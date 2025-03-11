@@ -4,6 +4,7 @@ class RoutersApp{
   String rutaDefault = '/';
   String rutaAuth = '/authScreen';
   String rutaPrincipalClient = '/principalClientScreen';
+  String routManualSplashScreen = '/manualSplashScreen';
 
   //imágenes 
   String rutaImages = 'assets/images/';

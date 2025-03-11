@@ -49,7 +49,11 @@ final GoRouter appRouter = GoRouter(
       path: objRutas.rutaPrincipalClient,
       builder: (context, state) => PrincipalClientScreen(),
     ),
+    GoRoute(
+      path: objRutas.routManualSplashScreen,
+      builder: (context, state) => const ManualSplashScreen(),
+    ),
   ],
-  initialLocation: objRutas.rutaDefault,
+  initialLocation: objRutas.routManualSplashScreen,
 );
 //

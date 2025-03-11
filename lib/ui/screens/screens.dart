@@ -1,3 +1,5 @@
+export 'package:cve_app/ui/screens/manual_splash_screen.dart';
+
 export 'package:cve_app/ui/screens/principal_screen.dart';
 
 export 'package:cve_app/ui/screens/auth/auth.dart';

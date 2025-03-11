@@ -374,6 +374,7 @@ class PrincipalStScreen extends StatelessWidget {
                               ),
                             ),
                           )
+                          
                           /*
                           const Text(
                             "VACACIONES SEGURAS",
