@@ -8,7 +8,7 @@ import 'package:cve_app/ui/ui.dart';
 final objRutas = RoutersApp();
 
 final GoRouter appRouter = GoRouter(
-  routes: [//    
+  routes: [//
     GoRoute(
       path: objRutas.rutaAuth,
       builder: (context, state) => BlocBuilder<AuthBloc, AuthState>(
@@ -46,8 +46,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => PrincipalScreen(),
     ),
     GoRoute(
-      path: objRutas.rutaPrincipalClient,
-      builder: (context, state) => PrincipalClientScreen(),
+      path: objRutas.rutaPrincipalUser,
+      builder: (context, state) => const PrincipalUserScreen(null),
     ),
     GoRoute(
       path: objRutas.routManualSplashScreen,

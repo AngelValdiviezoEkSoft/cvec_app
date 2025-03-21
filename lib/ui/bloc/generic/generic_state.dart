@@ -12,6 +12,12 @@ class GenericState extends Equatable {
   final String idFormaPago;
   final double heightModalPlanAct;
 
+  final bool viewAccountStatement;
+  final bool viewViewDebts;
+  final bool viewSendDeposits;
+  final bool viewPrintReceipts;
+  final bool viewViewReservations;
+
   const GenericState(
     {
       positionMenu = 0,
@@ -21,7 +27,12 @@ class GenericState extends Equatable {
       formaPago = 'C',
       localidadId = '',
       idFormaPago = '',
-      heightModalPlanAct = 0.65
+      heightModalPlanAct = 0.65,
+      viewAccountStatement = false,
+      viewViewDebts = false,
+      viewSendDeposits = false,
+      viewPrintReceipts = false,
+      viewViewReservations = false
     } 
   ) : positionMenu = positionMenu ?? 0,
       positionFormaPago = positionFormaPago ?? 0,
@@ -30,7 +41,12 @@ class GenericState extends Equatable {
       formaPago = formaPago ?? 'C',
       localidadId = localidadId ?? '',
       idFormaPago = idFormaPago ?? '',
-      heightModalPlanAct = heightModalPlanAct ?? 0.65;
+      heightModalPlanAct = heightModalPlanAct ?? 0.65,
+      viewAccountStatement = viewAccountStatement ?? false,
+      viewViewDebts = viewViewDebts ?? false,
+      viewSendDeposits = viewSendDeposits ?? false,
+      viewPrintReceipts = viewPrintReceipts ?? false,
+      viewViewReservations = viewViewReservations ?? false;
   
 
   GenericState copyWith({
@@ -41,9 +57,19 @@ class GenericState extends Equatable {
     String? formaPago,
     String? localidadId,
     String? idFormaPago,
-    double? heightModalPlanAct
+    double? heightModalPlanAct,
+    bool? viewAccountStatement,
+    bool? viewViewDebts,
+    bool? viewSendDeposits,
+    bool? viewPrintReceipts,
+    bool? viewViewReservations
   }) 
   => GenericState(
+    viewViewReservations: viewViewReservations ?? this.viewViewReservations,
+    viewPrintReceipts: viewPrintReceipts ?? this.viewPrintReceipts,
+    viewSendDeposits: viewSendDeposits ?? this.viewSendDeposits,
+    viewViewDebts: viewViewDebts ?? this.viewViewDebts,
+    viewAccountStatement: viewAccountStatement ?? this.viewAccountStatement,
     positionMenu: positionMenu ?? this.positionMenu,
     positionFormaPago: positionFormaPago ?? this.positionFormaPago,
     coordenadasMapa: coordenadasMapa ?? this.coordenadasMapa,
@@ -56,7 +82,7 @@ class GenericState extends Equatable {
 
 
   @override
-  List<Object> get props => [positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct];
+  List<Object> get props => [viewAccountStatement,viewViewDebts,viewSendDeposits,viewPrintReceipts,viewViewReservations,positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct];
 
   Future<String> readPrincipalPage() async {
 
@@ -126,7 +152,6 @@ class GenericState extends Equatable {
 
     return objLogin;
   }
-
   
   Future<String> lstProspectos() async {
     var rsp = await storage.read(key: 'RespuestaProspectos') ?? '';

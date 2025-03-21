@@ -16,6 +16,12 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   String idFormaPago = '';
   double heightModalPlanAct = 0.65;
 
+  bool viewAccountStatement = false;
+  bool viewViewDebts = false;
+  bool viewSendDeposits = false;
+  bool viewPrintReceipts = false;
+  bool viewViewReservations = false;
+
   GenericBloc() : super(const GenericState(
     positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, 
     radioMarcacion: 0.0,formaPago: '',localidadId: '', idFormaPago: '', 
@@ -27,7 +33,12 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     on<OnNewRadioMarcacionEvent>(_onCambioRadio);//_onCambioLocalidad
     on<OnNewLocalidadMarcacionEvent>(_onCambioLocalidad);//_onCambioLocalidad
     on<OnNewIdFormaPagoEvent>(_onCambioIdFormaPago);//_onCambioLocalidad  _onInitPositionFormaPago
-    on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);//_onCambioLocalidad      
+    on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);
+    on<OnShowViewAccountStatementEvent>(_onInitViewAccountStatement);//  
+    on<OnShowViewDebtsEvent>(_onInitViewViewDebts);//
+    on<OnShowViewSendDepositsEvent>(_onInitViewSendDeposits);//  
+    on<OnViewPrintReceiptsEvent>(_onInitViewPrintReceipts);//  
+    on<OnViewReservationsEvent>(_onInitViewReservation);//      
   }
 
   Future<void> init() async {
@@ -51,6 +62,22 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     ));
     add(OnNewPositionFormaPagoEvent(
       positionFormaPago
+    ));
+    
+    add( OnShowViewAccountStatementEvent(
+       viewAccountStatement
+    ));
+    add( OnShowViewDebtsEvent(
+       viewViewDebts
+    ));
+    add( OnShowViewSendDepositsEvent(
+       viewSendDeposits
+    ));
+    add( OnViewPrintReceiptsEvent(
+       viewPrintReceipts
+    ));
+    add( OnViewReservationsEvent(
+       viewViewReservations
     ));
   }
 
@@ -84,6 +111,26 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
 
   void _onInitPositionFormaPago( OnNewPositionFormaPagoEvent event, Emitter<GenericState> emit ) {
     emit( state.copyWith( positionFormaPago: positionFormaPago ) );
+  }
+
+  void _onInitViewAccountStatement( OnShowViewAccountStatementEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewAccountStatement: viewAccountStatement ) );
+  }
+
+  void _onInitViewViewDebts( OnShowViewDebtsEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewViewDebts: viewViewDebts ) );
+  }
+
+  void _onInitViewSendDeposits( OnShowViewSendDepositsEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewSendDeposits: viewSendDeposits ) );
+  }
+
+  void _onInitViewPrintReceipts( OnViewPrintReceiptsEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewPrintReceipts: viewPrintReceipts ) );
+  }
+
+  void _onInitViewReservation( OnViewReservationsEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewViewReservations: viewViewReservations ) );
   }
 
   void setPosicionFormaPago(int varPositionFormaPago) {
@@ -129,6 +176,31 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   void setHeightModalPlanAct(double varheightModalPlanAct) {
     heightModalPlanAct = varheightModalPlanAct;
     add(OnNewCambioHeightModalPlanActEvent(heightModalPlanAct));
+  }
+
+  void setShowViewAccountStatementEvent(bool varheightModalPlanAct) {
+    viewAccountStatement = varheightModalPlanAct;
+    add(OnShowViewAccountStatementEvent(viewAccountStatement));
+  }
+
+  void setShowViewDebts(bool varheightModalPlanAct) {
+    viewViewDebts = varheightModalPlanAct;
+    add(OnShowViewDebtsEvent(viewViewDebts));
+  }
+
+  void setShowViewSendDeposits(bool varheightModalPlanAct) {
+    viewSendDeposits = varheightModalPlanAct;
+    add(OnShowViewSendDepositsEvent(viewSendDeposits));
+  }
+
+  void setShowViewPrintRecipts(bool varheightModalPlanAct) {
+    viewPrintReceipts = varheightModalPlanAct;
+    add(OnViewPrintReceiptsEvent(viewPrintReceipts));
+  }
+
+  void setShowViewReservetions(bool varheightModalPlanAct) {
+    viewViewReservations = varheightModalPlanAct;
+    add(OnViewReservationsEvent(viewViewReservations));
   }
 
   @override

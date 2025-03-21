@@ -52,3 +52,28 @@ class OnNewCambioHeightModalPlanActEvent extends GenericEvent {
   final double height;
   const OnNewCambioHeightModalPlanActEvent(this.height);
 }
+
+class OnShowViewAccountStatementEvent extends GenericEvent {
+  final bool showIt;
+  const OnShowViewAccountStatementEvent(this.showIt);
+}
+
+class OnShowViewDebtsEvent extends GenericEvent {
+  final bool showIt;
+  const OnShowViewDebtsEvent(this.showIt);
+}
+
+class OnShowViewSendDepositsEvent extends GenericEvent {
+  final bool showIt;
+  const OnShowViewSendDepositsEvent(this.showIt);
+}
+
+class OnViewPrintReceiptsEvent extends GenericEvent {
+  final bool showIt;
+  const OnViewPrintReceiptsEvent(this.showIt);
+}
+
+class OnViewReservationsEvent extends GenericEvent {
+  final bool showIt;
+  const OnViewReservationsEvent(this.showIt);
+}

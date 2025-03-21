@@ -13,18 +13,31 @@ class AuthScreen extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;        
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF2EA3F2),
-      appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: const Color(0xFF2EA3F2),        
-        title: const Center(child: Text("Ingrese sus credenciales", style: TextStyle(color: Colors.white),)),
-      ),
-      body: Center(
-        child: ChangeNotifierProvider(
-          create: (_) => AuthService(),
-          child: AuthScreenSt(size: size),
-        )        
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: const Color(0xFF2EA3F2),      
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: const Color(0xFF2EA3F2),        
+          title: const Center(child: Text("Ingrese sus credenciales", style: TextStyle(color: Colors.white),)),
+          leading: GestureDetector(
+            onTap: () {
+              context.push(objRutas.rutaDefault);
+            },
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(Icons.arrow_back_ios)
+            ),
+          ),
+          
+        ),
+        body: Center(
+          child: ChangeNotifierProvider(
+            create: (_) => AuthService(),
+            child: AuthScreenSt(size: size),
+          )        
+        ),
       ),
     );
   }
@@ -143,7 +156,7 @@ class AuthScreenSt extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 115.0),
               child: ElevatedButton(
                 onPressed: () {
-                  context.push(objRutas.rutaPrincipalClient);
+                  context.push(objRutas.rutaPrincipalUser);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
