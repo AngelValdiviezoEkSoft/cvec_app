@@ -42,6 +42,17 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
     GoRoute(
+      path: objRutas.routPdfView,
+      builder: (context, state) => PdfView(
+        null,
+        'Estados de cuenta',
+        'Estados de cuenta',
+        'Estados de cuenta',
+        'Estados de cuenta',
+        true        
+      ),
+    ),
+    GoRoute(
       path: objRutas.rutaDefault,
       builder: (context, state) => PrincipalScreen(),
     ),

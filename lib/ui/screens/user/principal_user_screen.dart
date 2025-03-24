@@ -339,7 +339,20 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: const AccountStatementView(null),
+            child: Column(
+              children: [
+
+                Container(
+                  width: size.width,
+                  height: size.height * 0.06,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: const Text('Estados de cuenta', style: TextStyle(fontSize: 25),)
+                ),
+
+                const AccountStatementView(null),
+              ],
+            ),
           )
 
           :

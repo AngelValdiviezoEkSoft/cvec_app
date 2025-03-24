@@ -127,6 +127,49 @@ class GenericState extends Equatable {
     }
   }
 
+  Future<String> getContratos() async {
+
+    try{
+      /*
+      final resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+      */
+
+      //Map<String, dynamic> dataTmp = json.decode(json.encode(lstFinal));
+
+      final items = <ItemBoton>[
+        //if(objPermisos.mainMenu.itemListLeads)
+        ItemBoton('','','',1, Icons.group_add, 'Contrato', 'Cliente 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+          RoutersApp().routPdfView, 
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',2, Icons.groups, 'Contrato', 'Cliente 2','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+          RoutersApp().routPdfView, 
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',3, Icons.calendar_month, 'Contrato', 'Cliente 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+          RoutersApp().routPdfView, 
+          () {}
+        ),        
+      ]; 
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
+
   Future<String> waitCarga() async {
     
     return await Future.delayed(
@@ -163,8 +206,14 @@ class GenericState extends Equatable {
     var rsp = await storage.read(key: 'RespuestaClientes') ?? '';    
     return rsp;
   }
-/*  
-  Map<String, dynamic> serializeItemBotonMenu(ItemBoton item) {
+
+  String serializeItemBotonMenuList(List<ItemBoton> items) {    
+    final serializedList = items.map((item) => serializeItemBotonMenu(item)).toList();
+
+    return jsonEncode(serializedList);
+  }
+
+    Map<String, dynamic> serializeItemBotonMenu(ItemBoton item) {
     return {
       'tipoNotificacion': item.tipoNotificacion,
       'idSolicitud': item.idSolicitud,
@@ -188,11 +237,6 @@ class GenericState extends Equatable {
     };
   }
 
-  String serializeItemBotonMenuList(List<ItemBoton> items) {    
-    final serializedList = items.map((item) => serializeItemBotonMenu(item)).toList();
-
-    return jsonEncode(serializedList);
-  }
 
   List<ItemBoton> deserializeItemBotonMenuList(String jsonString) {
     final List<dynamic> jsonList = jsonDecode(jsonString);
@@ -236,6 +280,7 @@ class GenericState extends Equatable {
     );
   
   }
-*/
+
+
 }
 
