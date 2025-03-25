@@ -127,7 +127,7 @@ class GenericState extends Equatable {
     }
   }
 
-  Future<String> getContratos() async {
+  Future<String> getEstadoCuentas() async {
 
     try{
       /*
@@ -156,6 +156,48 @@ class GenericState extends Equatable {
         
         ItemBoton('','','',3, Icons.calendar_month, 'Contrato', 'Cliente 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
           RoutersApp().routPdfView, 
+          () {}
+        ),        
+      ]; 
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
+  Future<String> getRecibos() async {
+
+    try{
+      /*
+      final resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+      */
+
+      //Map<String, dynamic> dataTmp = json.decode(json.encode(lstFinal));
+
+      final items = <ItemBoton>[
+        //if(objPermisos.mainMenu.itemListLeads)
+        ItemBoton('','','',1, Icons.group_add, 'Recibo 1', 'Detalle del Recibo 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+          RoutersApp().routPrintReceiptView,
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',2, Icons.groups, 'Recibo 2', 'Detalle del Recibo 2','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+          RoutersApp().routPrintReceiptView, 
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',3, Icons.calendar_month, 'Recibo 3', 'Detalle del Recibo 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+          RoutersApp().routPrintReceiptView, 
           () {}
         ),        
       ]; 

@@ -43,7 +43,7 @@ class AccountStatementViewSt extends StatelessWidget {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          future: state.getContratos(),
+          future: state.getEstadoCuentas(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
 
             if(!snapshot.hasData) {

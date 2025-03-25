@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
 
 bool varTieneCorreo = false;
 String rolPagoPeriodoGen = '';
@@ -98,500 +100,55 @@ Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String co
     );
   }
 
-  pdf.addPage(
-    Page(
-      build: (context) {
-        return Column(
-          children: [
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text('Fecha: ',
-                  style: TextStyle(fontSize: 7, fontWeight: FontWeight.bold)),
-              Text(formatter, style: const TextStyle(fontSize: 7)),
-            ]),
-            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              Text('Mes: ',
-                  style: TextStyle(fontSize: 7, fontWeight: FontWeight.bold)),
-              Text(periodo, style: const TextStyle(fontSize: 7)),
-            ]),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('ROL DE PAGO',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(1),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('$rolPagoPeriodoGen ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 7))
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('Compañía: ',
-                              style: TextStyle(
-                                  fontSize: 7, fontWeight: FontWeight.bold)),
-                          Text('${rolDePago.cabeceraRol?.empresa}',
-                              style: const TextStyle(fontSize: 7)),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('División: ',
-                              style: TextStyle(
-                                  fontSize: 7, fontWeight: FontWeight.bold)),
-                          Text('${rolDePago.cabeceraRol?.division}',
-                              style: const TextStyle(fontSize: 7)),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('Sucursal: ',
-                              style: TextStyle(
-                                  fontSize: 7, fontWeight: FontWeight.bold)),
-                          Text('${rolDePago.cabeceraRol?.sucursal}',
-                              style: const TextStyle(fontSize: 7)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      '${rolDePago.cabeceraRol?.apellidos} ${rolDePago.cabeceraRol?.nombres}',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 14))
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('Tipo Nómina',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Container(
-                        width: 50.0,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('Área',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 5),
-                        child: Text('Cargo',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.tipoNomina}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.area}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Container(
-                        width: 150.0,
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.cargo}',
-                            maxLines: 3,
-                            overflow: TextOverflow.visible,
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 30.0,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('Proceso',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('CCosto',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 5),
-                        child: Text('Sueldo',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.proceso}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Container(
-                        width: 100.0,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.centroCosto}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text(
-                            '${rolDePago.cabeceraRol?.sueldo?.toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 45.0,
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('Periodo',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('SCosto',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 5),
-                        child: Text('Forma Pago',
-                            style: TextStyle(
-                                fontSize: 7, fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.periodo}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.subCentroCosto}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 5),
-                        child: Text('${rolDePago.cabeceraRol?.tipoPago}',
-                            style: const TextStyle(fontSize: 7)),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 15,
-              decoration: BoxDecoration(border: Border.all()),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('INGRESOS',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 7)),
-                  Text('EGRESOS',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 7)),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                  height: 200,
-                  width: 241,
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                                child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                    ),
-                                    child: Text('',
-                                        style: const TextStyle(fontSize: 6)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text('Cant',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text('Valor',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                          ]),
-                      renderIngresos(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                                child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                    ),
-                                    child: Text('',
-                                        style: const TextStyle(fontSize: 6)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text('Total Ingresos:',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                        '${rolDePago.totalIngresos?.toStringAsFixed(2)}',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
-                  height: 200,
-                  width: 241,
-                  decoration: BoxDecoration(border: Border.all()),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    //mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(children: [
-                        Expanded(
-                            child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                  0,
-                                  0,
-                                  0,
-                                  0,
-                                ),
-                                child: Text('',
-                                    style: const TextStyle(fontSize: 6)))),
-                        Expanded(
-                            child: Container(
-                                alignment: Alignment.bottomRight,
-                                child: Text('Cant',
-                                    style: TextStyle(
-                                        fontSize: 6,
-                                        fontWeight: FontWeight.bold)))),
-                        Expanded(
-                            child: Container(
-                                alignment: Alignment.bottomRight,
-                                child: Text('Valor',
-                                    style: TextStyle(
-                                        fontSize: 6,
-                                        fontWeight: FontWeight.bold)))),
-                      ]),
-                      renderEgresos(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                                child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      0,
-                                      0,
-                                      0,
-                                      0,
-                                    ),
-                                    child: Text('',
-                                        style: const TextStyle(fontSize: 6)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text('Total Egresos:',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                            Expanded(
-                                child: Container(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                        '${rolDePago.totalEgresos?.toStringAsFixed(2)}',
-                                        style: TextStyle(
-                                            fontSize: 6,
-                                            fontWeight: FontWeight.bold)))),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    'Neto a pagar: ${rolDePago.netoPagar}',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 7),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 15,
-              width: 482,
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    '    Observación : $observacion',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 7),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(children: [
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                      width: 120,
-                      decoration: const BoxDecoration(
-                          border: Border(bottom: BorderSide())),
-                    ),
-                    Text(
-                      'FIRMA DEL EMPLEADO',
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 7),
-                    ),
-                  ]),
-                  Container(
-                      width: 120,
-                      // decoration: const BoxDecoration(
-                      //     border: Border(top: BorderSide())),
-                      child: Column(children: [
-                        Container(
-                          height: 150,
-                          width: 200,
-                          child: Image(imageFirma),
-                          decoration: const BoxDecoration(
-                            border: Border(bottom: BorderSide()),
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
-                        Text(
-                            '${rolDePago.cabeceraRol?.encargadoCoporativoRRHH}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 7)),
-                        Text('${rolDePago.cabeceraRol?.cargoCorporativoRRHH}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 7)),
-                      ])),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    ),
-  );
+    pdf.addPage(
+      pw.MultiPage(
+        //pageFormat: format,
+        build: (context) => [
+          pw.Text('REPORTE DE ESTADOS DE CUENTA',
+              style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 10),
+          pw.Text('Cliente: MAYA CALDERON CRISTHIAN ESLAN'),
+          pw.Text('Tipo: Cuotas y gastos administrativos'),
+          pw.SizedBox(height: 10),
+
+          // Grupo 1
+          pw.Text('CVECAD-018749 - Casa Adjudicada - Activo',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 14)),
+          pw.SizedBox(height: 5),
+          _buildTable([
+            _headerRow(),
+            _row(['05/11/2022', 'CVECAD-018749 AN', 'ANT', '750.00', 'Pagada', '000081', 'CRUCE - REGA', '2750.00', '0.00', '09/01/2023', 'Pagado']),
+            _row(['30/11/2022', 'CVECAD-018749 OFE', 'OFE', '2750.00', 'Pagada', '010330', 'TARJETA CAPI', '38.71', '0.00', '30/11/2022', 'Pagado']),
+            _row(['05/01/2022', 'CVECAD-018749 RTC', 'RTC', '20.65', 'Pagada', '003357', 'TARJETA INTEI', '20.65', '0.00', '05/01/2022', 'Pagado']),
+            _row(['07/06/2023', 'CVECAD-018749 RTC', 'RTC', '20.65', 'Pagada', '003870', 'TARJETA INTEI', '20.65', '0.00', '07/06/2023', 'Pagado']),
+            _row(['17/07/2023', 'CVECAD-018749 RTC', 'RTC', '20.65', 'Pagada', '004337', 'TARJETA INTEI', '20.65', '0.00', '17/07/2023', 'Pagado']),
+          ]),
+
+          pw.SizedBox(height: 15),
+          pw.Text('CVEINSPCASAS-000003 - Inspección de Construcción de Vivienda - Terminado',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 14)),
+          pw.SizedBox(height: 5),
+          _buildTable([
+            _headerRow(),
+            _row(['05/10/2022', 'CVEINSPCASAS-0001 CT', 'CT', '200.00', 'Pagada', '009235', 'EFECTIVO JOR', '200.00', '0.00', '20/10/2022', 'Pagado']),
+          ]),
+
+          pw.SizedBox(height: 15),
+          pw.Text('CVE09MALI-21201 - Plan Alícuotas - Terminado',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 14)),
+          pw.SizedBox(height: 5),
+          _buildTable([
+            _headerRow(),
+            _row(['15/11/2021', 'CVE09MALI-21201 CT', 'CT', '20.00', 'Pagada', '002458', 'EFECTIVO WEI', '20.00', '0.00', '30/11/2021', 'Pagado']),
+            _row(['05/12/2021', 'CVE09MALI-21201 CT', 'CT', '20.00', 'Pagada', '002890', 'EFECTIVO WEI', '20.00', '0.00', '13/12/2021', 'Pagado']),
+            _row(['05/01/2022', 'CVE09MALI-21201 CT', 'CT', '18.00', 'Pagada', '003883', 'EFECTIVO WEI', '18.00', '0.00', '31/01/2022', 'Pagado']),
+            _row(['05/02/2022', 'CVE09MALI-21201 CT', 'CT', '18.00', 'Pagada', '004015', 'EFECTIVO WEI', '18.00', '0.90', '19/10/2022', 'Pagado']),
+            _row(['05/03/2022', 'CVE09MALI-21201 CT', 'CT', '20.00', 'Pagada', '005163', 'EFECTIVO WEI', '8.00', '12.00', '26/02/2022', 'Pagado']),
+          ]),
+        ],
+      ),
+    );
+
 
   final bytes = await pdf.save();
   final dir = await getApplicationDocumentsDirectory();
@@ -621,4 +178,45 @@ Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String co
   if (varTieneCorreo) certificadoAE();
 
   return pdf.save();
+
 }
+
+  List<String> _headerRow() => [
+        'Fecha venc.',
+        'Descripción',
+        'Tipo',
+        'Valor cuota',
+        'Estado cuota',
+        'Recibo',
+        'Forma pago',
+        'Valor pagado',
+        'Saldo',
+        'Fecha pago',
+        'Estado pago',
+      ];
+
+  List<String> _row(List<String> data) => data;
+
+  pw.Widget _buildTable(List<List<String>> rows) {
+    return pw.Table.fromTextArray(
+      headers: rows.first,
+      data: rows.sublist(1),
+      headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8),
+      cellStyle: const pw.TextStyle(fontSize: 6),
+      cellAlignment: pw.Alignment.centerLeft,
+      border: pw.TableBorder.all(width: 0.5),
+      columnWidths: {
+        0: const pw.FixedColumnWidth(55),
+        1: const pw.FixedColumnWidth(90),
+        2: const pw.FixedColumnWidth(35),
+        3: const pw.FixedColumnWidth(50),
+        4: const pw.FixedColumnWidth(50),
+        5: const pw.FixedColumnWidth(50),
+        6: const pw.FixedColumnWidth(60),
+        7: const pw.FixedColumnWidth(55),
+        8: const pw.FixedColumnWidth(40),
+        9: const pw.FixedColumnWidth(55),
+        10: const pw.FixedColumnWidth(50),
+      },
+    );
+  }

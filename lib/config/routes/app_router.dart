@@ -8,7 +8,7 @@ import 'package:cve_app/ui/ui.dart';
 final objRutas = RoutersApp();
 
 final GoRouter appRouter = GoRouter(
-  routes: [//
+  routes: [// 
     GoRoute(
       path: objRutas.rutaAuth,
       builder: (context, state) => BlocBuilder<AuthBloc, AuthState>(
@@ -40,6 +40,18 @@ final GoRouter appRouter = GoRouter(
         */
         },
       ),
+    ),    
+    GoRoute(
+      path: objRutas.rutaDefault,
+      builder: (context, state) => PrincipalScreen(),
+    ),
+    GoRoute(
+      path: objRutas.rutaPrincipalUser,
+      builder: (context, state) => const PrincipalUserScreen(null),
+    ),
+    GoRoute(
+      path: objRutas.routManualSplashScreen,
+      builder: (context, state) => const ManualSplashScreen(),
     ),
     GoRoute(
       path: objRutas.routPdfView,
@@ -53,16 +65,15 @@ final GoRouter appRouter = GoRouter(
       ),
     ),
     GoRoute(
-      path: objRutas.rutaDefault,
-      builder: (context, state) => PrincipalScreen(),
-    ),
-    GoRoute(
-      path: objRutas.rutaPrincipalUser,
-      builder: (context, state) => const PrincipalUserScreen(null),
-    ),
-    GoRoute(
-      path: objRutas.routManualSplashScreen,
-      builder: (context, state) => const ManualSplashScreen(),
+      path: objRutas.routPrintReceiptView,
+      builder: (context, state) => PdfView(
+        null,
+        'Imprimir Recibo',
+        'Imprimir Recibo',
+        'Imprimir Recibo',
+        'Imprimir Recibo',
+        true        
+      ),
     ),
   ],
   initialLocation: objRutas.routManualSplashScreen,

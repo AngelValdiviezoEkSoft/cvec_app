@@ -152,9 +152,9 @@ class PrincipalClientStScreen extends StatelessWidget {
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(true);
+                    gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewSendDeposits(true);
                     
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -165,8 +165,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(true);
+                    gnrBloc.setShowViewPrintRecipts(true);
+                    gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
 
                     Navigator.pop(context);
@@ -179,8 +179,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
                     gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(true);
+                    gnrBloc.setShowViewReservetions(true);
+                    gnrBloc.setShowViewSendDeposits(false);
 
                     Navigator.pop(context);
                   },
@@ -382,8 +382,22 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: const PrintReceiptView(null),
+            child: Column(
+              children: [
+
+                Container(
+                  width: size.width,
+                  height: size.height * 0.06,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: const Text('Recibos', style: TextStyle(fontSize: 25),)
+                ),
+
+                const PrintReceiptView(null),
+              ],
+            ),
           )
+
 
           :
 

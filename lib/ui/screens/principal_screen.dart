@@ -622,7 +622,7 @@ class MenuTile extends StatelessWidget {
           ruta = 'https://centrodeviajesecuador.com/plan-terrenos/';          
         }
         if(option.label == "Tu casa programada"){
-          ruta = 'https://centrodeviajesecuador.com/tu-casa-programada/';          
+          ruta = '${objRouts.newRoutCve}tu-casa-programada';          
         }
         if(option.label == "Revista"){
           ruta = 'https://drive.google.com/file/d/1vvXUqg5oZ6zkmhZNjmdAZsTvO3xj4xOZ/view?usp=sharing';          

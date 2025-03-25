@@ -14,6 +14,7 @@ class RoutersApp{
   String routPrintReceiptsScreen = '/printReceiptsScreen';
   String routViewReservationsScreen = '/viewReservationsScreen';
   String routPdfView = '/routPdfView';
+  String routPrintReceiptView = '/routPrintReceiptView';
 
   //imágenes 
   String rutaImages = 'assets/images/';
