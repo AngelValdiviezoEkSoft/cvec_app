@@ -1,4 +1,4 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+
 import 'package:cve_app/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -53,25 +53,29 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
               width: size.width * 0.97,
               height: size.height * 0.2,
               alignment: Alignment.center,
-              child: DefaultTextStyle(
-                style: const TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Canterbury',
-                ),
-                child: AnimatedTextKit(
-                  repeatForever: true,
-                  pause: const Duration(microseconds: 1000),
-
-                  animatedTexts: [
-                    ScaleAnimatedText('Bienvenido a', textStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 40)),
-                    ScaleAnimatedText('¡CENTRO DE VIAJES ECUADOR!', textStyle: const TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold)),
+              child: RichText(
+                text: const TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'BIENVENIDO A CENTRO',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'DE VIAJES ECUADOR',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ],
-                  onTap: () {
-                  },
                 ),
               ),
             ),
-                          
         
             SizedBox(height: size.height * 0.08,),
         

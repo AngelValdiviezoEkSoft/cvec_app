@@ -215,7 +215,7 @@ class PdfView extends StatelessWidget {
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,
-                    build: (context) => printReceiptRpt(rolDePago, correoEnvio!, periodoDesc!, periodo!),
+                    build: (context) => printReceiptRpt(),
                   );
                 }
               }
