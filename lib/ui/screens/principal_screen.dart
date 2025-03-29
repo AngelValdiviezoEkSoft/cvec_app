@@ -645,10 +645,10 @@ class MenuTile extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: size.width * 0.55,
-            height: size.height * 0.04,
+            width: size.width * 0.45,
+            height: size.height * 0.03,
             color: Colors.transparent,
-            child: Text(option.label, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black))
+            child: Text(option.label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
           ),
           Container(
             width: size.width * 0.45,
