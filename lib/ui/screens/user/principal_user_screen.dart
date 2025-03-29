@@ -121,7 +121,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 
                 ListTile(
                   leading: const Icon(Icons.document_scanner),
-                  title: const Text('Estado de cuenta'),
+                  title: Text(locGen!.menuAccountStatementLbl),
                   onTap: () {
                     
                     gnrBloc.setShowViewAccountStatementEvent(true);
@@ -135,7 +135,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.home),
-                  title: const Text('Deudas'),
+                  title: Text(locGen!.menuDebtsLbl),
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(true);
@@ -148,7 +148,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.send),
-                  title: const Text('Enviar depósitos'),
+                  title: Text(locGen!.menuSendDepositsLbl),
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
@@ -161,7 +161,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.print),
-                  title: const Text('Imprimir recibos'),
+                  title: Text(locGen!.menuPrintReceiptsLbl),
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
@@ -174,7 +174,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.visibility),
-                  title: const Text('Ver reservas'),
+                  title: Text(locGen!.menuSeeReservationsLbl),
                   onTap: () {
                     gnrBloc.setShowViewAccountStatementEvent(false);
                     gnrBloc.setShowViewDebts(false);
@@ -187,7 +187,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
-                  title: const Text('Cerrar Sesión'),
+                  title: Text(locGen!.menuLogOutLbl),
                   onTap: () {
                     
                     gnrBloc.setShowViewAccountStatementEvent(false);
@@ -248,7 +248,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          width: size.width * 0.79,
+                          width: size.width * 0.85,
                           height: size.height * 0.12,
                           color: Colors.transparent,
                           alignment: Alignment.center,
@@ -287,8 +287,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                                     pause: const Duration(microseconds: 1000),
         
                                     animatedTexts: [
-                                      ScaleAnimatedText('VACACIONES SEGURAS SIEMPRE', textStyle: const TextStyle(color: Colors.black)),
-                                      ScaleAnimatedText('¡PLANIFICA Y LOGRA LO IMPOSIBLE!', textStyle: const TextStyle(color: Colors.black)),
+                                      ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: const TextStyle(color: Colors.black)),
+                                      ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: const TextStyle(color: Colors.black)),
                                     ],
                                     onTap: () {
                                     },
@@ -347,7 +347,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   height: size.height * 0.06,
                   color: Colors.transparent,
                   alignment: Alignment.center,
-                  child: const Text('Estados de cuenta', style: TextStyle(fontSize: 25),)
+                  child: Text(locGen!.menuAccountStatementLbl, style: const TextStyle(fontSize: 25),)
                 ),
 
                 const AccountStatementView(null),
@@ -390,7 +390,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   height: size.height * 0.06,
                   color: Colors.transparent,
                   alignment: Alignment.center,
-                  child: const Text('Recibos', style: TextStyle(fontSize: 25),)
+                  child: Text(locGen!.receiptsLbl, style: const TextStyle(fontSize: 25),)
                 ),
 
                 const PrintReceiptView(null),

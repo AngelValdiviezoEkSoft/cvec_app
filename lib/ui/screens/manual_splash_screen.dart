@@ -2,6 +2,9 @@
 import 'package:cve_app/config/config.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+AppLocalizations? locGen;
 
 class ManualSplashScreen extends StatefulWidget {
   const ManualSplashScreen({super.key});
@@ -20,9 +23,10 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
 
     // Tiempo de espera antes de navegar (en segundos)
     Future.delayed(const Duration(seconds: 7), () {
+      locGen = AppLocalizations.of(context);
       context.push(objRouter.rutaDefault);
-    });    
-  
+    });
+    
   }
 
   @override
@@ -50,25 +54,26 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
         
             Container(
               color: Colors.transparent,
-              width: size.width * 0.97,
+              width: size.width * 0.65,
               height: size.height * 0.2,
               alignment: Alignment.center,
               child: RichText(
-                text: const TextSpan(
+                textAlign: TextAlign.center,                
+                text: TextSpan(                  
                   children: [
                     TextSpan(
-                      text: 'BIENVENIDO A CENTRO',
-                      style: TextStyle(
+                      text: AppLocalizations.of(context)!.bienvenidaCvec,//'BIENVENIDO A CENTRO',                      
+                      style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold
-                      ),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,                        
+                      ),                      
                     ),
                     TextSpan(
-                      text: 'DE VIAJES ECUADOR',
-                      style: TextStyle(
+                      text: AppLocalizations.of(context)!.bienvenidaCvec2,// ' DE VIAJES ECUADOR',
+                      style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 12,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold
                       ),
                     ),

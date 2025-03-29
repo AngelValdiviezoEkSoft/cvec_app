@@ -1,0 +1,104 @@
+{
+  "titulo1Introduccion": "VACACIONES SEGURAS SIEMPRE",
+  "@titulo1Introduccion": {
+    "description": "VACACIONES SEGURAS SIEMPRE"
+  },
+  "titulo2Introduccion": "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
+  "@titulo2Introduccion": {
+    "description": "¡PLANIFICA Y LOGRA LO IMPOSIBLE!"
+  },
+  "hola": "¡Hola, {userName}!",
+  "@hola": {
+    "description": "Hola usuario",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "bienvenidaLogin": "¡Bienvenido de nuevo!",
+  "@bienvenidaLogin": {
+    "description": "¡Bienvenido de nuevo!"
+  },
+  "bienvenidaCvec": "BIENVENIDO A CENTRO",
+  "@bienvenidaCvec": {
+    "description": "BIENVENIDO A CENTRO"    
+  },
+  "bienvenidaCvec2": " DE VIAJES ECUADOR",
+  "@bienvenidaCvec2": {
+    "description": " DE VIAJES ECUADOR"      
+  },
+  "menuDestinations": "Destinos",
+  "@menuDestinations": {
+    "description": "Destinos"
+  },
+  "menuDestinations": "Destinos",
+  "@menuDestinations": {
+    "description": "Destinos"
+  },
+  "menuDestinations": "Destinos",
+  "@menuDestinations": {
+    "description": "Destinos"
+  },
+  "menuMemberships": "Membresías",
+  "@menuMemberships": {
+    "description": "Membresías"
+  },
+  "menuBuyYourLand": "Compra tu terreno",
+  "@menuBuyYourLand": {
+    "description": "Compra tu terreno"
+  },
+  "menuYourPlannedHome": "Tu casa programada",
+  "@menuYourPlannedHome": {
+    "description": "Tu casa programada"
+  },
+  "menuMagazine": "Revista",
+  "@menuMagazine": {
+    "description": "Revista"
+  },
+  "userLbl": "Usuario",
+  "@userLbl": {
+    "description": "Usuario"
+  },
+  "passwordLbl": "Contraseña",
+  "@passwordLbl": {
+    "description": "Contraseña"
+  },
+  "logInLbl": "Acceder",
+  "@logInLbl": {
+    "description": "Acceder"
+  },
+  "barNavLogInLbl": "Ingrese sus credenciales",
+  "@barNavLogInLbl": {
+    "description": "Ingrese sus credenciales"
+  },
+  "menuAccountStatementLbl": "Estados de cuenta",
+  "@menuAccountStatementLbl": {
+    "description": "Estados de cuenta"
+  },
+  "menuDebtsLbl": "Deudas",
+  "@menuDebtsLbl": {
+    "description": "Deudas"
+  },
+  "menuSendDepositsLbl": "Enviar depósitos",
+  "@menuSendDepositsLbl": {
+    "description": "Enviar depósitos"
+  },
+  "menuPrintReceiptsLbl": "Imprimir recibos",
+  "@menuPrintReceiptsLbl": {
+    "description": "Imprimir recibos"
+  },
+  "menuSeeReservationsLbl": "Ver reservas",
+  "@menuSeeReservationsLbl": {
+    "description": "Ver reservas"
+  },
+  "menuLogOutLbl": "Cerrar Sesión",
+  "@menuLogOutLbl": {
+    "description": "Cerrar Sesión"
+  },
+  "receiptsLbl": "Recibos",
+  "@receiptsLbl": {
+    "description": "Recibos"
+  }
+} 

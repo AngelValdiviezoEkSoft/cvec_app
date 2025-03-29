@@ -43,7 +43,7 @@ final GoRouter appRouter = GoRouter(
     ),    
     GoRoute(
       path: objRutas.rutaDefault,
-      builder: (context, state) => PrincipalScreen(),
+      builder: (context, state) => const PrincipalScreen(null),
     ),
     GoRoute(
       path: objRutas.rutaPrincipalUser,

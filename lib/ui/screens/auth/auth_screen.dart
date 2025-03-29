@@ -1,4 +1,5 @@
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:cve_app/auth_service.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +21,7 @@ class AuthScreen extends StatelessWidget {
         appBar: AppBar(
           foregroundColor: Colors.white,
           backgroundColor: const Color(0xFF2EA3F2),        
-          title: const Center(child: Text("Ingrese sus credenciales", style: TextStyle(color: Colors.white),)),
+          title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
           leading: GestureDetector(
             onTap: () {
               context.push(objRutas.rutaDefault);
@@ -76,9 +77,9 @@ class AuthScreenSt extends StatelessWidget {
               color: Colors.transparent,
               width: size.width * 0.9,
               alignment: Alignment.centerLeft,
-              child: const Text(
-                '¡Bienvenido de nuevo!',
-                style: TextStyle(
+              child: Text(
+                locGen!.bienvenidaLogin,
+                style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.white
@@ -94,10 +95,10 @@ class AuthScreenSt extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: '',
-                labelText: 'Usuario',
-                labelStyle: TextStyle(color: Colors.white)
+                labelText: locGen!.userLbl,
+                labelStyle: const TextStyle(color: Colors.white)
               ),
               //onChanged: (value) => loginForm.email = value,
               /*
@@ -124,7 +125,7 @@ class AuthScreenSt extends StatelessWidget {
                   //controller: passWordTxt,
                   decoration: InputDecoration(
                     labelStyle: const TextStyle(color: Colors.white),
-                    labelText: 'Contraseña',
+                    labelText: locGen!.passwordLbl,
                     suffixIcon: 
                     !authService.varIsOscured
                       ? IconButton(
@@ -166,9 +167,9 @@ class AuthScreenSt extends StatelessWidget {
                   ),
                   minimumSize: const Size(double.infinity, 50),
                 ),
-                child: const Text(
-                  'Acceder',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                child: Text(
+                  locGen!.logInLbl,
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ),

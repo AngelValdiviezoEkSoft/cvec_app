@@ -7,10 +7,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 RoutersApp objRouts = RoutersApp();
 
 class PrincipalScreen extends StatelessWidget {
+
+  const PrincipalScreen(Key? key) : super (key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class PrincipalScreen extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return WillPopScope(
+    return WillPopScope(      
       onWillPop: () async => false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -40,14 +43,6 @@ class PrincipalStScreen extends StatelessWidget {
   static const platform = MethodChannel('call_channel');
 
   static const platformEmail = MethodChannel('email_channel');
-
-  final List<MenuOption> options = [
-    MenuOption(icon: Icons.place, label: "Destinos", url: "https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PLAN-GOLD1.jpg"),
-    MenuOption(icon: Icons.home, label: "Membresías", url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/MENBRES%C3%8DA.jpg'),
-    MenuOption(icon: Icons.web, label: "Compra tu terreno", url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/PLAN-TERRENO-2048x1536.jpg'),
-    MenuOption(icon: Icons.info, label: "Tu casa programada", url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resizeimage-2-1.jpg'),    
-    MenuOption(icon: Icons.archive_rounded, label: "Revista", url: 'https://centrodeviajesecuador.com/wp-content/uploads/2024/01/image-2-980x551.png'),
-  ];
 
 /*
   void openDialer() async {
@@ -84,7 +79,20 @@ class PrincipalStScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    
     final objRutas = RoutersApp();
+
+    List<MenuOption> options = [];
+
+    if(locGen != null) {
+      options = [
+        MenuOption(icon: Icons.place, label: locGen!.menuDestinations, url: "https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PLAN-GOLD1.jpg"),
+        MenuOption(icon: Icons.home, label: locGen!.menuMemberships, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/MENBRES%C3%8DA.jpg'),
+        MenuOption(icon: Icons.web, label: locGen!.menuBuyYourLand, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/PLAN-TERRENO-2048x1536.jpg'),
+        MenuOption(icon: Icons.info, label: locGen!.menuYourPlannedHome, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resizeimage-2-1.jpg'),    
+        MenuOption(icon: Icons.archive_rounded, label: locGen!.menuMagazine, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2024/01/image-2-980x551.png'),
+      ];
+    }
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -332,7 +340,7 @@ class PrincipalStScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: size.width * 0.79,
+                        width: size.width * 0.87,
                         height: size.height * 0.12,
                         color: Colors.transparent,
                         alignment: Alignment.center,
@@ -358,7 +366,7 @@ class PrincipalStScreen extends StatelessWidget {
       
                             Container(
                               color: Colors.transparent,
-                              width: size.width * 0.97,
+                              width: size.width * 0.99,
                               height: size.height * 0.035,
                               alignment: Alignment.center,
                               child: DefaultTextStyle(
@@ -368,11 +376,12 @@ class PrincipalStScreen extends StatelessWidget {
                                 ),
                                 child: AnimatedTextKit(
                                   repeatForever: true,
+                                  
                                   pause: const Duration(microseconds: 1000),
       
                                   animatedTexts: [
-                                    ScaleAnimatedText('VACACIONES SEGURAS SIEMPRE', textStyle: const TextStyle(color: Colors.black)),
-                                    ScaleAnimatedText('¡PLANIFICA Y LOGRA LO IMPOSIBLE!', textStyle: const TextStyle(color: Colors.black)),
+                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: const TextStyle(color: Colors.black)),
+                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: const TextStyle(color: Colors.black)),
                                   ],
                                   onTap: () {
                                   },
