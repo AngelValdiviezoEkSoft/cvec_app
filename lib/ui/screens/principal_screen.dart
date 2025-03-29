@@ -621,19 +621,19 @@ class MenuTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         String ruta = '';
-        if(option.label == "Destinos"){          
+        if(option.label == locGen!.menuDestinations){//"Destinos"){          
           ruta = '${objRouts.newRoutCve}destinos';
         }
-        if(option.label == "Membresías"){
+        if(option.label == locGen!.menuMemberships){//"Membresías"){
           ruta = '${objRouts.newRoutCve}mis-planes';
         }
-        if(option.label == "Compra tu terreno"){
+        if(option.label == locGen!.menuBuyYourLand){//"Compra tu terreno"){
           ruta = 'https://centrodeviajesecuador.com/plan-terrenos/';          
         }
-        if(option.label == "Tu casa programada"){
+        if(option.label == locGen!.menuYourPlannedHome){//"Tu casa programada"){
           ruta = '${objRouts.newRoutCve}tu-casa-programada';          
         }
-        if(option.label == "Revista"){
+        if(option.label == locGen!.menuMagazine){//"Revista"){
           ruta = 'https://drive.google.com/file/d/1vvXUqg5oZ6zkmhZNjmdAZsTvO3xj4xOZ/view?usp=sharing';          
         }        
 
@@ -645,7 +645,7 @@ class MenuTile extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: size.width * 0.45,
+            width: size.width * 0.55,
             height: size.height * 0.04,
             color: Colors.transparent,
             child: Text(option.label, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black))
