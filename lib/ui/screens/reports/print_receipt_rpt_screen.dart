@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 //import 'package:cve_app/domain/domain.dart';
 //import 'package:path_provider/path_provider.dart';
+import 'package:cve_app/domain/domain.dart';
 import 'package:pdf/widgets.dart';
 //import 'dart:io';
 //import 'package:http/http.dart' as http;
@@ -14,6 +15,22 @@ import 'package:pdf/pdf.dart';
 
 bool varTieneCorreoRecibo = false;
 String rolPagoPeriodoRecibo = '';
+
+Map<String, List<PagoItem>> agruparPorRubro(List<PagoItem> items) {
+  final Map<String, List<PagoItem>> agrupado = {};
+
+  for (var item in items) {
+    agrupado.putIfAbsent(item.descRubro, () => []);
+    if(agrupado[item.descRubro] != null){
+      agrupado[item.descRubro]!.add(item);
+    }
+    
+  }
+
+  return agrupado;
+}
+
+
 /*
 Future<Uint8List> printReceiptRpt(AccountStatementModel rolDePago, String correo, String periodoDesc, String periodo) async {
   rolPagoPeriodoRecibo = periodoDesc;
@@ -631,6 +648,7 @@ Future<Uint8List> printReceiptRpt(AccountStatementModel rolDePago, String correo
 }
 */
 Future<Uint8List> printReceiptRpt() async {
+
   final imageFirma = MemoryImage(
     (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List()
   );
@@ -639,8 +657,90 @@ Future<Uint8List> printReceiptRpt() async {
     (await rootBundle.load('assets/logo_app_pequenio.png')).buffer.asUint8List()
   );
 
+  var items = [
+    PagoItem(
+      descRubro: 'CVE09MPID-033463',
+      rubro: '',      
+      descripcion: '',
+      pagado: '',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPID-033463',
+      rubro: 'GAD',
+      descripcion: 'GAD 07/12',
+      pagado: '\$ 1.00',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPID-033463',
+      rubro: 'CT',
+      descripcion: 'CT 07/12',
+      pagado: '\$ 30.36',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPID-033463',
+      rubro: 'CT',
+      descripcion: 'CT 08/12',
+      pagado: '\$ 0.96',
+    ),
+
+    PagoItem(
+      descRubro: 'CVE09MPME-026212',
+      rubro: '',      
+      descripcion: '',
+      pagado: '',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPME-026212',
+      rubro: 'GAD',
+      descripcion: 'GAD 06/24',
+      pagado: '\$ 3.70',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPME-026212',
+      rubro: 'CT',
+      descripcion: 'CT 06/24',
+      pagado: '\$ 74.01',
+    ),
+
+    PagoItem(
+      descRubro: 'CVE09MPTE-024984',
+      rubro: '',      
+      descripcion: '',
+      pagado: '',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPTE-024984',
+      rubro: 'GAD',
+      descripcion: 'GAD 24/72',
+      pagado: '\$ 4.28',
+    ),
+    PagoItem(
+      descRubro: 'CVE09MPTE-024984',
+      rubro: 'CT',
+      descripcion: 'CT 24/72',
+      pagado: '\$ 85.69',
+    ),
+  ];
+
+  /* 
+  ...[ // Datos de la tabla sin bordes
+                  ['CVE09M', 'PID-033463', ''],
+                  ['GAD', '07/12', '\$1.00'],
+                  ['CT', '07/12', '\$30.36'],
+                  ['CT', '08/12', '\$0.96'],
+                  ['CVE09M', 'PME-026212' '', ''],
+                  ['GAD ', '06/24', '\$3.70'],
+                  ['CT', '06/24', '\$74.01'],
+                  ['CVE09M', 'PTE-024984', ''],
+                  ['GAD', '24/72', '\$4.28'],
+                  ['CT', '24/72', '\$85.69'],
+  */
+
+  final agrupado = agruparPorRubro(items);
+
   final pdf = pw.Document();
 
+/*
   pdf.addPage(
     pw.Page(
       pageFormat: PdfPageFormat.roll80,
@@ -648,14 +748,6 @@ Future<Uint8List> printReceiptRpt() async {
         return pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           children: [
-            /*
-            pw.Center(
-              child: pw.Text(
-                'Centro de Viajes Ecuador',
-                style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold),
-              ),
-            ),
-            */
             
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -769,6 +861,7 @@ Future<Uint8List> printReceiptRpt() async {
                   ],
                 ),
                 pw.Divider(),
+                
                 ...[ // Datos de la tabla sin bordes
                   ['CVE09M', 'PID-033463', ''],
                   ['GAD', '07/12', '\$1.00'],
@@ -781,14 +874,275 @@ Future<Uint8List> printReceiptRpt() async {
                   ['GAD', '24/72', '\$4.28'],
                   ['CT', '24/72', '\$85.69'],
                 ].map((row) => pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 2),
+                  padding: const pw.EdgeInsets.symmetric(vertical: 2),                  
                   child: pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: row.map((cell) => pw.Text(cell, style: const TextStyle(fontSize: 5))).toList(),
                   ),
-                )),
+                )
+                ),
+                
               ],
             ),
+            pw.SizedBox(height: 10),
+            pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),
+            pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
+            pw.Text('Total: \$200.00', style: const TextStyle(fontSize: 7)),
+            pw.SizedBox(height: 10),
+            pw.Text('Observación:', style: const TextStyle(fontSize: 7)),
+            pw.SizedBox(height: 10),
+            
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 80,
+                  child: Column(children: [
+                    Container(
+                      height: 150,
+                      width: 200,
+                      child: Image(imageFirma),
+                      decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide()),
+                      ),
+                    ),
+                    Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
+                    Text(
+                        'Firma Autorizada',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 6)),
+                    
+                  ]
+                )
+                ),
+
+                Container(
+                  width: 80,
+                  child: Column(children: [
+                    Container(
+                      height: 150,
+                      width: 200,
+                      child: Image(imageFirma),
+                      decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide()),
+                      ),
+                    ),
+                    Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
+                    Text(
+                        'Firma Cliente',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 6)),
+                    
+                  ]
+                )
+                ),
+
+              ],
+            ),
+
+            pw.SizedBox(height: 10),
+            pw.Text('Responsable Ingreso: RENDON SUAREZ ANA RAQUEL', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+            pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
+          ],
+        );
+      },
+    ),
+  );
+*/
+
+  pdf.addPage(
+    pw.Page(
+      pageFormat: PdfPageFormat.roll80,
+      margin: const pw.EdgeInsets.all(24),
+      build: (context) {
+        return pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                Container(
+                  height: 95,
+                  width: 160,
+                  child: Image(imageLogo),              
+                ),
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              ],
+            ),
+            pw.SizedBox(height: 15),
+            pw.Center(
+              child: pw.Text('Calle Aguirre 411 entre Chile y Chimborazo',
+              style: const pw.TextStyle(
+                        fontSize: 7
+                      ),),
+            ),
+            pw.Center(
+              child: pw.Text('Edif. C.C Unicentro 2do Piso Of. #211',
+              style: const pw.TextStyle(
+                        fontSize: 7
+                      ),),
+            ),
+            pw.Center(
+              child: pw.Text('Telfs: 6000575-579',
+              style: const pw.TextStyle(
+                        fontSize: 7
+                      ),),
+            ),
+            pw.Center(
+              child: //pw.Text('Web: www.centrodeviajesecuador.com'),
+                RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: 'Web:',
+                      style: pw.TextStyle(
+                        color: PdfColors.black,
+                        fontSize: 7,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' www.centrodeviajesecuador.com',
+                      style: pw.TextStyle(
+                        color: PdfColors.blue,
+                        fontSize: 7,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            
+
+            ),
+
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text('Ecuador', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              ],
+            ),
+
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text('ESTABLECIMIENTO: OFICINA', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              ],
+            ),
+
+            pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                pw.Text('RECIBO # 077872', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+              ],
+            ),
+
+            pw.SizedBox(height: 10),
+            pw.Divider(),
+            pw.Text('Cliente: BENIGNO VICTORIANO GUSTAVO', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+            pw.Text('Fecha: 25/03/2025', style: const pw.TextStyle(
+                        fontSize: 6
+                      ),),
+            pw.SizedBox(height: 2),
+
+            pw.Divider(),
+
+            // Tabla agrupada
+            pw.Table(
+              columnWidths: {
+                0: pw.FlexColumnWidth(3),
+                1: pw.FlexColumnWidth(4),
+                2: pw.FlexColumnWidth(2),
+              },
+              border: pw.TableBorder.all(),
+              children: [
+                pw.TableRow(
+                  children: [
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text("Rubro", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text("Descripción", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text("Pagado", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                  ],
+                ),
+                // Filas agrupadas por Rubro
+                ...agrupado.entries.expand((entry) {
+                  final rubro = entry.key;
+                  final rows = entry.value;
+                  
+                  return [
+                    // Fila de rubro
+                    pw.TableRow(
+                      children: [
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(4),
+                          child: pw.Text(rubro, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),                          
+                        ),
+                        pw.Container(),
+                        pw.Container(),
+                      ],
+                    ),
+                    // Filas de descripción
+                    ...rows.map((item) => 
+                    
+                    pw.TableRow(
+                          children: [
+                            if(item.rubro.isNotEmpty)
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(item.rubro, style: const pw.TextStyle(fontSize: 6)),
+                            ),
+                            /*
+                            if(item.rubro.isNotEmpty)
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(item.rubro),
+                            ),
+                            */
+                            if(item.rubro.isNotEmpty)
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(item.descripcion, style: const pw.TextStyle(fontSize: 6)),
+                            ),
+                            if(item.rubro.isNotEmpty)
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(item.pagado, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                            ),
+                          ],
+                        ))
+                  ];
+                }).toList()
+              ],
+            ),
+
             pw.SizedBox(height: 10),
             pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),
             pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
