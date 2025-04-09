@@ -673,19 +673,19 @@ Future<Uint8List> printReceiptRpt() async {
             pw.Center(
               child: pw.Text('Calle Aguirre 411 entre Chile y Chimborazo',
               style: const pw.TextStyle(
-                        fontSize: 9
+                        fontSize: 7
                       ),),
             ),
             pw.Center(
               child: pw.Text('Edif. C.C Unicentro 2do Piso Of. #211',
               style: const pw.TextStyle(
-                        fontSize: 9
+                        fontSize: 7
                       ),),
             ),
             pw.Center(
               child: pw.Text('Telfs: 6000575-579',
               style: const pw.TextStyle(
-                        fontSize: 9
+                        fontSize: 7
                       ),),
             ),
             pw.Center(
@@ -697,7 +697,7 @@ Future<Uint8List> printReceiptRpt() async {
                       text: 'Web:',
                       style: pw.TextStyle(
                         color: PdfColors.black,
-                        fontSize: 9,
+                        fontSize: 7,
                         fontWeight: FontWeight.bold
                       ),
                     ),
@@ -705,7 +705,7 @@ Future<Uint8List> printReceiptRpt() async {
                       text: ' www.centrodeviajesecuador.com',
                       style: pw.TextStyle(
                         color: PdfColors.blue,
-                        fontSize: 9,
+                        fontSize: 7,
                         fontWeight: FontWeight.bold
                       ),
                     ),
@@ -721,7 +721,7 @@ Future<Uint8List> printReceiptRpt() async {
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.Text('Ecuador', style: const pw.TextStyle(
-                        fontSize: 8
+                        fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               ],
@@ -732,7 +732,7 @@ Future<Uint8List> printReceiptRpt() async {
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.Text('ESTABLECIMIENTO: OFICINA', style: const pw.TextStyle(
-                        fontSize: 8
+                        fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               ],
@@ -743,7 +743,7 @@ Future<Uint8List> printReceiptRpt() async {
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
                 pw.Text('RECIBO # 077872', style: const pw.TextStyle(
-                        fontSize: 8
+                        fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               ],
@@ -752,10 +752,10 @@ Future<Uint8List> printReceiptRpt() async {
             pw.SizedBox(height: 10),
             pw.Divider(),
             pw.Text('Cliente: BENIGNO VICTORIANO GUSTAVO', style: const pw.TextStyle(
-                        fontSize: 8
+                        fontSize: 6
                       ),),
             pw.Text('Fecha: 25/03/2025', style: const pw.TextStyle(
-                        fontSize: 8
+                        fontSize: 6
                       ),),
             pw.SizedBox(height: 10),
             pw.Column(
@@ -763,9 +763,9 @@ Future<Uint8List> printReceiptRpt() async {
                 pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
-                    pw.Text('Rubro', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
-                    pw.Text('Descripción', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
-                    pw.Text('Pagado', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    pw.Text('Rubro', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                    pw.Text('Descripción', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                    pw.Text('Pagado', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
                   ],
                 ),
                 pw.Divider(),
@@ -816,7 +816,7 @@ Future<Uint8List> printReceiptRpt() async {
                         'Firma Autorizada',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 7)),
+                            fontWeight: FontWeight.bold, fontSize: 6)),
                     
                   ]
                 )
@@ -838,7 +838,7 @@ Future<Uint8List> printReceiptRpt() async {
                         'Firma Cliente',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 7)),
+                            fontWeight: FontWeight.bold, fontSize: 6)),
                     
                   ]
                 )
@@ -849,9 +849,9 @@ Future<Uint8List> printReceiptRpt() async {
 
             pw.SizedBox(height: 10),
             pw.Text('Responsable Ingreso: RENDON SUAREZ ANA RAQUEL', style: const pw.TextStyle(
-                        fontSize: 7
+                        fontSize: 6
                       ),),
-            pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+            pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
           ],
         );
       },

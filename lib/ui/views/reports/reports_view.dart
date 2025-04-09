@@ -198,6 +198,7 @@ class PdfView extends StatelessWidget {
             },
           )
           :
+          state.viewPrintReceipts ?
           FutureBuilder(
             future: printReceipt(),
             builder: (context, snapshot) {
@@ -216,6 +217,31 @@ class PdfView extends StatelessWidget {
                     canDebug: false,
                     canChangeOrientation: false,
                     build: (context) => printReceiptRpt(),
+                  );
+                }
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          )
+          :
+          FutureBuilder(
+            future: generateReservation(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      '${snapshot.error} occurred',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  );
+                } else if (snapshot.hasData) {
+                  return PdfPreview(
+                    pdfFileName: "Reservas.pdf",
+                    canChangePageFormat: false,
+                    canDebug: false,
+                    canChangeOrientation: false,
+                    build: (context) => generateReservation(),
                   );
                 }
               }

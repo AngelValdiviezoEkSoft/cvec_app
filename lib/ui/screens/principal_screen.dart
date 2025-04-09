@@ -594,7 +594,18 @@ class PrincipalStScreen extends StatelessWidget {
               SizedBox(width: size.width * 0.01,),
             ],
           ),
-        )
+        ),
+        floatingActionButton: FloatingActionButton(        
+          isExtended: true,
+          enableFeedback: true,
+          elevation: 10,        
+          onPressed: () {
+            launchUrl(Uri.parse('https://wa.me/593979856428?text=Unos%20de%20nuestros%20asesores%20se%20comunicara%20con%20usted'));
+          },        
+          tooltip: 'Agregar',                
+          backgroundColor: Colors.green,
+          child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white,),
+        ),
       ),
     );
   }
@@ -628,7 +639,7 @@ class MenuTile extends StatelessWidget {
           ruta = '${objRouts.newRoutCve}mis-planes';
         }
         if(option.label == locGen!.menuBuyYourLand){//"Compra tu terreno"){
-          ruta = 'https://centrodeviajesecuador.com/plan-terrenos/';          
+          ruta = '${objRouts.newRoutCve}plan-terrenos';          
         }
         if(option.label == locGen!.menuYourPlannedHome){//"Tu casa programada"){
           ruta = '${objRouts.newRoutCve}tu-casa-programada';          

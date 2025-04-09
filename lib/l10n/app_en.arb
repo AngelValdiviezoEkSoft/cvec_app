@@ -2,7 +2,7 @@
     "titulo1Introduccion": "SAFE VACATIONS ALWAYS",    
     "titulo2Introduccion": "¡PLAN AND ACHIEVE THE IMPOSSIBLE!",    
     "hola": "¡Hello, {userName}!",
-    "bienvenidaLogin": "!Welcome back!",
+    "bienvenidaLogin": "Welcome back!",
     "bienvenidaCvec": "WELCOME TO CENTRO",
     "bienvenidaCvec2": " DE VIAJES ECUADOR",    
     "menuDestinations": "Destinations",
@@ -20,5 +20,7 @@
     "menuPrintReceiptsLbl": "Print Receipts",
     "menuSeeReservationsLbl": "See Reservations",
     "menuLogOutLbl": "Logout",
-    "receiptsLbl": "Receipts"
+    "receiptsLbl": "Receipts",
+    "reservationsLbl": "Reservation List",
+    "menuReservationsLbl": "Reservations"
 } 

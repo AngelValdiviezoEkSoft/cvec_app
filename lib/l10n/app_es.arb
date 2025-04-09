@@ -100,5 +100,13 @@
   "receiptsLbl": "Recibos",
   "@receiptsLbl": {
     "description": "Recibos"
+  },
+  "reservationsLbl": "Lista de reservaciones",
+  "@reservationsLbl": {
+    "description": "Lista de reservaciones"
+  },
+  "menuReservationsLbl": "Reservaciones",
+  "@menuReservationsLbl": {
+    "description": "Reservaciones"
   }
 } 

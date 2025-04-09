@@ -211,6 +211,48 @@ class GenericState extends Equatable {
     }
   }
 
+  Future<String> getReservation() async {
+
+    try{
+      /*
+      final resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+      */
+
+      //Map<String, dynamic> dataTmp = json.decode(json.encode(lstFinal));
+
+      final items = <ItemBoton>[
+        //if(objPermisos.mainMenu.itemListLeads)
+        ItemBoton('','','',1, Icons.group_add, 'Reservación 1', 'Detalle de la Reservación 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+          RoutersApp().routReservationView,
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',2, Icons.groups, 'Reservación 2', 'Detalle de la Reservación 2','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+          RoutersApp().routReservationView,
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('','','',3, Icons.calendar_month, 'Reservación 3', 'Detalle de la Reservación 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+          RoutersApp().routReservationView, 
+          () {}
+        ),        
+      ]; 
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
 
   Future<String> waitCarga() async {
     

@@ -406,7 +406,19 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: const ReservationsView(null),
+            child: Column(
+              children: [
+                Container(
+                  width: size.width,
+                  height: size.height * 0.06,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: Text(locGen!.reservationsLbl, style: const TextStyle(fontSize: 25),)
+                ),
+
+                const ReservationsView(null),
+              ],
+            ),
           )
 
           :

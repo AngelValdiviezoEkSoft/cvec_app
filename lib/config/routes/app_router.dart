@@ -57,10 +57,10 @@ final GoRouter appRouter = GoRouter(
       path: objRutas.routPdfView,
       builder: (context, state) => PdfView(
         null,
-        'Estados de cuenta',
-        'Estados de cuenta',
-        'Estados de cuenta',
-        'Estados de cuenta',
+        locGen!.menuAccountStatementLbl,
+        locGen!.menuAccountStatementLbl,
+        locGen!.menuAccountStatementLbl,
+        locGen!.menuAccountStatementLbl,
         true        
       ),
     ),
@@ -68,14 +68,25 @@ final GoRouter appRouter = GoRouter(
       path: objRutas.routPrintReceiptView,
       builder: (context, state) => PdfView(
         null,
-        'Imprimir Recibo',
-        'Imprimir Recibo',
-        'Imprimir Recibo',
-        'Imprimir Recibo',
+        locGen!.menuPrintReceiptsLbl,
+        locGen!.menuPrintReceiptsLbl,
+        locGen!.menuPrintReceiptsLbl,
+        locGen!.menuPrintReceiptsLbl,
         true        
       ),
     ),
-  ],
+    GoRoute(
+      path: objRutas.routReservationView,
+      builder: (context, state) => PdfView(
+        null,
+        locGen!.menuReservationsLbl,
+        locGen!.menuReservationsLbl,
+        locGen!.menuReservationsLbl,
+        locGen!.menuReservationsLbl,
+        true        
+      ),
+    ),
+  ],//
   initialLocation: objRutas.routManualSplashScreen,
 );
 //
