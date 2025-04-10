@@ -86,10 +86,10 @@ class PrincipalStScreen extends StatelessWidget {
 
     if(locGen != null) {
       options = [
-        MenuOption(icon: Icons.place, label: locGen!.menuDestinations, url: "https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PLAN-GOLD1.jpg"),
-        MenuOption(icon: Icons.home, label: locGen!.menuMemberships, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/MENBRES%C3%8DA.jpg'),
-        MenuOption(icon: Icons.web, label: locGen!.menuBuyYourLand, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/PLAN-TERRENO-2048x1536.jpg'),
-        MenuOption(icon: Icons.info, label: locGen!.menuYourPlannedHome, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resizeimage-2-1.jpg'),    
+        MenuOption(icon: Icons.place, label: locGen!.menuDestinations, url: 'https://centroviajes.odoo.com/web/image/240615-c23d9c72/destinos.jpg'),//"https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PLAN-GOLD1.jpg"),
+        MenuOption(icon: Icons.home, label: locGen!.menuMemberships, url: 'https://centroviajes.odoo.com/web/image/218466-2df9071d/1.jpg'),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/MENBRES%C3%8DA.jpg'),
+        MenuOption(icon: Icons.web, label: locGen!.menuBuyYourLand, url: 'https://centroviajes.odoo.com/web/image/218467-d64b14b1/foto%20editada%20casa.jpg '),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/PLAN-TERRENO-2048x1536.jpg'),
+        MenuOption(icon: Icons.info, label: locGen!.menuYourPlannedHome, url: 'https://centroviajes.odoo.com/web/image/218465-1f2a80d8/2.JPG'),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resizeimage-2-1.jpg'),    
         MenuOption(icon: Icons.archive_rounded, label: locGen!.menuMagazine, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2024/01/image-2-980x551.png'),
       ];
     }
