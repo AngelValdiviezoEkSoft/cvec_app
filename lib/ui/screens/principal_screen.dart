@@ -1,12 +1,17 @@
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cve_app/app/app.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 RoutersApp objRouts = RoutersApp();
@@ -94,6 +99,8 @@ class PrincipalStScreen extends StatelessWidget {
       ];
     }
 
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -154,6 +161,24 @@ class PrincipalStScreen extends StatelessWidget {
             ),
           ),
           actions: [
+             DropdownButton<String>(
+              dropdownColor: const Color(0xFF53C9EC),
+              //value: Localizations.localeOf(context).languageCode,
+              value: languageProvider.locale.languageCode,
+              items: const [
+                DropdownMenuItem(value: 'en', child: Text('English', style: TextStyle(color: Colors.white, backgroundColor: Color(0xFF53C9EC), decorationColor: Color(0xFF53C9EC), ),)),
+                DropdownMenuItem(value: 'es', child: Text('Español', style: TextStyle(color: Colors.white, backgroundColor: Color(0xFF53C9EC), decorationColor: Color(0xFF53C9EC),))),
+              ],
+              onChanged: (value) {
+                if (value != null) {
+                  /*
+                  final posicionInicial = BlocProvider.of<LanguageBloc>(context);
+                  posicionInicial.setLanguage(Locale(value));
+                  */
+                  languageProvider.changeLocale(value);
+                }
+              },
+            ),
             InkWell(
               onTap: () async {
                 //openDialer();

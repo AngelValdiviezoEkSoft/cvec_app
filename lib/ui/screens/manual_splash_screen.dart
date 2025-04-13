@@ -23,7 +23,7 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
 
     // Tiempo de espera antes de navegar (en segundos)
     Future.delayed(const Duration(seconds: 7), () {
-      locGen = AppLocalizations.of(context);
+      //locGen = AppLocalizations.of(context);//IDIOMA DEL TELÉFONO
       context.push(objRouter.rutaDefault);
     });
     
@@ -33,6 +33,7 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    locGen = AppLocalizations.of(context);
 
     return Scaffold(
       backgroundColor: Colors.white,

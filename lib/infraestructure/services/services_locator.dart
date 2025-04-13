@@ -7,6 +7,7 @@ void setupServiceLocator() {
   
   //#Region Blocs 
   getIt.registerLazySingleton(() => GenericBloc());
-  getIt.registerLazySingleton(() => AuthBloc());  
-  //#EndRegion
+  getIt.registerLazySingleton(() => AuthBloc());
+  getIt.registerLazySingleton(() => LanguageBloc());
+  //#EndRegion 
 }
