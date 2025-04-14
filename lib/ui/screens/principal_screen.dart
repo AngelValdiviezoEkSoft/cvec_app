@@ -1,7 +1,6 @@
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,11 +9,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cve_app/app/app.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 RoutersApp objRouts = RoutersApp();
+double? x;
+double? y;
 
 class PrincipalScreen extends StatelessWidget {
 
@@ -36,18 +34,32 @@ class PrincipalScreen extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: PrincipalStScreen()
+        home: const ContenidoPrincipalScreen(null)
       ),
     );
   }
 }
 
+class ContenidoPrincipalScreen extends StatefulWidget {
 
-class PrincipalStScreen extends StatelessWidget {
+  const ContenidoPrincipalScreen(Key? key) : super(key: key);
+
+  @override
+  PrincipalStScreen createState() => PrincipalStScreen();
+}
+
+class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
+
+  //Size? size;// = MediaQuery.of(contextPrincipalGen!).size!;
 
   static const platform = MethodChannel('call_channel');
 
   static const platformEmail = MethodChannel('email_channel');
+
+  @override
+  void initState() {    
+    super.initState();
+  }
 
 /*
   void openDialer() async {
@@ -84,7 +96,12 @@ class PrincipalStScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    
+
+    if(x == null && y == null){
+      x = size.width * 0.84;
+      y = size.height * 0.74;
+    }
+
     final objRutas = RoutersApp();
 
     List<MenuOption> options = [];
@@ -94,9 +111,19 @@ class PrincipalStScreen extends StatelessWidget {
         MenuOption(icon: Icons.place, label: locGen!.menuDestinations, url: 'https://centroviajes.odoo.com/web/image/240615-c23d9c72/destinos.jpg'),//"https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PLAN-GOLD1.jpg"),
         MenuOption(icon: Icons.home, label: locGen!.menuMemberships, url: 'https://centroviajes.odoo.com/web/image/218466-2df9071d/1.jpg'),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/MENBRES%C3%8DA.jpg'),
         MenuOption(icon: Icons.web, label: locGen!.menuBuyYourLand, url: 'https://centroviajes.odoo.com/web/image/218467-d64b14b1/foto%20editada%20casa.jpg '),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/12/PLAN-TERRENO-2048x1536.jpg'),
-        MenuOption(icon: Icons.info, label: locGen!.menuYourPlannedHome, url: 'https://centroviajes.odoo.com/web/image/218465-1f2a80d8/2.JPG'),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resizeimage-2-1.jpg'),    
+        MenuOption(icon: Icons.info, label: locGen!.menuYourPlannedHome, url: 'https://centroviajes.odoo.com/web/image/218465-1f2a80d8/2.JPG'),//'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/Webp.net-resize!image-2-1.jpg'),    
         MenuOption(icon: Icons.archive_rounded, label: locGen!.menuMagazine, url: 'https://centrodeviajesecuador.com/wp-content/uploads/2024/01/image-2-980x551.png'),
       ];
+    }
+
+    Widget buildFloatingButton() {
+      return FloatingActionButton(
+        onPressed: () {
+          launchUrl(Uri.parse('https://wa.me/593979856428?text=Unos%20de%20nuestros%20asesores%20se%20comunicara%20con%20usted'));
+        },
+        backgroundColor: Colors.green,
+        child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white,),
+      );
     }
 
     final languageProvider = Provider.of<LanguageProvider>(context);
@@ -104,48 +131,6 @@ class PrincipalStScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        /*
-        drawer: Drawer(
-          backgroundColor: Colors.white,
-          shadowColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Menú Principal',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Inicio'),
-                onTap: () {
-                  Navigator.pop(context); // Cierra el menú
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Configuración'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Cerrar Sesión'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
-        */
         appBar: AppBar(
           backgroundColor: const Color(0xFF53C9EC),
           leading: GestureDetector(
@@ -273,18 +258,21 @@ class PrincipalStScreen extends StatelessWidget {
                 opacity: 0.3
               ),
             ),        
-            child: Column(
+            child: Stack(
+        children:
+            [
+            Column(
               children: [
                 /*
                 Container(
-                  width: size.width,
-                  height: size.height * 0.15,
+                  width: size!.width,
+                  height: size!.height * 0.15,
                   color: Colors.transparent,
                   child: Row(
                     children: [     
                       Container(
-                        width: size.width * 0.35,
-                        height: size.height * 0.04,
+                        width: size!.width * 0.35,
+                        height: size!.height * 0.04,
                         alignment: Alignment.center,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
@@ -295,30 +283,30 @@ class PrincipalStScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: size.width * 0.45,
-                        height: size.height * 0.12,
+                        width: size!.width * 0.45,
+                        height: size!.height * 0.12,
                         color: Colors.transparent,
                         alignment: Alignment.center,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: size.height * 0.02,),
+                            size!dBox(height: size!.height * 0.02,),
       
                             const Text(
                               "Centro de Viajes Ecuador",
-                              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
           
-                            SizedBox(
-                              height: size.height * 0.02,
+                            size!dBox(
+                              height: size!.height * 0.02,
                             ),
-                            SizedBox(
-                              width: size.width * 0.85,
-                              height: size.height * 0.02,
+                            size!dBox(
+                              width: size!.width * 0.85,
+                              height: size!.height * 0.02,
                               child: DefaultTextStyle(
                                 style: const TextStyle(
-                                  fontSize: 20.0,
+                                  fontsize!: 20.0,
                                   fontFamily: 'Canterbury',
                                 ),
                                 child: AnimatedTextKit(
@@ -417,25 +405,25 @@ class PrincipalStScreen extends StatelessWidget {
                             /*
                             const Text(
                               "VACACIONES SEGURAS",
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                              style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: size.height * 0.004),
+                            size!dBox(height: size!.height * 0.004),
                             Text(
                               "SIEMPRE",
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                              style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: size.height * 0.004), // Espacio entre la primera y segunda línea
+                            size!dBox(height: size!.height * 0.004), // Espacio entre la primera y segunda línea
                             Text(
                               "Centro de Viajes Ecuador",
-                              style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
-                            SizedBox(height: size.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
+                            size!dBox(height: size!.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
                             Text(
                               "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
-                              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                              style: TextStyle(fontsize!: 15, fontWeight: FontWeight.w400),
                               textAlign: TextAlign.center,
                             ),
                           */
@@ -461,7 +449,7 @@ class PrincipalStScreen extends StatelessWidget {
                         ),
                         itemCount: options.length,
                         itemBuilder: (context, index) {
-                          return MenuTile(option: options[index]);
+                          return MenuTile(null, option: options[index]);
                         },
                       ),
                     ),
@@ -469,6 +457,24 @@ class PrincipalStScreen extends StatelessWidget {
                 ),
               ],
             ),
+            // Botón flotante movible
+          Positioned(
+            left: x,
+            top: y,
+            child: Draggable(
+              feedback: buildFloatingButton(),
+              childWhenDragging: Container(), // Para que desaparezca mientras se arrastra
+              onDragEnd: (details) {
+                setState(() {
+                  x = details.offset.dx;
+                  y = details.offset.dy - AppBar().preferredSize.height; // compensar la barra de estado
+                });
+              },
+              child: buildFloatingButton(),
+            ),
+          ),
+            ]
+          ),
           ),
         ),
         bottomNavigationBar: Container(
@@ -620,6 +626,7 @@ class PrincipalStScreen extends StatelessWidget {
             ],
           ),
         ),
+        /*
         floatingActionButton: FloatingActionButton(        
           isExtended: true,
           enableFeedback: true,
@@ -631,10 +638,12 @@ class PrincipalStScreen extends StatelessWidget {
           backgroundColor: Colors.green,
           child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white,),
         ),
+        */
       ),
     );
   }
 }
+
 
 class MenuOption {
   final IconData icon;
@@ -647,7 +656,7 @@ class MenuOption {
 class MenuTile extends StatelessWidget {
   final MenuOption option;
 
-  const MenuTile({Key? key, required this.option}) : super(key: key);
+  const MenuTile(Key? key,{required this.option}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
