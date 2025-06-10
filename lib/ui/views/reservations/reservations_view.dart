@@ -1,11 +1,9 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:cve_app/auth_service.dart';
+import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ReservationsView extends StatelessWidget {
@@ -42,7 +40,6 @@ class ReservationsViewSt extends StatelessWidget {
         return FutureBuilder(
           future: state.getReservation(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-
             if(!snapshot.hasData) {
               return Scaffold(
                   backgroundColor: Colors.white,
@@ -73,7 +70,7 @@ class ReservationsViewSt extends StatelessWidget {
                       varIdPosicionMostrar: 0,
                       varEsRelevante: item.esRelevante,
                       varIdNotificacion: item.ordenNot,
-                      varNumIdenti: numeroIdentificacion,
+                      varNumIdenti: item.fechaNotificacion, //se usa para mostrar el campo de "room include"
                       icon: item.icon,
                       texto: item.mensajeNotificacion,
                       texto2: item.mensaje2,

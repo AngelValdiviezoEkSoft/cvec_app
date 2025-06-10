@@ -221,6 +221,7 @@ class ListaNotificaciones extends StatelessWidget {
               Container(
                 width: sizeLstNot.width,
                 height: sizeLstNot.height * 0.13,
+                //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
                 margin: const EdgeInsets.all(3), 
                 decoration: BoxDecoration(
                   boxShadow: <BoxShadow>[
@@ -241,7 +242,8 @@ class ListaNotificaciones extends StatelessWidget {
                   minVerticalPadding: 15,
                   title:  Container( 
                     width: sizeLstNot.width * 0.98,//65,
-                    height: sizeLstNot.height * 0.11,//90,
+                    height: sizeLstNot.height * 0.11,
+                    //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
                     alignment: Alignment.center, 
                     color: Colors.transparent,
                     child: Row(
@@ -272,44 +274,46 @@ class ListaNotificaciones extends StatelessWidget {
                         if(texto2 != null && texto2!.isNotEmpty )
                         Container(
                           width: sizeLstNot.width * 0.72,
-                          height: sizeLstNot.height * 0.11,
+                          height: sizeLstNot.height * 0.3,
                           color: Colors.transparent,
                           alignment: Alignment.centerLeft,
                           child: Column(
                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.55, height: sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
                               
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.55, height: sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
+                              
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
                             ],
                           ),
                         ),
           
-                        if(texto2 != null && texto2!.isNotEmpty )
+                        if(texto != null && texto!.isNotEmpty )
                         GestureDetector(
                           onTap: () {
                             context.push(rutaNavegacionFin!);
                           },
                           child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // El círculo de fondo
-                Container(
-                  width: sizeLstNot.width * 0.15,  // Tamaño del círculo (ajusta según sea necesario)
-                  height: sizeLstNot.height * 0.1,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 224, 232, 235),  // Color de fondo
-                  ),
-                ),
-                // El icono central (usamos un icono de grupo de personas)
-                Icon(
-                  icon, // Icono similar al de personas
-                  size: 30,  // Tamaño del icono
-                  color: Colors.blue[900],  // Color del icono
-                ),
-              ],
-            ),
+                            alignment: Alignment.center,
+                            children: [
+                              // El círculo de fondo
+                              Container(
+                                width: sizeLstNot.width * 0.15,  // Tamaño del círculo (ajusta según sea necesario)
+                                height: sizeLstNot.height * 0.1,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromARGB(255, 224, 232, 235),  // Color de fondo
+                                ),
+                              ),
+                              // El icono central (usamos un icono de grupo de personas)
+                              Icon(
+                                icon, // Icono similar al de personas
+                                size: 30,  // Tamaño del icono
+                                color: Colors.blue[900],  // Color del icono
+                              ),
+                            ],
+                          ),
                           
                         ),
           
@@ -332,7 +336,23 @@ class ListaNotificaciones extends StatelessWidget {
                             )
                           ),
                         ),
-                                   
+                              /*     
+                        if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty )
+                        Container(
+                          width: sizeLstNot.width * 0.72,
+                          height: sizeLstNot.height * 0.11,
+                          color: Colors.transparent,
+                          alignment: Alignment.centerLeft,
+                          child: Column(
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+                            children: [
+                              
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.55, height: sizeLstNot.height * 0.05,child: AutoSizeText( varNumIdentifLst!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
+                            ],
+                          ),
+                        ),
+                        */
+          
                       ],
                     ),                
                   ),

@@ -17,6 +17,9 @@ class RoutersApp{
   String routPrintReceiptView = '/routPrintReceiptView';
   String routReservationView = '/routReservationView';
 
+  String rutaTermCond = '/TerminosCondiciones';
+  String rutaScanQr = '/scanQr';
+
   //imágenes 
   String rutaImages = 'assets/images/';
   String rutaIcons = 'assets/icons/';

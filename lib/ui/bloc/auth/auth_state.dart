@@ -25,7 +25,7 @@ abstract class AuthState extends Equatable {
         }        
       }
       
-      return rspFinal; 
+      return rspFinal;
     }
     catch(ex) {
       return '';

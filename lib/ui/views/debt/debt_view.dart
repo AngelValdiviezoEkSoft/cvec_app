@@ -1,7 +1,6 @@
-import 'package:cve_app/config/config.dart';
+
 import 'package:flutter/material.dart';
-import 'package:cve_app/auth_service.dart';
-import 'package:go_router/go_router.dart';
+import 'package:cve_app/auth_services.dart';
 import 'package:provider/provider.dart';
 
 class DebtView extends StatelessWidget {
@@ -33,7 +32,7 @@ class DebtViewSt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final authService = Provider.of<AuthService>(context);
+    //final authService = Provider.of<AuthService>(context);
     //final objRutas = RoutersApp();
 
     return Container(

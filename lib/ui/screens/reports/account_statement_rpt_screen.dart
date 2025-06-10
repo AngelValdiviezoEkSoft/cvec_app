@@ -9,7 +9,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
 
 bool varTieneCorreo = false;
 String rolPagoPeriodoGen = '';

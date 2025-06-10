@@ -11,3 +11,9 @@ export 'package:cve_app/ui/screens/home/home.dart';
 export 'package:cve_app/ui/screens/navigation/navigation.dart';
 
 export 'package:cve_app/ui/screens/user/user.dart';
+
+export 'package:cve_app/ui/screens/qr/qr.dart';
+
+export 'package:cve_app/ui/screens/terms_conditions/terms_conditions.dart';
+
+export 'package:cve_app/ui/screens/welcome/welcome.dart';

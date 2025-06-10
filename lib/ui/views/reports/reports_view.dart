@@ -1,9 +1,11 @@
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/bloc/bloc.dart';
 import 'package:cve_app/ui/screens/reports/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
 
 //ignore: must_be_immutable
@@ -33,6 +35,49 @@ class PdfView extends StatelessWidget {
   }
 
   AccountStatementModel rolDePago = AccountStatementModel();
+
+  //Reservaciones
+  Future<dynamic> reservations() async {
+    try {
+      var tst = await ReservationsService().getReservations();
+      
+      final ts = 0;
+      /*
+      final json = UsuarioTypeResponseRpt.fromJson(response.body);
+      invoice = json.data;
+      if (json.succeeded) {
+        Fluttertoast.showToast(
+            msg: json.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        return json;
+      } else {
+        Fluttertoast.showToast(
+            msg: json.message,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+      */
+    } on Exception catch (error) {
+      Fluttertoast.showToast(
+          msg: '$error',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 5,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
 
   //method to make http request
   Future<dynamic> estadoCuentas() async {

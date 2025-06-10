@@ -214,14 +214,24 @@ class GenericState extends Equatable {
   Future<String> getReservation() async {
 
     try{
-      /*
-      final resp = await storage.read(key: 'RespuestaLogin') ?? '';
+      List<Booking>? rsp = await ReservationsService().getReservations();
 
-      final data = json.decode(resp);
-      */
+      final items = <ItemBoton>[];
 
-      //Map<String, dynamic> dataTmp = json.decode(json.encode(lstFinal));
+      if(rsp != null && rsp.isNotEmpty){
+        for(int i = 0; i < rsp.length; i++){
+          items.add(
+            ItemBoton('','','',1, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+              RoutersApp().routReservationView,
+              () {
+                
+              }
+            ),
+          );
+        }
+      }
 
+/*
       final items = <ItemBoton>[
         //if(objPermisos.mainMenu.itemListLeads)
         ItemBoton('','','',1, Icons.group_add, 'Reservación 1', 'Detalle de la Reservación 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
@@ -243,6 +253,7 @@ class GenericState extends Equatable {
           () {}
         ),        
       ]; 
+      */
 
       final jsonString = serializeItemBotonMenuList(items);
 

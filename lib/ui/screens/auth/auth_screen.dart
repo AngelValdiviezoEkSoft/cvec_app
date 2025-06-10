@@ -1,9 +1,19 @@
+import 'dart:convert';
+
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:cve_app/auth_service.dart';
+import 'package:cve_app/auth_services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
+//export 'package:cve_app/infraestructure/services/services.dart';
+
+TextEditingController userTxt = TextEditingController();
+TextEditingController passWordTxt = TextEditingController();
 
 class AuthScreen extends StatelessWidget {
 
@@ -56,7 +66,7 @@ class AuthScreenSt extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
-    final objRutas = RoutersApp();
+    //final objRutas = RoutersApp();
 
     return Container(
       width: size.width,//double.infinity,
@@ -94,6 +104,7 @@ class AuthScreenSt extends StatelessWidget {
             TextFormField(
               style: const TextStyle(color: Colors.white),
               autocorrect: false,
+              controller: userTxt,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: '',
@@ -122,7 +133,7 @@ class AuthScreenSt extends StatelessWidget {
             TextField(
               style: const TextStyle(color: Colors.white),
                   obscureText: authService.varIsOscured,
-                  //controller: passWordTxt,
+                  controller: passWordTxt,
                   decoration: InputDecoration(
                     labelStyle: const TextStyle(color: Colors.white),
                     labelText: locGen!.passwordLbl,
@@ -156,8 +167,232 @@ class AuthScreenSt extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 115.0),
               child: ElevatedButton(
-                onPressed: () {
-                  context.push(objRutas.rutaPrincipalUser);
+                onPressed: () async {
+                  
+                  if(userTxt.text.isEmpty || passWordTxt.text.isEmpty){
+
+                    showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ContentAlertDialog(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          onPressedCont: () {
+                            Navigator.of(context).pop();
+                          },
+                          tipoAlerta: AlertsType().alertAccion,
+                          numLineasTitulo: 2,
+                          numLineasMensaje: 2,
+                          titulo: 'Error',
+                          mensajeAlerta: 'Ingrese sus credenciales.'
+                        );
+                      },
+                    );
+
+                    return;
+                  }
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => SimpleDialog(
+                      alignment: Alignment.center,
+                      children: [
+                        SimpleDialogLoad(
+                          null,
+                          mensajeMostrar: 'Estamos validando',
+                          mensajeMostrarDialogCargando: 'tus credenciales',
+                        ),
+                      ]
+                    ),
+                  );
+
+                  const storage = FlutterSecureStorage();
+                  final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
+  
+                  if(objStr.isNotEmpty){
+
+                    var obj = RegisterDeviceResponseModel.fromJson(objStr);
+
+                    AuthRequest objAuthRequest  = AuthRequest(
+                      db: obj.result.database,
+                      login: userTxt.text,
+                      password: passWordTxt.text
+                    );
+
+                    try {
+                      
+                      var resp = await AuthServices().login(objAuthRequest);
+
+                      userTxt = TextEditingController();
+                      passWordTxt = TextEditingController();
+
+                      if(resp == 'NI'){
+                        //ignore: use_build_context_synchronously
+                        context.pop();
+
+                        showDialog(
+                          //ignore: use_build_context_synchronously
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Container(
+                                color: Colors.transparent,
+                                height: size.height * 0.22,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    
+                                    Container(
+                                      color: Colors.transparent,
+                                      height: size.height * 0.1,
+                                      child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
+                                    ),
+
+                                    Container(
+                                      color: Colors.transparent,
+                                      width: size.width * 0.95,
+                                      height: size.height * 0.11,
+                                      alignment: Alignment.center,
+                                      child: const AutoSizeText(
+                                        'No tiene acceso a internet',
+                                        maxLines: 2,
+                                        minFontSize: 2,
+                                      ),
+                                    ),
+                                    
+                                  ],
+                                )
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      
+                        return;
+                      }
+                    
+                      final data = json.decode(resp);
+
+                      final objError = data['error'];
+                      
+                      //ignore: use_build_context_synchronously
+                      context.pop();
+
+                      if(objError == null) {
+                        //ignore: use_build_context_synchronously
+                        context.push(objRutas.rutaPrincipalUser);
+                      } else {
+                        final msmError = data['error']['data']['name'];
+
+                        showDialog(
+                          //ignore: use_build_context_synchronously
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Container(
+                                color: Colors.transparent,
+                                height: size.height * 0.22,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    
+                                    Container(
+                                      color: Colors.transparent,
+                                      height: size.height * 0.1,
+                                      child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
+                                    ),
+
+                                    Container(
+                                      color: Colors.transparent,
+                                      width: size.width * 0.95,
+                                      height: size.height * 0.11,
+                                      alignment: Alignment.center,
+                                      child: AutoSizeText(
+                                        msmError,
+                                        maxLines: 2,
+                                        minFontSize: 4,
+                                      ),
+                                    ),
+                                    
+                                  ],
+                                )
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    // Acción para solicitar revisión
+                                    Navigator.of(context).pop();
+                                    //Navigator.of(context).pop();
+                                  },
+                                  child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    }
+                    catch(ex){
+                      //ignore: use_build_context_synchronously
+                      context.pop();
+
+                      showDialog(
+                        //ignore: use_build_context_synchronously
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Container(
+                              color: Colors.transparent,
+                              height: size.height * 0.22,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  
+                                  Container(
+                                    color: Colors.transparent,
+                                    height: size.height * 0.1,
+                                    child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
+                                  ),
+
+                                  Container(
+                                    color: Colors.transparent,
+                                    width: size.width * 0.95,
+                                    height: size.height * 0.11,
+                                    alignment: Alignment.center,
+                                    child: AutoSizeText(
+                                      ex.toString(),
+                                      maxLines: 2,
+                                      minFontSize: 4,
+                                    ),
+                                  ),
+                                  
+                                ],
+                              )
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                              ),
+                            ],
+                          );
+                        },
+                      );                        
+                    }
+                  }
+                    
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

@@ -1,4 +1,5 @@
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/services.dart';
 RoutersApp objRouts = RoutersApp();
 double? x;
 double? y;
+DonePermissions? objPermisosGen;
 
 class PrincipalScreen extends StatelessWidget {
 
@@ -60,17 +62,6 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
   void initState() {    
     super.initState();
   }
-
-/*
-  void openDialer() async {
-    final Uri dialerUri = Uri.parse("tel: +593979856428");
-    if (await canLaunchUrl(dialerUri)) {
-      await launchUrl(dialerUri);
-    } else {
-      //print("No se pudo abrir el teclado de llamadas.");
-    }
-  }
-  */
 
   void makePhoneCall() async {
     
@@ -259,222 +250,222 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
               ),
             ),        
             child: Stack(
-        children:
-            [
-            Column(
-              children: [
-                /*
-                Container(
-                  width: size!.width,
-                  height: size!.height * 0.15,
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [     
-                      Container(
-                        width: size!.width * 0.35,
-                        height: size!.height * 0.04,
-                        alignment: Alignment.center,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
-                            fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor
-                            opacity: 0.1
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: size!.width * 0.45,
-                        height: size!.height * 0.12,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            size!dBox(height: size!.height * 0.02,),
-      
-                            const Text(
-                              "Centro de Viajes Ecuador",
-                              style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-          
-                            size!dBox(
-                              height: size!.height * 0.02,
-                            ),
-                            size!dBox(
-                              width: size!.width * 0.85,
-                              height: size!.height * 0.02,
-                              child: DefaultTextStyle(
-                                style: const TextStyle(
-                                  fontsize!: 20.0,
-                                  fontFamily: 'Canterbury',
-                                ),
-                                child: AnimatedTextKit(
-                                  repeatForever: true,
-                                  animatedTexts: [
-                                    ScaleAnimatedText('SIEMPRE', textStyle: const TextStyle(color: Colors.black)),
-                                    ScaleAnimatedText('VACACIONES SEGURAS', textStyle: const TextStyle(color: Colors.black)),
-                                    ScaleAnimatedText('¡PLANIFICA Y LOGRA LO IMPOSIBLE!', textStyle: const TextStyle(color: Colors.black)),
-                                  ],
-                                  onTap: () {
-                                  },
-                                ),
+              children:
+              [
+                Column(
+                  children: [
+                    /*
+                    Container(
+                      width: size!.width,
+                      height: size!.height * 0.15,
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [     
+                          Container(
+                            width: size!.width * 0.35,
+                            height: size!.height * 0.04,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
+                                fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor
+                                opacity: 0.1
                               ),
-                            )
-                          ],
-                        )
-                        
-                      ),
-                    ],
-                  ),
-                ),
-                */
-                Container(
-                  width: size.width,
-                  height: size.height * 0.15,
-                  color: Colors.transparent,
-                  alignment: Alignment.center,
-                  child: Stack(
-                    children: [     
-                      Positioned(
-                        top: size.height * 0.03,
-                        left: size.width * 0.235,
-                        child: Container(
-                          width: size.width * 0.35,
-                          height: size.height * 0.09,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/logo_app_pequenio.png'),//Image(),//NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
-                              fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor
-                              opacity: 0.1
                             ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        width: size.width * 0.87,
-                        height: size.height * 0.12,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: size.height * 0.02,),
-      
-                            Container(
-                              color: Colors.transparent,
-                              width: size.width * 0.75,
-                              height: size.height * 0.03,
-                              child: const Text(
-                                "Centro de Viajes Ecuador",
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+                          Container(
+                            width: size!.width * 0.45,
+                            height: size!.height * 0.12,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                size!dBox(height: size!.height * 0.02,),
           
-                            SizedBox(
-                              height: size.height * 0.02,
-                            ),
-      
-                            Container(
-                              color: Colors.transparent,
-                              width: size.width * 0.99,
-                              height: size.height * 0.035,
-                              alignment: Alignment.center,
-                              child: DefaultTextStyle(
-                                style: const TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: 'Canterbury',
+                                const Text(
+                                  "Centro de Viajes Ecuador",
+                                  style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
                                 ),
-                                child: AnimatedTextKit(
-                                  repeatForever: true,
-                                  
-                                  pause: const Duration(microseconds: 1000),
-      
-                                  animatedTexts: [
-                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: const TextStyle(color: Colors.black)),
-                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: const TextStyle(color: Colors.black)),
-                                  ],
-                                  onTap: () {
-                                  },
+              
+                                size!dBox(
+                                  height: size!.height * 0.02,
                                 ),
-                              ),
+                                size!dBox(
+                                  width: size!.width * 0.85,
+                                  height: size!.height * 0.02,
+                                  child: DefaultTextStyle(
+                                    style: const TextStyle(
+                                      fontsize!: 20.0,
+                                      fontFamily: 'Canterbury',
+                                    ),
+                                    child: AnimatedTextKit(
+                                      repeatForever: true,
+                                      animatedTexts: [
+                                        ScaleAnimatedText('SIEMPRE', textStyle: const TextStyle(color: Colors.black)),
+                                        ScaleAnimatedText('VACACIONES SEGURAS', textStyle: const TextStyle(color: Colors.black)),
+                                        ScaleAnimatedText('¡PLANIFICA Y LOGRA LO IMPOSIBLE!', textStyle: const TextStyle(color: Colors.black)),
+                                      ],
+                                      onTap: () {
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
                             )
                             
-                            /*
-                            const Text(
-                              "VACACIONES SEGURAS",
-                              style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            ),
-                            size!dBox(height: size!.height * 0.004),
-                            Text(
-                              "SIEMPRE",
-                              style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            ),
-                            size!dBox(height: size!.height * 0.004), // Espacio entre la primera y segunda línea
-                            Text(
-                              "Centro de Viajes Ecuador",
-                              style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                            size!dBox(height: size!.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
-                            Text(
-                              "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
-                              style: TextStyle(fontsize!: 15, fontWeight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            ),
-                          */
-                          ],
-                        )
-                        
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: size.width,
-                  height: size.height * 0.68,
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(
-                      child: GridView.builder(              
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 20,                
-                        ),
-                        itemCount: options.length,
-                        itemBuilder: (context, index) {
-                          return MenuTile(null, option: options[index]);
-                        },
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                    */
+                    Container(
+                      width: size.width,
+                      height: size.height * 0.15,
+                      color: Colors.transparent,
+                      alignment: Alignment.center,
+                      child: Stack(
+                        children: [     
+                          Positioned(
+                            top: size.height * 0.03,
+                            left: size.width * 0.235,
+                            child: Container(
+                              width: size.width * 0.35,
+                              height: size.height * 0.09,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/logo_app_pequenio.png'),//Image(),//NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
+                                  fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor
+                                  opacity: 0.1
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: size.width * 0.87,
+                            height: size.height * 0.12,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height: size.height * 0.02,),
+          
+                                Container(
+                                  color: Colors.transparent,
+                                  width: size.width * 0.75,
+                                  height: size.height * 0.03,
+                                  child: const Text(
+                                    "Centro de Viajes Ecuador",
+                                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+              
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
+          
+                                Container(
+                                  color: Colors.transparent,
+                                  width: size.width * 0.99,
+                                  height: size.height * 0.035,
+                                  alignment: Alignment.center,
+                                  child: DefaultTextStyle(
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: 'Canterbury',
+                                    ),
+                                    child: AnimatedTextKit(
+                                      repeatForever: true,
+                                      
+                                      pause: const Duration(microseconds: 1000),
+          
+                                      animatedTexts: [
+                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: const TextStyle(color: Colors.black)),
+                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: const TextStyle(color: Colors.black)),
+                                      ],
+                                      onTap: () {
+                                      },
+                                    ),
+                                  ),
+                                )
+                                
+                                /*
+                                const Text(
+                                  "VACACIONES SEGURAS",
+                                  style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.center,
+                                ),
+                                size!dBox(height: size!.height * 0.004),
+                                Text(
+                                  "SIEMPRE",
+                                  style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.center,
+                                ),
+                                size!dBox(height: size!.height * 0.004), // Espacio entre la primera y segunda línea
+                                Text(
+                                  "Centro de Viajes Ecuador",
+                                  style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                                size!dBox(height: size!.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
+                                Text(
+                                  "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
+                                  style: TextStyle(fontsize!: 15, fontWeight: FontWeight.w400),
+                                  textAlign: TextAlign.center,
+                                ),
+                              */
+                              ],
+                            )
+                            
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: size.width,
+                      height: size.height * 0.68,
+                      color: Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: GridView.builder(              
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 20,                
+                            ),
+                            itemCount: options.length,
+                            itemBuilder: (context, index) {
+                              return MenuTile(null, option: options[index]);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+                // Botón flotante movible
+                Positioned(
+              left: x,
+              top: y,
+              child: Draggable(
+                feedback: buildFloatingButton(),
+                childWhenDragging: Container(), // Para que desaparezca mientras se arrastra
+                onDragEnd: (details) {
+                  setState(() {
+                    x = details.offset.dx;
+                    y = details.offset.dy - AppBar().preferredSize.height; // compensar la barra de estado
+                  });
+                },
+                child: buildFloatingButton(),
+              ),
             ),
-            // Botón flotante movible
-          Positioned(
-            left: x,
-            top: y,
-            child: Draggable(
-              feedback: buildFloatingButton(),
-              childWhenDragging: Container(), // Para que desaparezca mientras se arrastra
-              onDragEnd: (details) {
-                setState(() {
-                  x = details.offset.dx;
-                  y = details.offset.dy - AppBar().preferredSize.height; // compensar la barra de estado
-                });
-              },
-              child: buildFloatingButton(),
+              ]
             ),
-          ),
-            ]
-          ),
           ),
         ),
         bottomNavigationBar: Container(
@@ -626,19 +617,6 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
             ],
           ),
         ),
-        /*
-        floatingActionButton: FloatingActionButton(        
-          isExtended: true,
-          enableFeedback: true,
-          elevation: 10,        
-          onPressed: () {
-            launchUrl(Uri.parse('https://wa.me/593979856428?text=Unos%20de%20nuestros%20asesores%20se%20comunicara%20con%20usted'));
-          },        
-          tooltip: 'Agregar',                
-          backgroundColor: Colors.green,
-          child: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white,),
-        ),
-        */
       ),
     );
   }

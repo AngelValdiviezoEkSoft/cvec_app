@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cve_app/domain/models/models.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:cve_app/auth_service.dart';
+import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
