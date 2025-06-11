@@ -25,6 +25,7 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   bool viewSendDeposits = false;
   bool viewPrintReceipts = false;
   bool viewViewReservations = false;
+  bool viewWebSite = false;
 
   GenericBloc() : super(const GenericState(
     positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, 
@@ -40,7 +41,8 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);
     on<OnShowViewAccountStatementEvent>(_onInitViewAccountStatement);//  
     on<OnShowViewDebtsEvent>(_onInitViewViewDebts);//
-    on<OnShowViewSendDepositsEvent>(_onInitViewSendDeposits);//  
+    on<OnShowViewSendDepositsEvent>(_onInitViewSendDeposits);//
+    on<OnShowViewWebSiteEvent>(_onInitViewWebSite);//
     on<OnViewPrintReceiptsEvent>(_onInitViewPrintReceipts);//  
     on<OnViewReservationsEvent>(_onInitViewReservation);//      
   }
@@ -76,6 +78,9 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     ));
     add( OnShowViewSendDepositsEvent(
        viewSendDeposits
+    ));
+    add( OnShowViewWebSiteEvent(
+       viewWebSite
     ));
     add( OnViewPrintReceiptsEvent(
        viewPrintReceipts
@@ -127,6 +132,10 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
 
   void _onInitViewSendDeposits( OnShowViewSendDepositsEvent event, Emitter<GenericState> emit ) {
     emit( state.copyWith( viewSendDeposits: viewSendDeposits ) );
+  }
+
+  void _onInitViewWebSite( OnShowViewWebSiteEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewWebSite: viewWebSite ) );
   }
 
   void _onInitViewPrintReceipts( OnViewPrintReceiptsEvent event, Emitter<GenericState> emit ) {
@@ -195,6 +204,11 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   void setShowViewSendDeposits(bool varheightModalPlanAct) {
     viewSendDeposits = varheightModalPlanAct;
     add(OnShowViewSendDepositsEvent(viewSendDeposits));
+  }
+
+  void setShowViewWebSite(bool varheightModalPlanAct) {
+    viewWebSite = varheightModalPlanAct;
+    add(OnShowViewWebSiteEvent(viewWebSite));
   }
 
   void setShowViewPrintRecipts(bool varheightModalPlanAct) {

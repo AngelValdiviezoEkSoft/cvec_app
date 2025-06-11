@@ -1,5 +1,6 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
@@ -213,7 +214,13 @@ class ListaNotificaciones extends StatelessWidget {
     width: sizeLstNot.width,
     //height: sizeLstNot.height * 0.2,
     child: GestureDetector(
-          onTap: () {            
+          onTap: () async {
+            const storage = FlutterSecureStorage();
+
+            await storage.write(key: 'IdReservaciones', value: '');
+            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
+            
+            //ignore: use_build_context_synchronously
             context.push(rutaNavegacionFin!);            
           },
           child: Column(
@@ -278,12 +285,14 @@ class ListaNotificaciones extends StatelessWidget {
                           color: Colors.transparent,
                           alignment: Alignment.centerLeft,
                           child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              if(texto != null && texto!.isNotEmpty)
                               Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
                               
+                              if(texto2 != null && texto2!.isNotEmpty)
                               Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
                               
+                              if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty)
                               Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
                             ],
                           ),
@@ -336,23 +345,7 @@ class ListaNotificaciones extends StatelessWidget {
                             )
                           ),
                         ),
-                              /*     
-                        if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty )
-                        Container(
-                          width: sizeLstNot.width * 0.72,
-                          height: sizeLstNot.height * 0.11,
-                          color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-                            children: [
-                              
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.55, height: sizeLstNot.height * 0.05,child: AutoSizeText( varNumIdentifLst!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                            ],
-                          ),
-                        ),
-                        */
-          
+                        
                       ],
                     ),                
                   ),

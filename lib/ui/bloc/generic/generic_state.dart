@@ -15,6 +15,7 @@ class GenericState extends Equatable {
   final bool viewAccountStatement;
   final bool viewViewDebts;
   final bool viewSendDeposits;
+  final bool viewWebSite;
   final bool viewPrintReceipts;
   final bool viewViewReservations;
 
@@ -31,6 +32,7 @@ class GenericState extends Equatable {
       viewAccountStatement = false,
       viewViewDebts = false,
       viewSendDeposits = false,
+      viewWebSite = false,
       viewPrintReceipts = false,
       viewViewReservations = false
     } 
@@ -45,6 +47,7 @@ class GenericState extends Equatable {
       viewAccountStatement = viewAccountStatement ?? false,
       viewViewDebts = viewViewDebts ?? false,
       viewSendDeposits = viewSendDeposits ?? false,
+      viewWebSite = viewWebSite ?? false,
       viewPrintReceipts = viewPrintReceipts ?? false,
       viewViewReservations = viewViewReservations ?? false;
   
@@ -62,12 +65,14 @@ class GenericState extends Equatable {
     bool? viewViewDebts,
     bool? viewSendDeposits,
     bool? viewPrintReceipts,
-    bool? viewViewReservations
+    bool? viewViewReservations,
+    bool? viewWebSite
   }) 
   => GenericState(
     viewViewReservations: viewViewReservations ?? this.viewViewReservations,
     viewPrintReceipts: viewPrintReceipts ?? this.viewPrintReceipts,
     viewSendDeposits: viewSendDeposits ?? this.viewSendDeposits,
+    viewWebSite: viewWebSite ?? this.viewWebSite,
     viewViewDebts: viewViewDebts ?? this.viewViewDebts,
     viewAccountStatement: viewAccountStatement ?? this.viewAccountStatement,
     positionMenu: positionMenu ?? this.positionMenu,
@@ -82,7 +87,7 @@ class GenericState extends Equatable {
 
 
   @override
-  List<Object> get props => [viewAccountStatement,viewViewDebts,viewSendDeposits,viewPrintReceipts,viewViewReservations,positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct];
+  List<Object> get props => [viewAccountStatement,viewViewDebts,viewSendDeposits, viewWebSite,viewPrintReceipts,viewViewReservations,positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct];
 
   Future<String> readPrincipalPage() async {
 
@@ -221,7 +226,7 @@ class GenericState extends Equatable {
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
           items.add(
-            ItemBoton('','','',1, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].id, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routReservationView,
               () {
                 
@@ -264,6 +269,34 @@ class GenericState extends Equatable {
     }
   }
 
+  Future<String> getReceipts() async {
+
+    try{
+      List<Booking>? rsp = await ReceiptsService().getReceipts();
+
+      final items = <ItemBoton>[];
+
+      if(rsp != null && rsp.isNotEmpty){
+        for(int i = 0; i < rsp.length; i++){
+          items.add(
+            ItemBoton('','','',rsp[i].id, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+              RoutersApp().routReservationView,
+              () {
+                
+              }
+            ),
+          );
+        }
+      }
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
 
   Future<String> waitCarga() async {
     

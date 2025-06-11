@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-const storageProspecto = FlutterSecureStorage();
-AlertsMessages objMensajesProspectoService = AlertsMessages();
-ResponseValidation objResponseValidationService = ResponseValidation();
+const storageReceipts = FlutterSecureStorage();
+AlertsMessages objMessageReceipt = AlertsMessages();
+//ResponseValidation objResponseValidationService = ResponseValidation();
 
-class ReservationsService extends ChangeNotifier{
+class ReceiptsService extends ChangeNotifier{
 
   final String endPoint = StringConection().apiEndpoint;
 
@@ -25,15 +25,15 @@ class ReservationsService extends ChangeNotifier{
     return formKey.currentState?.validate() ?? false;
   }
 
-  Future<List<Booking>?> getReservations() async {
+  Future<List<Booking>?> getReceipts() async {
     try{
 
-      var codImei = await storageProspecto.read(key: 'codImei') ?? '';
+      var codImei = await storageReceipts.read(key: 'codImei') ?? '';
 
-      var objReg = await storageProspecto.read(key: 'RespuestaRegistro') ?? '';
+      var objReg = await storageReceipts.read(key: 'RespuestaRegistro') ?? '';
       var obj = RegisterDeviceResponseModel.fromJson(objReg);
 
-      var objLog = await storageProspecto.read(key: 'RespuestaLogin') ?? '';
+      var objLog = await storageReceipts.read(key: 'RespuestaLogin') ?? '';
       var objLogDecode = json.decode(objLog);
 
       List<MultiModel> lstMultiModel = [];
@@ -57,10 +57,10 @@ class ReservationsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.contract.bookings");
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel");
 
-      await storage.write(key: 'ListadoReservaciones', value: '');
-      await storage.write(key: 'ListadoReservaciones', value: objRsp);
+      await storage.write(key: 'ListadoRecibos', value: '');
+      await storage.write(key: 'ListadoRecibos', value: objRsp);
 
       final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
 
@@ -70,7 +70,7 @@ class ReservationsService extends ChangeNotifier{
     }
     on SocketException catch (_) {
       Fluttertoast.showToast(
-        msg: objMensajesProspectoService.mensajeFallaInternet,
+        msg: objMessageReceipt.mensajeFallaInternet,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 5,

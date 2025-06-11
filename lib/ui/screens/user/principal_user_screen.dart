@@ -129,7 +129,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
-                    
+                    gnrBloc.setShowViewWebSite(false);
+
                     Navigator.pop(context); // Cierra el menú 
                   },
                 ),
@@ -142,6 +143,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(false);
                     
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -155,6 +157,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(true);
+                    gnrBloc.setShowViewWebSite(false);
                     
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -168,6 +171,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(true);
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(false);
 
                     Navigator.pop(context);
                   },
@@ -181,10 +185,26 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(true);
                     gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(false);
 
                     Navigator.pop(context);
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.web_rounded),
+                  title: Text(locGen!.menuWebSiteLbl),
+                  onTap: () {
+                    gnrBloc.setShowViewAccountStatementEvent(false);
+                    gnrBloc.setShowViewDebts(false);
+                    gnrBloc.setShowViewPrintRecipts(false);
+                    gnrBloc.setShowViewReservetions(false);
+                    gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(true);
+
+                    Navigator.pop(context);
+                  },
+                ),
+                
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(locGen!.menuLogOutLbl),
@@ -195,6 +215,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewPrintRecipts(false);
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(false);
                     
                     Navigator.pop(context); // Cierra el menú 
 
@@ -207,7 +228,7 @@ class PrincipalClientStScreen extends StatelessWidget {
           body: 
           !state.viewAccountStatement && !state.viewPrintReceipts 
           && !state.viewSendDeposits && !state.viewViewDebts && 
-          !state.viewViewReservations ?
+          !state.viewViewReservations && !state.viewWebSite ?
           
           SingleChildScrollView(
             child: Container(        
@@ -420,6 +441,31 @@ class PrincipalClientStScreen extends StatelessWidget {
               ],
             ),
           )
+
+
+          :
+
+          state.viewWebSite ?
+          Container(
+            width: size.width,
+            height: size.height,
+            color: Colors.transparent,
+            child: Column(
+              children: [
+
+                Container(
+                  width: size.width,
+                  height: size.height * 0.06,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: Text(locGen!.menuWebSiteLbl, style: const TextStyle(fontSize: 25),)
+                ),
+
+                const WebSiteView(null),
+              ],
+            ),
+          )
+
 
           :
 

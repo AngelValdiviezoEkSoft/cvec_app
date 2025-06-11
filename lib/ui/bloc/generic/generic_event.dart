@@ -68,6 +68,11 @@ class OnShowViewSendDepositsEvent extends GenericEvent {
   const OnShowViewSendDepositsEvent(this.showIt);
 }
 
+class OnShowViewWebSiteEvent extends GenericEvent {
+  final bool showIt;
+  const OnShowViewWebSiteEvent(this.showIt);
+}
+
 class OnViewPrintReceiptsEvent extends GenericEvent {
   final bool showIt;
   const OnViewPrintReceiptsEvent(this.showIt);

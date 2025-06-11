@@ -93,6 +93,10 @@
   "@menuSeeReservationsLbl": {
     "description": "Ver reservas"
   },
+  "menuWebSiteLbl": "Ver sitio web",
+  "@menuWebSiteLbl": {
+    "description": "Ver sitio web"
+  },
   "menuLogOutLbl": "Cerrar Sesión",
   "@menuLogOutLbl": {
     "description": "Cerrar Sesión"

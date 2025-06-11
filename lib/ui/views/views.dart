@@ -9,3 +9,5 @@ export 'package:cve_app/ui/views/print_receipt/print_receipt.dart';
 export 'package:cve_app/ui/views/reservations/reservations.dart';
 
 export 'package:cve_app/ui/views/reports/reports.dart';
+
+export 'package:cve_app/ui/views/web_site/web_site.dart';

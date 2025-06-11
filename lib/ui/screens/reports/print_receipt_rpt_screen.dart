@@ -995,7 +995,7 @@ Future<Uint8List> printReceiptRpt() async {
                       ),),
             ),
             pw.Center(
-              child: //pw.Text('Web: www.centrodeviajesecuador.com'),
+              child: 
                 RichText(
                 text: TextSpan(
                   children: [
@@ -1070,11 +1070,11 @@ Future<Uint8List> printReceiptRpt() async {
             // Tabla agrupada
             pw.Table(
               columnWidths: {
-                0: pw.FlexColumnWidth(3),
-                1: pw.FlexColumnWidth(4),
-                2: pw.FlexColumnWidth(2),
+                0: const pw.FlexColumnWidth(3),
+                1: const pw.FlexColumnWidth(4),
+                2: const pw.FlexColumnWidth(2),
               },
-              border: pw.TableBorder.all(),
+              //border: pw.TableBorder.all(),
               children: [
                 pw.TableRow(
                   children: [
@@ -1118,14 +1118,7 @@ Future<Uint8List> printReceiptRpt() async {
                             pw.Padding(
                               padding: const pw.EdgeInsets.all(4),
                               child: pw.Text(item.rubro, style: const pw.TextStyle(fontSize: 6)),
-                            ),
-                            /*
-                            if(item.rubro.isNotEmpty)
-                            pw.Padding(
-                              padding: const pw.EdgeInsets.all(4),
-                              child: pw.Text(item.rubro),
-                            ),
-                            */
+                            ),                            
                             if(item.rubro.isNotEmpty)
                             pw.Padding(
                               padding: const pw.EdgeInsets.all(4),
@@ -1143,10 +1136,126 @@ Future<Uint8List> printReceiptRpt() async {
               ],
             ),
 
+            pw.Divider(),
             pw.SizedBox(height: 10),
-            pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),
-            pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
-            pw.Text('Total: \$200.00', style: const TextStyle(fontSize: 7)),
+            pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),            
+            pw.SizedBox(height: 2),
+            /////////
+            //pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
+            //pw.Text('Total: \$200.00', style: const TextStyle(fontSize: 7)),
+            /////////
+            
+            Container(
+                width: 150,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  Container(
+                    width: 150,
+                    height: 10,                    
+                    child: pw.Text('Subtotal:', style: const TextStyle(fontSize: 7)),
+                  ),
+                  
+                  Container(
+                    width: 150,
+                    height: 10,                    
+                    child: pw.Text('\$200.00', style: const TextStyle(fontSize: 7)),
+                  ),
+                ]
+              )
+            ),
+
+            Container(
+              width: 150,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Container(
+                  width: 150,
+                  height: 10,                  
+                  child: pw.Text('Total:', style: const TextStyle(fontSize: 7)),
+                ),
+                
+                Container(
+                  width: 150,
+                  height: 10,                  
+                  child: pw.Text('\$200.00', style: const TextStyle(fontSize: 7)),
+                ),
+              ]
+            )
+          ),
+
+  /*          
+            pw.Table(
+              columnWidths: {
+                0: const pw.FlexColumnWidth(3),
+                1: const pw.FlexColumnWidth(4),
+                2: const pw.FlexColumnWidth(2),
+              },
+              border: pw.TableBorder.all(),
+              children: [
+                pw.TableRow(
+                  children: [
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text(" ", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text(" ", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                    pw.Padding(
+                      padding: const pw.EdgeInsets.all(4),
+                      child: pw.Text(" ", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                    ),
+                  ],
+                ),
+                // Filas agrupadas por Rubro
+                ...agrupado.entries.expand((entry) {
+                  //final rubro = entry.key;
+                  final rows = entry.value;
+                  
+                  return [
+                    // Fila de rubro
+                    pw.TableRow(
+                      children: [
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(4),
+                          child: pw.Text('', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),                          
+                        ),
+                        pw.Container(),
+                        pw.Container(),
+                      ],
+                    ),
+                    // Filas de descripción
+                    ...rows.map((item) => 
+                    
+                    pw.TableRow(
+                          children: [
+                            
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(' ', style: const pw.TextStyle(fontSize: 6)),
+                            ),                            
+                            
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(' ', style: const pw.TextStyle(fontSize: 6)),
+                            ),
+                            
+                            pw.Padding(
+                              padding: const pw.EdgeInsets.all(4),
+                              child: pw.Text(item.pagado, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                            ),
+                          ],
+                        ))
+                  
+                  ];
+                }).toList()
+              ],
+            ),
+*/
+
             pw.SizedBox(height: 10),
             pw.Text('Observación:', style: const TextStyle(fontSize: 7)),
             pw.SizedBox(height: 10),

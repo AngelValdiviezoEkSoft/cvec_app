@@ -1,10 +1,11 @@
 
 import 'dart:typed_data';
+import 'package:cve_app/domain/domain.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-Future<Uint8List> generateReservation() async {
+Future<Uint8List> generateReservation(Booking objReservation) async {
     final pdf = pw.Document();
 
     pdf.addPage(
@@ -62,11 +63,7 @@ Future<Uint8List> generateReservation() async {
                   ],
                 ),
                 ...[ 
-                  ['008274', '02/04/2025', '04/04/2025', 'HOTEL EL JARDIN', 'Hospedaje (2 Adultos); Desayunos (4); Cenas (4)', 'CVE09MPID-032143', 'Doble (1)', 'Activa'],
-                  ['008273', '04/04/2025', '06/04/2025', 'TUZCO LODGE', 'Hospedaje (2 Adultos); Desayunos (4); Cenas (4)', 'CVE09MPID-036547', 'Doble (1)', 'Activa'],
-                  ['008272', '11/04/2025', '13/04/2025', 'GRAND HOTEL GUAYAQUIL', 'Hospedaje (2 Adultos); Desayunos (4)', 'CVE09MPID-032616', 'Matrimonial (1)', 'Activa'],
-                  ['008271', '02/04/2025', '04/04/2025', 'HOTEL ORQUIDEA', 'Hospedaje (2 Adultos); Desayunos (4); Cenas (4)', 'CVE09MPID-032443', 'Matrimonial (1)', 'Activa'],
-                  ['008270', '02/04/2025', '04/04/2025', 'HOTEL MAR AZUL', 'Hospedaje (2 Adultos); Desayunos (4)', 'CVE09MPID-032072', 'Matrimonial (1)', 'Activa'],
+                  [objReservation.name, objReservation.dateBookingsStart, objReservation.dateBookingsEnd, objReservation.tradeNameHotel, objReservation.personInclude, objReservation.subscriptionName, objReservation.roomInclude, objReservation.state],                  
                 ].map((row) => pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: row.map(

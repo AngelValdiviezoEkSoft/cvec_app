@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/bloc/bloc.dart';
@@ -8,9 +10,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
 
+const storage = FlutterSecureStorage();
+
 //ignore: must_be_immutable
 class PdfView extends StatelessWidget {
   //ClienteType? invoice;
+  Booking? objReservation;
   String? tipoCertificado;
   String? periodo;
   String? periodoDesc;
@@ -37,35 +42,23 @@ class PdfView extends StatelessWidget {
   AccountStatementModel rolDePago = AccountStatementModel();
 
   //Reservaciones
-  Future<dynamic> reservations() async {
+  Future<dynamic> rptReservation() async {
     try {
-      var tst = await ReservationsService().getReservations();
+
+      var objRsp = await storage.read(key: 'ListadoReservaciones') ?? '';
+      var id = await storage.read(key: 'IdReservaciones') ?? '0';
+      int idFinal = int.parse(id);
       
-      final ts = 0;
-      /*
-      final json = UsuarioTypeResponseRpt.fromJson(response.body);
-      invoice = json.data;
-      if (json.succeeded) {
-        Fluttertoast.showToast(
-            msg: json.message,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 5,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        return json;
-      } else {
-        Fluttertoast.showToast(
-            msg: json.message,
-            toastLength: Toast.LENGTH_LONG,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 5,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
-      }
-      */
+      final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
+
+      List<Booking> bookingList = bookingResponse.result.data.bookings.data;
+
+      //Booking objReservation = bookingList.where(x => x.id == id);
+
+      objReservation = bookingList.firstWhere((x) => x.id == idFinal);
+
+      return objReservation;
+
     } on Exception catch (error) {
       Fluttertoast.showToast(
           msg: '$error',
@@ -270,7 +263,7 @@ class PdfView extends StatelessWidget {
           )
           :
           FutureBuilder(
-            future: generateReservation(),
+            future: rptReservation(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasError) {
@@ -286,7 +279,7 @@ class PdfView extends StatelessWidget {
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,
-                    build: (context) => generateReservation(),
+                    build: (context) => generateReservation(objReservation!),
                   );
                 }
               }
