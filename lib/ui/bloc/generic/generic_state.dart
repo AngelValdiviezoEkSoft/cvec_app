@@ -272,15 +272,15 @@ class GenericState extends Equatable {
   Future<String> getReceipts() async {
 
     try{
-      List<Booking>? rsp = await ReceiptsService().getReceipts();
+      List<Payment>? rsp = await ReceiptsService().getReceipts();
 
       final items = <ItemBoton>[];
 
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
           items.add(
-            ItemBoton('','','',rsp[i].id, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-              RoutersApp().routReservationView,
+            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+              RoutersApp().routPrintReceiptView,
               () {
                 
               }
@@ -341,7 +341,7 @@ class GenericState extends Equatable {
     return jsonEncode(serializedList);
   }
 
-    Map<String, dynamic> serializeItemBotonMenu(ItemBoton item) {
+  Map<String, dynamic> serializeItemBotonMenu(ItemBoton item) {
     return {
       'tipoNotificacion': item.tipoNotificacion,
       'idSolicitud': item.idSolicitud,
@@ -364,7 +364,6 @@ class GenericState extends Equatable {
       'rutaNavegacion': item.rutaNavegacion,
     };
   }
-
 
   List<ItemBoton> deserializeItemBotonMenuList(String jsonString) {
     final List<dynamic> jsonList = jsonDecode(jsonString);

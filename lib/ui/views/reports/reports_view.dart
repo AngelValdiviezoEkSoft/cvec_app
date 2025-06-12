@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
+
 import 'package:cve_app/ui/bloc/bloc.dart';
 import 'package:cve_app/ui/screens/reports/reports.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ const storage = FlutterSecureStorage();
 class PdfView extends StatelessWidget {
   //ClienteType? invoice;
   Booking? objReservation;
+  Payment? objPayment;
   String? tipoCertificado;
   String? periodo;
   String? periodoDesc;
@@ -70,7 +71,6 @@ class PdfView extends StatelessWidget {
           fontSize: 16.0);
     }
   }
-
 
   //method to make http request
   Future<dynamic> estadoCuentas() async {
@@ -139,27 +139,7 @@ class PdfView extends StatelessWidget {
   //method to make http request
   Future<dynamic> printReceipt() async {
     try {
-      /*
-      String tokenUser = await storageEcommerce.read(key: 'jwtEnrolApp') ?? '';
-      var url = Uri.parse("https://apienrolapp.enrolapp.ec/api/v1/Reportes/GetCertifLaboralByIdentificacion/${invoice?.identificacion}");
-      final response = await http.get(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $tokenUser'
-        },
-      );
-      
-      final json = UsuarioTypeResponseRpt.fromJson(response.body);
-      
-      if (json.succeeded) {
-        
-        return json;
-      } else {
-        
-      }
-      */
-    
+  /*    
       return rolDePago = AccountStatementModel(
         netoPagar: 20,
         totalEgresos: 100,
@@ -194,6 +174,32 @@ class PdfView extends StatelessWidget {
           subCentroCosto: 'Centro de costo 1'
         )
       );
+*/
+
+      try {
+
+      var objRsp = await storage.read(key: 'ListadoRecibos') ?? '';
+      var id = await storage.read(key: 'IdRecibo') ?? '0';
+      int idFinal = int.parse(id);
+      
+      final bookingResponse = ReceiptResponse.fromJson(jsonDecode(objRsp));
+
+      List<Payment> bookingList = bookingResponse.result.data.accountPayment.data;
+
+      objPayment = bookingList.firstWhere((x) => x.paymentId == idFinal);
+
+      return objPayment;
+
+    } on Exception catch (error) {
+      Fluttertoast.showToast(
+          msg: '$error',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 5,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
 
     } on Exception catch (_) {
     
@@ -254,7 +260,7 @@ class PdfView extends StatelessWidget {
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,
-                    build: (context) => printReceiptRpt(),
+                    build: (context) => printReceiptRpt(objPayment!),
                   );
                 }
               }

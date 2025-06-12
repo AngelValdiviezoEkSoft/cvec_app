@@ -134,7 +134,72 @@ class GenericService extends ChangeNotifier {
     return reponseRs;    
   }
 
-  getMultiModelos(ConsultaMultiModelRequestModel objReq, String modelo) async {
+  getMultiModelos(ConsultaMultiModelRequestModel objReq, String modelo, bool isComposedInfo) async {
+
+    String ruta = '';
+    final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
+    
+    if(objStr.isNotEmpty)
+    {  
+      var obj = RegisterDeviceResponseModel.fromJson(objStr);
+      ruta = '${obj.result.url}/api/v1/${objReq.params.imei}/done/data/multi/models';
+    }
+
+    String tockenValidDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(objReq.params.tockenValidDate);
+
+    final requestBody = {
+      "jsonrpc": EnvironmentsProd().jsonrpc,
+      "params": {
+        "key": objReq.params.key,
+        "tocken": objReq.params.tocken,
+        "imei": objReq.params.imei,
+        "uid": objReq.params.uid,
+        "company": objReq.params.company,
+        "bearer": objReq.params.bearer,
+        "tocken_valid_date": tockenValidDate,
+        "is_composed_info": isComposedInfo,
+        "models": [
+          {
+            "model": modelo,
+            "filters": [
+              ["partner_id","=",objReq.params.partnerId],
+              if(modelo.isNotEmpty && modelo == 'account.payment')
+              ['payment_type', '=', 'inbound'],
+              if(modelo.isNotEmpty && modelo == 'account.payment')
+              ['partner_type', '=', 'customer'],
+              if(modelo.isNotEmpty && modelo == 'account.payment')
+              ['state', '=', 'posted'],
+            ]
+          }
+        ],
+      }
+    };
+
+    final headers = {
+      "Content-Type": EnvironmentsProd().contentType
+    };
+
+    final response = await http.post(
+      Uri.parse(ruta),
+      headers: headers,
+      body: jsonEncode(requestBody),
+    );
+
+    print('Respuesta Reporte: ${response.body}');
+    
+    var rspValidacion = json.decode(response.body);
+
+    //if(rspValidacion['result']['mensaje'] == 'El tocken no es valido'){
+    if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado)){
+      await tokenManager.checkTokenExpiration();
+      await getMultiModelos(objReq, modelo, isComposedInfo);
+    }
+
+    return response.body;
+    
+  }
+  
+  getMultiModelosSinFiltro(ConsultaMultiModelRequestModel objReq, String modelo) async {
 
     String ruta = '';
     final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
@@ -159,17 +224,14 @@ class GenericService extends ChangeNotifier {
         "tocken_valid_date": tockenValidDate,
         "models": [
           {
-            "model": modelo,
-            "filters": [
-              ["partner_id","=",objReq.params.partnerId]
-            ]
+            "model": modelo
           }
         ],
       }
     };
 
     final headers = {
-      "Content-Type": EnvironmentsProd().contentType//"application/json",
+      "Content-Type": EnvironmentsProd().contentType
     };
 
     final response = await http.post(
@@ -185,13 +247,14 @@ class GenericService extends ChangeNotifier {
     //if(rspValidacion['result']['mensaje'] == 'El tocken no es valido'){
     if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado)){
       await tokenManager.checkTokenExpiration();
-      await getMultiModelos(objReq, modelo);
+      await getMultiModelosSinFiltro(objReq, modelo);
     }
 
     return response.body;
     
   }
   
+
   getMultiModelosGen(ConsultaMultiModelRequestModel objReq, List<Map<String, dynamic>> lstModels) async {
 
     String ruta = '';

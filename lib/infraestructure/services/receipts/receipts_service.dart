@@ -25,7 +25,7 @@ class ReceiptsService extends ChangeNotifier{
     return formKey.currentState?.validate() ?? false;
   }
 
-  Future<List<Booking>?> getReceipts() async {
+  Future<List<Payment>?> getReceipts() async {
     try{
 
       var codImei = await storageReceipts.read(key: 'codImei') ?? '';
@@ -57,14 +57,14 @@ class ReceiptsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel");
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment", true);
 
       await storage.write(key: 'ListadoRecibos', value: '');
       await storage.write(key: 'ListadoRecibos', value: objRsp);
 
-      final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
+      final bookingResponse = ReceiptResponse.fromJson(jsonDecode(objRsp));
 
-      List<Booking> bookingList = bookingResponse.result.data.bookings.data;
+      List<Payment> bookingList = bookingResponse.result.data.accountPayment.data;
 
       return bookingList;
     }
@@ -82,4 +82,62 @@ class ReceiptsService extends ChangeNotifier{
     }
   }
 
+/*
+  Future<List<Payment>?> getCompanies() async {
+    try{
+
+      var codImei = await storageReceipts.read(key: 'codImei') ?? '';
+
+      var objReg = await storageReceipts.read(key: 'RespuestaRegistro') ?? '';
+      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+
+      var objLog = await storageReceipts.read(key: 'RespuestaLogin') ?? '';
+      var objLogDecode = json.decode(objLog);
+
+      List<MultiModel> lstMultiModel = [];
+
+      lstMultiModel.add(
+        MultiModel(model: 'res.company')
+      );
+
+      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
+        jsonrpc: EnvironmentsProd().jsonrpc,
+        params: ParamsMultiModels(
+          bearer: obj.result.bearer,
+          company: objLogDecode['result']['current_company'],
+          imei: codImei,
+          key: obj.result.key,
+          tocken: obj.result.tocken,
+          tockenValidDate: obj.result.tockenValidDate,
+          uid: objLogDecode['result']['uid'],
+          partnerId: objLogDecode['result']['partner_id'],
+          models: lstMultiModel
+        )
+      );
+
+      var objRsp = await GenericService().getMultiModelosSinFiltro(objReq, "res.company");
+
+      await storage.write(key: 'ListadoRecibos', value: '');
+      await storage.write(key: 'ListadoRecibos', value: objRsp);
+
+      final bookingResponse = ReceiptResponse.fromJson(jsonDecode(objRsp));
+
+      List<Payment> bookingList = bookingResponse.result.data.data;
+
+      return bookingList;
+    }
+    on SocketException catch (_) {
+      Fluttertoast.showToast(
+        msg: objMessageReceipt.mensajeFallaInternet,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+      return null;
+    }
+  }
+*/
 }

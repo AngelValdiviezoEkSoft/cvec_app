@@ -647,14 +647,14 @@ Future<Uint8List> printReceiptRpt(AccountStatementModel rolDePago, String correo
   return pdf.save();
 }
 */
-Future<Uint8List> printReceiptRpt() async {
+Future<Uint8List> printReceiptRpt(Payment objPayment) async {
 
   final imageFirma = MemoryImage(
     (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List()
   );
 
   final imageLogo = MemoryImage(
-    (await rootBundle.load('assets/logo_app_pequenio.png')).buffer.asUint8List()
+    (await rootBundle.load('assets/logo_empresa_desc.png')).buffer.asUint8List()
   );
 
   var items = [
@@ -722,237 +722,9 @@ Future<Uint8List> printReceiptRpt() async {
     ),
   ];
 
-  /* 
-  ...[ // Datos de la tabla sin bordes
-                  ['CVE09M', 'PID-033463', ''],
-                  ['GAD', '07/12', '\$1.00'],
-                  ['CT', '07/12', '\$30.36'],
-                  ['CT', '08/12', '\$0.96'],
-                  ['CVE09M', 'PME-026212' '', ''],
-                  ['GAD ', '06/24', '\$3.70'],
-                  ['CT', '06/24', '\$74.01'],
-                  ['CVE09M', 'PTE-024984', ''],
-                  ['GAD', '24/72', '\$4.28'],
-                  ['CT', '24/72', '\$85.69'],
-  */
-
   final agrupado = agruparPorRubro(items);
 
   final pdf = pw.Document();
-
-/*
-  pdf.addPage(
-    pw.Page(
-      pageFormat: PdfPageFormat.roll80,
-      build: (pw.Context context) {
-        return pw.Column(
-          crossAxisAlignment: pw.CrossAxisAlignment.start,
-          children: [
-            
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                Container(
-                  height: 95,
-                  width: 160,
-                  child: Image(imageLogo),              
-                ),
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-              ],
-            ),
-            pw.SizedBox(height: 15),
-            pw.Center(
-              child: pw.Text('Calle Aguirre 411 entre Chile y Chimborazo',
-              style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
-            ),
-            pw.Center(
-              child: pw.Text('Edif. C.C Unicentro 2do Piso Of. #211',
-              style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
-            ),
-            pw.Center(
-              child: pw.Text('Telfs: 6000575-579',
-              style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
-            ),
-            pw.Center(
-              child: //pw.Text('Web: www.centrodeviajesecuador.com'),
-                RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Web:',
-                      style: pw.TextStyle(
-                        color: PdfColors.black,
-                        fontSize: 7,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    TextSpan(
-                      text: ' www.centrodeviajesecuador.com',
-                      style: pw.TextStyle(
-                        color: PdfColors.blue,
-                        fontSize: 7,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            
-
-            ),
-
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('Ecuador', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-              ],
-            ),
-
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('ESTABLECIMIENTO: OFICINA', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-              ],
-            ),
-
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('RECIBO # 077872', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-                pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-              ],
-            ),
-
-            pw.SizedBox(height: 10),
-            pw.Divider(),
-            pw.Text('Cliente: BENIGNO VICTORIANO GUSTAVO', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-            pw.Text('Fecha: 25/03/2025', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-            pw.SizedBox(height: 10),
-            pw.Column(
-              children: [
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text('Rubro', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
-                    pw.Text('Descripción', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
-                    pw.Text('Pagado', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
-                  ],
-                ),
-                pw.Divider(),
-                
-                ...[ // Datos de la tabla sin bordes
-                  ['CVE09M', 'PID-033463', ''],
-                  ['GAD', '07/12', '\$1.00'],
-                  ['CT', '07/12', '\$30.36'],
-                  ['CT', '08/12', '\$0.96'],
-                  ['CVE09M', 'PME-026212' '', ''],
-                  ['GAD ', '06/24', '\$3.70'],
-                  ['CT', '06/24', '\$74.01'],
-                  ['CVE09M', 'PTE-024984', ''],
-                  ['GAD', '24/72', '\$4.28'],
-                  ['CT', '24/72', '\$85.69'],
-                ].map((row) => pw.Padding(
-                  padding: const pw.EdgeInsets.symmetric(vertical: 2),                  
-                  child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: row.map((cell) => pw.Text(cell, style: const TextStyle(fontSize: 5))).toList(),
-                  ),
-                )
-                ),
-                
-              ],
-            ),
-            pw.SizedBox(height: 10),
-            pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),
-            pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
-            pw.Text('Total: \$200.00', style: const TextStyle(fontSize: 7)),
-            pw.SizedBox(height: 10),
-            pw.Text('Observación:', style: const TextStyle(fontSize: 7)),
-            pw.SizedBox(height: 10),
-            
-            pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 80,
-                  child: Column(children: [
-                    Container(
-                      height: 150,
-                      width: 200,
-                      child: Image(imageFirma),
-                      decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide()),
-                      ),
-                    ),
-                    Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
-                    Text(
-                        'Firma Autorizada',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 6)),
-                    
-                  ]
-                )
-                ),
-
-                Container(
-                  width: 80,
-                  child: Column(children: [
-                    Container(
-                      height: 150,
-                      width: 200,
-                      child: Image(imageFirma),
-                      decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide()),
-                      ),
-                    ),
-                    Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
-                    Text(
-                        'Firma Cliente',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 6)),
-                    
-                  ]
-                )
-                ),
-
-              ],
-            ),
-
-            pw.SizedBox(height: 10),
-            pw.Text('Responsable Ingreso: RENDON SUAREZ ANA RAQUEL', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-            pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
-          ],
-        );
-      },
-    ),
-  );
-*/
 
   pdf.addPage(
     pw.Page(
@@ -977,22 +749,25 @@ Future<Uint8List> printReceiptRpt() async {
             ),
             pw.SizedBox(height: 15),
             pw.Center(
-              child: pw.Text('Calle Aguirre 411 entre Chile y Chimborazo',
+              child: pw.Text(objPayment.companyStreet,//'Calle Aguirre 411 entre Chile y Chimborazo',
               style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
+                  fontSize: 7
+                ),
+              ),
             ),
             pw.Center(
-              child: pw.Text('Edif. C.C Unicentro 2do Piso Of. #211',
+              child: pw.Text(objPayment.companyStreet2,//'Edif. C.C Unicentro 2do Piso Of. #211',
               style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
+                  fontSize: 7
+                ),
+              ),
             ),
             pw.Center(
-              child: pw.Text('Telfs: 6000575-579',
+              child: pw.Text('Telfs: ${objPayment.companyPhone}',
               style: const pw.TextStyle(
-                        fontSize: 7
-                      ),),
+                  fontSize: 7
+                ),
+              ),
             ),
             pw.Center(
               child: 
@@ -1008,7 +783,7 @@ Future<Uint8List> printReceiptRpt() async {
                       ),
                     ),
                     TextSpan(
-                      text: ' www.centrodeviajesecuador.com',
+                      text: ' ${objPayment.companyWebsite}',
                       style: pw.TextStyle(
                         color: PdfColors.blue,
                         fontSize: 7,
@@ -1018,21 +793,17 @@ Future<Uint8List> printReceiptRpt() async {
                   ],
                 ),
               ),
-            
-
             ),
-
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('Ecuador', style: const pw.TextStyle(
+                pw.Text(objPayment.countryName, style: const pw.TextStyle(
                         fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               ],
             ),
-
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
@@ -1043,12 +814,11 @@ Future<Uint8List> printReceiptRpt() async {
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
               ],
             ),
-
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('RECIBO # 077872', style: const pw.TextStyle(
+                pw.Text('RECIBO # ${objPayment.paymentName}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
@@ -1057,10 +827,10 @@ Future<Uint8List> printReceiptRpt() async {
 
             pw.SizedBox(height: 10),
             pw.Divider(),
-            pw.Text('Cliente: BENIGNO VICTORIANO GUSTAVO', style: const pw.TextStyle(
+            pw.Text('Cliente: ${objPayment.customerName}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
-            pw.Text('Fecha: 25/03/2025', style: const pw.TextStyle(
+            pw.Text('Fecha: ${objPayment.paymentDate}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
             pw.SizedBox(height: 2),
@@ -1138,12 +908,8 @@ Future<Uint8List> printReceiptRpt() async {
 
             pw.Divider(),
             pw.SizedBox(height: 10),
-            pw.Text('Forma de pago: BANCO PACIFICO CTA. CTE. #7718799', style: const TextStyle(fontSize: 6)),            
-            pw.SizedBox(height: 2),
-            /////////
-            //pw.Text('Subtotal: \$200.00', style: const TextStyle(fontSize: 7)),
-            //pw.Text('Total: \$200.00', style: const TextStyle(fontSize: 7)),
-            /////////
+            pw.Text('Forma de pago: ${objPayment.journalName}', style: const TextStyle(fontSize: 6)),            
+            pw.SizedBox(height: 2),            
             
             Container(
                 width: 150,
@@ -1179,7 +945,7 @@ Future<Uint8List> printReceiptRpt() async {
                 Container(
                   width: 150,
                   height: 10,                  
-                  child: pw.Text('\$200.00', style: const TextStyle(fontSize: 7)),
+                  child: pw.Text('\$${objPayment.paymentAmount}', style: const TextStyle(fontSize: 7)),
                 ),
               ]
             )
@@ -1257,7 +1023,7 @@ Future<Uint8List> printReceiptRpt() async {
 */
 
             pw.SizedBox(height: 10),
-            pw.Text('Observación:', style: const TextStyle(fontSize: 7)),
+            pw.Text('Observación: ${objPayment.paymentRef}', style: const TextStyle(fontSize: 7)),
             pw.SizedBox(height: 10),
             
             pw.Row(
@@ -1265,24 +1031,24 @@ Future<Uint8List> printReceiptRpt() async {
               children: [
                 Container(
                   width: 80,
-                  child: Column(children: [
-                    Container(
-                      height: 150,
-                      width: 200,
-                      child: Image(imageFirma),
-                      decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide()),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 200,
+                        child: Image(imageFirma),
+                        decoration: const BoxDecoration(
+                          border: Border(bottom: BorderSide()),
+                        ),
                       ),
-                    ),
-                    Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
-                    Text(
+                      Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
+                      Text(
                         'Firma Autorizada',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 6)),
-                    
-                  ]
-                )
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 6)
+                      ),                    
+                    ]
+                  )
                 ),
 
                 Container(
@@ -1311,7 +1077,7 @@ Future<Uint8List> printReceiptRpt() async {
             ),
 
             pw.SizedBox(height: 10),
-            pw.Text('Responsable Ingreso: RENDON SUAREZ ANA RAQUEL', style: const pw.TextStyle(
+            pw.Text('Responsable Ingreso: ${objPayment.userName}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
             pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),

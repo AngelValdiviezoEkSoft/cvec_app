@@ -102,13 +102,15 @@ class ReservationsViewSt extends StatelessWidget {
                                   
                         Container(
                           width: size.width,
-                          height: size.height * 0.85,
+                          //height: size.height * 0.85,
+                          height: size.height * 0.13 * lstMenu.length,
                           color: Colors.transparent,
                           child: ListView(
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
                               const SizedBox( height: 3, ),
                               ...itemMap,
+                              const SizedBox( height: 3, ),
                             ],
                           ),
                         ),

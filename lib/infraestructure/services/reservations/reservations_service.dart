@@ -57,7 +57,7 @@ class ReservationsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.contract.bookings");
+      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.contract.bookings", false);
 
       await storage.write(key: 'ListadoReservaciones', value: '');
       await storage.write(key: 'ListadoReservaciones', value: objRsp);
