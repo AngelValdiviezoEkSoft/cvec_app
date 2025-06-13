@@ -279,7 +279,7 @@ class GenericState extends Equatable {
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
           items.add(
-            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 

@@ -15,6 +15,7 @@ import 'package:pdf/pdf.dart';
 
 bool varTieneCorreoRecibo = false;
 String rolPagoPeriodoRecibo = '';
+String subTotalReceipt = '';
 
 Map<String, List<PagoItem>> agruparPorRubro(List<PagoItem> items) {
   final Map<String, List<PagoItem>> agrupado = {};
@@ -647,7 +648,7 @@ Future<Uint8List> printReceiptRpt(AccountStatementModel rolDePago, String correo
   return pdf.save();
 }
 */
-Future<Uint8List> printReceiptRpt(Payment objPayment) async {
+Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) async {
 
   final imageFirma = MemoryImage(
     (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List()
@@ -657,6 +658,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
     (await rootBundle.load('assets/logo_empresa_desc.png')).buffer.asUint8List()
   );
 
+/*
   var items = [
     PagoItem(
       descRubro: 'CVE09MPID-033463',
@@ -721,6 +723,29 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
       pagado: '\$ 85.69',
     ),
   ];
+  */
+
+  List<PagoItem> items = [];
+  double subTot = 0;
+
+  if(detRpt.isNotEmpty) {
+    for(int i = 0; i < detRpt.length; i++){
+      var amount = detRpt[i].lineAmount?.toStringAsFixed(2) ?? 0;
+
+      items.add(
+         PagoItem(
+          descRubro: detRpt[i].contractName ?? '',//'CVE09MPME-026212',
+          rubro: detRpt[i].quotaType ?? '',//'CT',
+          descripcion: detRpt[i].quotaName ?? '',//'CT 06/24',          
+          pagado: '\$ $amount'//'\$ 74.01',
+        ),
+      );
+
+      subTot = subTot + (detRpt[i].lineAmount ?? 0);
+    }
+
+    subTotalReceipt = subTot.toStringAsFixed(2);
+  }
 
   final agrupado = agruparPorRubro(items);
 
@@ -849,15 +874,15 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
                 pw.TableRow(
                   children: [
                     pw.Padding(
-                      padding: const pw.EdgeInsets.all(4),
+                      padding: const pw.EdgeInsets.all(1),
                       child: pw.Text("Rubro", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                     pw.Padding(
-                      padding: const pw.EdgeInsets.all(4),
+                      padding: const pw.EdgeInsets.all(1),
                       child: pw.Text("Descripción", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                     pw.Padding(
-                      padding: const pw.EdgeInsets.all(4),
+                      padding: const pw.EdgeInsets.all(1),
                       child: pw.Text("Pagado", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                   ],
@@ -872,7 +897,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
                     pw.TableRow(
                       children: [
                         pw.Padding(
-                          padding: const pw.EdgeInsets.all(4),
+                          padding: const pw.EdgeInsets.all(1),
                           child: pw.Text(rubro, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),                          
                         ),
                         pw.Container(),
@@ -886,17 +911,17 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
                           children: [
                             if(item.rubro.isNotEmpty)
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(4),
+                              padding: const pw.EdgeInsets.all(1),
                               child: pw.Text(item.rubro, style: const pw.TextStyle(fontSize: 6)),
                             ),                            
                             if(item.rubro.isNotEmpty)
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(4),
+                              padding: const pw.EdgeInsets.all(1),
                               child: pw.Text(item.descripcion, style: const pw.TextStyle(fontSize: 6)),
                             ),
                             if(item.rubro.isNotEmpty)
                             pw.Padding(
-                              padding: const pw.EdgeInsets.all(4),
+                              padding: const pw.EdgeInsets.all(1),
                               child: pw.Text(item.pagado, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
                             ),
                           ],
@@ -912,7 +937,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
             pw.SizedBox(height: 2),            
             
             Container(
-                width: 150,
+                width: 170,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -923,16 +948,16 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
                   ),
                   
                   Container(
-                    width: 150,
+                    width: 170,
                     height: 10,                    
-                    child: pw.Text('\$200.00', style: const TextStyle(fontSize: 7)),
+                    child: pw.Text('\$$subTotalReceipt', style: const TextStyle(fontSize: 7)),
                   ),
                 ]
               )
             ),
 
             Container(
-              width: 150,
+              width: 170,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -943,9 +968,9 @@ Future<Uint8List> printReceiptRpt(Payment objPayment) async {
                 ),
                 
                 Container(
-                  width: 150,
-                  height: 10,                  
-                  child: pw.Text('\$${objPayment.paymentAmount}', style: const TextStyle(fontSize: 7)),
+                  width: 170,
+                  height: 10,
+                  child: pw.Text('\$${objPayment.paymentAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 7)),
                 ),
               ]
             )

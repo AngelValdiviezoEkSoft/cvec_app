@@ -53,7 +53,8 @@ class ReceiptsService extends ChangeNotifier{
           tockenValidDate: obj.result.tockenValidDate,
           uid: objLogDecode['result']['uid'],
           partnerId: objLogDecode['result']['partner_id'],
-          models: lstMultiModel
+          models: lstMultiModel,
+          idConsulta: 0
         )
       );
 
@@ -65,6 +66,61 @@ class ReceiptsService extends ChangeNotifier{
       final bookingResponse = ReceiptResponse.fromJson(jsonDecode(objRsp));
 
       List<Payment> bookingList = bookingResponse.result.data.accountPayment.data;
+
+      return bookingList;
+    }
+    on SocketException catch (_) {
+      Fluttertoast.showToast(
+        msg: objMessageReceipt.mensajeFallaInternet,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 5,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+      );
+      return null;
+    }
+  }
+
+  Future<List<PaymentLine>?> getDetReceipts(int idCab) async {
+    try{
+
+      var codImei = await storageReceipts.read(key: 'codImei') ?? '';
+
+      var objReg = await storageReceipts.read(key: 'RespuestaRegistro') ?? '';
+      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+
+      var objLog = await storageReceipts.read(key: 'RespuestaLogin') ?? '';
+      var objLogDecode = json.decode(objLog);
+
+      List<MultiModel> lstMultiModel = [];
+
+      lstMultiModel.add(
+        MultiModel(model: 'account.payment.line.travel')
+      );
+
+      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
+        jsonrpc: EnvironmentsProd().jsonrpc,
+        params: ParamsMultiModels(
+          bearer: obj.result.bearer,
+          company: objLogDecode['result']['current_company'],
+          imei: codImei,
+          key: obj.result.key,
+          tocken: obj.result.tocken,
+          tockenValidDate: obj.result.tockenValidDate,
+          uid: objLogDecode['result']['uid'],
+          partnerId: objLogDecode['result']['partner_id'],
+          models: lstMultiModel,
+          idConsulta: idCab
+        )
+      );
+
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true);
+
+      final bookingResponse = ReceiptDetResponse.fromJson(jsonDecode(objRsp));
+
+      List<PaymentLine> bookingList = bookingResponse.result?.data?.accountPaymentLineTravel?.data ?? [];
 
       return bookingList;
     }

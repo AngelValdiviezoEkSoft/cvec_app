@@ -237,6 +237,7 @@ class ListaRecibos extends StatelessWidget {
                         ),
           */
 
+/*
                         if(texto2 == null || texto2!.isEmpty)
                         GestureDetector(
                           onTap: () {    
@@ -256,7 +257,7 @@ class ListaRecibos extends StatelessWidget {
                             )
                           ),
                         ),
-                        
+                        */
                       ],
                     ),                
                   ),

@@ -169,6 +169,8 @@ class GenericService extends ChangeNotifier {
               ['partner_type', '=', 'customer'],
               if(modelo.isNotEmpty && modelo == 'account.payment')
               ['state', '=', 'posted'],
+              if(modelo.isNotEmpty && modelo == 'account.payment.line.travel')
+              ['payment_id', '=', objReq.params.idConsulta],
             ]
           }
         ],

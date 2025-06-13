@@ -33,6 +33,7 @@ class ParamsMultiModels {
     String bearer;
     DateTime tockenValidDate;
     int partnerId;
+    int idConsulta;
     List<MultiModel> models;
 
     ParamsMultiModels({
@@ -45,6 +46,7 @@ class ParamsMultiModels {
         required this.tockenValidDate,
         required this.partnerId,
         required this.models,
+        required this.idConsulta
     });
 
     factory ParamsMultiModels.fromRawJson(String str) => ParamsMultiModels.fromJson(json.decode(str));
@@ -60,6 +62,7 @@ class ParamsMultiModels {
         bearer: json["bearer"],
         tockenValidDate: DateTime.parse(json["tocken_valid_date"]),
         partnerId: json["partner_id"] ?? 0,
+        idConsulta: 0,
         models: List<MultiModel>.from(json["models"].map((x) => MultiModel.fromJson(x))),
     );
 
@@ -72,6 +75,7 @@ class ParamsMultiModels {
         "bearer": bearer,
         "tocken_valid_date": tockenValidDate.toIso8601String(),
         "partner_id": partnerId,
+        "idConsulta": idConsulta,
         "models": List<dynamic>.from(models.map((x) => x.toJson())),
     };
 }

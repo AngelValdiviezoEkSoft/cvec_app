@@ -1,3 +1,5 @@
+export 'package:cve_app/domain/models/receipt_det_response.dart';
+
 export 'package:cve_app/domain/models/receipt_response.dart';
 
 export 'package:cve_app/domain/models/booking_response.dart';

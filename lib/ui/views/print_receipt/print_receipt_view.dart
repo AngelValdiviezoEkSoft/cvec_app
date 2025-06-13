@@ -104,7 +104,7 @@ class PrintReceiptViewSt extends StatelessWidget {
                                     
                           Container(
                             width: size.width,
-                            height: size.height * 0.09 * lstMenu.length,
+                            height: size.height * 0.12 * lstMenu.length,
                             color: Colors.transparent,
                             child: ListView(
 

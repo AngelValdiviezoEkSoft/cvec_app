@@ -53,6 +53,7 @@ class ReservationsService extends ChangeNotifier{
           tockenValidDate: obj.result.tockenValidDate,
           uid: objLogDecode['result']['uid'],
           partnerId: objLogDecode['result']['partner_id'],
+          idConsulta: 0,
           models: lstMultiModel
         )
       );

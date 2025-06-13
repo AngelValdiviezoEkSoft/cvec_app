@@ -41,6 +41,7 @@ class DataInicialService extends ChangeNotifier{
           tockenValidDate: obj.result.tockenValidDate,
           uid: objLogDecode['result']['uid'],
           partnerId: 0,
+          idConsulta: 0,
           models: []
         )
       );

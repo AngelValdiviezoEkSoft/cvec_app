@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 
 import 'package:cve_app/ui/bloc/bloc.dart';
 import 'package:cve_app/ui/screens/reports/reports.dart';
@@ -17,6 +18,7 @@ class PdfView extends StatelessWidget {
   //ClienteType? invoice;
   Booking? objReservation;
   Payment? objPayment;
+  List<PaymentLine> detalleRptReceipt = [];
   String? tipoCertificado;
   String? periodo;
   String? periodoDesc;
@@ -188,6 +190,8 @@ class PdfView extends StatelessWidget {
 
       objPayment = bookingList.firstWhere((x) => x.paymentId == idFinal);
 
+      detalleRptReceipt = await ReceiptsService().getDetReceipts(idFinal) ?? [];
+
       return objPayment;
 
     } on Exception catch (error) {
@@ -260,7 +264,7 @@ class PdfView extends StatelessWidget {
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,
-                    build: (context) => printReceiptRpt(objPayment!),
+                    build: (context) => printReceiptRpt(objPayment!, detalleRptReceipt),
                   );
                 }
               }
