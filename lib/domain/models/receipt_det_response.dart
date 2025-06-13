@@ -70,6 +70,7 @@ class PaymentLine {
   String? quotaType;
   int? quotaId;
   String? quotaName;
+  String? quotaCode;
   double? lineAmount;
 
   PaymentLine({
@@ -80,6 +81,7 @@ class PaymentLine {
     this.quotaType,
     this.quotaId,
     this.quotaName,
+    this.quotaCode,
     this.lineAmount,
   });
 
@@ -93,6 +95,7 @@ class PaymentLine {
       quotaId: json['quota_id'] ?? 0,
       quotaName: json['quota_name'] ?? '',
       lineAmount: json['line_amount']?.toDouble(),
+      quotaCode: json['quota_code'],
     );
   }
 }

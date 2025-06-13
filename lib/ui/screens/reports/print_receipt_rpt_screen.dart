@@ -16,6 +16,7 @@ import 'package:pdf/pdf.dart';
 bool varTieneCorreoRecibo = false;
 String rolPagoPeriodoRecibo = '';
 String subTotalReceipt = '';
+double expenses = 0;
 
 Map<String, List<PagoItem>> agruparPorRubro(List<PagoItem> items) {
   final Map<String, List<PagoItem>> agrupado = {};
@@ -732,16 +733,24 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
     for(int i = 0; i < detRpt.length; i++){
       var amount = detRpt[i].lineAmount?.toStringAsFixed(2) ?? 0;
 
-      items.add(
-         PagoItem(
-          descRubro: detRpt[i].contractName ?? '',//'CVE09MPME-026212',
-          rubro: detRpt[i].quotaType ?? '',//'CT',
-          descripcion: detRpt[i].quotaName ?? '',//'CT 06/24',          
-          pagado: '\$ $amount'//'\$ 74.01',
-        ),
-      );
 
-      subTot = subTot + (detRpt[i].lineAmount ?? 0);
+      if(detRpt[i].quotaCode != 'CPT'){
+        subTot = subTot + (detRpt[i].lineAmount ?? 0);
+
+        items.add(
+          PagoItem(
+            descRubro: detRpt[i].contractName ?? '',//'CVE09MPME-026212',
+            rubro: detRpt[i].quotaType ?? '',//'CT',
+            descripcion: detRpt[i].quotaName ?? '',//'CT 06/24',          
+            pagado: '\$ $amount'//'\$ 74.01',
+          ),
+        );
+
+      }
+      else {
+        expenses = expenses + (detRpt[i].lineAmount ?? 0);
+      }
+      
     }
 
     subTotalReceipt = subTot.toStringAsFixed(2);
@@ -942,19 +951,40 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                   Container(
-                    width: 150,
-                    height: 10,                    
+                    width: 107,
+                    height: 10,
                     child: pw.Text('Subtotal:', style: const TextStyle(fontSize: 7)),
                   ),
                   
                   Container(
-                    width: 170,
+                    width: 70,
                     height: 10,                    
-                    child: pw.Text('\$$subTotalReceipt', style: const TextStyle(fontSize: 7)),
+                    child: pw.Text('\$$subTotalReceipt', style: const TextStyle(fontSize: 7), textAlign: TextAlign.right),
                   ),
                 ]
               )
             ),
+
+            if(expenses != 0)
+            Container(
+              width: 170,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                Container(
+                  width: 107,
+                  height: 10,
+                  child: pw.Text('Servicios Adm.', style: const TextStyle(fontSize: 7)),
+                ),
+                
+                Container(
+                  width: 70,
+                  height: 10,
+                  child: pw.Text('\$${expenses.toStringAsFixed(2)}', style: const TextStyle(fontSize: 7), textAlign: TextAlign.right),
+                ),
+              ]
+            )
+          ),
 
             Container(
               width: 170,
@@ -962,15 +992,15 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                 Container(
-                  width: 150,
-                  height: 10,                  
+                  width: 107,
+                  height: 10,
                   child: pw.Text('Total:', style: const TextStyle(fontSize: 7)),
                 ),
                 
                 Container(
-                  width: 170,
+                  width: 70,
                   height: 10,
-                  child: pw.Text('\$${objPayment.paymentAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 7)),
+                  child: pw.Text('\$${objPayment.paymentAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 7), textAlign: TextAlign.right),
                 ),
               ]
             )

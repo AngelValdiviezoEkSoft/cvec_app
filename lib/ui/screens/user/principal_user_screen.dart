@@ -1,5 +1,4 @@
 import 'package:cve_app/config/config.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -677,21 +676,24 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: Column(
-              children: [
-
-                Container(
-                  width: size.width,
-                  height: size.height * 0.06,
-                  color: Colors.transparent,
-                  alignment: Alignment.center,
-                  child: Text(locGen!.receiptsLbl, style: const TextStyle(fontSize: 25),)
-                ),
-
-                const PrintReceiptView(null),
-
-                //SizedBox(height: size.height * 0.07),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+              
+                  Container(
+                    width: size.width,
+                    height: size.height * 0.06,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: Text(locGen!.receiptsLbl, style: const TextStyle(fontSize: 25),)
+                  ),
+              
+                  //AEVG
+                  PrintReceiptView(),
+                  //TransactionListPage(),
+              
+                ],
+              ),
             ),
           )
 
@@ -703,18 +705,20 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: Column(
-              children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.06,
-                  color: Colors.transparent,
-                  alignment: Alignment.center,
-                  child: Text(locGen!.reservationsLbl, style: const TextStyle(fontSize: 25),)
-                ),
-
-                const ReservationsView(null),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    width: size.width,
+                    height: size.height * 0.06,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: Text(locGen!.reservationsLbl, style: const TextStyle(fontSize: 25),)
+                  ),
+              
+                  const ReservationsView(null),
+                ],
+              ),
             ),
           )
 
