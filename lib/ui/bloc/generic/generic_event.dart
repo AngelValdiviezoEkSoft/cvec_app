@@ -82,3 +82,8 @@ class OnViewReservationsEvent extends GenericEvent {
   final bool showIt;
   const OnViewReservationsEvent(this.showIt);
 }
+
+class OnViewFrmDepositEvent extends GenericEvent {
+  final bool showIt;
+  const OnViewFrmDepositEvent(this.showIt);
+}

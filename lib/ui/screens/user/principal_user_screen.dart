@@ -403,6 +403,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
 
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -417,6 +418,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
                     
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -431,6 +433,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(true);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
                     
                     Navigator.pop(context); // Cierra el menú 
                   },
@@ -445,6 +448,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
 
                     Navigator.pop(context);
                   },
@@ -459,6 +463,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(true);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
 
                     Navigator.pop(context);
                   },
@@ -473,6 +478,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(true);
+                    gnrBloc.setShowViewFrmDeposit(false);
 
                     Navigator.pop(context);
                   },
@@ -489,6 +495,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     gnrBloc.setShowViewReservetions(false);
                     gnrBloc.setShowViewSendDeposits(false);
                     gnrBloc.setShowViewWebSite(false);
+                    gnrBloc.setShowViewFrmDeposit(false);
                     
                     Navigator.pop(context); // Cierra el menú 
 
@@ -501,7 +508,7 @@ class PrincipalClientStScreen extends StatelessWidget {
           body: 
           !state.viewAccountStatement && !state.viewPrintReceipts 
           && !state.viewSendDeposits && !state.viewViewDebts && 
-          !state.viewViewReservations && !state.viewWebSite ?
+          !state.viewViewReservations && !state.viewWebSite && !state.viewFrmDeposits ?
           
           SingleChildScrollView(
             child: Container(        
@@ -661,7 +668,7 @@ class PrincipalClientStScreen extends StatelessWidget {
 
           :
 
-          state.viewSendDeposits ?          
+          state.viewSendDeposits ?
           Container(
             width: size.width,
             height: size.height,
@@ -690,8 +697,13 @@ class PrincipalClientStScreen extends StatelessWidget {
                         color: Colors.transparent,
                         child: GestureDetector(
                           onTap: () {
-                            // Acción cuando se presiona el botón
-                            //print('Botón personalizado presionado');
+                            gnrBloc.setShowViewAccountStatementEvent(false);
+                            gnrBloc.setShowViewDebts(false);
+                            gnrBloc.setShowViewPrintRecipts(false);
+                            gnrBloc.setShowViewReservetions(false);
+                            gnrBloc.setShowViewSendDeposits(false);
+                            gnrBloc.setShowViewWebSite(false);
+                            gnrBloc.setShowViewFrmDeposit(true);
                           },
                           child: Container(
                             width: size.width * 0.08, // Tamaño del botón
@@ -706,9 +718,9 @@ class PrincipalClientStScreen extends StatelessWidget {
                                   offset: Offset(2, 2),
                                 ),
                               ],
-                            ),                                
+                            ),
                             alignment: Alignment.center,
-                            child: const Icon(Icons.add_box_outlined, color: Colors.white), // Ícono dentro del botón
+                            child: const Icon(Icons.add, color: Colors.white), // Ícono dentro del botón
                           ),
                         ),
                   
@@ -721,6 +733,15 @@ class PrincipalClientStScreen extends StatelessWidget {
                 const DepositView(null),
               ],
             ),
+          )
+          :
+
+          state.viewFrmDeposits ?
+          Container(
+            width: size.width,
+            height: size.height,
+            color: Colors.transparent,
+            child: const DepositFrmView(null),
           )
 
           :
@@ -742,9 +763,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     child: Text(locGen!.receiptsLbl, style: const TextStyle(fontSize: 25),)
                   ),
               
-                  //AEVG
-                  PrintReceiptView(),
-                  //TransactionListPage(),
+                  const PrintReceiptView(null),
               
                 ],
               ),

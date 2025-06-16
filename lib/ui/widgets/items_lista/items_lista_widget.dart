@@ -221,7 +221,7 @@ class ListaNotificaciones extends StatelessWidget {
             await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
             
             //ignore: use_build_context_synchronously
-            context.push(rutaNavegacionFin!);            
+            context.push(rutaNavegacionFin!);
           },
           child: Column(
             children: [

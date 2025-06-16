@@ -26,6 +26,7 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   bool viewPrintReceipts = false;
   bool viewViewReservations = false;
   bool viewWebSite = false;
+  bool viewFrmDeposits = false;
 
   GenericBloc() : super(const GenericState(
     positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, 
@@ -35,16 +36,17 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     on<OnNewPositionEvent>(_onReInitPosition);
     on<OnNewCoordenadasPositionEvent>(_onReInitPositionMapa);
     on<OnNewFormaPagoEvent>(_onCambioFormaPago);
-    on<OnNewRadioMarcacionEvent>(_onCambioRadio);//_onCambioLocalidad
-    on<OnNewLocalidadMarcacionEvent>(_onCambioLocalidad);//_onCambioLocalidad
-    on<OnNewIdFormaPagoEvent>(_onCambioIdFormaPago);//_onCambioLocalidad  _onInitPositionFormaPago
+    on<OnNewRadioMarcacionEvent>(_onCambioRadio);
+    on<OnNewLocalidadMarcacionEvent>(_onCambioLocalidad);
+    on<OnNewIdFormaPagoEvent>(_onCambioIdFormaPago);
     on<OnNewPositionFormaPagoEvent>(_onInitPositionFormaPago);
-    on<OnShowViewAccountStatementEvent>(_onInitViewAccountStatement);//  
-    on<OnShowViewDebtsEvent>(_onInitViewViewDebts);//
-    on<OnShowViewSendDepositsEvent>(_onInitViewSendDeposits);//
-    on<OnShowViewWebSiteEvent>(_onInitViewWebSite);//
-    on<OnViewPrintReceiptsEvent>(_onInitViewPrintReceipts);//  
-    on<OnViewReservationsEvent>(_onInitViewReservation);//      
+    on<OnShowViewAccountStatementEvent>(_onInitViewAccountStatement);
+    on<OnShowViewDebtsEvent>(_onInitViewViewDebts);
+    on<OnShowViewSendDepositsEvent>(_onInitViewSendDeposits);
+    on<OnShowViewWebSiteEvent>(_onInitViewWebSite);
+    on<OnViewPrintReceiptsEvent>(_onInitViewPrintReceipts);
+    on<OnViewReservationsEvent>(_onInitViewReservation);
+    on<OnViewFrmDepositEvent>(_onInitViewFrmReservation);
   }
 
   Future<void> init() async {
@@ -87,6 +89,9 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     ));
     add( OnViewReservationsEvent(
        viewViewReservations
+    ));
+    add( OnViewFrmDepositEvent(
+       viewFrmDeposits
     ));
   }
 
@@ -145,6 +150,10 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   void _onInitViewReservation( OnViewReservationsEvent event, Emitter<GenericState> emit ) {
     emit( state.copyWith( viewViewReservations: viewViewReservations ) );
   }
+
+  void _onInitViewFrmReservation( OnViewFrmDepositEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( viewFrmDeposits: viewFrmDeposits ) );
+  }  
 
   void setPosicionFormaPago(int varPositionFormaPago) {
     positionFormaPago = varPositionFormaPago;
@@ -219,6 +228,11 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   void setShowViewReservetions(bool varheightModalPlanAct) {
     viewViewReservations = varheightModalPlanAct;
     add(OnViewReservationsEvent(viewViewReservations));
+  }
+
+  void setShowViewFrmDeposit(bool varheightModalPlanAct) {
+    viewFrmDeposits = varheightModalPlanAct;
+    add(OnViewFrmDepositEvent(viewFrmDeposits));
   }
 
   @override

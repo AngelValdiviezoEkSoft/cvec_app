@@ -153,6 +153,9 @@ Map<String, List<ItemBoton>> groupedTransactions = {};
 late TextEditingController searchTxt;
 
 class PrintReceiptView extends StatefulWidget {
+  
+  const PrintReceiptView(Key? key) : super (key: key);
+  
   @override
   PrintReceiptViewSt createState() => PrintReceiptViewSt();
 }
