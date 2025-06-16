@@ -203,19 +203,24 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                 String objPerm = rspTmp;
 
                 List<ItemBoton> lstMenu = state.deserializeItemBotonMenuList(objPerm);
+                List<ItemBoton> lstMenuFiltrado = lstMenu;
 
                 if(searchQuery.isNotEmpty){
-                  filteredTransactions = lstMenu
+                  lstMenuFiltrado = [];
+
+                  lstMenuFiltrado = lstMenu
                     .where((tx) => tx.mensajeNotificacion.toLowerCase().contains(searchQuery.toLowerCase()))
                     .toList();
 
-                  if(filteredTransactions.isNotEmpty){
+                  //objPayment = bookingList.firstWhere((x) => x.paymentId == idFinal);
+
+                  //if(filteredTransactions.isNotEmpty){
                     groupedTransactions = {};
 
                     for (var tx in filteredTransactions) {
                       groupedTransactions.putIfAbsent(tx.mensaje2, () => []).add(tx);
                     }
-                  }
+                  //}
                   
                 }
                 else{
@@ -226,8 +231,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                   }                  
                 }
 
-
-                List<Widget> itemMap = lstMenu.map(
+                List<Widget> itemMap = lstMenuFiltrado.map(
                 (item) => FadeInLeft(
                   duration: const Duration( milliseconds: 250 ),
                   child: 
@@ -267,7 +271,33 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                                    
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: searchTxt,
+                              decoration: InputDecoration(
+                                hintText: 'Buscar',
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {                                      
+                                      searchQuery = '';
+                                      searchTxt.text = searchQuery;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.close, color: Colors.black,),
+                                )
+                              ),
+                              onEditingComplete: () {
+                                FocusScope.of(context).unfocus();
+
+                                setState(() {
+                                  searchQuery = searchTxt.text;
+                                });
+                              },
+                            ),
+                          ),    
                           Container(
                             width: size.width,
                             height: size.height * 0.12 * lstMenu.length,

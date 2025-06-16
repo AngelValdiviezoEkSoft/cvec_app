@@ -7,7 +7,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 
 const storageProspecto = FlutterSecureStorage();
 AlertsMessages objMensajesProspectoService = AlertsMessages();
@@ -70,6 +70,7 @@ class ReservationsService extends ChangeNotifier{
       return bookingList;
     }
     on SocketException catch (_) {
+      /*
       Fluttertoast.showToast(
         msg: objMensajesProspectoService.mensajeFallaInternet,
         toastLength: Toast.LENGTH_LONG,
@@ -79,6 +80,7 @@ class ReservationsService extends ChangeNotifier{
         textColor: Colors.white,
         fontSize: 16.0
       );
+      */
       return null;
     }
   }

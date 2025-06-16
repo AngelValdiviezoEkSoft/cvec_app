@@ -11,3 +11,5 @@ export 'package:cve_app/ui/views/reservations/reservations.dart';
 export 'package:cve_app/ui/views/reports/reports.dart';
 
 export 'package:cve_app/ui/views/web_site/web_site.dart';
+
+export 'package:cve_app/ui/views/generic/generic.dart';

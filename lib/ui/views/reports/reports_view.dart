@@ -8,7 +8,7 @@ import 'package:cve_app/ui/screens/reports/reports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
 
 const storage = FlutterSecureStorage();
@@ -63,6 +63,7 @@ class PdfView extends StatelessWidget {
       return objReservation;
 
     } on Exception catch (error) {
+      /*
       Fluttertoast.showToast(
           msg: '$error',
           toastLength: Toast.LENGTH_LONG,
@@ -71,6 +72,7 @@ class PdfView extends StatelessWidget {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+    */
     }
   }
 
@@ -195,6 +197,7 @@ class PdfView extends StatelessWidget {
       return objPayment;
 
     } on Exception catch (error) {
+      /*
       Fluttertoast.showToast(
           msg: '$error',
           toastLength: Toast.LENGTH_LONG,
@@ -203,6 +206,7 @@ class PdfView extends StatelessWidget {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
+          */
     }
 
     } on Exception catch (_) {

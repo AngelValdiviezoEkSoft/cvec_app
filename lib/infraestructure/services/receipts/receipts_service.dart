@@ -7,7 +7,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 
 const storageReceipts = FlutterSecureStorage();
 AlertsMessages objMessageReceipt = AlertsMessages();
@@ -70,6 +70,7 @@ class ReceiptsService extends ChangeNotifier{
       return bookingList;
     }
     on SocketException catch (_) {
+      /*
       Fluttertoast.showToast(
         msg: objMessageReceipt.mensajeFallaInternet,
         toastLength: Toast.LENGTH_LONG,
@@ -79,6 +80,7 @@ class ReceiptsService extends ChangeNotifier{
         textColor: Colors.white,
         fontSize: 16.0
       );
+      */
       return null;
     }
   }
@@ -125,6 +127,7 @@ class ReceiptsService extends ChangeNotifier{
       return bookingList;
     }
     on SocketException catch (_) {
+      /*
       Fluttertoast.showToast(
         msg: objMessageReceipt.mensajeFallaInternet,
         toastLength: Toast.LENGTH_LONG,
@@ -134,6 +137,7 @@ class ReceiptsService extends ChangeNotifier{
         textColor: Colors.white,
         fontSize: 16.0
       );
+      */
       return null;
     }
   }

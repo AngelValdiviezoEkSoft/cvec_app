@@ -1,8 +1,14 @@
-import 'package:cve_app/ui/bloc/bloc.dart';
+import 'dart:io';
+
 import 'package:cve_app/ui/ui.dart';
 import 'package:file_picker/file_picker.dart';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
+//import 'package:image_cropper/image_cropper.dart';
 
 class DepositFrmView extends StatefulWidget {
 
@@ -20,6 +26,27 @@ class DepositFrmViewState extends State<DepositFrmView> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _observationsController = TextEditingController();
+  String rutaPagoAdj = '';
+
+  String fechaHoraEscogida = '';
+
+  String selectedValueBanco = 'Produbanco';
+  String selectedValueCliente = 'Tito Salazar';
+
+  final List<String> cmbBancoCve = ['Produbanco', 'Banco de Guayaquil'];
+  final List<String> cmbBancoClient = ['Narboni', 'Tito Salazar'];
+
+  File? selectedFile;
+
+  Future<void> pickFile(FilePickerResult? result) async {
+    //FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        selectedFile = File(result.files.single.path!);
+      });
+    }
+  }
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -33,6 +60,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
         _fileName = _pickedFile!.name;
       });
     }
+
+    pickFile(result);
   }
 
   void _savePayment() {
@@ -63,6 +92,14 @@ class DepositFrmViewState extends State<DepositFrmView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    fechaHoraEscogida = '${DateTime.now()} ${DateTime.now().hour}';
+    rutaPagoAdj = '';
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final gnrBloc = Provider.of<GenericBloc>(context);
@@ -73,147 +110,411 @@ class DepositFrmViewState extends State<DepositFrmView> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
-            children: [
-              ElevatedButton.icon(
-                onPressed: _pickFile,
-                icon: const Icon(Icons.attach_file),
-                label: const Text('Adjuntar Archivo'),
-              ),
-              if (_fileName != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    'Archivo seleccionado: $_fileName',
-                    style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                /*
+                ElevatedButton.icon(
+                  onPressed: _pickFile,
+                  icon: const Icon(Icons.attach_file),
+                  label: const Text('Adjuntar Archivo'),
                 ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Monto',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.monetization_on_outlined)
+                */
+
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.028,
+                  color: Colors.transparent,
+                  child: const Text('Foto recibo de pago: '),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese el monto';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _titleController,
-                decoration: InputDecoration(
-                  labelText: 'Título',
-                  border: OutlineInputBorder(),
+
+                SizedBox(
+                  height: size.height * 0.005,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingrese el título';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-              TextFormField(
-                controller: _observationsController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  labelText: 'Observaciones',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _savePayment,                
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  textStyle: TextStyle(fontSize: 18),
-                  backgroundColor: Colors.green
-                ),
-                child: Center(
+            
+                Container(
+                  width: size.width * 0.96,
+                  color: Colors.transparent,
+                  alignment: Alignment.centerLeft,
                   child: Container(
-                    color: Colors.transparent,
-                    width: size.width,
-                    //height: size.height * 0.08,
-                    alignment: Alignment.center,
-                    //padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.15,
-                          //height: size.height * 0.045,
-                          child: const Icon(Icons.save, color: Colors.white,)
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.25,
-                          //height: size.height * 0.08,
-                          child: const Text('Guardar', style: TextStyle(color: Colors.white),)),
-                      ],
+                      width: size.width * 0.25,
+                      height: size.height * 0.11,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[400], // Color de fondo
+                        borderRadius: BorderRadius.circular(12), // Bordes redondeados
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          mostrarOpciones(context);
+                        },
+                        child: const Icon(Icons.add_a_photo_outlined, size: 40, color: Colors.white)
                     ),
                   ),
                 ),
-              ),
-
-              SizedBox(
-                height: size.height * 0.025,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  gnrBloc.setShowViewAccountStatementEvent(false);
-                  gnrBloc.setShowViewDebts(false);
-                  gnrBloc.setShowViewPrintRecipts(false);
-                  gnrBloc.setShowViewReservetions(false);
-                  gnrBloc.setShowViewSendDeposits(true);
-                  gnrBloc.setShowViewWebSite(false);
-                  gnrBloc.setShowViewFrmDeposit(false);
-                },                
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  textStyle: const TextStyle(fontSize: 18),
-                  backgroundColor: Colors.red
+            
+                if (_fileName != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      'Archivo seleccionado: $_fileName',
+                      style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                    ),
+                  ),
+                
+                if (_fileName != null && selectedFile != null)
+                  FileViewer(file: selectedFile!),
+            
+                SizedBox(
+                  height: size.height * 0.025,
                 ),
-                child: Center(
+            
+                TextFormField(
+                  controller: _amountController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'Monto',
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.monetization_on_outlined)
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese el monto';
+                    }
+                    return null;
+                  },
+                ),
+            
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+
+                TextFormField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Número de comprobante:',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese el título';
+                    }
+                    return null;
+                  },
+                ),
+                
+                
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+              
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.028,
+                  color: Colors.transparent,
+                  child: const Text('Fecha: '),
+                ),
+
+                SizedBox(
+                  height: size.height * 0.005,
+                ),
+
+                GestureDetector(
+                  onTap: () {
+                    openDatePicker(context);
+                  },
                   child: Container(
+                    width: size.width * 0.96,
+                    height: size.height * 0.028,
                     color: Colors.transparent,
-                    width: size.width,
-                    //height: size.height * 0.08,
-                    alignment: Alignment.center,
-                    //padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.15,
-                          //height: size.height * 0.045,
-                          child: const Icon(Icons.close, color: Colors.white,)
-                        ),
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.25,
-                          //height: size.height * 0.08,
-                          child: const Text('Salir', style: TextStyle(color: Colors.white),)),
-                      ],
+                    child: GestureDetector(
+                      onTap: () {
+                        openDatePicker(context);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.calendar_month_outlined, color: Colors.blue,),
+                          SizedBox(
+                            width: size.width * 0.008,
+                          ),
+                          Text(fechaHoraEscogida),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-
-            ],
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                TextFormField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(
+                    labelText: 'Concepto',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor ingrese el título';
+                    }
+                    return null;
+                  },
+                ),
+                
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                TextFormField(
+                  controller: _observationsController,
+                  maxLines: 3,
+                  decoration: const InputDecoration(
+                    labelText: 'Notas',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.028,
+                  color: Colors.transparent,
+                  child: const Text('He realizado el pago en: '),
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.07,
+                  alignment: Alignment.center,
+                  //color: Colors.transparent,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent, // Color de fondo (opcional)
+                    border: Border.all(
+                      color: Colors.black54, // Color del borde
+                      width: 0.5,         // Grosor del borde
+                    ),
+                    borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
+                  ),
+                  child: DropdownButton<String>(
+                    //hint: const Text('He realizado el pago en'),
+                    value: selectedValueBanco,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedValueBanco = newValue!;
+                      });
+                    },
+                    items: cmbBancoCve.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+            
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.028,
+                  color: Colors.transparent,
+                  child: const Text('Titular: '),
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  height: size.height * 0.07,
+                  alignment: Alignment.center,
+                  //color: Colors.transparent,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent, // Color de fondo (opcional)
+                    border: Border.all(
+                      color: Colors.black54, // Color del borde
+                      width: 0.5,         // Grosor del borde
+                    ),
+                    borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
+                  ),
+                  child: DropdownButton<String>(
+                    //hint: const Text('He realizado el pago en'),
+                    value: selectedValueCliente,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedValueCliente = newValue!;
+                      });
+                    },
+                    items: cmbBancoClient.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
+            
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: _savePayment,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: const BorderSide(color: Colors.green, width: 2),
+                      ),
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                    ),
+                    child: const Text(
+                      'Guardar',
+                      style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+            
+                SizedBox(
+                  height: size.height * 0.025,
+                ),
+            
+                Container(
+                  width: size.width * 0.96,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      gnrBloc.setShowViewAccountStatementEvent(false);
+                      gnrBloc.setShowViewDebts(false);
+                      gnrBloc.setShowViewPrintRecipts(false);
+                      gnrBloc.setShowViewReservetions(false);
+                      gnrBloc.setShowViewSendDeposits(true);
+                      gnrBloc.setShowViewWebSite(false);
+                      gnrBloc.setShowViewFrmDeposit(false);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 147, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: const BorderSide(color: Colors.red, width: 2),
+                      ),
+                      backgroundColor: Colors.white,
+                      elevation: 0,
+                    ),
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+            
+              ],
+            ),
           ),
         ),
       );
+  }
+
+  
+  void openDatePicker(BuildContext context) {
+  picker.DatePicker.showDateTimePicker(
+    context,
+    showTitleActions: true, 
+    onChanged: (date) {
+      setState(() {
+        fechaHoraEscogida = '$date';
+      });
+    },
+    currentTime: DateTime.now()
+  );
+}
+
+  void mostrarOpciones(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Tomar foto'),
+              onTap: () async {
+                Navigator.pop(context);
+                
+                final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+                                        
+                try {
+                  if (pickedFile != null) {
+                    /*
+                    final croppedFile = await ImageCropper().cropImage(
+                      sourcePath: pickedFile.path,
+                      compressFormat: ImageCompressFormat.png,
+                      compressQuality: 100,                                        
+                    );
+                    */
+                    //if (pickedFile != null) {                                        
+      
+                      rutaPagoAdj = pickedFile.path;
+                      
+                      //validandoFoto = false;
+                      
+                      setState(() {});
+                    
+                    //}
+                  }
+                } catch(_) {
+                  
+                }
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Seleccionar foto'),
+              onTap: () async {
+                Navigator.pop(context);
+                
+                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                        
+                try {
+                  if (pickedFile != null) {
+                    /*
+                    final croppedFile = await ImageCropper().cropImage(
+                      sourcePath: pickedFile.path,
+                      compressFormat: ImageCompressFormat.png,
+                      compressQuality: 100,                                        
+                    );
+                    if (croppedFile != null) {    
+                      */                                    
+      
+                      rutaPagoAdj = pickedFile.path;
+                      
+                      //validandoFoto = false;
+                      
+                      setState(() {});
+                    
+                    //}
+                  }
+                } catch(_) {
+                  
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -128,7 +128,25 @@ class DepositViewSt extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-         
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Buscar',
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                              onChanged: (value) {
+                                /*
+                                setState(() {
+                                  searchQuery = value;
+                                });
+                                */
+                              },
+                            ),
+                          ),
+
                           Container(
                             width: size.width,
                             height: size.height * 0.12 * lstMenu.length,
