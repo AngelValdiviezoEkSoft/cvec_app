@@ -15,6 +15,7 @@
     "logInLbl": "Log In",
     "barNavLogInLbl": "Enter your credentials",
     "menuAccountStatementLbl": "Account statements",
+    "menuDebitsLbl": "Debits",
     "menuDebtsLbl": "Debts",
     "menuSendDepositsLbl": "Send Deposits",
     "menuPrintReceiptsLbl": "Print Receipts",

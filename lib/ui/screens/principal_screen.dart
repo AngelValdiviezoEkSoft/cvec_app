@@ -450,20 +450,20 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                 ),
                 // Botón flotante movible
                 Positioned(
-              left: x,
-              top: y,
-              child: Draggable(
-                feedback: buildFloatingButton(),
-                childWhenDragging: Container(), // Para que desaparezca mientras se arrastra
-                onDragEnd: (details) {
-                  setState(() {
-                    x = details.offset.dx;
-                    y = details.offset.dy - AppBar().preferredSize.height; // compensar la barra de estado
-                  });
-                },
-                child: buildFloatingButton(),
-              ),
-            ),
+                  left: x,
+                  top: y,
+                  child: Draggable(
+                    feedback: buildFloatingButton(),
+                    childWhenDragging: Container(), // Para que desaparezca mientras se arrastra
+                    onDragEnd: (details) {
+                      setState(() {
+                        x = details.offset.dx;
+                        y = details.offset.dy - AppBar().preferredSize.height; // compensar la barra de estado
+                      });
+                    },
+                    child: buildFloatingButton(),
+                  ),
+                ),
               ]
             ),
           ),

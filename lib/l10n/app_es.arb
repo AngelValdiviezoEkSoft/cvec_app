@@ -77,6 +77,10 @@
   "@menuAccountStatementLbl": {
     "description": "Estados de cuenta"
   },
+  "menuDebitsLbl": "Listado de deudas",
+  "@menuDebitsLbl": {
+    "description": "Listado de deudas"
+  },  
   "menuDebtsLbl": "Deudas",
   "@menuDebtsLbl": {
     "description": "Deudas"

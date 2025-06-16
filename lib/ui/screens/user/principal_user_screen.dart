@@ -661,12 +661,66 @@ class PrincipalClientStScreen extends StatelessWidget {
 
           :
 
-          state.viewSendDeposits ?
+          state.viewSendDeposits ?          
           Container(
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: const DepositView(null),
+            child: Column(
+              children: [
+
+                Container(
+                  color: Colors.transparent,
+                  width: size.width * 0.9,
+                  height: size.height * 0.1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: size.width * 0.55,
+                        height: size.height * 0.06,
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text(locGen!.menuDebitsLbl, style: const TextStyle(fontSize: 25),)
+                      ),
+                  
+                      Container(
+                        width: size.width * 0.35,
+                        height: size.height * 0.06,
+                        color: Colors.transparent,
+                        child: GestureDetector(
+                          onTap: () {
+                            // Acción cuando se presiona el botón
+                            //print('Botón personalizado presionado');
+                          },
+                          child: Container(
+                            width: size.width * 0.08, // Tamaño del botón
+                            height: size.height * 0.07,
+                            decoration: const BoxDecoration(
+                              color: Colors.green, // Color de fondo
+                              shape: BoxShape.circle, // Forma circular
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),                                
+                            alignment: Alignment.center,
+                            child: const Icon(Icons.add_box_outlined, color: Colors.white), // Ícono dentro del botón
+                          ),
+                        ),
+                  
+                      ),
+                             
+                    ],
+                  ),
+                ),
+
+                const DepositView(null),
+              ],
+            ),
           )
 
           :
