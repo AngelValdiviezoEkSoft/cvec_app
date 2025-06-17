@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  google_mlkit_text_recognition: ^0.15.0
+  flutter_multi_formatter: ^2.13.7
   image_picker: ^1.1.2
   flutter_datetime_picker_plus: ^2.2.0
   flutter_pdfview: ^1.3.1

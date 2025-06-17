@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 //import 'package:image_cropper/image_cropper.dart';
@@ -21,12 +25,19 @@ class DepositFrmView extends StatefulWidget {
 class DepositFrmViewState extends State<DepositFrmView> {
   final _formKey = GlobalKey<FormState>();  
 
-  String? _fileName;
+  //String? _fileName;
+  var currencyFormatter = CurrencyInputFormatter(
+    thousandSeparator: ThousandSeparator.None,
+  );
+
+  String extractedText = '';
+  
   PlatformFile? _pickedFile;
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _observationsController = TextEditingController();
   String rutaPagoAdj = '';
+  bool validandoFoto = false;
 
   String fechaHoraEscogida = '';
 
@@ -57,7 +68,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
     if (result != null) {
       setState(() {
         _pickedFile = result.files.first;
-        _fileName = _pickedFile!.name;
+        //_fileName = _pickedFile!.name;
       });
     }
 
@@ -86,7 +97,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
       _observationsController.clear();
       setState(() {
         _pickedFile = null;
-        _fileName = null;
+        //_fileName = null;
       });
     }
   }
@@ -95,7 +106,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
   void initState() {
     super.initState();
 
-    fechaHoraEscogida = '${DateTime.now()} ${DateTime.now().hour}';
+    fechaHoraEscogida = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
+
     rutaPagoAdj = '';
   }
 
@@ -105,6 +117,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
     final gnrBloc = Provider.of<GenericBloc>(context);
     final size = MediaQuery.of(context).size;
     contextPrincipalGen = context;
+    ColorsApp objColorsApp = ColorsApp();
 
     return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -132,6 +145,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                   height: size.height * 0.005,
                 ),
             
+                if (rutaPagoAdj.isEmpty)
                 Container(
                   width: size.width * 0.96,
                   color: Colors.transparent,
@@ -146,12 +160,83 @@ class DepositFrmViewState extends State<DepositFrmView> {
                       child: GestureDetector(
                         onTap: () {
                           mostrarOpciones(context);
+/*
+                            showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                              ),
+                              builder: (context) {
+                                return Wrap(
+                                  children: [
+                                    ListTile(
+                                      leading: const Icon(Icons.camera_alt_outlined),
+                                      title: const Text('Tomar foto'),
+                                      onTap: () async {
+                                        Navigator.pop(context);
+                                        
+                                        final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+                                                                
+                                        try {
+                                          if (pickedFile != null) {
+                                            /*
+                                            final croppedFile = await ImageCropper().cropImage(
+                                              sourcePath: pickedFile.path,
+                                              compressFormat: ImageCompressFormat.png,
+                                              compressQuality: 100,                                        
+                                            );
+                                            */
+                                            //if (pickedFile != null) {                                        
+                              
+                                              rutaPagoAdj = pickedFile.path;
+                                              
+                                              //validandoFoto = false;
+                                              
+                                              setState(() {});
+                                            
+                                            //}
+                                          }
+                                        } catch(_) {
+                                          
+                                        }
+                                      },
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.photo_library_outlined),
+                                      title: const Text('Seleccionar foto'),
+                                      onTap: () async {
+                                        Navigator.pop(context);
+                                        
+                                        final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                                                
+                                        try {
+                                          if (pickedFile != null) {
+                              
+                                              setState(() {
+                                                rutaPagoAdj = pickedFile.path;
+                                              
+                                                validandoFoto = false;
+                                              });
+                                            
+                                            //}
+                                          }
+                                        } catch(_) {
+                                          
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          */
                         },
                         child: const Icon(Icons.add_a_photo_outlined, size: 40, color: Colors.white)
                     ),
                   ),
                 ),
             
+            /*
                 if (_fileName != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
@@ -163,6 +248,64 @@ class DepositFrmViewState extends State<DepositFrmView> {
                 
                 if (_fileName != null && selectedFile != null)
                   FileViewer(file: selectedFile!),
+                  */
+
+                  if(rutaPagoAdj.isNotEmpty)
+                  Container(
+                    width: size.width * 0.96,
+                    color: Colors.transparent,
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: size.width * 0.25,
+                      height: size.height * 0.11,
+                      decoration: !validandoFoto ? 
+                      BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(File(rutaPagoAdj)),
+                          fit: BoxFit.cover,
+                        ),
+                        //borderRadius: BorderRadius.circular(size.width * 0.2),
+                        /*
+                        border: Border.all(
+                          width: 3,
+                          color: objColorsApp.naranja50PorcTrans,
+                          style: BorderStyle.solid,
+                        ),
+                        */
+                      )
+                      :
+                      BoxDecoration(
+                        borderRadius: BorderRadius.circular(size.width * 0.2),
+                        border: Border.all(
+                          width: 3,
+                          color: objColorsApp.naranja50PorcTrans,
+                          style: BorderStyle.solid,
+                        ),
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          mostrarOpciones(context);
+                        },
+                        /*
+                        child: validandoFoto ? SpinKitFadingCircle(
+                          size: 35,
+                          itemBuilder: (BuildContext context, int index) {
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: index.isEven
+                                  ? Colors.black12
+                                  : Colors.white,
+                              ),
+                            );
+                          },
+                        )
+                        :
+                        null
+                        */
+                      )
+                    ),
+                  ),
+                               
             
                 SizedBox(
                   height: size.height * 0.025,
@@ -170,11 +313,14 @@ class DepositFrmViewState extends State<DepositFrmView> {
             
                 TextFormField(
                   controller: _amountController,
-                  keyboardType: TextInputType.number,
+                  inputFormatters: [currencyFormatter],
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   decoration: const InputDecoration(
                     labelText: 'Monto',
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.monetization_on_outlined)
+                    prefixIcon: Icon(Icons.monetization_on_outlined),
+                    hintText: "0.00",
+                    prefixText: '\$',
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -432,7 +578,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
     showTitleActions: true, 
     onChanged: (date) {
       setState(() {
-        fechaHoraEscogida = '$date';
+        //fechaHoraEscogida = '$date';
+        fechaHoraEscogida = DateFormat('yyyy-MM-dd HH:mm').format(date);
       });
     },
     currentTime: DateTime.now()
@@ -458,21 +605,16 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                         
                 try {
                   if (pickedFile != null) {
-                    /*
-                    final croppedFile = await ImageCropper().cropImage(
-                      sourcePath: pickedFile.path,
-                      compressFormat: ImageCompressFormat.png,
-                      compressQuality: 100,                                        
-                    );
-                    */
-                    //if (pickedFile != null) {                                        
-      
-                      rutaPagoAdj = pickedFile.path;
-                      
-                      //validandoFoto = false;
-                      
-                      setState(() {});
+                    File file = File(pickedFile.path);
+
+                    readTextFromImage(file);
+                  
+                    rutaPagoAdj = pickedFile.path;
                     
+                    //validandoFoto = false;
+                    
+                    setState(() {});
+                  
                     //}
                   }
                 } catch(_) {
@@ -490,20 +632,15 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                         
                 try {
                   if (pickedFile != null) {
-                    /*
-                    final croppedFile = await ImageCropper().cropImage(
-                      sourcePath: pickedFile.path,
-                      compressFormat: ImageCompressFormat.png,
-                      compressQuality: 100,                                        
-                    );
-                    if (croppedFile != null) {    
-                      */                                    
+                    File file = File(pickedFile.path);
+
+                    readTextFromImage(file);                        
       
-                      rutaPagoAdj = pickedFile.path;
-                      
-                      //validandoFoto = false;
-                      
-                      setState(() {});
+                    rutaPagoAdj = pickedFile.path;
+                    
+                    //validandoFoto = false;
+                    
+                    setState(() {});
                     
                     //}
                   }
@@ -516,5 +653,20 @@ class DepositFrmViewState extends State<DepositFrmView> {
         );
       },
     );
+  }
+
+  Future<void> readTextFromImage(File image) async {
+    final inputImage = InputImage.fromFile(image);
+    final textRecognizer = TextRecognizer();
+
+    final RecognizedText recognizedText = await textRecognizer.processImage(inputImage);
+
+    String text = recognizedText.text;
+
+    setState(() {
+      extractedText = text;
+    });
+
+    textRecognizer.close();
   }
 }
