@@ -19,6 +19,8 @@ class GenericState extends Equatable {
   final bool viewWebSite;
   final bool viewPrintReceipts;
   final bool viewViewReservations;
+  final bool cargando;
+  final bool levantaModal;
 
   const GenericState(
     {
@@ -36,7 +38,9 @@ class GenericState extends Equatable {
       viewWebSite = false,
       viewPrintReceipts = false,
       viewViewReservations = false,
-      viewFrmDeposits = false
+      viewFrmDeposits = false,
+      cargando = false,
+      levantaModal = false
     } 
   ) : positionMenu = positionMenu ?? 0,
       positionFormaPago = positionFormaPago ?? 0,
@@ -52,7 +56,9 @@ class GenericState extends Equatable {
       viewWebSite = viewWebSite ?? false,
       viewPrintReceipts = viewPrintReceipts ?? false,
       viewViewReservations = viewViewReservations ?? false,
-      viewFrmDeposits = viewFrmDeposits ?? false;
+      viewFrmDeposits = viewFrmDeposits ?? false,
+      cargando = cargando ?? false,
+      levantaModal = levantaModal ?? false;
   
 
   GenericState copyWith({
@@ -70,7 +76,9 @@ class GenericState extends Equatable {
     bool? viewPrintReceipts,
     bool? viewViewReservations,
     bool? viewWebSite,
-    bool? viewFrmDeposits
+    bool? viewFrmDeposits,
+    bool? cargando,
+    bool? levantaModal
   }) 
   => GenericState(
     viewViewReservations: viewViewReservations ?? this.viewViewReservations,
@@ -87,12 +95,14 @@ class GenericState extends Equatable {
     localidadId: localidadId ?? this.localidadId,
     idFormaPago: idFormaPago ?? this.idFormaPago,
     heightModalPlanAct: heightModalPlanAct ?? this.heightModalPlanAct,
-    viewFrmDeposits: viewFrmDeposits ?? this.viewFrmDeposits
+    viewFrmDeposits: viewFrmDeposits ?? this.viewFrmDeposits,
+    cargando: cargando ?? this.cargando,
+    levantaModal: levantaModal ?? this.levantaModal
   );
 
 
   @override
-  List<Object> get props => [viewAccountStatement,viewViewDebts,viewSendDeposits, viewWebSite,viewPrintReceipts,viewViewReservations,positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct,viewFrmDeposits];
+  List<Object> get props => [viewAccountStatement,viewViewDebts,viewSendDeposits, viewWebSite,viewPrintReceipts,viewViewReservations,positionMenu,positionFormaPago,coordenadasMapa,radioMarcacion,formaPago,localidadId,idFormaPago, heightModalPlanAct,viewFrmDeposits,cargando,levantaModal];
 
   Future<String> readPrincipalPage() async {
 

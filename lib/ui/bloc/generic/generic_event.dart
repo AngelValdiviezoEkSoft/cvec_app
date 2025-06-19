@@ -87,3 +87,13 @@ class OnViewFrmDepositEvent extends GenericEvent {
   final bool showIt;
   const OnViewFrmDepositEvent(this.showIt);
 }
+
+class OnViewCargandoEvent extends GenericEvent {
+  final bool showIt;
+  const OnViewCargandoEvent(this.showIt);
+}
+
+class OnViewLevantaModalEvent extends GenericEvent {
+  final bool showIt;
+  const OnViewLevantaModalEvent(this.showIt);
+}

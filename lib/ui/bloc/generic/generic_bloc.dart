@@ -27,6 +27,8 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
   bool viewViewReservations = false;
   bool viewWebSite = false;
   bool viewFrmDeposits = false;
+  bool cargando = false;
+  bool levantaModal = false;
 
   GenericBloc() : super(const GenericState(
     positionMenu: 0, positionFormaPago: 0, coordenadasMapa: 0.0, 
@@ -47,6 +49,8 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     on<OnViewPrintReceiptsEvent>(_onInitViewPrintReceipts);
     on<OnViewReservationsEvent>(_onInitViewReservation);
     on<OnViewFrmDepositEvent>(_onInitViewFrmReservation);
+    on<OnViewCargandoEvent>(_onInitCargando);
+    on<OnViewLevantaModalEvent>(_onInitLevantaModal);
   }
 
   Future<void> init() async {
@@ -92,6 +96,12 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
     ));
     add( OnViewFrmDepositEvent(
        viewFrmDeposits
+    ));
+    add( OnViewCargandoEvent(
+       cargando
+    ));
+    add( OnViewLevantaModalEvent(
+       levantaModal
     ));
   }
 
@@ -153,11 +163,29 @@ class GenericBloc extends Bloc<GenericEvent, GenericState> {
 
   void _onInitViewFrmReservation( OnViewFrmDepositEvent event, Emitter<GenericState> emit ) {
     emit( state.copyWith( viewFrmDeposits: viewFrmDeposits ) );
-  }  
+  }
+
+  void _onInitCargando( OnViewCargandoEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( cargando: cargando ) );
+  }
+
+  void _onInitLevantaModal( OnViewLevantaModalEvent event, Emitter<GenericState> emit ) {
+    emit( state.copyWith( levantaModal: levantaModal ) );
+  }
 
   void setPosicionFormaPago(int varPositionFormaPago) {
     positionFormaPago = varPositionFormaPago;
     add(OnNewPositionFormaPagoEvent(varPositionFormaPago));
+  }
+
+  void setLevantaModal(bool varPositionFormaPago) {
+    levantaModal = varPositionFormaPago;
+    add(OnViewLevantaModalEvent(levantaModal));
+  }
+
+  void setCargando(bool varPositionFormaPago) {
+    cargando = varPositionFormaPago;
+    add(OnViewCargandoEvent(cargando));
   }
 
   void getPosicion() {
