@@ -175,7 +175,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                       FileViewer(file: selectedFile!),
                       */
 
-                  if (rutaPagoAdj.isNotEmpty)
+                  if (rutaPagoAdj.isNotEmpty && !state.levantaModal)
                     Container(
                       width: size.width * 0.96,
                       color: Colors.transparent,
@@ -201,6 +201,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                 ),
                           child: GestureDetector(
                             onTap: () async {
+                              gnrBloc.setLevantaModal(true);
                               mostrarOpciones(context, size);
                             },
                           )),
@@ -752,28 +753,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         title: const Text('Eliminar foto', style: TextStyle(color: Colors.white)),
                         onTap: () async {
                           Navigator.pop(context);
-                          
-                          final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
-
-                          gnrBloc.setCargando(true);
-
-                          try {
-                            if (pickedFile != null) {
-                              File file = File(pickedFile.path);
-
-                              readTextFromImage(file, 'CAMARA');
-
-                              rutaPagoAdj = pickedFile.path;
-
-                              //validandoFoto = false;
-                              gnrBloc.setCargando(false);
-                              gnrBloc.setLevantaModal(false);
-
-                              setState(() {});
-
-                              //}
-                            }
-                          } catch (_) {}
+                          rutaPagoAdj = '';
                         },
                       ),
                       if(rutaPagoAdj.isNotEmpty)
