@@ -6,15 +6,29 @@ import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
-    as picker;
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 //import 'package:image_cropper/image_cropper.dart';
+
+  bool btnGuardar = false;
+  bool btnGuardarFoto = false;
+  TextEditingController amountController = TextEditingController();
+  TextEditingController compController = TextEditingController();
+  TextEditingController concController = TextEditingController();
+  TextEditingController observationsController = TextEditingController();
+  String rutaPagoAdj = '';
+  bool validandoFoto = false;
+  String selectedValueBanco = 'Produbanco';
+  String selectedValueCliente = 'Tito Salazar';
+
+  String fechaHoraEscogida = '';
+  String fechaHoraEscogidaMuestra = '';
 
 class DepositFrmView extends StatefulWidget {
   const DepositFrmView(Key? key) : super(key: key);
@@ -31,21 +45,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
     thousandSeparator: ThousandSeparator.None,
   );
 
-  String extractedText = '';
-
-  //PlatformFile? _pickedFile;
-  final TextEditingController _amountController = TextEditingController();
-  final TextEditingController compController = TextEditingController();
-  final TextEditingController concController = TextEditingController();
-  final TextEditingController _observationsController = TextEditingController();
-  String rutaPagoAdj = '';
-  bool validandoFoto = false;
-
-  String fechaHoraEscogida = '';
-  String fechaHoraEscogidaMuestra = '';
-
-  String selectedValueBanco = 'Produbanco';
-  String selectedValueCliente = 'Tito Salazar';
+  String extractedText = '';  
 
   final List<String> cmbBancoCve = ['Produbanco', 'Banco de Guayaquil'];
   final List<String> cmbBancoClient = ['Narboni', 'Tito Salazar'];
@@ -81,6 +81,13 @@ class DepositFrmViewState extends State<DepositFrmView> {
   @override
   void initState() {
     super.initState();
+
+    btnGuardar = false;
+
+    concController = TextEditingController ();
+    compController = TextEditingController ();
+    amountController = TextEditingController ();
+    observationsController = TextEditingController ();
 
     fechaHoraEscogida = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
     fechaHoraEscogidaMuestra = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -211,10 +218,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     height: size.height * 0.025,
                   ),
                   TextFormField(
-                    controller: _amountController,
+                    controller: amountController,
                     inputFormatters: [currencyFormatter],
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
                         labelText: 'Monto',
                         enabledBorder: const UnderlineInputBorder(
@@ -231,7 +237,14 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         hintText: "0.00",
                         suffixIcon: IconButton(
                           onPressed: () {
-                            _amountController.text = '';
+                            amountController.text = '';
+
+                            if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                              || compController.text.isEmpty || concController.text.isEmpty){
+                              setState(() {
+                                btnGuardar = false;
+                              });
+                            }
                           },
                           icon: state.cargando 
                           ?
@@ -247,12 +260,21 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           ),
                         )
                       ),
-                      validator: (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese el monto';
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      if(value.isNotEmpty && compController.text.isNotEmpty 
+                      && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                        setState(() {
+                          btnGuardar = true;
+                        });
+                      }
+                    },
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(
                     height: size.height * 0.025,
@@ -274,6 +296,13 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         suffixIcon: IconButton(
                           onPressed: () {
                             compController.text = '';
+
+                            if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                              || compController.text.isEmpty || concController.text.isEmpty){
+                              setState(() {
+                                btnGuardar = false;
+                              });
+                            }
                           },
                           icon: state.cargando 
                           ?
@@ -294,6 +323,15 @@ class DepositFrmViewState extends State<DepositFrmView> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      if(value.isNotEmpty && amountController.text.isNotEmpty 
+                      && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                        setState(() {
+                          btnGuardar = true;
+                        });
+                      }
+                    },
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(
                     height: size.height * 0.025,
@@ -356,6 +394,13 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         suffixIcon: IconButton(
                           onPressed: () {
                             concController.text = '';
+
+                            if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                              || compController.text.isEmpty || concController.text.isEmpty){
+                              setState(() {
+                                btnGuardar = false;
+                              });
+                            }
                           },
                           icon: state.cargando 
                           ?
@@ -376,12 +421,21 @@ class DepositFrmViewState extends State<DepositFrmView> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      if(value.isNotEmpty && amountController.text.isNotEmpty 
+                      && compController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                        setState(() {
+                          btnGuardar = true;
+                        });
+                      }
+                    },
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(
                     height: size.height * 0.025,
                   ),
                   TextFormField(
-                    controller: _observationsController,
+                    controller: observationsController,
                     maxLines: 3,
                     decoration: InputDecoration(
                         labelText: 'Notas',
@@ -397,7 +451,13 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
-                            _observationsController.text = '';
+                            observationsController.text = '';
+                            if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                              || compController.text.isEmpty || concController.text.isEmpty){
+                              setState(() {
+                                btnGuardar = false;
+                              });
+                            }
                           },
                           icon: state.cargando 
                           ?
@@ -412,6 +472,15 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             color: Colors.black,
                           ),
                         )),
+                    onChanged: (value) {
+                      if(value.isNotEmpty && amountController.text.isNotEmpty 
+                      && compController.text.isNotEmpty && concController.text.isNotEmpty){
+                        setState(() {
+                          btnGuardar = true;
+                        });
+                      }
+                    },
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(
                     height: size.height * 0.025,
@@ -437,7 +506,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           8), // Bordes redondeados (opcional)
                     ),
                     child: DropdownButton<String>(
-                      //hint: const Text('He realizado el pago en'),
                       value: selectedValueBanco,
                       onChanged: (String? newValue) {
                         setState(() {
@@ -476,7 +544,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           8), // Bordes redondeados (opcional)
                     ),
                     child: DropdownButton<String>(
-                      //hint: const Text('He realizado el pago en'),
                       value: selectedValueCliente,
                       onChanged: (String? newValue) {
                         setState(() {
@@ -498,127 +565,158 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     width: size.width * 0.96,
                     color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                    child: ElevatedButton(                      
+                      onPressed:
+                      () {
+
+                        if(amountController.text.isEmpty){
+                          btnGuardar = false;                          
+                        }
+
+                        if(compController.text.isEmpty){
+                          btnGuardar = false;                          
+                        }
+
+                        if(concController.text.isEmpty){
+                          btnGuardar = false;                          
+                        }
+
+                        if(observationsController.text.isEmpty){
+                          btnGuardar = false;                          
+                        }
+
+                        setState(() {
+                          return;
+                        });
+
+                        if(btnGuardar){
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Column(
                                     children: [
-                                      GestureDetector(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: const Icon(Icons.close)),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Icon(Icons.close)),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: size.height * 0.009,
+                                      ),
+                                      const Text(
+                                        '¿Confirmas que todos los datos ingresados son correctos?',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: size.height * 0.009,
-                                  ),
-                                  const Text(
-                                    '¿Confirmas que todos los datos ingresados son correctos?',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              content: Container(
-                                width: size.width * 0.96,
-                                height: size.height * 0.125,
-                                color: Colors.transparent,
-                                alignment: Alignment.centerLeft,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        'Valor del pago: ${_amountController.text}'),
-                                    Text(
-                                        'Número de comprobante: ${compController.text}'),
-                                    Text('Fecha: $fechaHoraEscogidaMuestra'),
-                                    Text('Concepto: ${concController.text}'),
-                                    Text(
-                                        'He realizado el pago en: ${concController.text}'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      // Aquí podrías enviar la información al backend o procesarla.
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                            content: const Text(
-                                                'Pago guardado exitosamente')),
-                                      );
-                                      final gnrBloc = Provider.of<GenericBloc>(
-                                          contextPrincipalGen!);
-
-                                      gnrBloc.setShowViewAccountStatementEvent(
-                                          false);
-                                      gnrBloc.setShowViewDebts(false);
-                                      gnrBloc.setShowViewPrintRecipts(false);
-                                      gnrBloc.setShowViewReservetions(false);
-                                      gnrBloc.setShowViewSendDeposits(false);
-                                      gnrBloc.setShowViewWebSite(false);
-                                      gnrBloc.setShowViewFrmDeposit(true);
-
-                                      // Limpiar formulario (opcional)
-                                      _amountController.clear();
-                                      compController.clear();
-                                      _observationsController.clear();
-                                      setState(() {
-                                        //_pickedFile = null;
-                                        //_fileName = null;
-                                      });
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 86, vertical: 15),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      side: const BorderSide(
-                                          color: Colors.blue, width: 2),
+                                  content: Container(
+                                    width: size.width * 0.96,
+                                    height: size.height * 0.21,
+                                    color: Colors.transparent,
+                                    alignment: Alignment.centerLeft,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Valor del pago: ${amountController.text}'),
+                                        Text('Número de comprobante: ${compController.text}'),
+                                        Text('Fecha: $fechaHoraEscogidaMuestra'),
+                                        Text('Concepto: ${concController.text}'),
+                                        Text('He realizado el pago en: $selectedValueBanco'),
+                                        Text('Titular: $selectedValueCliente'),
+                                      ],
                                     ),
-                                    backgroundColor: Colors.white,
-                                    elevation: 0,
                                   ),
-                                  child: const Text(
-                                    'Sí, Continuar',
-                                    style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          /*
+                                          // Aquí podrías enviar la información al backend o procesarla.
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: const Text(
+                                                    'Pago guardado exitosamente')),
+                                          );
+                                          */
+
+                                          gnrBloc.setShowViewAccountStatementEvent(false);
+                                          gnrBloc.setShowViewDebts(false);
+                                          gnrBloc.setShowViewPrintRecipts(false);
+                                          gnrBloc.setShowViewReservetions(false);
+                                          gnrBloc.setShowViewSendDeposits(true);
+                                          gnrBloc.setShowViewWebSite(false);
+                                          gnrBloc.setShowViewFrmDeposit(false);
+
+                                          // Limpiar formulario (opcional)
+                                          /*
+                                          amountController.clear();
+                                          compController.clear();
+                                          observationsController.clear();
+                                          */
+
+                                          Navigator.of(context).pop();
+
+                                          context.push(objRutas.rutaConfDepositScreen);
+
+                                          setState(() {
+                                            //_pickedFile = null;
+                                            //_fileName = null;
+                                          });
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 86, vertical: 15),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          side: const BorderSide(
+                                              color: Colors.blue, width: 2),
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        elevation: 0,
+                                      ),
+                                      child: const Text(
+                                        'Sí, Continuar',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
+                        }
+                        else {
+                          //poner alerta para validar que se ingrese la foto
+                        }
+                      
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 150, vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
-                          side: const BorderSide(color: Colors.green, width: 2),
+                          side: BorderSide(color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, width: 2),
                         ),
                         backgroundColor: Colors.white,
                         elevation: 0,
                       ),
-                      child: const Text(
+                      child: Text(
                         'Guardar',
-                        style: TextStyle(
-                            color: Colors.green, fontWeight: FontWeight.bold),
+                        style: TextStyle( color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -771,6 +869,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           try {
                             if (pickedFile != null) {
                               File file = File(pickedFile.path);
+                              btnGuardarFoto = true;
 
                               readTextFromImage(file, 'CAMARA');
 
@@ -802,6 +901,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           try {
                             if (pickedFile != null) {
                               File file = File(pickedFile.path);
+                              btnGuardarFoto = true;
 
                               readTextFromImage(file, 'GALERIA');
 
@@ -829,156 +929,12 @@ class DepositFrmViewState extends State<DepositFrmView> {
       gnrBloc.setLevantaModal(false);
     });
 
-/*
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      useSafeArea: true,
-      builder: (BuildContext context) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(85.0),
-            child: Column(
-              //mainAxisSize: MainAxisSize.min,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
-                    child: Icon(
-                      Icons.add_a_photo,
-                      size: 60,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListTile(
-                        leading: Icon(Icons.camera_alt, color: Colors.white),
-                        title: Text('Tomar foto', style: TextStyle(color: Colors.white)),
-                        onTap: () {
-                          Navigator.pop(context);
-                          //_tomarFoto();
-                        },
-                      ),
-                      Divider(color: Colors.white24, height: 1),
-                      ListTile(
-                        leading: Icon(Icons.photo_library, color: Colors.white),
-                        title: Text('Seleccionar foto', style: TextStyle(color: Colors.white)),
-                        onTap: () {
-                          Navigator.pop(context);
-                          //_seleccionarFoto();
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                //const SizedBox(height: 220),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-*/
-/*
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) {
-        return Wrap(
-          children: [
-            ListTile(
-              leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text('Tomar foto'),
-              onTap: () async {                
-
-                Navigator.pop(context);
-
-                final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
-
-                gnrBloc.setCargando(true);
-
-                try {
-                  if (pickedFile != null) {
-                    File file = File(pickedFile.path);
-
-                    readTextFromImage(file, 'CAMARA');
-
-                    rutaPagoAdj = pickedFile.path;
-
-                    //validandoFoto = false;
-                    gnrBloc.setCargando(false);
-                    gnrBloc.setLevantaModal(false);
-
-                    setState(() {});
-
-                    //}
-                  }
-                } catch (_) {}
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_library_outlined),
-              title: const Text('Seleccionar foto'),
-              onTap: () async {
-                Navigator.pop(context);
-
-                gnrBloc.setCargando(true);
-
-                final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-                try {
-                  if (pickedFile != null) {
-                    File file = File(pickedFile.path);
-
-                    readTextFromImage(file, 'GALERIA');
-
-                    rutaPagoAdj = pickedFile.path;
-
-                    //validandoFoto = false;
-
-                    setState(() {});
-
-                    //}
-                  }
-                } catch (_) {}
-              },
-            ),
-          ],
-        );
-      },
-    );
-    */
   }
 
   Future<void> readTextFromImage(File image, String tipoCaptura) async {
     final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
 
-    _amountController.text = '';
+    amountController.text = '';
     compController.text = '';
 
     final inputImage = InputImage.fromFile(image);
@@ -993,7 +949,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
       //Map<String, String> datos = extraerDatos(text);
       if (lstDatosFrm.isNotEmpty) {
         try {
-          _amountController.text = lstDatosFrm[3].split('\$')[1];
+          amountController.text = lstDatosFrm[3].split('\$')[1];
           compController.text = lstDatosFrm[15].split('No.')[1];
 
           gnrBloc.setCargando(false);
@@ -1005,7 +961,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             if (lstDatosFrm[4].toUpperCase().contains('\$')) {
               String numComp = lstDatosFrm[8].replaceAll(RegExp(r'[^0-9]'), '');
 
-              _amountController.text = lstDatosFrm[4].split('\$')[1];
+              amountController.text = lstDatosFrm[4].split('\$')[1];
               compController.text = numComp;
 
               gnrBloc.setCargando(false);
@@ -1016,7 +972,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             if (lstDatosFrm[3].toUpperCase().contains('MONTO')) {
               String numComp = lstDatosFrm[1].replaceAll(RegExp(r'[^0-9]'), '');
 
-              _amountController.text = lstDatosFrm[3].split('\$')[1];
+              amountController.text = lstDatosFrm[3].split('\$')[1];
               compController.text = numComp;
 
               gnrBloc.setCargando(false);
@@ -1025,7 +981,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
               return;              
             }
             if (lstDatosFrm[3].toUpperCase().contains('TOTAL')) {
-              _amountController.text = lstDatosFrm[4];
+              amountController.text = lstDatosFrm[4];
               compController.text = '${lstDatosFrm[2].split(' ')[0]} ${lstDatosFrm[2].split(' ')[1]} ${lstDatosFrm[2].split(' ')[2]}';
 
               gnrBloc.setCargando(false);
@@ -1036,7 +992,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             if (lstDatosFrm[12].toUpperCase().contains('USD')) {
               String numComp = lstDatosFrm[6].replaceAll(RegExp(r'[^0-9]'), '');
 
-              _amountController.text = lstDatosFrm[12].split('USD')[0];
+              amountController.text = lstDatosFrm[12].split('USD')[0];
               compController.text = numComp;
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
@@ -1046,7 +1002,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             if (lstDatosFrm[11].toUpperCase().contains('USD')) {
               var montoStr = lstDatosFrm[11].split('USD')[0];
               double.parse(montoStr);
-              _amountController.text = montoStr.trim();
+              amountController.text = montoStr.trim();
               compController.text = lstDatosFrm[2];
 
               gnrBloc.setCargando(false);
@@ -1056,7 +1012,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             }
           } catch (_) {
             //if(lstDatosFrm.length == 22){
-            _amountController.text = lstDatosFrm[10];
+            amountController.text = lstDatosFrm[10];
             compController.text = lstDatosFrm[9].split('SECU: ')[1];
             gnrBloc.setCargando(false);
             gnrBloc.setLevantaModal(false);
@@ -1069,19 +1025,19 @@ class DepositFrmViewState extends State<DepositFrmView> {
               
 
               if(lstDatosFrm[23].toUpperCase().contains('WONTO') || lstDatosFrm[23].toUpperCase().contains('MONTO')){
-                _amountController.text = lstDatosFrm[23].split(' ')[2];
+                amountController.text = lstDatosFrm[23].split(' ')[2];
                 compController.text = lstDatosFrm[41].split('SECU: ')[1];
               }
               if(lstDatosFrm[12].toUpperCase().contains('BAP')){
-                _amountController.text = lstDatosFrm[13];
+                amountController.text = lstDatosFrm[13];
                 compController.text = '${lstDatosFrm[12].split(' ')[0]} ${lstDatosFrm[12].split(' ')[1]} ${lstDatosFrm[12].split(' ')[2]}';
               }
               if(lstDatosFrm[13].toUpperCase().contains('BAP')){
-                _amountController.text = lstDatosFrm[14];
+                amountController.text = lstDatosFrm[14];
                 compController.text = '${lstDatosFrm[13].split(' ')[0]} ${lstDatosFrm[13].split(' ')[1]} ${lstDatosFrm[13].split(' ')[2]}';
               }
               if(lstDatosFrm[11].toUpperCase().contains('BAP')){
-                _amountController.text = lstDatosFrm[13];
+                amountController.text = lstDatosFrm[13];
                 compController.text = '${lstDatosFrm[11].split(' ')[0]} ${lstDatosFrm[11].split(' ')[1]} ${lstDatosFrm[11].split(' ')[2]}';
               }
             }          
@@ -1096,7 +1052,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
       String total = datos["Monto"] ?? '';
       String comp = datos["Recibo"] ?? '';
       String compFin = '${comp.split(' ')[0]} ${comp.split(' ')[1]}';
-      _amountController.text = total;
+      amountController.text = total;
       compController.text = compFin;
 
       gnrBloc.setCargando(false);

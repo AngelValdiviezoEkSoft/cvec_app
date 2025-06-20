@@ -117,11 +117,12 @@ class DepositViewSt extends StatelessWidget {
                 ).toList();                
 
                 
-                return Container(
+                return //lstMenu.isNotEmpty ?
+                Container(
                   width: size.width,
                   height: size.height * 0.79,
                   color: Colors.transparent,
-                  alignment: Alignment.center,
+                  //alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SingleChildScrollView(

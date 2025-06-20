@@ -17,3 +17,5 @@ export 'package:cve_app/ui/screens/qr/qr.dart';
 export 'package:cve_app/ui/screens/terms_conditions/terms_conditions.dart';
 
 export 'package:cve_app/ui/screens/welcome/welcome.dart';
+
+export 'package:cve_app/ui/screens/deposit/deposit.dart';

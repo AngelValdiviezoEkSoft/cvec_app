@@ -7,7 +7,11 @@ import 'package:cve_app/ui/ui.dart';
 final objRutas = RoutersApp();
 
 final GoRouter appRouter = GoRouter(
-  routes: [// 
+  routes: [//
+    GoRoute(
+      path: objRutas.rutaConfDepositScreen,
+      builder: (context, state) => const ConfirmacionDepositoScreen(null),
+    ),
     GoRoute(
       path: objRutas.rutaScanQr,
       builder: (context, state) => ScanQrScreen(null),

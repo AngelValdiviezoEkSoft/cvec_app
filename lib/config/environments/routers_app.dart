@@ -19,6 +19,7 @@ class RoutersApp{
 
   String rutaTermCond = '/TerminosCondiciones';
   String rutaScanQr = '/scanQr';
+  String rutaConfDepositScreen = '/ConfirmacionDepositoScrn';
 
   //imágenes 
   String rutaImages = 'assets/images/';
