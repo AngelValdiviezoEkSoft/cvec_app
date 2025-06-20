@@ -300,7 +300,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                           ),    
                           Container(
                             width: size.width,
-                            height: size.height * 0.12 * lstMenu.length,
+                            height: lstMenu.isNotEmpty ? size.height * 0.12 * lstMenu.length : size.height * 0.75,
                             color: Colors.transparent,
                             child: ListView(
 

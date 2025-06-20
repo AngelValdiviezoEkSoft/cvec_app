@@ -3,40 +3,31 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
-class DepositView extends StatelessWidget {
+String searchQueryDeposit = '';
 
-  const DepositView(Key? key) : super(key: key);
-
+class DepositView extends StatefulWidget {
+  
+  const DepositView(Key? key) : super (key: key);
+  
   @override
-  Widget build(BuildContext context) {
-
-    final size = MediaQuery.of(context).size;        
-
-    return Center(
-      child: ChangeNotifierProvider(
-        create: (_) => AuthService(),
-        child: DepositViewSt(size: size),
-      )        
-    );
-  }
+  DepositViewSt createState() => DepositViewSt();
 }
 
-class DepositViewSt extends StatelessWidget {
-  const DepositViewSt({
-    super.key,
-    required this.size
-  });
+class DepositViewSt extends State<DepositView> {
 
-  final Size size;
+  @override
+  void initState() {    
+    super.initState();
+
+    searchQueryDeposit = '';
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final size = MediaQuery.of(context).size;    
+    final size = MediaQuery.of(context).size;
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
@@ -65,9 +56,9 @@ class DepositViewSt extends StatelessWidget {
 
                 List<ItemBoton> lstMenu = state.deserializeItemBotonMenuList(objPerm);
 
-                if(searchQuery.isNotEmpty){
+                if(searchQueryDeposit.isNotEmpty){
                   filteredTransactions = lstMenu
-                    .where((tx) => tx.mensajeNotificacion.toLowerCase().contains(searchQuery.toLowerCase()))
+                    .where((tx) => tx.mensajeNotificacion.toLowerCase().contains(searchQueryDeposit.toLowerCase()))
                     .toList();
 
                   if(filteredTransactions.isNotEmpty){
@@ -138,12 +129,12 @@ class DepositViewSt extends StatelessWidget {
                                 prefixIcon: const Icon(Icons.search),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                               ),
-                              onChanged: (value) {
-                                /*
+                              onEditingComplete: () {
+                                FocusScope.of(context).unfocus();
+
                                 setState(() {
-                                  searchQuery = value;
+                                  searchQuery = searchTxt.text;
                                 });
-                                */
                               },
                             ),
                           ),

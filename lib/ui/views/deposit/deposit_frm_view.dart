@@ -414,7 +414,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             size: 12,
                             color: Colors.black,
                           ),
-                        )),
+                        )
+                      ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Por favor ingrese el título';

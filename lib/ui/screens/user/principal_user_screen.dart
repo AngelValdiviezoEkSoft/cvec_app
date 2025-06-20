@@ -663,7 +663,22 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: const DebtView(null),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+              
+                  Container(
+                    width: size.width * 0.55,
+                    height: size.height * 0.055,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: Text(locGen!.menuDebitsLbl, style: const TextStyle(fontSize: 25),)
+                  ),
+              
+                  const DebtView(null),
+                ],
+              ),
+            ),
           )
 
           :

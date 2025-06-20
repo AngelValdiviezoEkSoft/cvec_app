@@ -150,14 +150,7 @@ class GenericState extends Equatable {
   Future<String> getEstadoCuentas() async {
 
     try{
-      /*
-      final resp = await storage.read(key: 'RespuestaLogin') ?? '';
-
-      final data = json.decode(resp);
-      */
-
-      //Map<String, dynamic> dataTmp = json.decode(json.encode(lstFinal));
-
+      
       final items = <ItemBoton>[
         //if(objPermisos.mainMenu.itemListLeads)
         ItemBoton('','','',1, Icons.group_add, 'Contrato', 'Cliente 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
@@ -175,6 +168,41 @@ class GenericState extends Equatable {
         ),
         
         ItemBoton('','','',3, Icons.calendar_month, 'Contrato', 'Cliente 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+          RoutersApp().routPdfView, 
+          () {}
+        ),        
+      ]; 
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
+  Future<String> getDebitos() async {
+
+    try{
+      
+      final items = <ItemBoton>[
+        //if(objPermisos.mainMenu.itemListLeads)
+        ItemBoton('Contrato A','Plan Identidad','',1, Icons.group_add, 'Cuota 06/12', 'Cliente 1','05 Jun 2025','\$31.00', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+          RoutersApp().routPdfView, 
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('Contrato B','Plan Contrato','',2, Icons.groups, 'Cuota 01/03', 'Cliente 2','08 Ago 2024','\$50.00', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+          RoutersApp().routPdfView, 
+          () {
+            
+          }
+        ),
+        
+        ItemBoton('Contrato C','Plan terreno','',3, Icons.calendar_month, 'Cuota 02/09', 'Cliente 3','20 Abr 2020','\$259.00', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
           RoutersApp().routPdfView, 
           () {}
         ),        
