@@ -363,7 +363,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget>[
-                
+                /*
                 DrawerHeader(
                   decoration: const BoxDecoration(
                     color: Colors.blue,
@@ -390,6 +390,27 @@ class PrincipalClientStScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+                */
+
+                SizedBox(height: size.height * 0.075,),
+
+                GestureDetector(
+                  onTap: () {
+                    context.push(objRutas.rutaPerfilScreen);
+                  },
+                  child: _buildProfileCard(),
+                  /*
+                  const UserAccountsDrawerHeader(
+                    //arrowColor: Colors.red,                    
+                    accountName: Text('Angel Elias Valdiviezo'),
+                    accountEmail: Text('Duran City - Etapa Bromelia, Propietario'),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.person, size: 40, color: Colors.grey),
+                    ),                  
+                  ),
+                  */
                 ),
                 
                 ListTile(
@@ -484,6 +505,25 @@ class PrincipalClientStScreen extends StatelessWidget {
                   },
                 ),
                 
+                SizedBox(height: size.height * 0.17,),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.web_rounded),
+                  title: Text(locGen!.menuHelpSupportLbl),
+                  onTap: () {
+                    /*
+                    gnrBloc.setShowViewAccountStatementEvent(false);
+                    gnrBloc.setShowViewDebts(false);
+                    gnrBloc.setShowViewPrintRecipts(false);
+                    gnrBloc.setShowViewReservetions(false);
+                    gnrBloc.setShowViewSendDeposits(false);
+                    gnrBloc.setShowViewWebSite(true);
+                    gnrBloc.setShowViewFrmDeposit(false);
+
+                    Navigator.pop(context);
+                    */
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(locGen!.menuLogOutLbl),
@@ -596,31 +636,6 @@ class PrincipalClientStScreen extends StatelessWidget {
                                   ),
                                 ),
                               )
-                              /*
-                              const Text(
-                                "VACACIONES SEGURAS",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: size.height * 0.004),
-                              Text(
-                                "SIEMPRE",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: size.height * 0.004), // Espacio entre la primera y segunda línea
-                              Text(
-                                "Centro de Viajes Ecuador",
-                                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(height: size.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
-                              Text(
-                                "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
-                                textAlign: TextAlign.center,
-                              ),
-                            */
                             ],
                           )
                           
@@ -672,7 +687,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     height: size.height * 0.055,
                     color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: Text(locGen!.menuDebitsLbl, style: const TextStyle(fontSize: 25),)
+                    child: Text(locGen!.menuDebtsLbl, style: const TextStyle(fontSize: 25),)
                   ),
               
                   const DebtView(null),
@@ -703,7 +718,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                         height: size.height * 0.06,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text(locGen!.menuDebitsLbl, style: const TextStyle(fontSize: 25),)
+                        child: Text(locGen!.menuSendDepositsLbl, style: const TextStyle(fontSize: 25),)
                       ),
                   
                       Container(
@@ -833,6 +848,50 @@ class PrincipalClientStScreen extends StatelessWidget {
 
         );
       }
+    );
+  }
+
+  Widget _buildProfileCard() {
+    return Container(
+      color: Colors.transparent,
+      padding: const EdgeInsets.all(16),
+      child: const Row(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.grey,
+            child: Icon(Icons.person, size: 40, color: Colors.white),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Angel Elias Valdiviezo González',
+                  maxLines: 1, // Número de líneas que quieres mostrar (usualmente 1)
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Duran City - Etapa Bromelia, MZ14-V13',
+                  maxLines: 1, // Número de líneas que quieres mostrar (usualmente 1)
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  'Propietario',
+                  style: TextStyle(color: Colors.black, fontSize: 14),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 10),
+          Icon(Icons.arrow_forward_ios, color: Colors.grey),
+        ],
+      ),
     );
   }
 }

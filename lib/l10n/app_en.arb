@@ -4,7 +4,7 @@
     "hola": "¡Hello, {userName}!",
     "bienvenidaLogin": "Welcome back!",
     "bienvenidaCvec": "WELCOME TO CENTRO",
-    "bienvenidaCvec2": " DE VIAJES ECUADOR",    
+    "bienvenidaCvec2": " DE VIAJES ECUADOR",        
     "menuDestinations": "Destinations",
     "menuMemberships": "Memberships",
     "menuBuyYourLand": "Buy your land",
@@ -21,6 +21,7 @@
     "menuPrintReceiptsLbl": "Print Receipts",
     "menuSeeReservationsLbl": "See Reservations",
     "menuWebSiteLbl": "See Web Site",
+    "menuHelpSupportLbl": "Help and support",
     "menuLogOutLbl": "Logout",
     "receiptsLbl": "Receipts",
     "reservationsLbl": "Reservation List",
@@ -45,5 +46,11 @@
     "paymentDetLbl": "Payment details",
     "notUpdtPymntLbl": "Updated payment notification",
     "msmNotUpdtPymntLbl": "Your payment notification has changed status to Pending",
-    "msmValidateAmounLbl": "Please enter the amount"
+    "msmValidateAmounLbl": "Please enter the amount",
+    "myProfileLbl": "My profile",
+    "chngPasswLbl": "Change password",
+    "settingLbl": "Setting",
+    "privPolLbl": "Privacy Policy",
+    "termCondLbl": "Terms and Conditions",
+    "moreLbl": "More"
 } 

@@ -101,6 +101,10 @@
   "@menuWebSiteLbl": {
     "description": "Ver sitio web"
   },
+  "menuHelpSupportLbl": "Ayuda y soporte",
+  "@menuHelpSupportLbl": {
+    "description": "Ayuda y soporte"
+  },
   "menuLogOutLbl": "Cerrar Sesión",
   "@menuLogOutLbl": {
     "description": "Cerrar Sesión"
@@ -200,5 +204,29 @@
   "msmValidateAmounLbl": "Por favor ingrese el monto",
   "@msmValidateAmounLbl": {
     "description": "Por favor ingrese el monto"
+  },
+  "myProfileLbl": "Mi perfil",
+  "@myProfileLbl": {
+    "description": "Mi perfil"
+  },
+  "moreLbl": "Más",
+  "@moreLbl": {
+    "description": "Más"
+  },
+  "chngPasswLbl": "Cambiar contraseña",
+  "@chngPasswLbl": {
+    "description": "Cambiar contraseña"
+  },
+  "settingLbl": "Configuración",
+  "@settingLbl": {
+    "description": "Configuración"
+  },
+  "privPolLbl": "Política de privacidad",
+  "@privPolLbl": {
+    "description": "Política de privacidad"
+  },
+  "termCondLbl": "Términos y condiciones",
+  "@termCondLbl": {
+    "description": "Términos y condiciones"
   }
 }
