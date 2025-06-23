@@ -127,7 +127,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     width: size.width * 0.96,
                     height: size.height * 0.028,
                     color: Colors.transparent,
-                    child: const Text('Foto recibo de pago: '),
+                    child: Text(locGen!.photoPaymentReceiptLbl),
                   ),
                   SizedBox(
                     height: size.height * 0.005,
@@ -222,7 +222,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     inputFormatters: [currencyFormatter],
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     decoration: InputDecoration(
-                        labelText: 'Monto',
+                        labelText: locGen!.amountLbl,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.grey,
@@ -262,7 +262,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                       ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Por favor ingrese el monto';
+                        return locGen!.msmValidateAmounLbl;//'Por favor ingrese el monto';
                       }
                       return null;
                     },
@@ -282,7 +282,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                   TextFormField(
                     controller: compController,
                     decoration: InputDecoration(
-                        labelText: 'Número de comprobante:',
+                        labelText: locGen!.receiptNumberLbl,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.grey,
@@ -340,7 +340,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     width: size.width * 0.96,
                     height: size.height * 0.028,
                     color: Colors.transparent,
-                    child: const Text('Fecha: '),
+                    child: Text(locGen!.dateLbl),
                   ),
                   SizedBox(
                     height: size.height * 0.005,
@@ -380,7 +380,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                   TextFormField(
                     controller: concController,
                     decoration: InputDecoration(
-                        labelText: 'Concepto',
+                        labelText: locGen!.conceptLbl,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.grey,
@@ -439,7 +439,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     controller: observationsController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                        labelText: 'Notas',
+                        labelText: locGen!.notesLbl,
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.grey,
@@ -490,7 +490,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     width: size.width * 0.96,
                     height: size.height * 0.028,
                     color: Colors.transparent,
-                    child: const Text('He realizado el pago en: '),
+                    child: Text(locGen!.paymentLbl),
                   ),
                   Container(
                     width: size.width * 0.96,
@@ -528,7 +528,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                     width: size.width * 0.96,
                     height: size.height * 0.028,
                     color: Colors.transparent,
-                    child: const Text('Titular: '),
+                    child: Text(locGen!.holderLbl),
                   ),
                   Container(
                     width: size.width * 0.96,
@@ -716,7 +716,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         elevation: 0,
                       ),
                       child: Text(
-                        'Guardar',
+                        locGen!.saveLbl,
                         style: TextStyle( color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -748,9 +748,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         backgroundColor: Colors.white,
                         elevation: 0,
                       ),
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(
+                      child: Text(
+                        locGen!.cancelLbl,
+                        style: const TextStyle(
                             color: Colors.red, fontWeight: FontWeight.bold),
                       ),
                     ),

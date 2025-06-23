@@ -31,18 +31,19 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
   void initState() {
     super.initState();
 
+    //if(locGen != null)
     _timer = Timer(
       const Duration(seconds: 2), () {
-        const snackBar = SnackBar(
+        final snackBar = SnackBar(
         /// need to set following properties for best effect of awesome_snackbar_content
         elevation: 0,
         behavior: SnackBarBehavior.floating,
         backgroundColor: Colors.transparent,
         content: AwesomeSnackbarContent(
-          title: '¡Notificación de pago actualizada!',
-          message: 'Tu notificación de pago ha cambiado de estado a Pendiente',
+          title: locGen!.notUpdtPymntLbl,
+          message: locGen!.msmNotUpdtPymntLbl,
           contentType: ContentType.success,          
-          titleTextStyle: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),          
+          titleTextStyle: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),          
         ),
       );
 
@@ -74,7 +75,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
           foregroundColor: Colors.white,
           backgroundColor: const Color(0xFF2EA3F2),        
           //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-          title: const Center(child: Text('Detalle de pago', style: const TextStyle(color: Colors.white),)),
+          title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
           leading: GestureDetector(
             onTap: () {
               context.push(objRutas.rutaPrincipalUser);
@@ -108,7 +109,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Pendiente', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                        child: Text(locGen!.pendingReviewLbl, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                       ),
 
                       SizedBox(
@@ -119,7 +120,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Foto recibo de pago:', style: TextStyle(color: Colors.grey),),
+                        child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
                       ),
 
                       SizedBox(
@@ -164,7 +165,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Valor de pago: ', style: TextStyle(color: Colors.grey),),
+                        child: Text(locGen!.amountPaymentLbl, style: const TextStyle(color: Colors.grey),),
                       ),
 
                       Container(
@@ -182,7 +183,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Fecha de pago: ', style: TextStyle(color: Colors.grey)),
+                        child: Text(locGen!.paymentDateLbl, style: const TextStyle(color: Colors.grey)),
                       ),
 
                       Container(
@@ -200,7 +201,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Concepto: ', style: TextStyle(color: Colors.grey)),
+                        child: Text(locGen!.conceptLbl, style: const TextStyle(color: Colors.grey)),
                       ),
 
                       Container(
@@ -218,7 +219,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Notas: ', style: TextStyle(color: Colors.grey)),
+                        child: Text(locGen!.notesLbl, style: const TextStyle(color: Colors.grey)),
                       ),
 
                       Container(
@@ -236,7 +237,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Banco: ', style: TextStyle(color: Colors.grey)),
+                        child: Text(locGen!.bankLbl, style: const TextStyle(color: Colors.grey)),
                       ),
 
                       Container(
@@ -254,7 +255,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                         width: size.width * 0.96,
                         height: size.height * 0.028,
                         color: Colors.transparent,
-                        child: const Text('Titular: ' , style: TextStyle(color: Colors.grey)),
+                        child: Text(locGen!.holderLbl , style: const TextStyle(color: Colors.grey)),
                       ),
                       
                       Container(

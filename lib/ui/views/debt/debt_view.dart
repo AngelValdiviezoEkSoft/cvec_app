@@ -120,7 +120,6 @@ class DebtViewSt extends State<DebtView> {
                   width: size.width,
                   height: size.height * 0.8,
                   color: Colors.transparent,
-                  //alignment: Alignment.center,
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -167,12 +166,10 @@ class DebtViewSt extends State<DebtView> {
                           Container(
                             width: size.width,
                             height: size.height * 0.22 * lstMenu.length,
-                            color: Colors.transparent,
-                            child: ListView(
-                      
+                            color: Colors.transparent, 
+                            child: ListView(                      
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                                //const SizedBox( height: 2, ),
                                 ...itemMap,
                               ],
                             ),

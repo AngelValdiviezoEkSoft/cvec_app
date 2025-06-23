@@ -265,9 +265,9 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                   height: size.height * 0.82,
                   color: Colors.transparent,
                   alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -291,27 +291,27 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                               ),
                               onEditingComplete: () {
                                 FocusScope.of(context).unfocus();
-
+                      
                                 setState(() {
                                   searchQuery = searchTxt.text;
                                 });
                               },
                             ),
-                          ),    
+                          ),
+                      
+                          //if(lstMenu.isNotEmpty)  
                           Container(
                             width: size.width,
                             height: lstMenu.isNotEmpty ? size.height * 0.12 * lstMenu.length : size.height * 0.75,
                             color: Colors.transparent,
-                            child: ListView(
-
+                            child: ListView(                      
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                                const SizedBox( height: 3, ),
                                 ...itemMap,
                               ],
                             ),
                           ),
-          
+                                
                         ],
                       ),
                     ),

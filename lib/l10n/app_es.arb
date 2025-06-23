@@ -116,5 +116,89 @@
   "menuReservationsLbl": "Reservaciones",
   "@menuReservationsLbl": {
     "description": "Reservaciones"
+  },
+  "searchLbl": "Buscar",
+  "@searchLbl": {
+    "description": "Buscar"
+  },
+  "photoPaymentReceiptLbl": "Foto recibo de pago",
+  "@photoPaymentReceiptLbl": {
+    "description": "Foto recibo de pago"
+  },
+  "amountLbl": "Monto",
+  "@amountLbl": {
+    "description": "Monto"
+  },
+  "receiptNumberLbl": "Número de comprobante",
+  "@receiptNumberLbl": {
+    "description": "Número de comprobante"
+  },
+  "dateLbl": "Fecha",
+  "@dateLbl": {
+    "description": "Fecha"
+  },
+  "conceptLbl": "Concepto",
+  "@conceptLbl": {
+    "description": "Concepto"
+  },
+  "notesLbl": "Notas",
+  "@notesLbl": {
+    "description": "Notas"
+  },
+  "paymentLbl": "He realizado el pago en:",
+  "@paymentLbl": {
+    "description": "He realizado el pago en:"
+  },
+  "holderLbl": "Titular:",
+  "@holderLbl": {
+    "description": "Titular:"
+  },
+  "saveLbl": "Guardar",
+  "@saveLbl": {
+    "description": "Guardar"
+  },
+  "cancelLbl": "Cancelar",
+  "@cancelLbl": {
+    "description": "Cancelar"
+  },
+  "confirmInfoDebLbl": "¿Confirmas que todos los datos ingresados son correctos?",
+  "@confirmInfoDebLbl": {
+    "description": "¿Confirmas que todos los datos ingresados son correctos"
+  },
+  "amountPaymentLbl": "Valor de pago",
+  "@amountPaymentLbl": {
+    "description": "Valor de pago"
+  },
+  "confirmLbl": "Sí, Continuar",
+  "@confirmLbl": {
+    "description": "Sí, Continuar"
+  },
+  "pendingReviewLbl": "Pendiente",
+  "@pendingReviewLbl": {
+    "description": "Pendiente"
+  },
+  "paymentDateLbl": "Fecha de pago",
+  "@paymentDateLbl": {
+    "description": "Fecha de pago"
+  },
+  "bankLbl": "Banco",
+  "@bankLbl": {
+    "description": "Banco"
+  },
+  "paymentDetLbl": "Detalle de pago",
+  "@paymentDetLbl": {
+    "description": "Detalle de pago"
+  },
+  "notUpdtPymntLbl": "Notificación de pago actualizada",
+  "@notUpdtPymntLbl": {
+    "description": "Notificación de pago actualizada"
+  },
+  "msmNotUpdtPymntLbl": "Tu notificación de pago ha cambiado de estado a Pendiente",
+  "@msmNotUpdtPymntLbl": {
+    "description": "Tu notificación de pago ha cambiado de estado a Pendiente"
+  },
+  "msmValidateAmounLbl": "Por favor ingrese el monto",
+  "@msmValidateAmounLbl": {
+    "description": "Por favor ingrese el monto"
   }
-} 
+}

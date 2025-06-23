@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:provider/provider.dart';
 
 String searchQueryRsv = '';
+late TextEditingController searchRsvtTxt;
 
 class ReservationsView extends StatefulWidget {
   
@@ -17,6 +18,12 @@ class ReservationsView extends StatefulWidget {
 }
 
 class ReservationsViewSt extends State<ReservationsView> {
+
+  @override
+  void initState() {
+    super.initState();
+    searchRsvtTxt = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +124,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
-                            controller: searchTxt,
+                            controller: searchRsvtTxt,
                             decoration: InputDecoration(
                               hintText: 'Buscar',
                               prefixIcon: const Icon(Icons.search),
@@ -126,7 +133,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                                 onPressed: () {
                                   setState(() {                                      
                                     searchQueryRsv = '';
-                                    searchTxt.text = searchQueryRsv;
+                                    searchRsvtTxt.text = searchQueryRsv;
                                   });
                                 },
                                 icon: const Icon(Icons.close, color: Colors.black,),
@@ -136,7 +143,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                               FocusScope.of(context).unfocus();
 
                               setState(() {
-                                searchQueryRsv = searchTxt.text;
+                                searchQueryRsv = searchRsvtTxt.text;
                               });
                             },
                           ),
@@ -326,7 +333,7 @@ class ReservationsViewSt extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
-                            controller: searchTxt,
+                            controller: searchRsvtTxt,
                             decoration: InputDecoration(
                               hintText: 'Buscar',
                               prefixIcon: const Icon(Icons.search),
@@ -335,7 +342,7 @@ class ReservationsViewSt extends StatelessWidget {
                                 onPressed: () {
                                   setState(() {                                      
                                     searchQueryRsv = '';
-                                    searchTxt.text = searchQueryRsv;
+                                    searchRsvtTxt.text = searchQueryRsv;
                                   });
                                 },
                                 icon: const Icon(Icons.close, color: Colors.black,),
@@ -345,7 +352,7 @@ class ReservationsViewSt extends StatelessWidget {
                               FocusScope.of(context).unfocus();
 
                               setState(() {
-                                searchQueryRsv = searchTxt.text;
+                                searchQueryRsv = searchRsvtTxt.text;
                               });
                             },
                           ),
