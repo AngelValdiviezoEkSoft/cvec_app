@@ -132,7 +132,7 @@ class DebtViewSt extends State<DebtView> {
                             child: TextField(
                               controller: searchDebTxt,
                               decoration: InputDecoration(
-                                hintText: 'Buscar',
+                                hintText: locGen!.searchLbl,
                                 prefixIcon: const Icon(Icons.search),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                 suffixIcon: IconButton(

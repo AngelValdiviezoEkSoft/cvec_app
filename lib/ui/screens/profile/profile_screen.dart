@@ -8,6 +8,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(locGen!.myProfileLbl),
@@ -24,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildProfileCard(),
+            _buildProfileCard(context, size),
             const SizedBox(height: 20),
             _buildOptionCard(context),
             const SizedBox(height: 20),
@@ -37,22 +40,22 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileCard() {
+  Widget _buildProfileCard(BuildContext context, Size size) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.blue.shade700,
         borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.all(16),
-      child: const Row(
+      child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white,
             child: Icon(Icons.person, size: 40, color: Colors.grey),
           ),
-          SizedBox(width: 16),
-          Expanded(
+          SizedBox(width: size.width * 0.035),//16),
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,7 +71,12 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.edit, color: Colors.white),
+          GestureDetector(
+            onTap: () {
+              context.push(objRutas.rutaFrmProfileScrn);
+            },
+            child: const Icon(Icons.edit, color: Colors.white)
+          ),
         ],
       ),
     );
@@ -118,6 +126,19 @@ class ProfileScreen extends StatelessWidget {
         if(title == locGen!.chngPasswLbl){
           context.push(objRutas.rutaContrasenaScreen);
         }
+
+        if(title == locGen!.settingLbl){
+          context.push(objRutas.rutaSettingUserScrn);
+        }
+
+        if(title == locGen!.privPolLbl){
+          //context.push(objRutas.rutaSettingUserScrn);
+        }
+
+        if(title == locGen!.termCondLbl){
+          //context.push(objRutas.rutaSettingUserScrn);
+        }
+
       },
     );
   }

@@ -22,6 +22,10 @@ class RoutersApp{
   String rutaConfDepositScreen = '/ConfirmacionDepositoScrn';
   String rutaPerfilScreen = '/rutaPerfilScrn';
   String rutaContrasenaScreen = '/rutaCambContScrn';
+  String rutaFrmProfileScrn = '/rutaFrmProfileScrn';
+  String rutaFrmProfileEditScrn = '/rutaFrmProfileEditScrn';
+  String rutaSettingUserScrn = '/rutaSettingUserScrn';
+  //
 
   //imágenes 
   String rutaImages = 'assets/images/';

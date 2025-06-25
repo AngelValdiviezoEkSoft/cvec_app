@@ -399,7 +399,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   onTap: () {
                     context.push(objRutas.rutaPerfilScreen);
                   },
-                  child: _buildProfileCard(),
+                  child: _buildProfileCard(context, size),
                   /*
                   const UserAccountsDrawerHeader(
                     //arrowColor: Colors.red,                    
@@ -851,19 +851,23 @@ class PrincipalClientStScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileCard() {
+  Widget _buildProfileCard(BuildContext context, Size size) {
     return Container(
       color: Colors.transparent,
       padding: const EdgeInsets.all(16),
-      child: const Row(
+      child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.grey,
             child: Icon(Icons.person, size: 40, color: Colors.white),
           ),
-          SizedBox(width: 16),
-          Expanded(
+
+          SizedBox(width: size.width * 0.02),//16),
+          
+          Container(
+            color: Colors.transparent,
+            width: size.width * 0.46,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -873,14 +877,14 @@ class PrincipalClientStScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: size.height * 0.002),
                 Text(
                   'Duran City - Etapa Bromelia, MZ14-V13',
                   maxLines: 1, // Número de líneas que quieres mostrar (usualmente 1)
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: size.height * 0.002),
                 Text(
                   'Propietario',
                   style: TextStyle(color: Colors.black, fontSize: 14),
@@ -888,8 +892,11 @@ class PrincipalClientStScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 10),
-          Icon(Icons.arrow_forward_ios, color: Colors.grey),
+
+          //SizedBox(width: 10),
+          SizedBox(width: size.width * 0.0005),
+
+          const Icon(Icons.arrow_forward_ios, color: Colors.grey),
         ],
       ),
     );

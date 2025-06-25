@@ -125,7 +125,7 @@ class DepositViewSt extends State<DepositView> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
                               decoration: InputDecoration(
-                                hintText: 'Buscar',
+                                hintText: locGen!.searchLbl,
                                 prefixIcon: const Icon(Icons.search),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                               ),

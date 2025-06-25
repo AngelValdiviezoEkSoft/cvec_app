@@ -9,6 +9,18 @@ final objRutas = RoutersApp();
 final GoRouter appRouter = GoRouter(
   routes: [//
     GoRoute(
+      path: objRutas.rutaSettingUserScrn,
+      builder: (context, state) => const SettingsUserScreen(),
+    ),
+    GoRoute(
+      path: objRutas.rutaFrmProfileScrn,
+      builder: (context, state) => const FrmProfileScreen(),
+    ),
+    GoRoute(
+      path: objRutas.rutaFrmProfileEditScrn,
+      builder: (context, state) => const FrmProfileEditScreen(null),
+    ),
+    GoRoute(
       path: objRutas.rutaContrasenaScreen,
       builder: (context, state) => const CambiarContrasenaScreen(null),
     ),

@@ -209,6 +209,10 @@
   "@myProfileLbl": {
     "description": "Mi perfil"
   },
+  "profileLbl": "Perfil",
+  "@profileLbl": {
+    "description": "Perfil"
+  },
   "moreLbl": "Más",
   "@moreLbl": {
     "description": "Más"
@@ -228,5 +232,65 @@
   "termCondLbl": "Términos y condiciones",
   "@termCondLbl": {
     "description": "Términos y condiciones"
+  },
+  "namLastNameLbl": "Nombre y Apellido",
+  "@namLastNameLbl": {
+    "description": "Nombre y Apellido"
+  },
+  "idNumberLbl": "Número de identificación",
+  "@idNumberLbl": {
+    "description": "Número de identificación"
+  },
+  "cellNumberLbl": "Celular",
+  "@cellNumberLbl": {
+    "description": "Celular"
+  },
+  "emailLbl": "Correo electrónico",
+  "@emailLbl": {
+    "description": "Correo electrónico"
+  },
+  "altEmailLbl": "Correo electrónico alternativo",
+  "@altEmailLbl": {
+    "description": "Correo electrónico alternativo"
+  },
+  "brDateLbl": "Fecha de nacimiento",
+  "@brDateLbl": {
+    "description": "Fecha de nacimiento"
+  },
+  "languageLbl": "Idioma",
+  "@languageLbl": {
+    "description": "Idioma"
+  },
+  "brightnessLbl": "Brillo",
+  "@brightnessLbl": {
+    "description": "Brillo"
+  },
+  "lghtModeLbl": "Modo Claro",
+  "@lghtModeLbl": {
+    "description": "Modo Claro"
+  },
+  "drkModeLbl": "Modo Oscuro",
+  "@drkModeLbl": {
+    "description": "Modo Oscuro"
+  },
+  "automaticLbl": "Automático",
+  "@automaticLbl": {
+    "description": "Automático"
+  },
+  "chngPsswLbl": "Cambiar Contraseña",
+  "@chngPsswLbl": {
+    "description": "Cambiar Contraseña"
+  },
+  "orderPsswFrmLbl": "Crea una contraseña nueva que al menos tenga 8 caracteres",
+  "@orderPsswFrmLbl": {
+    "description": "Crea una contraseña nueva que al menos tenga 8 caracteres"
+  },
+  "enterNewPsswLbl": "Ingresa tu nueva contraseña",
+  "@enterNewPsswLbl": {
+    "description": "Ingresa tu nueva contraseña"
+  },
+  "repeatNewPsswLbl": "Repite tu nueva contraseña",
+  "@repeatNewPsswLbl": {
+    "description": "Repite tu nueva contraseña"
   }
 }

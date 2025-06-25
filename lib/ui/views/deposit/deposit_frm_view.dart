@@ -142,16 +142,14 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         height: size.height * 0.11,
                         decoration: BoxDecoration(
                           color: Colors.grey[350], // Color de fondo
-                          borderRadius:
-                              BorderRadius.circular(12), // Bordes redondeados
+                          borderRadius: BorderRadius.circular(12), // Bordes redondeados
                         ),
                         child: GestureDetector(
                             onTap: () {
                               gnrBloc.setLevantaModal(true);
                               mostrarOpciones(context, size);
                             },
-                            child: const Icon(Icons.add_a_photo_outlined,
-                                size: 40, color: Colors.white)),
+                            child: const Icon(Icons.add_a_photo_outlined, size: 40, color: Colors.white)),
                       ),
                     ),
 
@@ -166,21 +164,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         color: Colors.transparent,
                       ),
                     ),
-
-
-                  /*
-                    if (_fileName != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          'Archivo seleccionado: $_fileName',
-                          style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                    
-                    if (_fileName != null && selectedFile != null)
-                      FileViewer(file: selectedFile!),
-                      */
 
                   if (rutaPagoAdj.isNotEmpty && !state.levantaModal)
                     Container(
