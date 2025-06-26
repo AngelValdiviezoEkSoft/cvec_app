@@ -1,3 +1,5 @@
+export 'package:cve_app/domain/models/bank_response_model.dart';
+
 export 'package:cve_app/domain/models/receipt_det_response.dart';
 
 export 'package:cve_app/domain/models/receipt_response.dart';
@@ -27,3 +29,4 @@ export 'package:cve_app/domain/models/register_device_model.dart';
 export 'package:cve_app/domain/models/account_statement_model.dart';
 
 export 'package:cve_app/domain/models/widget_model/widget_model.dart';
+

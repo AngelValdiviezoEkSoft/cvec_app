@@ -303,7 +303,7 @@ class AuthServices extends ChangeNotifier {
 
       var rspCorreo = json.decode(rsp);
 
-      String emailUser = rspCorreo["result"]["data"][0]["email"];
+      String emailUser = rspCorreo["result"]["data"][0]["email"] ?? '';
 
       await storage.write(key: 'CorreoUser', value: emailUser);
       //#endregion

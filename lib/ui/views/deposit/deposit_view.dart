@@ -1,6 +1,7 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +33,8 @@ class DepositViewSt extends State<DepositView> {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          future: state.getReceipts(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          future: DepositService().getDeposit(),
+          builder: (context, snapshot) {
 
             if(!snapshot.hasData) {
               return Scaffold(
@@ -49,6 +50,23 @@ class DepositViewSt extends State<DepositView> {
             }
             else
             {  
+              /* 
+              if(snapshot.hasData){
+              lstBankAccount = snapshot.data as List<BankAccount>;
+
+              if(lstBankAccount.isNotEmpty){
+
+                for(int i = 0; i < lstBankAccount.length; i++){
+                  cmbBancoCve.add(lstBankAccount[i].bankName);
+                }
+
+                selectedValueBanco = lstBankAccount[0].bankName;
+                holderName = lstBankAccount[0].bankAccountHolder;
+              }
+              
+            }
+              */
+
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
                 String rspTmp = snapshot.data as String;
                 

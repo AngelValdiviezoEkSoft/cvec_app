@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 //late Timer _timer;
 
 class AuthService extends ChangeNotifier {
   
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final storage = const FlutterSecureStorage();
 
   String passWord = '';
   String email = '';
@@ -79,6 +81,10 @@ class AuthService extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }
 
-  
+  Future logOut() async {
+    await storage.write(key: 'RespuestaLogin', value: '');    
+    
+    return;
+  }
 
 }

@@ -91,7 +91,7 @@ class FrmProfileScreen extends StatelessWidget {
                                   ProfileField(label: locGen!.cellNumberLbl, value: '0988665834'),
                                   ProfileField(label: locGen!.emailLbl, value: 'angel_elias_valdiviezo_gonzalez@hotmail.com'),
                                   ProfileField(label: locGen!.altEmailLbl, value: 'melanie.vilema@gmail.com'),
-                                  ProfileField(label: locGen!.brDateLbl, value: '1994-04-20'),
+                                  ProfileField(label: locGen!.brDateLbl, value: '20/04/1994'),
                                 ],
                               ),
                             ),

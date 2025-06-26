@@ -291,7 +291,7 @@ class Welcome2Screen extends StatelessWidget {
     
           Position position = await getLocation();
     
-          imeiCod = '823456040000006'; //BORRAR LUEGO - PARA EMULADOR
+          imeiCod = '923456040000006'; //BORRAR LUEGO - PARA EMULADOR
           //imeiCod = '82345604000002Luis'; //BORRAR LUEGO - PARA CELULAR PRUEBAS
           //imeiCod = '82345604113'; //BORRAR LUEGO - PARA EMULADOR
     

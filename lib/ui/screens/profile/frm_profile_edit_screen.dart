@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 
 String rutaFotoPerfilEdit = '';
+String fechaCumpleAnios = '';
 
 class FrmProfileEditScreen extends StatefulWidget {
   const FrmProfileEditScreen(Key? key) : super(key: key);
@@ -23,7 +26,18 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
     super.initState();
 
     rutaFotoPerfilEdit = '';
+    fechaCumpleAnios = '20/04/1994';
+
   } 
+
+  void openDatePickerProfile(BuildContext context) {
+    picker.DatePicker.showDatePicker(context, showTitleActions: true, maxTime: DateTime.now(),
+      onChanged: (date) {
+      setState(() {
+        fechaCumpleAnios = DateFormat('dd/MM/yyyy').format(date);
+      });
+    }, currentTime: DateTime.now());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,26 +114,31 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
 
                                       SizedBox(height: size.height * 0.008,),
 
-                                      Container(
-                                        width: size.width * 0.92,
-                                        height: size.height * 0.08,
-                                        color: Colors.transparent,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: size.width * 0.92,
-                                              height: size.height * 0.02,
-                                              color: Colors.transparent,
-                                              child: Text(locGen!.brDateLbl, style: TextStyle(color: Colors.grey[300]),),
-                                            ),
-                                            SizedBox(height: size.height * 0.007,),
-                                            Container(
-                                              width: size.width * 0.92,
-                                              height: size.height * 0.02,
-                                              color: Colors.transparent,
-                                              child: const Text("1994-04-20", style: TextStyle(color: Colors.black),),
-                                            ),
-                                          ],
+                                      GestureDetector(
+                                        onTap: () {
+                                          openDatePickerProfile(context);
+                                        },
+                                        child: Container(
+                                          width: size.width * 0.92,
+                                          height: size.height * 0.08,
+                                          color: Colors.transparent,
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                width: size.width * 0.92,
+                                                height: size.height * 0.02,
+                                                color: Colors.transparent,
+                                                child: Text(locGen!.brDateLbl, style: TextStyle(color: Colors.grey[300]),),
+                                              ),
+                                              SizedBox(height: size.height * 0.007,),
+                                              Container(
+                                                width: size.width * 0.92,
+                                                height: size.height * 0.02,
+                                                color: Colors.transparent,
+                                                child: Text(fechaCumpleAnios, style: const TextStyle(color: Colors.black),),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
 
@@ -135,8 +154,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
 
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 130, vertical: 20),
+                                            padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(15),
                                               //side: BorderSide(color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, width: 2),
@@ -146,7 +164,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                           ),
                                           child: Text(
                                             locGen!.saveLbl,
-                                            style: const TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                            style: const TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
                                           ),
                                         ),
                                       ),

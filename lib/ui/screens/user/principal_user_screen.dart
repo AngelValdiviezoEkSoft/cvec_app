@@ -1,3 +1,4 @@
+import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -527,19 +528,51 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
                   title: Text(locGen!.menuLogOutLbl),
-                  onTap: () {
-                    
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
-                    
-                    Navigator.pop(context); // Cierra el menú 
+                  onTap: () async {
 
-                    context.push(objRutas.rutaAuth);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('¿Está seguro que desea cerrar su sesión?'),
+                          
+                          actions: [
+                            TextButton(
+                              onPressed: () async {
+
+                                gnrBloc.setShowViewAccountStatementEvent(false);
+                                gnrBloc.setShowViewDebts(false);
+                                gnrBloc.setShowViewPrintRecipts(false);
+                                gnrBloc.setShowViewReservetions(false);
+                                gnrBloc.setShowViewSendDeposits(false);
+                                gnrBloc.setShowViewWebSite(false);
+                                gnrBloc.setShowViewFrmDeposit(false);
+                                
+                                Navigator.pop(context); // Cierra el menú 
+
+                                await AuthService().logOut();
+
+                                //ignore: use_build_context_synchronously
+                                context.push(objRutas.rutaAuth);
+
+                              },
+                              child: Text('Sí', style: TextStyle(color: Colors.blue[200]),),
+                            ),
+                            TextButton(
+                              onPressed: () {
+
+                                Navigator.of(context).pop();
+
+                                //context.push(objRutasGen.rutaBienvenida);
+
+                              },
+                              child: const Text('No', style: TextStyle(color: Colors.black),),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
                   },
                 ),
               ],
