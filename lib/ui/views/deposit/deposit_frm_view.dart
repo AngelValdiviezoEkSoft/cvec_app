@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
@@ -129,7 +131,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
             if(snapshot.hasData){
               lstBankAccount = snapshot.data as List<BankAccount>;
 
-              if(lstBankAccount.isNotEmpty){
+              if(lstBankAccount.isNotEmpty && cmbBancoCve.isEmpty){
 
                 for(int i = 0; i < lstBankAccount.length; i++){
                   cmbBancoCve.add(lstBankAccount[i].bankName);
@@ -137,11 +139,11 @@ class DepositFrmViewState extends State<DepositFrmView> {
 
                 selectedValueBanco = lstBankAccount[0].bankName;
                 holderName = lstBankAccount[0].bankAccountHolder;
-              }
-              
-            }
 
-            return Padding(
+          
+              }
+
+                    return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
@@ -515,11 +517,11 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         child: Text(locGen!.paymentLbl),
                       ),
                       
+                      //if(lstBankAccount.isNotEmpty)
                       Container(
                         width: size.width * 0.96,
                         height: size.height * 0.07,
                         alignment: Alignment.center,
-                        //color: Colors.transparent,
                         decoration: BoxDecoration(
                           color: Colors.transparent, // Color de fondo (opcional)
                           border: Border.all(
@@ -529,20 +531,49 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
                         ),
                         child: DropdownButton<String>(
-                          value: selectedValueBanco,
+                          value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
+                          hint: const Text("Selecciona un banco", style: TextStyle(fontSize: 11)),
                           onChanged: (String? newValue) {
-                            setState(() {
-                              selectedValueBanco = newValue!;
+                            if (cmbBancoCve.contains(newValue)) {
+                              setState(() {
+                                selectedValueBanco = newValue!;
+                                showHolder = true;
 
-                              showHolder = true;
-
-                              for(int i = 0; i < lstBankAccount.length; i++){
-                                if(lstBankAccount[i].bankName == selectedValueBanco){
-                                  holderName = lstBankAccount[i].bankAccountHolder;
+                                for (int i = 0; i < lstBankAccount.length; i++) {
+                                  if (lstBankAccount[i].bankName == selectedValueBanco) {
+                                    holderName = lstBankAccount[i].bankAccountHolder;
+                                  }
                                 }
-                              }
+                              });
+                            }
+                          },
+                          items: cmbBancoCve.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value, style: const TextStyle(fontSize: 11)),
+                            );
+                          }).toList(),
+                        ),
 
-                            });
+                        /*
+                        DropdownButton<String>(
+                          //value: selectedValueBanco,
+                          value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
+                          onChanged: (String? newValue) {
+                            if(cmbBancoCve.contains(selectedValueBanco)){
+                              setState(() {
+                                selectedValueBanco = newValue!;
+
+                                showHolder = true;
+
+                                for(int i = 0; i < lstBankAccount.length; i++){
+                                  if(lstBankAccount[i].bankName == selectedValueBanco){
+                                    holderName = lstBankAccount[i].bankAccountHolder;
+                                  }
+                                }
+
+                              });
+                            }                            
                           },
                           items: cmbBancoCve.map((String value) {
                             return DropdownMenuItem<String>(
@@ -551,6 +582,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             );
                           }).toList(),
                         ),
+                      */
                       ),
                       
                       SizedBox(
@@ -676,18 +708,17 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text('Valor del pago: ${amountController.text}'),
-                                            Text('Número de comprobante: ${compController.text}'),
-                                            Text('Fecha: $fechaHoraEscogidaMuestra'),
-                                            Text('Concepto: ${concController.text}'),
-                                            Text('He realizado el pago en: $selectedValueBanco'),
-                                            Text('Titular: $selectedValueCliente'),
+                                            Text('${locGen!.amountPaymentLbl}: ${amountController.text}'),
+                                            Text('${locGen!.receiptNumberLbl}: ${compController.text}'),
+                                            Text('${locGen!.dateLbl}: $fechaHoraEscogidaMuestra'),
+                                            Text('${locGen!.conceptLbl}: ${concController.text}'),
+                                            Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
                                           ],
                                         ),
                                       ),
                                       actions: [
                                         ElevatedButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             if (_formKey.currentState!.validate()) {
                                               /*
                                               // Aquí podrías enviar la información al backend o procesarla.
@@ -713,15 +744,106 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                               compController.clear();
                                               observationsController.clear();
                                               */
-        
-                                              Navigator.of(context).pop();
-        
+
+                                              int idBank = 0;
+                                              double idPartner = 0;
+                                              int idUser = 0;
+
+                                              for(int i = 0; i < lstBankAccount.length; i++){
+                                                if(lstBankAccount[i].bankName == selectedValueBanco){
+                                                  idBank = lstBankAccount[i].bankAccountId;                                                  
+                                                }
+                                              }
+
+                                              var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
+                                              var objLogDecode = json.decode(objLog);
+
+                                              idPartner = double.parse(objLogDecode['result']['partner_id'].toString());
+                                              idUser = int.parse(objLogDecode['result']['user_id'][0].toString());
+
+                                              final bytes = await File(rutaPagoAdj).readAsBytes();
+                                              String base64 = base64Encode(bytes);
+
+                                              DepositRequestModel objRqt = DepositRequestModel(
+                                                amount: double.parse(amountController.text),
+                                                customerNotes: observationsController.text,
+                                                date: DateTime.parse(fechaHoraEscogidaMuestra),
+                                                idAccountBank: idBank,
+                                                name: concController.text,
+                                                receiptNumber: compController.text,
+                                                receiptFile: base64,
+                                                idPartner: idPartner,
+                                                idUser: idUser
+                                              );
+
+                                              String gifRespuesta = '';
+                                              String respuestaReg = '';
+
+                                              DepositResponseModel objRsp = await DepositService().registroDeposito(objRqt);
+
+                                              respuestaReg = objRsp.result.mensaje;
+
+                                              if(objRsp.result.estado == 200){
+                                                gifRespuesta = 'assets/gifs/exito.gif';                                                
+                                              } else {
+                                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+                                              }
+
+                                              //ignore: use_build_context_synchronously
+                                              //Navigator.of(context).pop();
+
+                                              showDialog(
+                                                //ignore:use_build_context_synchronously
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Container(
+                                                      color: Colors.transparent,
+                                                      height: size.height * 0.17,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            height: size.height * 0.09,
+                                                            child: Image.asset(gifRespuesta),
+                                                          ),
+                              
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            width: size.width * 0.95,
+                                                            height: size.height * 0.08,
+                                                            alignment: Alignment.center,
+                                                            child: AutoSizeText(
+                                                              respuestaReg,
+                                                              maxLines: 2,
+                                                              minFontSize: 2,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              
+                                              //ignore: use_build_context_synchronously
                                               context.push(objRutas.rutaConfDepositScreen);
-        
+        /*
                                               setState(() {
                                                 //_pickedFile = null;
                                                 //_fileName = null;
                                               });
+                                              */
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -808,6 +930,13 @@ class DepositFrmViewState extends State<DepositFrmView> {
                   ),
                 ),
               ),
+            );
+          
+              
+            }
+
+            return Container(
+
             );
           },
         );

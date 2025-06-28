@@ -231,6 +231,7 @@ class ListaNotificaciones extends StatelessWidget {
                 //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
                 margin: const EdgeInsets.all(3), 
                 decoration: BoxDecoration(
+                  //color: Colors.red,
                   boxShadow: <BoxShadow>[
                     BoxShadow( color: Colors.black.withOpacity(0.2), offset: const Offset(4,6), blurRadius: 10 ),
                   ],
@@ -341,7 +342,7 @@ class ListaNotificaciones extends StatelessWidget {
                                 onTap: () {                                  
                                   context.push(rutaNavegacionFin!);
                                 },
-                                child: Icon(icon, color: Colors.white,))
+                                child: Icon(icon, color: Colors.black,))
                             )
                           ),
                         ),

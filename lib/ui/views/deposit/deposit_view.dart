@@ -1,12 +1,16 @@
 
 import 'package:animate_do/animate_do.dart';
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 String searchQueryDeposit = '';
+List<ReceiptModelResponse> lstReceipts = [];
 
 class DepositView extends StatefulWidget {
   
@@ -23,18 +27,23 @@ class DepositViewSt extends State<DepositView> {
     super.initState();
 
     searchQueryDeposit = '';
+
+    lstReceipts = [];
   }
 
   @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    final gnrBloc = Provider.of<GenericBloc>(context);
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
           future: DepositService().getDeposit(),
           builder: (context, snapshot) {
+
+            gnrBloc.setCargando(true);
 
             if(!snapshot.hasData) {
               return Scaffold(
@@ -50,29 +59,27 @@ class DepositViewSt extends State<DepositView> {
             }
             else
             {  
-              /* 
-              if(snapshot.hasData){
-              lstBankAccount = snapshot.data as List<BankAccount>;
-
-              if(lstBankAccount.isNotEmpty){
-
-                for(int i = 0; i < lstBankAccount.length; i++){
-                  cmbBancoCve.add(lstBankAccount[i].bankName);
-                }
-
-                selectedValueBanco = lstBankAccount[0].bankName;
-                holderName = lstBankAccount[0].bankAccountHolder;
-              }
-              
-            }
-              */
 
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
-                String rspTmp = snapshot.data as String;
+
+                lstReceipts = snapshot.data as List<ReceiptModelResponse>;
+                /*
+                String rspTmp = jsonEncode(lstReceipts.map((e) => e.toJson()).toList());
                 
                 String objPerm = rspTmp;
+                */
 
-                List<ItemBoton> lstMenu = state.deserializeItemBotonMenuList(objPerm);
+                List<ItemBoton> lstMenu = [];//state.deserializeItemBotonMenuList(objPerm);
+
+                for(int i = 0; i < lstReceipts.length; i++){
+                  lstMenu.add(
+                    ItemBoton(
+                      '','','',
+                      i,Icons.person,lstReceipts[i].receiptConcept,DateFormat('dd/MM/yyyy').format(DateTime.parse(lstReceipts[i].receiptDate)),'','',
+                      Colors.white,Colors.white,false,false,'','','','','','',(){}
+                    )
+                  );
+                }
 
                 if(searchQueryDeposit.isNotEmpty){
                   filteredTransactions = lstMenu
@@ -86,7 +93,6 @@ class DepositViewSt extends State<DepositView> {
                       groupedTransactions.putIfAbsent(tx.mensaje2, () => []).add(tx);
                     }
                   }
-                  
                 }
                 else{
                   if(groupedTransactions.isEmpty){
@@ -96,12 +102,11 @@ class DepositViewSt extends State<DepositView> {
                   }                  
                 }
 
-
                 List<Widget> itemMap = lstMenu.map(
                 (item) => FadeInLeft(
                   duration: const Duration( milliseconds: 250 ),
                   child: 
-                    ItemsListaRecibosWidget(
+                    ItemsListasWidget(
                       null,
                       varIdPosicionMostrar: 0,
                       varEsRelevante: item.esRelevante,
@@ -125,8 +130,9 @@ class DepositViewSt extends State<DepositView> {
                   )
                 ).toList();                
 
+                gnrBloc.setCargando(false);
                 
-                return //lstMenu.isNotEmpty ?
+                return !state.cargando ?
                 Container(
                   width: size.width,
                   height: size.height * 0.79,
@@ -159,7 +165,7 @@ class DepositViewSt extends State<DepositView> {
 
                           Container(
                             width: size.width,
-                            height: size.height * 0.12 * lstMenu.length,
+                            height: size.height * 0.2 * lstMenu.length,
                             color: Colors.transparent,
                             child: ListView(
 
@@ -175,13 +181,27 @@ class DepositViewSt extends State<DepositView> {
                       ),
                     ),
                   ),
+                )
+                :                
+                Container(
+                  color: Colors.white,
+                  width: size.width,
+                  height: size.height * 0.78,
+                  alignment: Alignment.center,
+                  child: Image.asset(AppConfig().rutaGifLoading),
                 );
               
               }
               
             }
 
-            return Container();
+            return Container(
+                  color: Colors.white,
+                  width: size.width,
+                  height: size.height * 0.78,
+                  alignment: Alignment.center,
+                  child: Image.asset(AppConfig().rutaGifLoading),
+                );
           }
         );
       }

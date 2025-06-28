@@ -4,15 +4,9 @@ class AppConfig {
   final String apiKeyIos = 'AIzaSyBNRevgaESKXBVcIFnEPVBQcTc1i_yqE6k';
 
   final String rutaGifCargaPage = 'assets/loadingPlux.gif';
-  // final String rutaGifXMorada = 'assets/gifMoradoLoadingX.gif';
-  // final String rutaGifCargando = 'assets/gif_validate_user_data.gif';
-  final String rutaGifLoading = 'assets/gifLoadingPlux.gif';
-  // final String rutaGifPurpleLoading = 'assets/gifMoradoLoadingPlux.gif';
+  final String rutaGifLoading = 'assets/gifs/gifPaginaEnEspera.gif';
   final String iconoErrorEquisRoja = 'assets/equisError.png';
-  // final String rutaGifXBlanco = 'assets/gifLoadingX.gif';
-  //
-
-  //
+  
   final String rutaGifCheckBlanco = 'assets/gifs/gifCheckBlanco.gif';
   final String rutaGifCheckGris = 'assets/gifs/gifCheckGris.gif';
   final String rutaGifCheckMorado = 'assets/gifs/gifCheckMorado.gif';
@@ -22,11 +16,9 @@ class AppConfig {
   final String rutaGifErrorBlanco = 'assets/gifs/gifErrorBlanco.gif';
   final String rutaGifErrorGris = 'assets/gifs/gifErrorGris.gif';
   final String rutaGifErrorMorado = 'assets/gifs/gifErrorMorado.gif';
-  final String rutaGifFantasmaBlanco =
-      'assets/gifs/gifFantasmaBlanco.gif';
+  final String rutaGifFantasmaBlanco = 'assets/gifs/gifFantasmaBlanco.gif';
   final String rutaGifFantasmaGris = 'assets/gifs/gifFantasmaGris.gif';
-  final String rutaGifFantasmaMorado =
-      'assets/gifs/gifFantasmaMorado.gif';
+  final String rutaGifFantasmaMorado = 'assets/gifs/gifFantasmaMorado.gif';
   final String rutaGifPluxBlanco = 'assets/gifs/gifPluxBlanco.gif';
   final String rutaGifPluxGris = 'assets/gifs/gifPluxGris.gif';
   final String rutaGifPluxMorado = 'assets/gifs/gifPluxMorado.gif';
