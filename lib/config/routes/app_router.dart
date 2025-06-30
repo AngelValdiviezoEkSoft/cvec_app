@@ -9,6 +9,10 @@ final objRutas = RoutersApp();
 final GoRouter appRouter = GoRouter(
   routes: [//
     GoRoute(
+      path: objRutas.rutaDetalleDepositFrmScrn,
+      builder: (context, state) => const DetalleDepositFrmScreen(null),
+    ),
+    GoRoute(
       path: objRutas.rutaSettingUserScrn,
       builder: (context, state) => const SettingsUserScreen(),
     ),

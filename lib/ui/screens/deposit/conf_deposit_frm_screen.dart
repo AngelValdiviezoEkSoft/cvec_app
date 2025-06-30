@@ -70,212 +70,204 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
       onWillPop: () async => false,
       child: BlocBuilder<GenericBloc, GenericState>(
           builder: (context, stateEstado) {
-        return Scaffold(
-          appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: const Color(0xFF2EA3F2),        
-          //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-          title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
-          leading: GestureDetector(
-            onTap: () {
-              context.push(objRutas.rutaPrincipalUser);
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.arrow_back_ios)
-            ),
-          ),          
-        ),
-                //backgroundColor:,
-                /*
-                appBar: PluxAppBar(
-                  'Administración de montos',
-                  oColorLetra: Colors.black,
-                  backgorundAppBarColor: oCorpColorsGen.grisBackgroundPlux,
+            return Scaffold(
+              appBar: AppBar(
+              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFF2EA3F2),        
+              //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
+              title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
+              leading: GestureDetector(
+                onTap: () {
+                  context.push(objRutas.rutaPrincipalUser);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.arrow_back_ios)
                 ),
-                */
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
+              ),          
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                elevation: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.pendingReviewLbl, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-                      ),
-
-                      SizedBox(
-                        height: size.height * 0.015,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
-                      ),
-
-                      SizedBox(
-                        height: size.height * 0.005,
-                      ),
-                
-                      Container(
+                        Container(
                           width: size.width * 0.96,
+                          height: size.height * 0.028,
                           color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                              width: size.width * 0.25,
-                              height: size.height * 0.17,
-                              decoration: !validandoFoto
-                                  ? BoxDecoration(
-                                      image: DecorationImage(
-                                        image: FileImage(File(rutaPagoAdj)),
-                                        fit: BoxFit.cover,
-                                      ),                              
-                                    )
-                                  : BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(size.width * 0.2),
-                                      border: Border.all(
-                                        width: 3,
-                                        color: objColorsApp.naranja50PorcTrans,
-                                        style: BorderStyle.solid,
-                                      ),
-                                    ),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  
-                                },
-                              )),
+                          child: Text(locGen!.pendingReviewLbl, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
                         ),
-                
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.amountPaymentLbl, style: const TextStyle(color: Colors.grey),),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.015,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(amountController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.005,
+                        ),
+                  
+                        Container(
+                            width: size.width * 0.96,
+                            color: Colors.transparent,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                                width: size.width * 0.25,
+                                height: size.height * 0.17,
+                                decoration: !validandoFoto
+                                    ? BoxDecoration(
+                                        image: DecorationImage(
+                                          image: FileImage(File(rutaPagoAdj)),
+                                          fit: BoxFit.cover,
+                                        ),                              
+                                      )
+                                    : BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(size.width * 0.2),
+                                        border: Border.all(
+                                          width: 3,
+                                          color: objColorsApp.naranja50PorcTrans,
+                                          style: BorderStyle.solid,
+                                        ),
+                                      ),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    
+                                  },
+                                )),
+                          ),
+                  
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.amountPaymentLbl, style: const TextStyle(color: Colors.grey),),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.paymentDateLbl, style: const TextStyle(color: Colors.grey)),
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(amountController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(fechaHoraEscogidaMuestra, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.conceptLbl, style: const TextStyle(color: Colors.grey)),
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.paymentDateLbl, style: const TextStyle(color: Colors.grey)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(concController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(fechaHoraEscogidaMuestra, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.notesLbl, style: const TextStyle(color: Colors.grey)),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.conceptLbl, style: const TextStyle(color: Colors.grey)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(observationsController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(concController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.notesLbl, style: const TextStyle(color: Colors.grey)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.bankLbl, style: const TextStyle(color: Colors.grey)),
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(observationsController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(selectedValueBanco, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.bankLbl, style: const TextStyle(color: Colors.grey)),
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.holderLbl , style: const TextStyle(color: Colors.grey)),
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(selectedValueCliente, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                    ],
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(selectedValueBanco, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
+
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.holderLbl , style: const TextStyle(color: Colors.grey)),
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(selectedValueCliente, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                        ),
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                      ],
+                    ),
+                  
                   ),
-                
                 ),
               ),
-            ),
-          )
-        );
+            )
+          );
       
       }),
     );

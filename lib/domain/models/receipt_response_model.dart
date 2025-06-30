@@ -68,6 +68,9 @@ class ReceiptModelResponse {
   final String receiptBankName;
   final String receiptBankAccountHolder;
   final String receiptState;
+  final String receiptFile;
+  final String receiptComment;
+  final String receiptDateApproving;
 
   ReceiptModelResponse({
     required this.receiptAmount,
@@ -79,6 +82,9 @@ class ReceiptModelResponse {
     required this.receiptBankName,
     required this.receiptBankAccountHolder,
     required this.receiptState,
+    required this.receiptFile,
+    required this.receiptComment,
+    required this.receiptDateApproving
   });
 
   factory ReceiptModelResponse.fromJson(Map<String, dynamic> json) {
@@ -93,6 +99,9 @@ class ReceiptModelResponse {
       receiptBankName: json['receipt_bank_name'] ?? '',
       receiptBankAccountHolder: json['receipt_bank_account_holder'] ?? '',
       receiptState: json['receipt_state'] ?? '',
+      receiptFile: json['receipt_file'] ?? '',
+      receiptComment: json['receipt_comments'] ?? '',
+      receiptDateApproving: json['receipt_approving_date'] ?? ''
     );
   }
 
@@ -106,5 +115,8 @@ class ReceiptModelResponse {
         'receipt_bank_name': receiptBankName,
         'receipt_bank_account_holder': receiptBankAccountHolder,
         'receipt_state': receiptState,
+        'receipt_file': receiptFile,
+        'receipt_comments': receiptComment,
+        'receipt_approving_date': receiptDateApproving
       };
 }

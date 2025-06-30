@@ -181,6 +181,18 @@
   "@pendingReviewLbl": {
     "description": "Pendiente"
   },
+  "approveReviewLbl": "Aprobado",
+  "@approveReviewLbl": {
+    "description": "Aprobado"
+  },
+  "rejectedReviewLbl": "Rechazado",
+  "@rejectedReviewLbl": {
+    "description": "Rechazado"
+  },
+  "commentsLbl": "Comentarios",
+  "@commentsLbl": {
+    "description": "Comentarios"
+  },
   "paymentDateLbl": "Fecha de pago",
   "@paymentDateLbl": {
     "description": "Fecha de pago"

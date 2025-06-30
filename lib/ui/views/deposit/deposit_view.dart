@@ -6,11 +6,13 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 String searchQueryDeposit = '';
 List<ReceiptModelResponse> lstReceipts = [];
+ReceiptModelResponse? objReciboDet;
 
 class DepositView extends StatefulWidget {
   
@@ -29,6 +31,20 @@ class DepositViewSt extends State<DepositView> {
     searchQueryDeposit = '';
 
     lstReceipts = [];
+    objReciboDet = ReceiptModelResponse(
+      receiptAmount: 0,
+      receiptBankAccountHolder: '',
+      receiptBankAccountId: 0,
+      receiptBankName: '',
+      receiptConcept: '',
+      receiptDate: '',
+      receiptNumber: '',
+      receiptState: '',
+      receiptNotes: '',
+      receiptFile: '',
+      receiptComment: '',
+      receiptDateApproving: ''
+    );
   }
 
   @override
@@ -63,20 +79,52 @@ class DepositViewSt extends State<DepositView> {
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
                 lstReceipts = snapshot.data as List<ReceiptModelResponse>;
-                /*
-                String rspTmp = jsonEncode(lstReceipts.map((e) => e.toJson()).toList());
-                
-                String objPerm = rspTmp;
-                */
 
                 List<ItemBoton> lstMenu = [];//state.deserializeItemBotonMenuList(objPerm);
 
                 for(int i = 0; i < lstReceipts.length; i++){
+                  String statusDeposit = lstReceipts[i].receiptState;
+                  Color colorStatus = Colors.transparent;
+
+                  String fechaStr = lstReceipts[i].receiptDate;
+
+                  //String fechaStr = "2025-06-28 00:00:00";
+
+                  // Parsear la fecha
+                  DateTime fecha = DateTime.parse(fechaStr);
+
+                  // Formatear al estilo "Sábado 28, Junio"
+                  String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
+
+                  // Capitalizar la primera letra
+                  fechaFormateada = fechaFormateada[0].toUpperCase() + fechaFormateada.substring(1);
+
+
+                  if(statusDeposit.toLowerCase() == 'draft'){
+                    statusDeposit = locGen!.pendingReviewLbl;
+                    colorStatus = Colors.grey;
+                  }
+
+                  if(statusDeposit.toLowerCase() == 'rejected'){
+                    statusDeposit = locGen!.rejectedReviewLbl;
+                    colorStatus = Colors.red;
+                  }
+
+                  if(statusDeposit.toLowerCase() == 'approved'){
+                    statusDeposit = locGen!.approveReviewLbl;
+                    colorStatus = Colors.green;
+                  }
+
                   lstMenu.add(
                     ItemBoton(
-                      '','','',
-                      i,Icons.person,lstReceipts[i].receiptConcept,DateFormat('dd/MM/yyyy').format(DateTime.parse(lstReceipts[i].receiptDate)),'','',
-                      Colors.white,Colors.white,false,false,'','','','','','',(){}
+                      '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                      i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                      Colors.white,colorStatus,false,false,'','','','','',
+                      objRutas.rutaDetalleDepositFrmScrn,
+                      (){
+                        objReciboDet = lstReceipts[i];
+                        context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                      }
                     )
                   );
                 }
@@ -106,8 +154,9 @@ class DepositViewSt extends State<DepositView> {
                 (item) => FadeInLeft(
                   duration: const Duration( milliseconds: 250 ),
                   child: 
-                    ItemsListasWidget(
+                    ItemsDepositsWidget(
                       null,
+                      colorTexto: item.color2,
                       varIdPosicionMostrar: 0,
                       varEsRelevante: item.esRelevante,
                       varIdNotificacion: item.ordenNot,
@@ -116,16 +165,17 @@ class DepositViewSt extends State<DepositView> {
                       texto: item.mensajeNotificacion,
                       texto2: item.mensaje2,
                       color1: item.color1,
-                      color2: item.color2,
-                      onPress: () {  },
+                      color2: item.color1,
+                      onPress: item.onPress,
                       varMuestraNotificacionesTrAp: 0,
                       varMuestraNotificacionesTrProc: 0,
                       varMuestraNotificacionesTrComp: 0,
                       varMuestraNotificacionesTrInfo: 0,
-                      varIconoNot: item.iconoNotificacion,
+                      varIconoNot: item.idNotificacionGen,
                       varIconoNotTrans: item.rutaImagen,
                       permiteGestion: permiteGestion,
                       rutaNavegacion: item.rutaNavegacion,
+                      amount: item.idSolicitud
                     ),
                   )
                 ).toList();                
@@ -137,14 +187,14 @@ class DepositViewSt extends State<DepositView> {
                   width: size.width,
                   height: size.height * 0.79,
                   color: Colors.transparent,
-                  //alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-
+                          //AQUI PONER TABS
+/*
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextField(
@@ -162,7 +212,7 @@ class DepositViewSt extends State<DepositView> {
                               },
                             ),
                           ),
-
+*/
                           Container(
                             width: size.width,
                             height: size.height * 0.2 * lstMenu.length,
@@ -196,12 +246,12 @@ class DepositViewSt extends State<DepositView> {
             }
 
             return Container(
-                  color: Colors.white,
-                  width: size.width,
-                  height: size.height * 0.78,
-                  alignment: Alignment.center,
-                  child: Image.asset(AppConfig().rutaGifLoading),
-                );
+              color: Colors.transparent,
+              width: size.width,
+              height: size.height * 0.78,
+              alignment: Alignment.center,
+              child: const Text("No hay datos"),
+            );
           }
         );
       }

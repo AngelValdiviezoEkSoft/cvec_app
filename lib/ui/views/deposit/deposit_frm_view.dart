@@ -554,35 +554,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             );
                           }).toList(),
                         ),
-
-                        /*
-                        DropdownButton<String>(
-                          //value: selectedValueBanco,
-                          value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
-                          onChanged: (String? newValue) {
-                            if(cmbBancoCve.contains(selectedValueBanco)){
-                              setState(() {
-                                selectedValueBanco = newValue!;
-
-                                showHolder = true;
-
-                                for(int i = 0; i < lstBankAccount.length; i++){
-                                  if(lstBankAccount[i].bankName == selectedValueBanco){
-                                    holderName = lstBankAccount[i].bankAccountHolder;
-                                  }
-                                }
-
-                              });
-                            }                            
-                          },
-                          items: cmbBancoCve.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value, style: const TextStyle(fontSize: 11),),
-                            );
-                          }).toList(),
-                        ),
-                      */
                       ),
                       
                       SizedBox(

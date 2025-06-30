@@ -215,13 +215,18 @@ class ListaNotificaciones extends StatelessWidget {
     //height: sizeLstNot.height * 0.2,
     child: GestureDetector(
           onTap: () async {
-            const storage = FlutterSecureStorage();
+            if(onPress2 != null){
+              onPress2!();
+            }
+            else{
+              const storage = FlutterSecureStorage();
 
-            await storage.write(key: 'IdReservaciones', value: '');
-            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-            
-            //ignore: use_build_context_synchronously
-            context.push(rutaNavegacionFin!);
+              await storage.write(key: 'IdReservaciones', value: '');
+              await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
+              
+              //ignore: use_build_context_synchronously
+              context.push(rutaNavegacionFin!);
+            }            
           },
           child: Column(
             children: [
