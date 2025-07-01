@@ -247,7 +247,8 @@ class ListaDebt extends StatelessWidget {
                                   
                             SizedBox(width: sizeLstNot.width * 0.05,),
 
-                            Container(color: Colors.transparent, width: sizeLstNot.width * 0.35, height: sizeLstNot.height * 0.08, alignment: Alignment.center, child: AutoSizeText( texto ?? '', style: const TextStyle( color: Colors.black, ), presetFontSizes: const [16,14,12,10], maxLines: 1,)),
+                            //Container(color: Colors.transparent, width: sizeLstNot.width * 0.35, height: sizeLstNot.height * 0.08, alignment: Alignment.center, child: AutoSizeText( texto ?? '', style: const TextStyle( color: Colors.black, ), presetFontSizes: const [16,14,12,10], maxLines: 1,)),
+                            Container(color: Colors.transparent, width: sizeLstNot.width * 0.35, height: sizeLstNot.height * 0.08, alignment: Alignment.center, child: const AutoSizeText( '', style: const TextStyle( color: Colors.black, ), presetFontSizes: const [16,14,12,10], maxLines: 1,)),
                                   
                             SizedBox(width: sizeLstNot.width * 0.05,),
 

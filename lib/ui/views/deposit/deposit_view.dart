@@ -213,6 +213,87 @@ class DepositViewSt extends State<DepositView> {
                             ),
                           ),
 */
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF007AFF),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text('Todas',
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                
+                                /*
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Text(
+                                    'Aprobadas', maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                                */
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text('Aprobadas',maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Color(0xFF007AFF))),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text('Rechazadas',maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(color: Color(0xFF007AFF))),
+                                  ),
+                                ),
+                                
+                                const SizedBox(width: 8),
+
+                                Expanded(
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text('En Progreso',maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(color: Color(0xFF007AFF))),
+                                  ),
+                                ),
+                                
+                                const SizedBox(width: 8),
+                              ],
+                            ),
+                          ),
+
                           Container(
                             width: size.width,
                             height: size.height * 0.2 * lstMenu.length,

@@ -160,9 +160,11 @@ class GenericService extends ChangeNotifier {
         "is_composed_info": isComposedInfo,
         "models": [
           {
-            "model": modelo,
+            "model": modelo,            
             "filters": [
               ["partner_id","=",objReq.params.partnerId],
+              if(modelo.isNotEmpty && modelo == 'ek.travel.subscription.quota')
+              ['contract_id', '=', objReq.params.idConsulta],
               if(modelo.isNotEmpty && modelo == 'account.payment')
               ['payment_type', '=', 'inbound'],
               if(modelo.isNotEmpty && modelo == 'account.payment')

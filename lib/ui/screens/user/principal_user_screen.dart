@@ -751,7 +751,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                         height: size.height * 0.06,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text(locGen!.menuSendDepositsLbl, style: const TextStyle(fontSize: 25),)
+                        child: Text(locGen!.menuSendDepositsLbl, style: const TextStyle(fontSize: 20),)
                       ),
                   
                       Container(
@@ -769,8 +769,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                             gnrBloc.setShowViewFrmDeposit(true);
                           },
                           child: Container(
-                            width: size.width * 0.08, // Tamaño del botón
-                            height: size.height * 0.07,
+                            width: size.width * 0.04,
+                            height: size.height * 0.03,
                             decoration: const BoxDecoration(
                               color: Colors.green, // Color de fondo
                               shape: BoxShape.circle, // Forma circular

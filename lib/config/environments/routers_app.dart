@@ -26,6 +26,7 @@ class RoutersApp{
   String rutaFrmProfileEditScrn = '/rutaFrmProfileEditScrn';
   String rutaSettingUserScrn = '/rutaSettingUserScrn';
   String rutaDetalleDepositFrmScrn = '/rutaDetalleDepositFrmScrn';
+  String rutaDebsDetScrn = '/rutaDebsDetScrn';
   //
 
   //imágenes 

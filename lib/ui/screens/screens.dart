@@ -23,3 +23,5 @@ export 'package:cve_app/ui/screens/deposit/deposit.dart';
 export 'package:cve_app/ui/screens/profile/profile.dart';
 
 export 'package:cve_app/ui/screens/settings/settings.dart';
+
+export 'package:cve_app/ui/screens/debts/debts.dart';

@@ -1,3 +1,7 @@
+export 'package:cve_app/domain/models/suscription_det_response_model.dart';
+
+export 'package:cve_app/domain/models/suscription_response_model.dart';
+
 export 'package:cve_app/domain/models/deposit_response_model.dart';
 
 export 'package:cve_app/domain/models/deposit_request_model.dart';
