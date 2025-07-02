@@ -2,6 +2,7 @@ import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -76,11 +77,6 @@ class PrincipalClientStScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final gnrBloc = Provider.of<GenericBloc>(context);
 
-    //final languageProvider = Provider.of<LanguageProvider>(context);
-    
-    //final objRutas = RoutersApp();
-    //AccountStatementView
-
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
         return Scaffold( 
@@ -88,311 +84,13 @@ class PrincipalClientStScreen extends StatelessWidget {
           AppBar(
             backgroundColor: const Color(0xFF53C9EC),
           ),
-          /*
-          :
-          AppBar(
-            backgroundColor: const Color(0xFF53C9EC),
-            leading: Row(
-              children: [                    
-                Container(
-                  color: Colors.transparent,
-                  width: size.width * 0.15,
-                  height: size.height * 0.07,
-                  child: GestureDetector(
-                    onTap: () {
-                      Drawer(
-                        backgroundColor: Colors.white,
-                        shadowColor: Colors.white,
-                        surfaceTintColor: Colors.white,
-                        child: ListView(
-                          padding: EdgeInsets.zero,
-                          children: <Widget>[
-                            
-                            DrawerHeader(
-                              decoration: const BoxDecoration(
-                                color: Colors.blue,
-                              ),
-                              child: GestureDetector(
-                                onTap: () {
-                                  gnrBloc.setShowViewAccountStatementEvent(false);
-                                  gnrBloc.setShowViewDebts(false);
-                                  gnrBloc.setShowViewPrintRecipts(false);
-                                  gnrBloc.setShowViewReservetions(false);
-                                  gnrBloc.setShowViewSendDeposits(false);
-                                  
-                                  Navigator.pop(context); // Cierra el menú 
-                                },
-                                child: Container(
-                                  width: size.width * 0.35,
-                                  height: size.height * 0.09,
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage('assets/logo_app_pequenio.png'),//Image(),//NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
-                                      fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor                            
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            
-                            ListTile(
-                              leading: const Icon(Icons.document_scanner),
-                              title: Text(locGen!.menuAccountStatementLbl),
-                              onTap: () {
-                                
-                                gnrBloc.setShowViewAccountStatementEvent(true);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                      
-                                Navigator.pop(context); // Cierra el menú 
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.home),
-                              title: Text(locGen!.menuDebtsLbl),
-                              onTap: () {
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(true);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                                
-                                Navigator.pop(context); // Cierra el menú 
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.send),
-                              title: Text(locGen!.menuSendDepositsLbl),
-                              onTap: () {
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(true);
-                                gnrBloc.setShowViewWebSite(false);
-                                
-                                Navigator.pop(context); // Cierra el menú 
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.print),
-                              title: Text(locGen!.menuPrintReceiptsLbl),
-                              onTap: () {
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(true);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                      
-                                Navigator.pop(context);
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.visibility),
-                              title: Text(locGen!.menuSeeReservationsLbl),
-                              onTap: () {
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(true);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                      
-                                Navigator.pop(context);
-                              },
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.web_rounded),
-                              title: Text(locGen!.menuWebSiteLbl),
-                              onTap: () {
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(true);
-                      
-                                Navigator.pop(context);
-                              },
-                            ),
-                            
-                            ListTile(
-                              leading: const Icon(Icons.exit_to_app),
-                              title: Text(locGen!.menuLogOutLbl),
-                              onTap: () {
-                                
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                                
-                                Navigator.pop(context); // Cierra el menú 
-                      
-                                context.push(objRutas.rutaAuth);
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.menu, color: Colors.white,)
-                    ),
-                  ),
-                ),
-              
-                GestureDetector(
-                  onTap: () {
-                    
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: AssetImage('assets/logo_app_pequenio_blanco.png'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            actions: [
-              DropdownButton<String>(
-                dropdownColor: const Color(0xFF53C9EC),
-                //value: Localizations.localeOf(context).languageCode,
-                value: languageProvider.locale.languageCode,
-                items: const [
-                  DropdownMenuItem(value: 'en', child: Text('English', style: TextStyle(color: Colors.white, backgroundColor: Color(0xFF53C9EC), decorationColor: Color(0xFF53C9EC), ),)),
-                  DropdownMenuItem(value: 'es', child: Text('Español', style: TextStyle(color: Colors.white, backgroundColor: Color(0xFF53C9EC), decorationColor: Color(0xFF53C9EC),))),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    /*
-                    final posicionInicial = BlocProvider.of<LanguageBloc>(context);
-                    posicionInicial.setLanguage(Locale(value));
-                    */
-                    languageProvider.changeLocale(value);
-                  }
-                },
-              ),
-              InkWell(
-                onTap: () async {
-                  //openDialer();
-                  makePhoneCall();
-                },
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  width: size.width * 0.14,
-                  height: size.height * 0.05,
-                  color: Colors.transparent,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.call,
-                      color: Colors.white, 
-                    ),
-                    color: Colors.white,
-                    tooltip: '(593-9) 79856428',
-                    onPressed: () async {
-                      //openDialer();
-                      makePhoneCall();
-                    },
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  openEmailApp('info@centrodeviajesecuador.com');
-                },
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  width: size.width * 0.14,
-                  height: size.height * 0.05,
-                  color: Colors.transparent,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.mail,
-                      color: Colors.white, 
-                    ),
-                    color: Colors.white,
-                    tooltip: 'info@centrodeviajesecuador.com',
-                    onPressed: () async { 
-                      openEmailApp('info@centrodeviajesecuador.com');                 
-                    },
-                  ),
-                ),
-              ),        
-              InkWell(
-                onTap: () {
-        
-                  context.push(objRutas.rutaAuth);
-                  
-                },
-                borderRadius: BorderRadius.circular(50),
-                child: Container(
-                  width: size.width * 0.14,
-                  height: size.height * 0.05,
-                  color: Colors.transparent,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.person,
-                      color: Colors.white, 
-                    ),
-                    color: Colors.white,
-                    tooltip: 'Ingrese',
-                    onPressed: () async {
-                      context.push(objRutas.rutaAuth);
-                    
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          */
           drawer: Drawer(
             backgroundColor: Colors.white,
             shadowColor: Colors.white,
             surfaceTintColor: Colors.white,
             child: ListView(
               padding: EdgeInsets.zero,
-              children: <Widget>[
-                /*
-                DrawerHeader(
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      gnrBloc.setShowViewAccountStatementEvent(false);
-                      gnrBloc.setShowViewDebts(false);
-                      gnrBloc.setShowViewPrintRecipts(false);
-                      gnrBloc.setShowViewReservetions(false);
-                      gnrBloc.setShowViewSendDeposits(false);
-                      
-                      Navigator.pop(context); // Cierra el menú 
-                    },
-                    child: Container(
-                      width: size.width * 0.35,
-                      height: size.height * 0.09,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/logo_app_pequenio.png'),//Image(),//NetworkImage('https://centrodeviajesecuador.com/wp-content/uploads/2021/07/NARBONI-CORPORATION-PNG.png'), // URL de la imagen
-                          fit: BoxFit.fitHeight, // Ajusta la imagen al tamaño del contenedor                            
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                */
+              children: <Widget>[                
 
                 SizedBox(height: size.height * 0.075,),
 
@@ -401,17 +99,6 @@ class PrincipalClientStScreen extends StatelessWidget {
                     context.push(objRutas.rutaPerfilScreen);
                   },
                   child: _buildProfileCard(context, size),
-                  /*
-                  const UserAccountsDrawerHeader(
-                    //arrowColor: Colors.red,                    
-                    accountName: Text('Angel Elias Valdiviezo'),
-                    accountEmail: Text('Duran City - Etapa Bromelia, Propietario'),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.person, size: 40, color: Colors.grey),
-                    ),                  
-                  ),
-                  */
                 ),
                 
                 ListTile(
@@ -736,7 +423,9 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: Column(
+            child: const DepositView(null),
+            /*
+            Column(
               children: [
 
                 Container(
@@ -794,8 +483,10 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
 
                 const DepositView(null),
+                
               ],
             ),
+            */
           )
           :
 
@@ -885,6 +576,7 @@ class PrincipalClientStScreen extends StatelessWidget {
   }
 
   Widget _buildProfileCard(BuildContext context, Size size) {
+
     return Container(
       color: Colors.transparent,
       padding: const EdgeInsets.all(16),
@@ -905,10 +597,10 @@ class PrincipalClientStScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Angel Elias Valdiviezo González',
-                  maxLines: 1, // Número de líneas que quieres mostrar (usualmente 1)
+                  displayName,
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 SizedBox(height: size.height * 0.002),
                 Text(

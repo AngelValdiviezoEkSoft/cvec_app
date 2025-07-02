@@ -16,6 +16,8 @@ abstract class AuthState extends Equatable {
       await storage.write(key: 'fecMem', value: '');
       await storage.write(key: 'idMem', value: '');
 
+      displayName = await storage.read(key: 'PartnerDisplayName') ?? '';
+
       if(rspReg.isEmpty && rspLog.isEmpty){
         rspFinal = '';
       }

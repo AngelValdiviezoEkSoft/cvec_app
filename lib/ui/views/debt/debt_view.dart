@@ -2,13 +2,19 @@
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 String searchQueryDebt = '';
 List<ItemBoton> filteredTransactionsDeb = [];
 late TextEditingController searchDebTxt;
 int idContrato = 0;
+String nameContrato = '';
+String namePlan = '';
+String fechaInsc = '';
+
 /*
 class DebtView extends StatefulWidget {
   
@@ -197,54 +203,32 @@ class DebtViewSt extends State<DebtView> {
 }
 */
 
-class DebtView extends StatelessWidget {
-  const DebtView(Key? key) : super (key: key);  
+class DebtView extends StatefulWidget {
+  //const DebtView(Key? key) : super (key: key);  
+
+  const DebtView(Key? key) : super (key: key);
+  
+  @override
+  DebtViewSt createState() => DebtViewSt();
+}
+
+class DebtViewSt extends State<DebtView> {
+
+  @override
+  void initState() {
+    super.initState();
+    searchQueryDebt = '';
+    searchDebTxt = TextEditingController();
+    filteredTransactionsDeb = [];
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final notifications = [
-      {
-        'title': 'Primer Contrato',
-        'date': 'mayo 31-2025 12:15 p. m.',
-        'message': 'Plan Identidad 1',
-        'amount': '\$500.00',
-        'tag': 'Plan',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-      {
-        'title': 'Segundo Contrato',
-        'date': 'mayo 31-2025 12:15 p. m.',
-        'message': 'Plan Identidad 2',
-        'tag': 'Contrato',
-        'amount': '\$200.00',
-        'icon': Icons.credit_card,
-        'unread': false,
-      },
-      {
-        'title': 'Tercer Contrato',
-        'date': 'mayo 30-2025 07:07 p. m.',
-        'message': 'Plan Identidad 3',
-        'tag': 'Plan',
-        'amount': '\$100.00',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-      {
-        'title': 'Cuarto Contrato',
-        'date': 'mayo 06-2025 01:35 p. m.',
-        'message': 'Plan Identidad 4',
-        'tag': 'Plan',
-        'amount': '\$20.00',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-    ];
-
+    
     return FutureBuilder(
-    future: DebsService().getDebts(),
-    builder: (context, snapshot) {
+      future: DebsService().getDebts(),
+      builder: (context, snapshot) {
 
         if(!snapshot.hasData) {
           return Scaffold(
@@ -263,7 +247,25 @@ class DebtView extends StatelessWidget {
           //
           if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
+            idContrato = 0;
+            nameContrato = '';
+            namePlan = '';
+            fechaInsc = '';
+
             List<Subscription> lstSubs = snapshot.data as List<Subscription>;
+            List<Subscription> lstSubsResp = [];
+
+            if(searchQueryDebt.isNotEmpty){
+              
+              for(int i = 0; i < lstSubs.length; i++){
+                if(lstSubs[i].contractPlan.toLowerCase().contains(searchQueryDebt.toLowerCase())){
+                  lstSubsResp.add(lstSubs[i]);
+                }
+              }
+
+              lstSubs = [];
+              lstSubs = lstSubsResp;
+            }
 
             return Container(
                 width: size.width,
@@ -271,55 +273,39 @@ class DebtView extends StatelessWidget {
                 color: Colors.transparent,
                 child: Column(
                     children: [
-                      // Tabs
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF007AFF),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text('Todas',
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Color(0xFF007AFF)),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                alignment: Alignment.center,
-                                child: const Text('No leídas',
-                                    style: TextStyle(color: Color(0xFF007AFF))),
-                              ),
-                            ),
-                            /*
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: const Text(
-                                'Marcar todas como leídas',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            */
-                          ],
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: searchDebTxt,
+                          decoration: InputDecoration(
+                            hintText: locGen!.searchContPlanLbl,//'Buscar por plan del contrato',
+                            prefixIcon: const Icon(Icons.search),
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                
+                                setState(() {                                      
+                                  searchQueryDebt = '';
+                                  searchDebTxt.text = searchQueryDebt;
+                                });
+                                
+                              },
+                              icon: const Icon(Icons.close, color: Colors.black,),
+                            )
+                          ),
+                          onEditingComplete: () {
+                            FocusScope.of(context).unfocus();
+                  
+                            setState(() {
+                              searchQueryDebt = searchDebTxt.text;
+                            });
+                            
+                          },
                         ),
                       ),
-                
-                      // Lista de notificaciones
+
+                      SizedBox(height: size.height * 0.009,),
+                      
                       Expanded(
                         child: ListView.builder(
                           itemCount: lstSubs.length,
@@ -329,6 +315,11 @@ class DebtView extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 idContrato = item.contractId;
+                                nameContrato = item.contractName;
+                                namePlan = item.contractPlan;
+
+                                DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
+                                fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
 
                                 context.push(objRutas.rutaDebsDetScrn);
                               },
@@ -341,14 +332,10 @@ class DebtView extends StatelessWidget {
                                     //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                     child: Stack(
                                       children: [
-                                          
-                                      
                                         Container(
-                                          width: size.width * 0.92,
-                                          height: size.height * 0.14,
+                                          width: size.width * 0.85,
+                                          height: size.height * 0.13,
                                           alignment: Alignment.centerRight,
-                                          //color: Colors.blue,
-                                          //padding: const EdgeInsets.all(12),
                                           decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius: BorderRadius.circular(12),
@@ -361,46 +348,37 @@ class DebtView extends StatelessWidget {
                                             child: Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    
-                                                    SizedBox(height: size.height * 0.019),
-                                                    Text(item.contractName,
-                                                        style: const TextStyle(
-                                                            fontWeight: FontWeight.w600, fontSize: 18)),
-                                                    //const SizedBox(height: 2),
-                                                    SizedBox(height: size.height * 0.005),
-                                                    Text(item.contractPlan),
-                                                    //const SizedBox(height: 6),
-                                                    SizedBox(height: size.height * 0.008),
-                                                    
-                                                    Text(item.contractInscriptionDate,style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
-                                                    //const SizedBox(height: 8),
-                                                    /*
-                                                    SizedBox(height: size.height * 0.01),
-                                                    Container(
-                                                      padding: const EdgeInsets.symmetric(
-                                                          horizontal: 12, vertical: 6),
-                                                      decoration: BoxDecoration(
-                                                        color: const Color(0xFFE3F0FF),
-                                                        borderRadius: BorderRadius.circular(12),
+                                                Container(
+                                                  color: Colors.transparent,
+                                                  width: size.width * 0.42,
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      
+                                                      SizedBox(height: size.height * 0.019),
+
+                                                      Text(item.contractName,
+                                                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                       ),
-                                                      child: Text(
-                                                        item['tag'] as String,
-                                                        style: const TextStyle(color: Colors.black),
-                                                      ),
-                                                    ),
-                                                    */
-                                                
-                                                  ],
+                                                      
+                                                      SizedBox(height: size.height * 0.005),
+                                                      
+                                                      Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
+                                                      
+                                                      SizedBox(height: size.height * 0.008),
+                                                      
+                                                      Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                      
+                                                    ],
+                                                  ),
                                                 ),
                               
                                                 Container(
                                                   color: Colors.transparent,
                                                   width: size.width * 0.3,
-                                                  alignment: Alignment.center,
-                                                  child: Text('\$${item.contractResidual}',
+                                                  alignment: Alignment.centerRight,
+                                                  child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
                                                       style: const TextStyle(
                                                           fontWeight: FontWeight.w600, fontSize: 20)),
                                                 ),
@@ -412,7 +390,7 @@ class DebtView extends StatelessWidget {
                                         
                                         ),
                               
-                                        SizedBox(height: size.height * 0.18,),
+                                        SizedBox(height: size.height * 0.14,),
                                       
                                       ],
                                     ),
@@ -423,14 +401,14 @@ class DebtView extends StatelessWidget {
                                     
                                     // Ícono exterior al card
                                     Positioned(
-                                      left: size.width * 0.006,//5,
-                                      top: size.height * 0.05,
-                                      child: Stack(
+                                      left: size.width * 0.028,//5,
+                                      top: size.height * 0.042,
+                                      child: const Stack(
                                         alignment: Alignment.topLeft,
                                         children: [
                                           CircleAvatar(
                                                 radius: 20,
-                                                backgroundColor: const Color(0xFF007AFF),
+                                                backgroundColor: Color(0xFF007AFF),
                                                 child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
                                                     color: Colors.white),
                                               ),
@@ -472,4 +450,5 @@ class DebtView extends StatelessWidget {
     );
     
   }
+
 }

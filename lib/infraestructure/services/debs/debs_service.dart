@@ -88,7 +88,7 @@ class DebsService extends ChangeNotifier{
 
       var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true);
 
-      print('Rsp Lista DET DEBS $objRsp');
+      //print('Rsp Lista DET DEBS $objRsp');
       
       SuscriptionDetResponseModel objConv = SuscriptionDetResponseModel.fromJson(jsonDecode(objRsp));
 

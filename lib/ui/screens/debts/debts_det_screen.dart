@@ -82,45 +82,6 @@ class DebsDetScreenState extends State<DebsDetScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final detalleCuota = [
-      {
-        'title': '05 FEB 2025',
-        'date': 'Cuota 05/12',
-        'message': 'Plan Identidad 1',
-        'amount': '\$500.00',
-        'tag': 'Plan',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-      {
-        'title': '05 MAR 2025',
-        'date': 'Cuota 06/12',
-        'message': 'Plan Identidad 2',
-        'tag': 'Contrato',
-        'amount': '\$200.00',
-        'icon': Icons.credit_card,
-        'unread': false,
-      },
-      {
-        'title': '05 ABR 2025',
-        'date': 'Cuota 07/12',
-        'message': 'Plan Identidad 3',
-        'tag': 'Plan',
-        'amount': '\$100.00',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-      {
-        'title': '05 MAY 2025',
-        'date': 'Cuota 08/12',
-        'message': 'Plan Identidad 4',
-        'tag': 'Plan',
-        'amount': '\$20.00',
-        'icon': Icons.notifications,
-        'unread': true,
-      },
-    ];
-
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocBuilder<GenericBloc, GenericState>(
@@ -144,7 +105,7 @@ class DebsDetScreenState extends State<DebsDetScreen> {
           if(snapshot.data != null && snapshot.data!.isNotEmpty) {
             List<Quota> lstSubs = snapshot.data as List<Quota>;
             
-              return Scaffold(
+            return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
                 backgroundColor: const Color(0xFF2EA3F2),        
@@ -161,27 +122,24 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                 ),          
               ),
               body: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     SizedBox(height:  size.height * 0.02,),
             
                     Container(
                       color: Colors.transparent,
-                      width: size.width * 0.3,
+                      width: size.width * 0.95,
                       alignment: Alignment.center,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('Contrato',
-                              style: const TextStyle(fontSize: 20)),
+                          Text(nameContrato, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             
-                          Text('Plan terreno',
-                              style: const TextStyle(fontSize: 20)),
+                          Text(namePlan, style: const TextStyle(fontSize: 16)),
             
-                          Text('01/07/2025',
-                              style: const TextStyle(fontSize: 20)),
+                          Text(fechaInsc, style: const TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),
@@ -189,72 +147,80 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                     SizedBox(height:  size.height * 0.02,),
             
                     Expanded(
-                  child: ListView.builder(
-                    itemCount: lstSubs.length,
-                    itemBuilder: (context, index) {
-                      final item = lstSubs[index];
-                      
-                      return Container(
-                              width: size.width,
-                              color: Colors.grey[100],
-                              alignment: Alignment.center,
-                              child: Stack(
-                                children: [
+                      child: ListView.builder(
+                        itemCount: lstSubs.length,
+                        itemBuilder: (context, index) {
+                          final item = lstSubs[index];
+
+                          DateTime dateQuote = DateTime.parse(item.quotaDueDate);
+
+                          String formattedDateQuote = DateFormat("dd MMM yy", "en_US").format(dateQuote);
+                          //String formatted = DateFormat("dd MMM", "en_US").format(date);
+                          
+                          return Container(
+                                  width: size.width,
+                                  //height: size.height * 0.25,
+                                  color: Colors.grey[100],
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    children: [
+                                        
                                     
-                                
-                                  Container(
-                                    width: size.width * 0.95,
-                                    height: size.height * 0.17,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Container(
-                                      width: size.width * 0.85,
-                                      color: Colors.transparent,
-                                      alignment: Alignment.center,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            color: Colors.transparent,
-                                            width: size.width * 0.15,
-                                            alignment: Alignment.center,
-                                            child: Text(item.quotaDueDate,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w600, fontSize: 20,), textAlign: TextAlign.center,),
+                                      Container(
+                                        width: size.width * 0.95,
+                                        height: size.height * 0.08,
+                                        alignment: Alignment.center,
+                                        //color: Colors.transparent,
+                                        
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          //borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Container(
+                                          width: size.width * 0.85,
+                                          color: Colors.transparent,
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.1,
+                                                alignment: Alignment.center,
+                                                child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
+                                              ),
+
+                                              SizedBox(width: size.width * 0.02),
+                
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.36,
+                                                child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                              ),
+                            
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.25,
+                                                alignment: Alignment.centerRight,
+                                                child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                              ),
+                            
+                                              SizedBox(width: size.width * 0.0004),
+                                            ],
                                           ),
-            
-                                          Container(
-                                            color: Colors.transparent,
-                                            width: size.width * 0.3,
-                                            child: Text(item.quotaName,
-                                                style: const TextStyle(fontSize: 20)),
-                                          ),
-                        
-                                          Container(
-                                            color: Colors.transparent,
-                                            width: size.width * 0.2,
-                                            child: Text('\$${item.quotaResidual}',
-                                                style: const TextStyle(fontSize: 20)),
-                                          ),
-                        
-                                          SizedBox(width: size.width * 0.0004),
-                                        ],
+                                        ),
+                                      
                                       ),
-                                    ),
-                                  
+                            
+                                      SizedBox(height: size.height * 0.09,),
+                                    
+                                    ],
                                   ),
-                        
-                                  SizedBox(height: size.height * 0.18,),
-                                
-                                ],
-                              ),
-                            );
-                    },
-                  ),
-                ),
+                                );
+                        },
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -262,12 +228,31 @@ class DebsDetScreenState extends State<DebsDetScreen> {
           
           }
         }
-            return Container(
-              color: Colors.transparent,
-              width: size.width,
-              height: size.height * 0.78,
-              alignment: Alignment.center,
-              child: const Text("No hay datos"),
+            return Scaffold(
+              appBar: AppBar(
+                foregroundColor: Colors.white,
+                backgroundColor: const Color(0xFF2EA3F2),        
+                //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
+                title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
+                leading: GestureDetector(
+                  onTap: () {
+                    context.push(objRutas.rutaPrincipalUser);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.arrow_back_ios)
+                  ),
+                ),          
+              ),
+              body: Center(
+                child: Container(
+                  color: Colors.transparent,
+                  width: size.width,
+                  height: size.height * 0.78,
+                  alignment: Alignment.center,
+                  child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                ),
+              ),
             );
           }
         );

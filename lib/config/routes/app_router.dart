@@ -68,7 +68,7 @@ final GoRouter appRouter = GoRouter(
                   if(snapshot.data == 'termCond') {
                     return const TermsAndConditionsScreen(null);
                   }
-                  if(snapshot.data == 'home') {
+                  if(snapshot.data == 'home') {                    
                     return const PrincipalUserScreen(null);
                   }
                 }

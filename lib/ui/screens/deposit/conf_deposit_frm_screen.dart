@@ -254,7 +254,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(selectedValueCliente, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(holderName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
                         ),
                         
                         SizedBox(

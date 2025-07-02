@@ -304,5 +304,13 @@
   "repeatNewPsswLbl": "Repite tu nueva contraseña",
   "@repeatNewPsswLbl": {
     "description": "Repite tu nueva contraseña"
+  },
+  "tabAlsDebsLbl": "Todas",
+  "@tabAlsDebsLbl": {
+    "description": "Todas"
+  },
+  "searchContPlanLbl": "Buscar por plan del contrato",
+  "@searchContPlanLbl": {
+    "description": "Buscar por plan del contrato"
   }
 }

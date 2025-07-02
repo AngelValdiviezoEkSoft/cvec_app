@@ -14,6 +14,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 
 TextEditingController userTxt = TextEditingController();
 TextEditingController passWordTxt = TextEditingController();
+String displayName = '';
 
 class AuthScreen extends StatelessWidget {
 
@@ -282,13 +283,19 @@ class AuthScreenSt extends StatelessWidget {
                       }
                     
                       final data = json.decode(resp);
-
+                      
                       final objError = data['error'];
                       
                       //ignore: use_build_context_synchronously
                       context.pop();
 
                       if(objError == null) {
+                        displayName = data["result"]["partner_display_name"] ?? '';
+
+                        const storage = FlutterSecureStorage();
+
+                        await storage.write(key: 'PartnerDisplayName', value: displayName);
+
                         //ignore: use_build_context_synchronously
                         context.push(objRutas.rutaPrincipalUser);
                       } else {

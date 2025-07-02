@@ -13,6 +13,10 @@ import 'package:provider/provider.dart';
 String searchQueryDeposit = '';
 List<ReceiptModelResponse> lstReceipts = [];
 ReceiptModelResponse? objReciboDet;
+bool tabTodas = true;
+bool tabProgreso = false;
+bool tabAprobadas = false;
+bool tabRechazadas = false;
 
 class DepositView extends StatefulWidget {
   
@@ -29,6 +33,11 @@ class DepositViewSt extends State<DepositView> {
     super.initState();
 
     searchQueryDeposit = '';
+
+    tabTodas = true;
+    tabProgreso = false;
+    tabAprobadas = false;
+    tabRechazadas = false;
 
     lstReceipts = [];
     objReciboDet = ReceiptModelResponse(
@@ -88,17 +97,11 @@ class DepositViewSt extends State<DepositView> {
 
                   String fechaStr = lstReceipts[i].receiptDate;
 
-                  //String fechaStr = "2025-06-28 00:00:00";
-
-                  // Parsear la fecha
                   DateTime fecha = DateTime.parse(fechaStr);
 
-                  // Formatear al estilo "Sábado 28, Junio"
                   String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
 
-                  // Capitalizar la primera letra
                   fechaFormateada = fechaFormateada[0].toUpperCase() + fechaFormateada.substring(1);
-
 
                   if(statusDeposit.toLowerCase() == 'draft'){
                     statusDeposit = locGen!.pendingReviewLbl;
@@ -115,18 +118,67 @@ class DepositViewSt extends State<DepositView> {
                     colorStatus = Colors.green;
                   }
 
-                  lstMenu.add(
-                    ItemBoton(
-                      '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                      i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
-                      Colors.white,colorStatus,false,false,'','','','','',
-                      objRutas.rutaDetalleDepositFrmScrn,
-                      (){
-                        objReciboDet = lstReceipts[i];
-                        context.push(objRutas.rutaDetalleDepositFrmScrn);                        
-                      }
-                    )
-                  );
+                  if(tabTodas){
+                    lstMenu.add(
+                      ItemBoton(
+                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                        Colors.white,colorStatus,false,false,'','','','','',
+                        objRutas.rutaDetalleDepositFrmScrn,
+                        (){
+                          objReciboDet = lstReceipts[i];
+                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                        }
+                      )
+                    );
+                  }
+
+                  if(tabProgreso && statusDeposit.toLowerCase() == locGen!.pendingReviewLbl.toLowerCase()){
+                    lstMenu.add(
+                      ItemBoton(
+                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                        Colors.white,colorStatus,false,false,'','','','','',
+                        objRutas.rutaDetalleDepositFrmScrn,
+                        (){
+                          objReciboDet = lstReceipts[i];
+                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                        }
+                      )
+                    );
+                  }
+
+                  if(tabAprobadas && statusDeposit.toLowerCase() == 'approved'){
+                    lstMenu.add(
+                      ItemBoton(
+                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                        Colors.white,colorStatus,false,false,'','','','','',
+                        objRutas.rutaDetalleDepositFrmScrn,
+                        (){
+                          objReciboDet = lstReceipts[i];
+                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                        }
+                      )
+                    );
+                  }
+
+                  if(tabRechazadas && statusDeposit.toLowerCase() == 'rejected'){
+                    lstMenu.add(
+                      ItemBoton(
+                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                        Colors.white,colorStatus,false,false,'','','','','',
+                        objRutas.rutaDetalleDepositFrmScrn,
+                        (){
+                          objReciboDet = lstReceipts[i];
+                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                        }
+                      )
+                    );
+                  }
+
+                  
                 }
 
                 if(searchQueryDeposit.isNotEmpty){
@@ -183,134 +235,185 @@ class DepositViewSt extends State<DepositView> {
                 gnrBloc.setCargando(false);
                 
                 return !state.cargando ?
-                Container(
-                  width: size.width,
-                  height: size.height * 0.79,
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //AQUI PONER TABS
-/*
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                hintText: locGen!.searchLbl,
-                                prefixIcon: const Icon(Icons.search),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                Scaffold(
+                  body: Container(
+                    width: size.width,
+                    height: size.height * 0.85,//0.79,
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //AQUI PONER TABS
+                  /*
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: locGen!.searchLbl,
+                                  prefixIcon: const Icon(Icons.search),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                                onEditingComplete: () {
+                                  FocusScope.of(context).unfocus();
+                  
+                                  setState(() {
+                                    searchQuery = searchTxt.text;
+                                  });
+                                },
                               ),
-                              onEditingComplete: () {
-                                FocusScope.of(context).unfocus();
-
-                                setState(() {
-                                  searchQuery = searchTxt.text;
-                                });
-                              },
                             ),
-                          ),
-*/
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF007AFF),
-                                      borderRadius: BorderRadius.circular(20),
+                  */
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tabTodas = true;
+                                        tabProgreso = false;
+                                        tabAprobadas = false;
+                                        tabRechazadas = false;
+                  
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: tabTodas ? const Color(0xFF007AFF) : Colors.white,
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(locGen!.tabAlsDebsLbl,
+                                            style: TextStyle(color: tabTodas ? Colors.white : const Color(0xFF007AFF))),
+                                      ),
                                     ),
-                                    alignment: Alignment.center,
-                                    child: const Text('Todas',
-                                        style: TextStyle(color: Colors.white)),
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                
-                                /*
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: const Text(
-                                    'Aprobadas', maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ),
-                                */
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
+                  
+                                  const SizedBox(width: 8),
+                                  
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tabTodas = false;
+                                        tabProgreso = false;
+                                        tabAprobadas = true;
+                                        tabRechazadas = false;
+                  
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: tabAprobadas ? const Color(0xFF007AFF) : Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(locGen!.approveReviewLbl,maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: tabAprobadas ? Colors.white : const Color(0xFF007AFF))
+                                        ),
+                                      ),
                                     ),
-                                    alignment: Alignment.center,
-                                    child: const Text('Aprobadas',maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Color(0xFF007AFF))),
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tabTodas = false;
+                                        tabProgreso = false;
+                                        tabAprobadas = false;
+                                        tabRechazadas = true;
+                  
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: tabRechazadas ? const Color(0xFF007AFF) : Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(locGen!.rejectedReviewLbl,maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(color: tabRechazadas ? Colors.white : const Color(0xFF007AFF))),
+                                      ),
                                     ),
-                                    alignment: Alignment.center,
-                                    child: const Text('Rechazadas',maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(color: Color(0xFF007AFF))),
                                   ),
-                                ),
-                                
-                                const SizedBox(width: 8),
-
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
+                                  
+                                  const SizedBox(width: 8),
+                  
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        tabTodas = false;
+                                        tabProgreso = true;
+                                        tabAprobadas = false;
+                                        tabRechazadas = false;
+                  
+                                        setState(() {
+                                          
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: tabProgreso ? const Color(0xFF007AFF) : Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Text(locGen!.pendingReviewLbl,maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(color: tabProgreso ? Colors.white : const Color(0xFF007AFF))),
+                                      ),
                                     ),
-                                    alignment: Alignment.center,
-                                    child: const Text('En Progreso',maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(color: Color(0xFF007AFF))),
                                   ),
-                                ),
-                                
-                                const SizedBox(width: 8),
-                              ],
+                                  
+                                  const SizedBox(width: 8),
+                                ],
+                              ),
                             ),
-                          ),
-
-                          Container(
-                            width: size.width,
-                            height: size.height * 0.2 * lstMenu.length,
-                            color: Colors.transparent,
-                            child: ListView(
-
-                              physics: const BouncingScrollPhysics(),
-                              children: <Widget>[
-                                const SizedBox( height: 3, ),
-                                ...itemMap,
-                              ],
+                  
+                            Container(
+                              width: size.width,
+                              height: size.height * 0.2 * lstMenu.length,
+                              color: Colors.transparent,
+                              child: ListView(
+                  
+                                physics: const BouncingScrollPhysics(),
+                                children: <Widget>[
+                                  const SizedBox( height: 3, ),
+                                  ...itemMap,
+                                ],
+                              ),
                             ),
-                          ),
-          
-                        ],
+                            
+                          ],
+                        ),
                       ),
                     ),
+                  ),
+                  floatingActionButton: FloatingActionButton(                
+                    onPressed: () {
+                      gnrBloc.setShowViewAccountStatementEvent(false);
+                      gnrBloc.setShowViewDebts(false);
+                      gnrBloc.setShowViewPrintRecipts(false);
+                      gnrBloc.setShowViewReservetions(false);
+                      gnrBloc.setShowViewSendDeposits(false);
+                      gnrBloc.setShowViewWebSite(false);
+                      gnrBloc.setShowViewFrmDeposit(true);
+                    },
+                    backgroundColor: const Color.fromRGBO(75, 57, 239, 1.0),
+                    child: const Icon(Icons.add_card_sharp, color: Colors.white,),
                   ),
                 )
                 :                

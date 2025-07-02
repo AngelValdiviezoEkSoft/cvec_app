@@ -105,7 +105,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                   child: Column(
                                     children: [
                                       
-                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: 'Angel Elias Valdiviezo Gonzalez', txtInpTp: TextInputType.text,),
+                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: displayName, txtInpTp: TextInputType.text,),
                                       //CustomTextField(label: locGen!.idNumberLbl, initialValue: '0922219480'),
                                       CustomTextField(label: locGen!.cellNumberLbl, initialValue: '0988665834', txtInpTp: TextInputType.number,),
                                       CustomTextField(label: locGen!.emailLbl, initialValue: 'angel_elias_valdiviezo_gonzalez@hotmail.com', txtInpTp: TextInputType.emailAddress,),

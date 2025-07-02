@@ -70,7 +70,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
       });
     }
   }
-
+/*
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -86,7 +86,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
 
     pickFile(result);
   }
-
+*/
   @override
   void initState() {
     super.initState();
@@ -143,765 +143,732 @@ class DepositFrmViewState extends State<DepositFrmView> {
           
               }
 
-                    return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-        
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.photoPaymentReceiptLbl),
-                      ),
-                      SizedBox(
-                        height: size.height * 0.005,
-                      ),
-                      if (rutaPagoAdj.isEmpty && !state.levantaModal)
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+          
                         Container(
-                          width: size.width * 0.96,
-                          color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            width: size.width * 0.25,
-                            height: size.height * 0.11,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[350], // Color de fondo
-                              borderRadius: BorderRadius.circular(12), // Bordes redondeados
-                            ),
-                            child: GestureDetector(
-                                onTap: () {
-                                  gnrBloc.setLevantaModal(true);
-                                  mostrarOpciones(context, size);
-                                },
-                                child: const Icon(Icons.add_a_photo_outlined, size: 40, color: Colors.white)),
-                          ),
-                        ),
-        
-                      if (state.levantaModal)
-                        Container(
-                          width: size.width * 0.96,
-                          color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            width: size.width * 0.25,
-                            height: size.height * 0.11,
-                            color: Colors.transparent,
-                          ),
-                        ),
-        
-                      if (rutaPagoAdj.isNotEmpty && !state.levantaModal)
-                        Container(
-                          width: size.width * 0.96,
-                          color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                              width: size.width * 0.25,
-                              height: size.height * 0.11,
-                              decoration: !validandoFoto
-                                  ? BoxDecoration(
-                                      image: DecorationImage(
-                                        image: FileImage(File(rutaPagoAdj)),
-                                        fit: BoxFit.cover,
-                                      ),                              
-                                    )
-                                  : BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(size.width * 0.2),
-                                      border: Border.all(
-                                        width: 3,
-                                        color: objColorsApp.naranja50PorcTrans,
-                                        style: BorderStyle.solid,
-                                      ),
-                                    ),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  gnrBloc.setLevantaModal(true);
-                                  mostrarOpciones(context, size);
-                                },
-                              )),
-                        ),
-        
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-
-                      TextFormField(
-                        controller: amountController,
-                        inputFormatters: [currencyFormatter],
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(
-                            labelText: locGen!.amountLbl,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 2), // Borde cuando no está enfocado
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 3), // Borde cuando está enfocado
-                            ),
-                            prefixIcon: const Icon(Icons.monetization_on_outlined),
-                            hintText: "0.00",
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                amountController.text = '';
-        
-                                if(observationsController.text.isEmpty || amountController.text.isEmpty 
-                                  || compController.text.isEmpty || concController.text.isEmpty){
-                                  setState(() {
-                                    btnGuardar = false;
-                                  });
-                                }
-                              },
-                              icon: state.cargando 
-                              ?
-                              LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                              :
-                              const Icon(
-                                Icons.cancel,
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )
-                          ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return locGen!.msmValidateAmounLbl;//'Por favor ingrese el monto';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          if(value.isNotEmpty && compController.text.isNotEmpty 
-                          && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
-                            setState(() {
-                              btnGuardar = true;
-                            });
-                          }
-                        },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      TextFormField(
-                        controller: compController,
-                        decoration: InputDecoration(
-                            labelText: locGen!.receiptNumberLbl,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 2), // Borde cuando no está enfocado
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 3), // Borde cuando está enfocado
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                compController.text = '';
-        
-                                if(observationsController.text.isEmpty || amountController.text.isEmpty 
-                                  || compController.text.isEmpty || concController.text.isEmpty){
-                                  setState(() {
-                                    btnGuardar = false;
-                                  });
-                                }
-                              },
-                              icon: state.cargando 
-                              ?
-                              LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                              :
-                              const Icon(
-                                Icons.cancel,
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el título';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          if(value.isNotEmpty && amountController.text.isNotEmpty 
-                          && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
-                            setState(() {
-                              btnGuardar = true;
-                            });
-                          }
-                        },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.dateLbl),
-                      ),
-                     
-                      SizedBox(
-                        height: size.height * 0.005,
-                      ),
-                      
-                      GestureDetector(
-                        onTap: () {
-                          openDatePicker(context);
-                        },
-                        child: Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: GestureDetector(
-                            onTap: () {
-                              openDatePicker(context);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.calendar_month_outlined,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.008,
-                                ),
-                                Text(fechaHoraEscogida),
-                              ],
-                            ),
-                          ),
+                          child: Text(locGen!.photoPaymentReceiptLbl),
                         ),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      TextFormField(
-                        controller: concController,
-                        decoration: InputDecoration(
-                            labelText: locGen!.conceptLbl,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 2), // Borde cuando no está enfocado
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 3), // Borde cuando está enfocado
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                concController.text = '';
-        
-                                if(observationsController.text.isEmpty || amountController.text.isEmpty 
-                                  || compController.text.isEmpty || concController.text.isEmpty){
-                                  setState(() {
-                                    btnGuardar = false;
-                                  });
-                                }
-                              },
-                              icon: state.cargando 
-                              ?
-                              LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                              :
-                              const Icon(
-                                Icons.cancel,
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )
-                          ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el título';
-                          }
-                          return null;
-                        },
-                        onChanged: (value) {
-                          if(value.isNotEmpty && amountController.text.isNotEmpty 
-                          && compController.text.isNotEmpty && observationsController.text.isNotEmpty){
-                            setState(() {
-                              btnGuardar = true;
-                            });
-                          }
-                        },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      TextFormField(
-                        controller: observationsController,
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                            labelText: locGen!.notesLbl,
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 2), // Borde cuando no está enfocado
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 3), // Borde cuando está enfocado
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                observationsController.text = '';
-                                if(observationsController.text.isEmpty || amountController.text.isEmpty 
-                                  || compController.text.isEmpty || concController.text.isEmpty){
-                                  setState(() {
-                                    btnGuardar = false;
-                                  });
-                                }
-                              },
-                              icon: state.cargando 
-                              ?
-                              LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                              :
-                              const Icon(
-                                Icons.cancel,
-                                size: 12,
-                                color: Colors.black,
-                              ),
-                            )),
-                        onChanged: (value) {
-                          if(value.isNotEmpty && amountController.text.isNotEmpty 
-                          && compController.text.isNotEmpty && concController.text.isNotEmpty){
-                            setState(() {
-                              btnGuardar = true;
-                            });
-                          }
-                        },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.paymentLbl),
-                      ),
-                      
-                      //if(lstBankAccount.isNotEmpty)
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.07,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent, // Color de fondo (opcional)
-                          border: Border.all(
-                            color: Colors.black54, // Color del borde
-                            width: 0.5, // Grosor del borde
-                          ),
-                          borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
+                        
+                        SizedBox(
+                          height: size.height * 0.005,
                         ),
-                        child: DropdownButton<String>(
-                          value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
-                          hint: const Text("Selecciona un banco", style: TextStyle(fontSize: 11)),
-                          onChanged: (String? newValue) {
-                            if (cmbBancoCve.contains(newValue)) {
-                              setState(() {
-                                selectedValueBanco = newValue!;
-                                showHolder = true;
+                        if (rutaPagoAdj.isEmpty && !state.levantaModal)
+                          Container(
+                            width: size.width * 0.96,
+                            color: Colors.transparent,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              width: size.width * 0.25,
+                              height: size.height * 0.11,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[350], // Color de fondo
+                                borderRadius: BorderRadius.circular(12), // Bordes redondeados
+                              ),
+                              child: GestureDetector(
+                                  onTap: () {
+                                    gnrBloc.setLevantaModal(true);
+                                    mostrarOpciones(context, size);
+                                  },
+                                  child: const Icon(Icons.add_a_photo_outlined, size: 40, color: Colors.white)),
+                            ),
+                          ),
+          
+                        if (state.levantaModal)
+                          Container(
+                            width: size.width * 0.96,
+                            color: Colors.transparent,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              width: size.width * 0.25,
+                              height: size.height * 0.11,
+                              color: Colors.transparent,
+                            ),
+                          ),
+          
+                        if (rutaPagoAdj.isNotEmpty && !state.levantaModal)
+                          Container(
+                            width: size.width * 0.96,
+                            color: Colors.transparent,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                                width: size.width * 0.25,
+                                height: size.height * 0.11,
+                                decoration: !validandoFoto
+                                    ? BoxDecoration(
+                                        image: DecorationImage(
+                                          image: FileImage(File(rutaPagoAdj)),
+                                          fit: BoxFit.cover,
+                                        ),                              
+                                      )
+                                    : BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(size.width * 0.2),
+                                        border: Border.all(
+                                          width: 3,
+                                          color: objColorsApp.naranja50PorcTrans,
+                                          style: BorderStyle.solid,
+                                        ),
+                                      ),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    gnrBloc.setLevantaModal(true);
+                                    mostrarOpciones(context, size);
+                                  },
+                                )),
+                          ),
+          
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
 
-                                for (int i = 0; i < lstBankAccount.length; i++) {
-                                  if (lstBankAccount[i].bankName == selectedValueBanco) {
-                                    holderName = lstBankAccount[i].bankAccountHolder;
+                        TextFormField(
+                          controller: amountController,
+                          inputFormatters: [currencyFormatter],
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          decoration: InputDecoration(
+                              labelText: locGen!.amountLbl,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2), // Borde cuando no está enfocado
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 3), // Borde cuando está enfocado
+                              ),
+                              prefixIcon: const Icon(Icons.monetization_on_outlined),
+                              hintText: "0.00",
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  amountController.text = '';
+          
+                                  if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                                    || compController.text.isEmpty || concController.text.isEmpty){
+                                    setState(() {
+                                      btnGuardar = false;
+                                    });
                                   }
-                                }
+                                },
+                                icon: state.cargando 
+                                ?
+                                LoadingAnimationWidget.fallingDot(
+                                  color: const Color(0xFF1A1A3F),
+                                  size: 12,
+                                )
+                                :
+                                const Icon(
+                                  Icons.cancel,
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )
+                            ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return locGen!.msmValidateAmounLbl;//'Por favor ingrese el monto';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            if(value.isNotEmpty && compController.text.isNotEmpty 
+                            && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                              setState(() {
+                                btnGuardar = true;
                               });
                             }
                           },
-                          items: cmbBancoCve.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value, style: const TextStyle(fontSize: 11)),
-                            );
-                          }).toList(),
+                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         ),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      if(showHolder)
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.holderLbl),
-                      ),
-
-                      if(showHolder)
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(holderName),
-                      ),
-
-                      /*
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.07,
-                        alignment: Alignment.center,
-                        //color: Colors.transparent,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent, // Color de fondo (opcional)
-                          border: Border.all(
-                            color: Colors.black54, // Color del borde
-                            width: 0.5, // Grosor del borde
-                          ),
-                          borderRadius: BorderRadius.circular(
-                              8), // Bordes redondeados (opcional)
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
                         ),
-                        child: DropdownButton<String>(
-                          value: selectedValueCliente,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedValueCliente = newValue!;
-                            });
+                        
+                        TextFormField(
+                          controller: compController,
+                          decoration: InputDecoration(
+                              labelText: locGen!.receiptNumberLbl,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2), // Borde cuando no está enfocado
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 3), // Borde cuando está enfocado
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  compController.text = '';
+          
+                                  if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                                    || compController.text.isEmpty || concController.text.isEmpty){
+                                    setState(() {
+                                      btnGuardar = false;
+                                    });
+                                  }
+                                },
+                                icon: state.cargando 
+                                ?
+                                LoadingAnimationWidget.fallingDot(
+                                  color: const Color(0xFF1A1A3F),
+                                  size: 12,
+                                )
+                                :
+                                const Icon(
+                                  Icons.cancel,
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese el título';
+                            }
+                            return null;
                           },
-                          items: cmbBancoClient.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                          onChanged: (value) {
+                            if(value.isNotEmpty && amountController.text.isNotEmpty 
+                            && concController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                              setState(() {
+                                btnGuardar = true;
+                              });
+                            }
+                          },
+                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         ),
-                      ),
-                      */
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.dateLbl),
+                        ),
                       
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      
-                      Container(
-                        width: size.width * 0.96,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: ElevatedButton(                      
-                          onPressed:
-                          () {
-        
-                            if(amountController.text.isEmpty){
-                              btnGuardar = false;                          
+                        SizedBox(
+                          height: size.height * 0.005,
+                        ),
+                        
+                        GestureDetector(
+                          onTap: () {
+                            openDatePicker(context);
+                          },
+                          child: Container(
+                            width: size.width * 0.96,
+                            height: size.height * 0.028,
+                            color: Colors.transparent,
+                            child: GestureDetector(
+                              onTap: () {
+                                openDatePicker(context);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: Colors.blue,
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.008,
+                                  ),
+                                  Text(fechaHoraEscogida),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        TextFormField(
+                          controller: concController,
+                          decoration: InputDecoration(
+                              labelText: locGen!.conceptLbl,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2), // Borde cuando no está enfocado
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 3), // Borde cuando está enfocado
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  concController.text = '';
+          
+                                  if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                                    || compController.text.isEmpty || concController.text.isEmpty){
+                                    setState(() {
+                                      btnGuardar = false;
+                                    });
+                                  }
+                                },
+                                icon: state.cargando 
+                                ?
+                                LoadingAnimationWidget.fallingDot(
+                                  color: const Color(0xFF1A1A3F),
+                                  size: 12,
+                                )
+                                :
+                                const Icon(
+                                  Icons.cancel,
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )
+                            ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor ingrese el título';
                             }
-        
-                            if(compController.text.isEmpty){
-                              btnGuardar = false;                          
+                            return null;
+                          },
+                          onChanged: (value) {
+                            if(value.isNotEmpty && amountController.text.isNotEmpty 
+                            && compController.text.isNotEmpty && observationsController.text.isNotEmpty){
+                              setState(() {
+                                btnGuardar = true;
+                              });
                             }
-        
-                            if(concController.text.isEmpty){
-                              btnGuardar = false;                          
+                          },
+                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        ),
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        TextFormField(
+                          controller: observationsController,
+                          maxLines: 3,
+                          decoration: InputDecoration(
+                              labelText: locGen!.notesLbl,
+                              enabledBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2), // Borde cuando no está enfocado
+                              ),
+                              focusedBorder: const UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 3), // Borde cuando está enfocado
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  observationsController.text = '';
+                                  if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                                    || compController.text.isEmpty || concController.text.isEmpty){
+                                    setState(() {
+                                      btnGuardar = false;
+                                    });
+                                  }
+                                },
+                                icon: state.cargando 
+                                ?
+                                LoadingAnimationWidget.fallingDot(
+                                  color: const Color(0xFF1A1A3F),
+                                  size: 12,
+                                )
+                                :
+                                const Icon(
+                                  Icons.cancel,
+                                  size: 12,
+                                  color: Colors.black,
+                                ),
+                              )),
+                          onChanged: (value) {
+                            if(value.isNotEmpty && amountController.text.isNotEmpty 
+                            && compController.text.isNotEmpty && concController.text.isNotEmpty){
+                              setState(() {
+                                btnGuardar = true;
+                              });
                             }
-        
-                            if(observationsController.text.isEmpty){
-                              btnGuardar = false;                          
-                            }
-        
-                            setState(() {
-                              return;
-                            });
-        
-                            if(btnGuardar){
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: const Icon(Icons.close)),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: size.height * 0.009,
-                                          ),
-                                          const Text(
-                                            '¿Confirmas que todos los datos ingresados son correctos?',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                      content: Container(
-                                        width: size.width * 0.96,
-                                        height: size.height * 0.21,
-                                        color: Colors.transparent,
-                                        alignment: Alignment.centerLeft,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                          },
+                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        ),
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.paymentLbl),
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          height: size.height * 0.07,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent, // Color de fondo (opcional)
+                            border: Border.all(
+                              color: Colors.black54, // Color del borde
+                              width: 0.5, // Grosor del borde
+                            ),
+                            borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
+                          ),
+                          child: DropdownButton<String>(
+                            value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
+                            hint: const Text("Selecciona un banco", style: TextStyle(fontSize: 11)),
+                            onChanged: (String? newValue) {
+                              if (cmbBancoCve.contains(newValue)) {
+                                setState(() {
+                                  selectedValueBanco = newValue!;
+                                  showHolder = true;
+
+                                  for (int i = 0; i < lstBankAccount.length; i++) {
+                                    if (lstBankAccount[i].bankName == selectedValueBanco) {
+                                      holderName = lstBankAccount[i].bankAccountHolder;
+                                    }
+                                  }
+                                });
+                              }
+                            },
+                            items: cmbBancoCve.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value, style: const TextStyle(fontSize: 11)),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        //if(showHolder)
+                        Container(
+                          width: size.width * 0.88,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(locGen!.holderLbl),
+                        ),
+
+                        Container(
+                          width: size.width * 0.88,
+                          height: size.height * 0.028,
+                          color: Colors.transparent,
+                          child: Text(holderName),
+                        ),
+
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+                        
+                        Container(
+                          width: size.width * 0.96,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: ElevatedButton(                      
+                            onPressed:
+                            () {
+          
+                              if(amountController.text.isEmpty){
+                                btnGuardar = false;                          
+                              }
+          
+                              if(compController.text.isEmpty){
+                                btnGuardar = false;                          
+                              }
+          
+                              if(concController.text.isEmpty){
+                                btnGuardar = false;                          
+                              }
+          
+                              if(observationsController.text.isEmpty){
+                                btnGuardar = false;                          
+                              }
+          
+                              setState(() {
+                                return;
+                              });
+          
+                              if(btnGuardar){
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Column(
                                           children: [
-                                            Text('${locGen!.amountPaymentLbl}: ${amountController.text}'),
-                                            Text('${locGen!.receiptNumberLbl}: ${compController.text}'),
-                                            Text('${locGen!.dateLbl}: $fechaHoraEscogidaMuestra'),
-                                            Text('${locGen!.conceptLbl}: ${concController.text}'),
-                                            Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                    child: const Icon(Icons.close)),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: size.height * 0.009,
+                                            ),
+                                            const Text(
+                                              '¿Confirmas que todos los datos ingresados son correctos?',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            if (_formKey.currentState!.validate()) {
-                                              /*
-                                              // Aquí podrías enviar la información al backend o procesarla.
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                    content: const Text(
-                                                        'Pago guardado exitosamente')),
-                                              );
-                                              */
-        
-                                              gnrBloc.setShowViewAccountStatementEvent(false);
-                                              gnrBloc.setShowViewDebts(false);
-                                              gnrBloc.setShowViewPrintRecipts(false);
-                                              gnrBloc.setShowViewReservetions(false);
-                                              gnrBloc.setShowViewSendDeposits(true);
-                                              gnrBloc.setShowViewWebSite(false);
-                                              gnrBloc.setShowViewFrmDeposit(false);
-        
-                                              // Limpiar formulario (opcional)
-                                              /*
-                                              amountController.clear();
-                                              compController.clear();
-                                              observationsController.clear();
-                                              */
-
-                                              int idBank = 0;
-                                              double idPartner = 0;
-                                              int idUser = 0;
-
-                                              for(int i = 0; i < lstBankAccount.length; i++){
-                                                if(lstBankAccount[i].bankName == selectedValueBanco){
-                                                  idBank = lstBankAccount[i].bankAccountId;                                                  
-                                                }
-                                              }
-
-                                              var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-                                              var objLogDecode = json.decode(objLog);
-
-                                              idPartner = double.parse(objLogDecode['result']['partner_id'].toString());
-                                              idUser = int.parse(objLogDecode['result']['user_id'][0].toString());
-
-                                              final bytes = await File(rutaPagoAdj).readAsBytes();
-                                              String base64 = base64Encode(bytes);
-
-                                              DepositRequestModel objRqt = DepositRequestModel(
-                                                amount: double.parse(amountController.text),
-                                                customerNotes: observationsController.text,
-                                                date: DateTime.parse(fechaHoraEscogidaMuestra),
-                                                idAccountBank: idBank,
-                                                name: concController.text,
-                                                receiptNumber: compController.text,
-                                                receiptFile: base64,
-                                                idPartner: idPartner,
-                                                idUser: idUser
-                                              );
-
-                                              String gifRespuesta = '';
-                                              String respuestaReg = '';
-
-                                              DepositResponseModel objRsp = await DepositService().registroDeposito(objRqt);
-
-                                              respuestaReg = objRsp.result.mensaje;
-
-                                              if(objRsp.result.estado == 200){
-                                                gifRespuesta = 'assets/gifs/exito.gif';                                                
-                                              } else {
-                                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
-                                              }
-
-                                              //ignore: use_build_context_synchronously
-                                              //Navigator.of(context).pop();
-
-                                              showDialog(
-                                                //ignore:use_build_context_synchronously
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Container(
-                                                      color: Colors.transparent,
-                                                      height: size.height * 0.17,
-                                                      child: Column(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          
-                                                          Container(
-                                                            color: Colors.transparent,
-                                                            height: size.height * 0.09,
-                                                            child: Image.asset(gifRespuesta),
-                                                          ),
-                              
-                                                          Container(
-                                                            color: Colors.transparent,
-                                                            width: size.width * 0.95,
-                                                            height: size.height * 0.08,
-                                                            alignment: Alignment.center,
-                                                            child: AutoSizeText(
-                                                              respuestaReg,
-                                                              maxLines: 2,
-                                                              minFontSize: 2,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      )
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                              
-                                              //ignore: use_build_context_synchronously
-                                              context.push(objRutas.rutaConfDepositScreen);
-        /*
-                                              setState(() {
-                                                //_pickedFile = null;
-                                                //_fileName = null;
-                                              });
-                                              */
-                                            }
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 86, vertical: 15),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(15),
-                                              side: const BorderSide(
-                                                  color: Colors.blue, width: 2),
-                                            ),
-                                            backgroundColor: Colors.white,
-                                            elevation: 0,
-                                          ),
-                                          child: const Text(
-                                            'Sí, Continuar',
-                                            style: TextStyle(
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.bold),
+                                        content: Container(
+                                          width: size.width * 0.96,
+                                          height: size.height * 0.21,
+                                          color: Colors.transparent,
+                                          alignment: Alignment.centerLeft,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text('${locGen!.amountPaymentLbl}: ${amountController.text}'),
+                                              Text('${locGen!.receiptNumberLbl}: ${compController.text}'),
+                                              Text('${locGen!.dateLbl}: $fechaHoraEscogidaMuestra'),
+                                              Text('${locGen!.conceptLbl}: ${concController.text}'),
+                                              Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                );
-                            }
-                            else {
-                              //poner alerta para validar que se ingrese la foto
-                            }
-                          
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 150, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: BorderSide(color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, width: 2),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () async {
+                                              if (_formKey.currentState!.validate()) {
+                                                /*
+                                                // Aquí podrías enviar la información al backend o procesarla.
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content: const Text(
+                                                          'Pago guardado exitosamente')),
+                                                );
+                                                */
+          
+                                                gnrBloc.setShowViewAccountStatementEvent(false);
+                                                gnrBloc.setShowViewDebts(false);
+                                                gnrBloc.setShowViewPrintRecipts(false);
+                                                gnrBloc.setShowViewReservetions(false);
+                                                gnrBloc.setShowViewSendDeposits(true);
+                                                gnrBloc.setShowViewWebSite(false);
+                                                gnrBloc.setShowViewFrmDeposit(false);
+          
+                                                // Limpiar formulario (opcional)
+                                                /*
+                                                amountController.clear();
+                                                compController.clear();
+                                                observationsController.clear();
+                                                */
+
+                                                int idBank = 0;
+                                                double idPartner = 0;
+                                                int idUser = 0;
+
+                                                for(int i = 0; i < lstBankAccount.length; i++){
+                                                  if(lstBankAccount[i].bankName == selectedValueBanco){
+                                                    idBank = lstBankAccount[i].bankAccountId;                                                  
+                                                  }
+                                                }
+
+                                                var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
+                                                var objLogDecode = json.decode(objLog);
+
+                                                idPartner = double.parse(objLogDecode['result']['partner_id'].toString());
+                                                idUser = int.parse(objLogDecode['result']['user_id'][0].toString());
+
+                                                final bytes = await File(rutaPagoAdj).readAsBytes();
+                                                String base64 = base64Encode(bytes);
+
+                                                DepositRequestModel objRqt = DepositRequestModel(
+                                                  amount: double.parse(amountController.text),
+                                                  customerNotes: observationsController.text,
+                                                  date: DateTime.parse(fechaHoraEscogidaMuestra),
+                                                  idAccountBank: idBank,
+                                                  name: concController.text,
+                                                  receiptNumber: compController.text,
+                                                  receiptFile: base64,
+                                                  idPartner: idPartner,
+                                                  idUser: idUser
+                                                );
+
+                                                String gifRespuesta = '';
+                                                String respuestaReg = '';
+
+                                                DepositResponseModel objRsp = await DepositService().registroDeposito(objRqt);
+
+                                                respuestaReg = objRsp.result.mensaje;
+
+                                                if(objRsp.result.estado == 200){
+                                                  gifRespuesta = 'assets/gifs/exito.gif';                                                
+                                                } else {
+                                                  gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+                                                }
+
+                                                //ignore: use_build_context_synchronously
+                                                //Navigator.of(context).pop();
+
+                                                showDialog(
+                                                  //ignore:use_build_context_synchronously
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Container(
+                                                        color: Colors.transparent,
+                                                        height: size.height * 0.17,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            
+                                                            Container(
+                                                              color: Colors.transparent,
+                                                              height: size.height * 0.09,
+                                                              child: Image.asset(gifRespuesta),
+                                                            ),
+                                
+                                                            Container(
+                                                              color: Colors.transparent,
+                                                              width: size.width * 0.95,
+                                                              height: size.height * 0.08,
+                                                              alignment: Alignment.center,
+                                                              child: AutoSizeText(
+                                                                respuestaReg,
+                                                                maxLines: 2,
+                                                                minFontSize: 2,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                
+                                                //ignore: use_build_context_synchronously
+                                                context.push(objRutas.rutaConfDepositScreen);
+          /*
+                                                setState(() {
+                                                  //_pickedFile = null;
+                                                  //_fileName = null;
+                                                });
+                                                */
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 86, vertical: 15),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15),
+                                                side: const BorderSide(
+                                                    color: Colors.blue, width: 2),
+                                              ),
+                                              backgroundColor: Colors.white,
+                                              elevation: 0,
+                                            ),
+                                            child: const Text(
+                                              'Sí, Continuar',
+                                              style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                              }
+                              else {
+                                //poner alerta para validar que se ingrese la foto
+                              }
+                            
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 150, vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: BorderSide(color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, width: 2),
+                              ),
+                              backgroundColor: Colors.white,
+                              elevation: 0,
                             ),
-                            backgroundColor: Colors.white,
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            locGen!.saveLbl,
-                            style: TextStyle( color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, fontWeight: FontWeight.bold),
+                            child: Text(
+                              locGen!.saveLbl,
+                              style: TextStyle( color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
 
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
 
-                      Container(
-                        width: size.width * 0.96,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            gnrBloc.setShowViewAccountStatementEvent(false);
-                            gnrBloc.setShowViewDebts(false);
-                            gnrBloc.setShowViewPrintRecipts(false);
-                            gnrBloc.setShowViewReservetions(false);
-                            gnrBloc.setShowViewSendDeposits(true);
-                            gnrBloc.setShowViewWebSite(false);
-                            gnrBloc.setShowViewFrmDeposit(false);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 147, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(color: Colors.red, width: 2),
+                        Container(
+                          width: size.width * 0.96,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              gnrBloc.setShowViewAccountStatementEvent(false);
+                              gnrBloc.setShowViewDebts(false);
+                              gnrBloc.setShowViewPrintRecipts(false);
+                              gnrBloc.setShowViewReservetions(false);
+                              gnrBloc.setShowViewSendDeposits(true);
+                              gnrBloc.setShowViewWebSite(false);
+                              gnrBloc.setShowViewFrmDeposit(false);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 147, vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: const BorderSide(color: Colors.red, width: 2),
+                              ),
+                              backgroundColor: Colors.white,
+                              elevation: 0,
                             ),
-                            backgroundColor: Colors.white,
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            locGen!.cancelLbl,
-                            style: const TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                            child: Text(
+                              locGen!.cancelLbl,
+                              style: const TextStyle(
+                                  color: Colors.red, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
           
               
             }

@@ -40,7 +40,7 @@
     "confirmInfoDebLbl": "Do you confirm that all the data entered is correct?",
     "amountPaymentLbl": "Payment value",
     "confirmLbl": "Yes, continue",
-    "pendingReviewLbl": "Pending review",
+    "pendingReviewLbl": "Pending",
     "approveReviewLbl": "Approved",
     "rejectedReviewLbl": "Rejected",
     "paymentDateLbl": "Payment date",
@@ -71,5 +71,7 @@
     "chngPsswLbl": "Change Password",
     "orderPsswFrmLbl": "Create a new password that is at least 8 characters long.",
     "enterNewPsswLbl": "Enter your new password",
-    "repeatNewPsswLbl": "Repeat your new password"
+    "repeatNewPsswLbl": "Repeat your new password",
+    "tabAlsDebsLbl": "All",
+    "searchContPlanLbl": "Search by contract plan"
 } 

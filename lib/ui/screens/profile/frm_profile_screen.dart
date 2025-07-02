@@ -86,7 +86,7 @@ class FrmProfileScreen extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ProfileField(label: locGen!.namLastNameLbl, value: 'Angel Elias Valdiviezo Gonzalez'),
+                                  ProfileField(label: locGen!.namLastNameLbl, value: displayName),
                                   ProfileField(label: locGen!.idNumberLbl, value: '0922219480'),
                                   ProfileField(label: locGen!.cellNumberLbl, value: '0988665834'),
                                   ProfileField(label: locGen!.emailLbl, value: 'angel_elias_valdiviezo_gonzalez@hotmail.com'),

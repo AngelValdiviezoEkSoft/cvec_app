@@ -55,16 +55,18 @@ class ProfileScreen extends StatelessWidget {
             child: Icon(Icons.person, size: 40, color: Colors.grey),
           ),
           SizedBox(width: size.width * 0.035),//16),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Angel Elias Valdiviezo G...',
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                  displayName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                SizedBox(height: 4),
-                Text(
+                const SizedBox(height: 4),
+                const  Text(
                   'Duran City - Etapa Bromelia, MZ14-V13\nPropietario',
                   style: TextStyle(color: Colors.white70, fontSize: 14),
                 ),
