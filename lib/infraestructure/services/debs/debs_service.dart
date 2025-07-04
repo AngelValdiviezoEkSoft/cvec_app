@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -47,7 +48,21 @@ class DebsService extends ChangeNotifier{
 
       var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true);
 
-      //print('Rsp Lista DEBS $objRsp');
+      var rspValidacion = json.decode(objRsp);
+
+      if(rspValidacion['result']['mensaje'] != null){
+        final TokenManager tokenManager = TokenManager();
+        
+        String msmFinal = rspValidacion['result']['mensaje'].toString().trim().toLowerCase();
+
+        //rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado
+
+        //if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado)){
+        if(msmFinal.contains(MessageValidation().tockenNoValido) || msmFinal.contains(MessageValidation().tockenExpirado)){
+          await tokenManager.checkTokenExpiration();
+          await getDebts();
+        }
+      }
       
       SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(jsonDecode(objRsp));
 

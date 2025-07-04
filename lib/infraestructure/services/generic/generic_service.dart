@@ -191,14 +191,6 @@ class GenericService extends ChangeNotifier {
 
     //print('Respuesta Reporte: ${response.body}');
     
-    var rspValidacion = json.decode(response.body);
-
-    //if(rspValidacion['result']['mensaje'] == 'El tocken no es valido'){
-    if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado)){
-      await tokenManager.checkTokenExpiration();
-      await getMultiModelos(objReq, modelo, isComposedInfo);
-    }
-
     return response.body;
     
   }
