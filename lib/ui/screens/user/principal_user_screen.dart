@@ -374,7 +374,9 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: Column(
+            child: 
+            /*
+            Column(
               children: [
 
                 Container(
@@ -385,7 +387,65 @@ class PrincipalClientStScreen extends StatelessWidget {
                   child: Text(locGen!.menuAccountStatementLbl, style: const TextStyle(fontSize: 25),)
                 ),
 
+                RoutersApp().routPdfView,
+
                 const AccountStatementView(null),
+              ],
+            ),
+            */
+             Column(
+              children: [
+
+                Container(
+                  color: Colors.transparent,
+                  width: size.width * 0.9,
+                  height: size.height * 0.08,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: size.width * 0.55,
+                        height: size.height * 0.06,
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text(locGen!.menuAccountStatementLbl, style: const TextStyle(fontSize: 22),)
+                      ),
+                  
+                      Container(
+                        width: size.width * 0.35,
+                        height: size.height * 0.06,
+                        color: Colors.transparent,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push(RoutersApp().routPdfView);
+                          },
+                          child: Container(
+                            width: size.width * 0.04,
+                            height: size.height * 0.03,
+                            decoration: const BoxDecoration(
+                              color: Colors.green, // Color de fondo
+                              shape: BoxShape.circle, // Forma circular
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 4,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            child: const Icon(Icons.picture_as_pdf, color: Colors.white), // Ícono dentro del botón
+                          ),
+                        ),
+                  
+                      ),
+                             
+                    ],
+                  ),
+                ),
+
+                const AccountStatementView(null),
+                
               ],
             ),
           )

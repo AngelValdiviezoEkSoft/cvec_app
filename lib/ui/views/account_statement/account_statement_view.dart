@@ -248,7 +248,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
 
                 return Container(
                   width: size.width,
-                  height: size.height * 0.83,
+                  height: size.height * 0.8,
                   color: Colors.transparent,
                   child: Column(
                       children: [
@@ -300,7 +300,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                   DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
                                   fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
 
-                                  context.push(objRutas.rutaDebsDetScrn);
+                                  context.push(objRutas.rutaAccountDetScrn);
                                 },
                                 child: Stack(
                                   children: [
@@ -330,7 +330,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                 children: [
                                                   Container(
                                                     color: Colors.transparent,
-                                                    width: size.width * 0.36,
+                                                    width: size.width * 0.45,
                                                     alignment: Alignment.centerLeft,
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,20 +342,27 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                         ),
                                                         
-                                                        SizedBox(height: size.height * 0.005),
-                                                        
-                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
-                                                        
                                                         SizedBox(height: size.height * 0.008),
                                                         
                                                         Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+
+                                                        SizedBox(height: size.height * 0.008),
+                                                        Text('\$${item.contractResidual.toStringAsFixed(2)}',style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
+
+                                                        SizedBox(height: size.height * 0.008),
+                                                        LinearProgressIndicator(
+                                                          value: 0.75, // 0.0 a 1.0
+                                                          minHeight: 10,
+                                                          backgroundColor: Colors.grey[300],
+                                                          color: Colors.blue,
+                                                        ),
                                                         
                                                       ],
                                                     ),
                                                   ),
                                 
                                                   Container(
-                                                    width: size.width * 0.41,
+                                                    width: size.width * 0.3,
                                                     color: Colors.transparent,
                                                     child: Column(
                                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -365,21 +372,28 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           color: Colors.transparent,
                                                           width: size.width * 0.3,
                                                           alignment: Alignment.centerRight,
+                                                          /*
                                                           child: Text('${locGen!.totalLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.w600, fontSize: 15)),
+                                                                  */
                                                         ),
+                                                        
                                                         SizedBox(height: size.height * 0.02,),
-                                                        Container(
-                                                          color: Colors.transparent,
-                                                          width: size.width * 0.3,
-                                                          alignment: Alignment.centerRight,
-                                                          child: Text('${locGen!.paidLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
-                                                          maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                        
+                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
+                                                        
+                                                        SizedBox(height: size.height * 0.02,),
 
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.w600, fontSize: 15)),
+                                                        Container(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                                          decoration: BoxDecoration(
+                                                            color: const Color(0xFFE3F0FF),
+                                                            borderRadius: BorderRadius.circular(12),
+                                                          ),
+                                                          child: Text(locGen!.stateLbl,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
                                                         ),
+                                                        /*
                                                         SizedBox(height: size.height * 0.02,),
                                                         Container(
                                                           color: Colors.transparent,
@@ -389,6 +403,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.w600, fontSize: 15)),
                                                         ),
+                                                        */
                                                       ],
                                                     ),
                                                   ),
@@ -399,7 +414,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                             ),
                                           
                                           ),
-                                
+                                /*
                                           SizedBox(height: size.height * 0.14,),
                                         
                                           Positioned(
@@ -417,6 +432,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                     fontWeight: FontWeight.w500, color: Colors.black)),
                                                                                     ),
                                           )
+                                          */
                                         ],
                                       ),
                                     ),
