@@ -312,5 +312,21 @@
   "searchContPlanLbl": "Buscar por plan del contrato",
   "@searchContPlanLbl": {
     "description": "Buscar por plan del contrato"
+  },
+  "totalLbl": "Total",
+  "@totalLbl": {
+    "description": "Total"
+  },
+  "paidLbl": "Pagado",
+  "@paidLbl": {
+    "description": "Pagado"
+  },
+  "balanceLbl": "Saldo",
+  "@balanceLbl": {
+    "description": "Saldo"
+  },
+  "stateLbl": "Estado",
+  "@stateLbl": {
+    "description": "Estado"
   }
 }

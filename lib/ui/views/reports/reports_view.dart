@@ -62,7 +62,7 @@ class PdfView extends StatelessWidget {
 
       return objReservation;
 
-    } on Exception catch (error) {
+    } on Exception catch (_) {
       /*
       Fluttertoast.showToast(
           msg: '$error',
@@ -196,7 +196,7 @@ class PdfView extends StatelessWidget {
 
       return objPayment;
 
-    } on Exception catch (error) {
+    } on Exception catch (_) {
       /*
       Fluttertoast.showToast(
           msg: '$error',

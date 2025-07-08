@@ -6,8 +6,10 @@ import 'package:pdf/widgets.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
+/*
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart' show rootBundle;
+*/
 import 'package:pdf/widgets.dart' as pw;
 
 bool varTieneCorreo = false;
@@ -18,15 +20,17 @@ Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String co
   final String endPoint = '';//CadenaConexion().apiUtilsEndpoint;
   varTieneCorreo = correo != '';
   initializeDateFormatting('es');
-  final DateTime now = DateTime.now();
-  final String formatter = DateFormat('dd-MM-yyyy').format(now);
+  //final DateTime now = DateTime.now();
+  //final String formatter = DateFormat('dd-MM-yyyy').format(now);
 
   final pdf = Document();
-  String? observacion;
+  //String? observacion;
+ /*
   final imageFirma = MemoryImage(
       (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List());
   
   observacion = rolDePago.cabeceraRol?.observacion;
+  */
 /*
   if (rolDePago.observacion == null) {
     observacion = '';

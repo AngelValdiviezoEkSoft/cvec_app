@@ -73,5 +73,9 @@
     "enterNewPsswLbl": "Enter your new password",
     "repeatNewPsswLbl": "Repeat your new password",
     "tabAlsDebsLbl": "All",
-    "searchContPlanLbl": "Search by contract plan"
+    "searchContPlanLbl": "Search by contract plan",
+    "totalLbl": "Total",
+    "paidLbl": "Paid",
+    "balanceLbl": "Balance",
+    "stateLbl": "State"
 } 

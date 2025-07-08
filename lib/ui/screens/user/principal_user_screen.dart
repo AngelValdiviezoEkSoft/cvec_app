@@ -2,7 +2,6 @@ import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';

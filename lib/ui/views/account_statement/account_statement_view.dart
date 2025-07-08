@@ -365,7 +365,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           color: Colors.transparent,
                                                           width: size.width * 0.3,
                                                           alignment: Alignment.centerRight,
-                                                          child: Text('Total: \$${item.contractResidual.toStringAsFixed(2)}',
+                                                          child: Text('${locGen!.totalLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.w600, fontSize: 15)),
                                                         ),
@@ -374,7 +374,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           color: Colors.transparent,
                                                           width: size.width * 0.3,
                                                           alignment: Alignment.centerRight,
-                                                          child: Text('Pagado: \$${item.contractResidual.toStringAsFixed(2)}',
+                                                          child: Text('${locGen!.paidLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
                                                           maxLines: 1, overflow: TextOverflow.ellipsis,
 
                                                               style: const TextStyle(
@@ -385,7 +385,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           color: Colors.transparent,
                                                           width: size.width * 0.3,
                                                           alignment: Alignment.centerRight,
-                                                          child: Text('Saldo: \$${item.contractResidual.toStringAsFixed(2)}',
+                                                          child: Text('${locGen!.balanceLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
                                                               style: const TextStyle(
                                                                   fontWeight: FontWeight.w600, fontSize: 15)),
                                                         ),
@@ -412,7 +412,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                               color: const Color(0xFFE3F0FF),
                                               borderRadius: BorderRadius.circular(12),
                                             ),
-                                            child: Text("Estado",
+                                            child: Text(locGen!.stateLbl,
                                                 style: const TextStyle(
                                                     fontWeight: FontWeight.w500, color: Colors.black)),
                                                                                     ),
