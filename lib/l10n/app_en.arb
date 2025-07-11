@@ -77,5 +77,13 @@
     "totalLbl": "Total",
     "paidLbl": "Paid",
     "balanceLbl": "Balance",
-    "stateLbl": "State"
+    "stateLbl": "State",
+    "statePreContLbl": "Pre Contract",
+    "stateOpenLbl": "Active",
+    "stateAnullLbl": "Anulalled",
+    "stateClosLbl": "Closed",
+    "statePreLiqLbl": "Pre Liquidated",
+    "stateLiquidationLbl": "Liquidated",
+    "stateFinalizedLbl": "Finalized",
+    "statePaidLbl": "Paid"
 } 

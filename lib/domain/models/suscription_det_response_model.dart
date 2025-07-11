@@ -77,19 +77,34 @@ class Quota {
   final String quotaDueDate;
   final double quotaResidual;
 
+  final double quotaAmount;
+  final double quotaPaidAmount;
+  final String quotaDatePayment;//date_payment
+  final String quotaState;
+
   Quota({
     required this.quotaId,
     required this.quotaName,
     required this.quotaDueDate,
     required this.quotaResidual,
+
+    required this.quotaAmount,
+    required this.quotaPaidAmount,
+    required this.quotaDatePayment,
+    required this.quotaState
   });
 
   factory Quota.fromJson(Map<String, dynamic> json) {
     return Quota(
-      quotaId: json['quota_id'],
-      quotaName: json['quota_name'],
-      quotaDueDate: json['quota_due_date'],
-      quotaResidual: (json['quota_residual'] as num).toDouble(),
+      quotaId: json['quota_id'] ?? 0,
+      quotaName: json['quota_name'] ?? '',
+      quotaDueDate: json['quota_due_date'] ?? '',
+      quotaResidual: json['quota_residual'] != null ? (json['quota_residual'] as num).toDouble() : 0,
+
+      quotaAmount: json['quota_amount'] != null ? (json['quota_amount'] as num).toDouble() : 0,
+      quotaPaidAmount: json['quota_paid_amount'] != null ? (json['quota_paid_amount'] as num).toDouble() : 0,
+      quotaDatePayment: json['quota_date_payment'] ?? '',
+      quotaState: json['quota_state'] ?? '',
     );
   }
 }

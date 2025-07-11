@@ -334,5 +334,37 @@
   "stateLbl": "Estado",
   "@stateLbl": {
     "description": "Estado"
+  },
+  "statePreContLbl": "Pre Contrato",
+  "@statePreContLbl": {
+    "description": "Pre Contrato"
+  },
+  "stateOpenLbl": "Activo",
+  "@stateOpenLbl": {
+    "description": "Activo"
+  },
+  "stateAnullLbl": "Anulado",
+  "@stateAnullLbl": {
+    "description": "Anulado"
+  },
+  "stateClosLbl": "Terminado",
+  "@stateClosLbl": {
+    "description": "Terminado"
+  },
+  "statePreLiqLbl": "Pre Liquidado",
+  "@statePreLiqLbl": {
+    "description": "Pre Liquidado"
+  },
+  "stateLiquidationLbl": "Liquidado",
+  "@stateLiquidationLbl": {
+    "description": "Liquidado"
+  },
+  "stateFinalizedLbl": "Cerrado",
+  "@stateFinalizedLbl": {
+    "description": "Cerrado"
+  },
+  "statePaidLbl": "Pagado",
+  "@statePaidLbl": {
+    "description": "Pagado"
   }
 }

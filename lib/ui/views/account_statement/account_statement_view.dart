@@ -148,6 +148,11 @@ import 'package:intl/intl.dart';
 String searchQueryAcc = '';
 late TextEditingController searchAccTxt;
 
+int idContratoAccountStatement = 0;
+String nameContratoAccountStatement = '';
+String namePlanAccountStatement = '';
+String fechaInscAccountStatement = '';
+
 class AccountStatementView extends StatefulWidget {  
 
   const AccountStatementView(Key? key) : super (key: key);
@@ -164,6 +169,11 @@ class AccountStatementViewSt extends State<AccountStatementView> {
 
     searchAccTxt = TextEditingController();
     searchQueryAcc = '';
+
+    idContratoAccountStatement = 0;
+    nameContratoAccountStatement = '';
+    namePlanAccountStatement = '';
+    fechaInscAccountStatement = '';
   }
 
   @override
@@ -175,7 +185,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
       builder: (context,state) {
         return FutureBuilder(
           //future: state.getEstadoCuentas(),
-          future: DebsService().getDebts(),
+          future: AccountStatementService().getAccountStatement(),
           //builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           builder: (context, snapshot) {
 
@@ -198,6 +208,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                 List<Subscription> lstSubs = snapshot.data as List<Subscription>;
                 List<Subscription> lstSubsResp = [];
 
+                String estadoAccount = '';
+
                 if(searchQueryAcc.isNotEmpty){
                   
                   for(int i = 0; i < lstSubs.length; i++){
@@ -209,42 +221,6 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                   lstSubs = [];
                   lstSubs = lstSubsResp;
                 }
-                
-/*
-                String rspTmp = snapshot.data as String;
-                
-                String objPerm = rspTmp;//.split('---')[2];
-
-                List<ItemBoton> lstMenu = state.deserializeItemBotonMenuList(objPerm);
-
-                List<Widget> itemMap = lstMenu.map(
-                (item) => FadeInLeft(
-                  duration: const Duration( milliseconds: 250 ),
-                  child: 
-                    ItemsListasWidget(
-                      null,
-                      varIdPosicionMostrar: 0,
-                      varEsRelevante: item.esRelevante,
-                      varIdNotificacion: item.ordenNot,
-                      varNumIdenti: numeroIdentificacion,
-                      icon: item.icon,
-                      texto: item.mensajeNotificacion,
-                      texto2: item.mensaje2,
-                      color1: item.color1,
-                      color2: item.color2,
-                      onPress: () {  },
-                      varMuestraNotificacionesTrAp: 0,
-                      varMuestraNotificacionesTrProc: 0,
-                      varMuestraNotificacionesTrComp: 0,
-                      varMuestraNotificacionesTrInfo: 0,
-                      varIconoNot: item.iconoNotificacion,
-                      varIconoNotTrans: item.rutaImagen,
-                      permiteGestion: permiteGestion,
-                      rutaNavegacion: item.rutaNavegacion,
-                    ),
-                  )
-                ).toList();
-                */
 
                 return Container(
                   width: size.width,
@@ -290,15 +266,41 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                             itemCount: lstSubs.length,
                             itemBuilder: (context, index) {
                               final item = lstSubs[index];
-                              
+
+                              switch (item.contractState) {
+                                case Constants.stateAnulled:
+                                  estadoAccount = locGen!.stateAnullLbl;
+                                  break;
+                                case Constants.stateClosed:
+                                  estadoAccount = locGen!.stateClosLbl;
+                                  break;
+                                case Constants.stateDraft:
+                                  estadoAccount = locGen!.statePreContLbl;
+                                  break;
+                                case Constants.stateFin:
+                                  estadoAccount = locGen!.stateFinalizedLbl;
+                                  break;
+                                case Constants.stateOpen:
+                                  estadoAccount = locGen!.stateOpenLbl;
+                                  break;
+                                case Constants.statePreLiq:
+                                  estadoAccount = locGen!.statePreLiqLbl;
+                                  break;
+                                case Constants.stateLiq:
+                                  estadoAccount = locGen!.stateLiquidationLbl;
+                                  break;
+                                default:
+                                  estadoAccount = ''; // o algún valor por defecto apropiado
+                              }
+
                               return GestureDetector(
                                 onTap: () {
-                                  idContrato = item.contractId;
-                                  nameContrato = item.contractName;
-                                  namePlan = item.contractPlan;
+                                  idContratoAccountStatement = item.contractId;
+                                  nameContratoAccountStatement = item.contractName;
+                                  namePlanAccountStatement = item.contractPlan;
 
                                   DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
-                                  fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
+                                  fechaInscAccountStatement = DateFormat("dd/MM/yyyy").format(dateQuote);
 
                                   context.push(objRutas.rutaAccountDetScrn);
                                 },
@@ -344,14 +346,14 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                         
                                                         SizedBox(height: size.height * 0.008),
                                                         
-                                                        Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                        Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
 
                                                         SizedBox(height: size.height * 0.008),
-                                                        Text('\$${item.contractResidual.toStringAsFixed(2)}',style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
+                                                        Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
 
                                                         SizedBox(height: size.height * 0.008),
                                                         LinearProgressIndicator(
-                                                          value: 0.75, // 0.0 a 1.0
+                                                          value: item.contractPaidPercent,//0.75, // 0.0 a 1.0
                                                           minHeight: 10,
                                                           backgroundColor: Colors.grey[300],
                                                           color: Colors.blue,
@@ -391,7 +393,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                             color: const Color(0xFFE3F0FF),
                                                             borderRadius: BorderRadius.circular(12),
                                                           ),
-                                                          child: Text(locGen!.stateLbl,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
+                                                          child: Text(estadoAccount,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
                                                         ),
                                                         /*
                                                         SizedBox(height: size.height * 0.02,),

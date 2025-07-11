@@ -13,3 +13,5 @@ export 'package:cve_app/infraestructure/services/receipts/receipts.dart';
 export 'package:cve_app/infraestructure/services/deposit/deposit.dart';
 
 export 'package:cve_app/infraestructure/services/debs/debs.dart';
+
+export 'package:cve_app/infraestructure/services/account/account.dart';
