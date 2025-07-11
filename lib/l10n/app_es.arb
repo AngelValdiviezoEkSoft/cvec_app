@@ -25,9 +25,15 @@
   "@bienvenidaCvec": {
     "description": "BIENVENIDO A CENTRO"    
   },
-  "bienvenidaCvec2": " DE VIAJES ECUADOR",
+  "bienvenidaCvec2": " DE VIAJES ECUADOR {userName}",
   "@bienvenidaCvec2": {
-    "description": " DE VIAJES ECUADOR"      
+    "description": " DE VIAJES ECUADOR",
+    "placeholders": {
+        "userName": {
+          "type": "String",
+          "example": "John"
+        }
+      }
   },
   "menuDestinations": "Destinos",
   "@menuDestinations": {

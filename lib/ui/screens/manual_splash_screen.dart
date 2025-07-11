@@ -70,16 +70,8 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
                         fontWeight: FontWeight.bold,                        
                       ),                      
                     ),
-                    const TextSpan(
-                      text: ' Angel',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,                        
-                      ),                      
-                    ),
                     TextSpan(
-                      text: AppLocalizations.of(context)!.bienvenidaCvec2,// ' DE VIAJES ECUADOR',
+                      text: AppLocalizations.of(context)!.bienvenidaCvec2('Angel'),// ' DE VIAJES ECUADOR',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 22,

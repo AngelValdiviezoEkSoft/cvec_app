@@ -4,7 +4,7 @@
     "hola": "¡Hello, {userName}!",
     "bienvenidaLogin": "Welcome back!",
     "bienvenidaCvec": "WELCOME TO CENTRO",
-    "bienvenidaCvec2": " DE VIAJES ECUADOR",        
+    "bienvenidaCvec2": " DE VIAJES ECUADOR {userName}",
     "menuDestinations": "Destinations",
     "menuMemberships": "Memberships",
     "menuBuyYourLand": "Buy your land",
