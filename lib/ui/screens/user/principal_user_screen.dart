@@ -176,6 +176,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+                /*
                 ListTile(
                   leading: const Icon(Icons.web_rounded),
                   title: Text(locGen!.menuWebSiteLbl),
@@ -191,6 +192,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+                */
                 
                 SizedBox(height: size.height * 0.17,),
                 const Divider(),
@@ -608,7 +610,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             ),
           )
 
-
+/*
           :
 
           state.viewWebSite ?
@@ -623,7 +625,7 @@ class PrincipalClientStScreen extends StatelessWidget {
               ],
             ),
           )
-
+*/
 
           :
 

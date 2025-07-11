@@ -506,7 +506,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           },
                           onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         ),
-                        
+                        /*
                         SizedBox(
                           height: size.height * 0.025,
                         ),
@@ -560,7 +560,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           height: size.height * 0.025,
                         ),
                         
-                        //if(showHolder)
                         Container(
                           width: size.width * 0.88,
                           height: size.height * 0.028,
@@ -574,7 +573,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           color: Colors.transparent,
                           child: Text(holderName),
                         ),
-
+*/
                         SizedBox(
                           height: size.height * 0.025,
                         ),
@@ -629,9 +628,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                             SizedBox(
                                               height: size.height * 0.009,
                                             ),
-                                            const Text(
-                                              '¿Confirmas que todos los datos ingresados son correctos?',
-                                              style: TextStyle(
+                                            Text(
+                                              locGen!.confirmInfoDebLbl,
+                                              style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -650,7 +649,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                               Text('${locGen!.receiptNumberLbl}: ${compController.text}'),
                                               Text('${locGen!.dateLbl}: $fechaHoraEscogidaMuestra'),
                                               Text('${locGen!.conceptLbl}: ${concController.text}'),
-                                              Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
+                                              //Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
                                             ],
                                           ),
                                         ),

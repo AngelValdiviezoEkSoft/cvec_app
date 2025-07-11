@@ -48,7 +48,7 @@ class DepositService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.customer.receipt.record", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "ek.customer.receipt.record", true, '');
       
       ReceiptResponseModel objConv = ReceiptResponseModel.fromJson(jsonDecode(objRsp));
 

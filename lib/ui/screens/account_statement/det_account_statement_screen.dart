@@ -120,7 +120,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     return FileImage(file);
   }
 
-  static Widget _paymentItem(PaymentItem item) {
+  static Widget _paymentItem(PaymentLineData item) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,13 +128,13 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.date, style: TextStyle(fontSize: 16)),
-              SizedBox(height: 2),
-              Text(item.dueDate, style: TextStyle(color: Colors.grey, fontSize: 14)),
+              Text(item.paymentSequence, style: TextStyle(fontSize: 16)),
+              const SizedBox(height: 2),              
+              Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.paymentDate)), style: TextStyle(color: Colors.grey, fontSize: 14)),
             ],
           ),
         ),
-        Text(item.amount, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        Text('\$${item.lineAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       ],
     );
   }
@@ -146,7 +146,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocBuilder<GenericBloc, GenericState>(
-          builder: (context, stateEstado) {
+        builder: (context, stateEstado) {
         return FutureBuilder(
           future: AccountStatementService().getDetAccountStatement(idContratoAccountStatement),
           builder: (context, snapshot) {
@@ -219,7 +219,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
 
                               String formattedDateQuote = DateFormat("dd MMM yy", "en_US").format(dateQuote);
                               
-                              switch (item.quotaState) {
+                              switch (item.quotaState.toLowerCase()) {
                                 case Constants.stateAnulled:
                                   estadoDetAccount = locGen!.stateAnullLbl;
                                   break;
@@ -279,142 +279,172 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                   );
                                 */
 
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => Dialog(
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Text(
-                                                "Payments for\nInstallment 3",
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                              ),
-                                              const SizedBox(height: 8),
-                                              Text(
-                                                "\$220",
-                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                              ),
-                                              const Divider(height: 30),
-
-                                              Container(
-                                                color: Colors.transparent,
-                                                height: size.height * 0.2,
-                                                child: SingleChildScrollView(
-                                                  physics: const ScrollPhysics(),                                              
-                                                  child: Column(
-                                                    children: payments
-                                                        .map((p) => Padding(
-                                                              padding: const EdgeInsets.only(bottom: 2),
-                                                              child: _paymentItem(p),
-                                                            ))
-                                                        .toList(),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              /*
-                                              ...payments.map((p) => Padding(
-                                                    padding: const EdgeInsets.only(bottom: 10),
-                                                    child: _paymentItem(p),
-                                                  )),
-                                                  */
-                                                  
-                                                  const Divider(height: 30),
-                                              const SizedBox(height: 10),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(context),
-                                                child: const Text(
-                                                  "Close",
-                                                  style: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-
-                                },
-                                child: Container(
-                                        width: size.width,
-                                        //height: size.height * 0.25,
-                                        color: Colors.grey[100],
-                                        alignment: Alignment.center,
-                                        child: Stack(
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog(
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                              
-                                          
-                                            Container(
-                                              width: size.width * 0.95,
-                                              height: size.height * 0.08,
-                                              alignment: Alignment.center,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.white,
-                                                //borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child: Container(
-                                                width: size.width * 0.85,
-                                                color: Colors.transparent,
-                                                alignment: Alignment.center,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      color: Colors.transparent,
-                                                      width: size.width * 0.1,
-                                                      alignment: Alignment.center,
-                                                      child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
-                                                    ),
-                                
-                                                    SizedBox(width: size.width * 0.02),
+                                            Text(
+                                              item.quotaName,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              "\$${item.quotaPaidAmount.toStringAsFixed(2)}",
+                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                            ),
+
+                                            const Divider(height: 30),
+
+                                            FutureBuilder(
+                                              future: AccountStatementService().getDetCuotasAccountStatement(item.quotaId),
+                                              builder: (context, snapshot) {
                                                 
-                                                    Container(
-                                                      color: Colors.transparent,
-                                                      width: size.width * 0.22,
-                                                      child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                if(!snapshot.hasData) {
+                                                  return Center(
+                                                    child: Image.asset(
+                                                      "assets/gifs/gif_carga.gif",
+                                                      height: size.width * 0.85,
+                                                      width: size.width * 0.85,
                                                     ),
-                                  
-                                                    Container(
-                                                      color: Colors.transparent,
-                                                      width: size.width * 0.3,
-                                                      alignment: Alignment.center,
-                                                      child: Text('\$${item.quotaPaidAmount.toStringAsFixed(2)} / \$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                  );
+                                                }
+                                                
+                                                if(snapshot.hasData) {
+                                                  
+                                                  List<PaymentLineData> lstPaymentLineData = snapshot.data as List<PaymentLineData>;
+
+                                                  return Container(
+                                                  color: Colors.transparent,
+                                                  height: size.height * 0.2,
+                                                  child: SingleChildScrollView(
+                                                    physics: const ScrollPhysics(),                                              
+                                                    child: Column(
+                                                      children: lstPaymentLineData
+                                                          .map((p) => Padding(
+                                                                padding: const EdgeInsets.only(bottom: 2),
+                                                                child: _paymentItem(p),
+                                                              ))
+                                                          .toList(),
                                                     ),
-                                  
-                                                    SizedBox(width: size.width * 0.0004),
-                                
-                                                    Container(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                                      decoration: BoxDecoration(
-                                                        color: const Color(0xFFE3F0FF),
-                                                        borderRadius: BorderRadius.circular(12),
-                                                      ),
-                                                      child: Text(estadoDetAccount,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
-                                                    ),
-                                  
-                                                    SizedBox(width: size.width * 0.0004),
-                                
-                                
-                                                  ],
+                                                  ),
+                                                );
+                                                }
+
+                                                return Container(
+                                                  color: Colors.transparent,
+                                                  width: size.width,
+                                                  height: size.height * 0.78,
+                                                  alignment: Alignment.center,
+                                                  child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                                                );
+                                              }
+                                            ),
+
+                                            /*
+                                            ...payments.map((p) => Padding(
+                                                  padding: const EdgeInsets.only(bottom: 10),
+                                                  child: _paymentItem(p),
+                                                )),
+                                                */
+                                                
+                                            const Divider(height: 30),
+
+                                            const SizedBox(height: 10),
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(context),
+                                              child: const Text(
+                                                "Close",
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                               ),
-                                            
-                                            ),
-                                  
-                                            SizedBox(height: size.height * 0.09,),
-                                          
+                                            )
                                           ],
                                         ),
                                       ),
+                                    ),
+                                  );
+
+                                },
+                                child: Container(
+                                  width: size.width,
+                                  //height: size.height * 0.25,
+                                  color: Colors.grey[100],
+                                  alignment: Alignment.center,
+                                  child: Stack(
+                                    children: [
+                                        
+                                    
+                                      Container(
+                                        width: size.width * 0.95,
+                                        height: size.height * 0.08,
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                        child: Container(
+                                          width: size.width * 0.85,
+                                          color: Colors.transparent,
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.1,
+                                                alignment: Alignment.center,
+                                                child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
+                                              ),
+                          
+                                              SizedBox(width: size.width * 0.02),
+                                          
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.22,
+                                                child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                              ),
+                            
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width * 0.3,
+                                                alignment: Alignment.center,
+                                                child: Text('\$${item.quotaPaidAmount.toStringAsFixed(2)} / \$${item.quotaAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                              ),
+                            
+                                              SizedBox(width: size.width * 0.0004),
+                          
+                                              Container(
+                                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xFFE3F0FF),
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                child: Text(estadoDetAccount,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
+                                              ),
+                            
+                                              SizedBox(width: size.width * 0.0004),
+                          
+                          
+                                            ],
+                                          ),
+                                        ),
+                                      
+                                      ),
+                            
+                                      SizedBox(height: size.height * 0.09,),
+                                    
+                                    ],
+                                  ),
+                                ),
                               );
                             },
                           ),

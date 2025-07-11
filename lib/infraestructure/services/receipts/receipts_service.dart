@@ -58,7 +58,7 @@ class ReceiptsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment", true, '');
 
       await storage.write(key: 'ListadoRecibos', value: '');
       await storage.write(key: 'ListadoRecibos', value: objRsp);
@@ -118,7 +118,7 @@ class ReceiptsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true, '');
 
       final bookingResponse = ReceiptDetResponse.fromJson(jsonDecode(objRsp));
 

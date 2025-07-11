@@ -1,3 +1,5 @@
+export 'package:cve_app/domain/models/account_statement_det_pay_mode_response.dart';
+
 export 'package:cve_app/domain/models/suscription_det_response_model.dart';
 
 export 'package:cve_app/domain/models/suscription_response_model.dart';

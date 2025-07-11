@@ -46,7 +46,7 @@ class DebsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true, '');
 
       var rspValidacion = json.decode(objRsp);
 
@@ -101,7 +101,7 @@ class DebsService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true, '');
 
       //print('Rsp Lista DET DEBS $objRsp');
       

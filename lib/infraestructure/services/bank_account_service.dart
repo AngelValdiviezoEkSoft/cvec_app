@@ -45,7 +45,7 @@ class BankAccountService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "res.partner.bank", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "res.partner.bank", true, '');
       
       BankResponse objConv = BankResponse.fromJson(jsonDecode(objRsp));
 

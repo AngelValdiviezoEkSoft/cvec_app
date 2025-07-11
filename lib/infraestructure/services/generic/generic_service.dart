@@ -134,7 +134,7 @@ class GenericService extends ChangeNotifier {
     return reponseRs;    
   }
 
-  getMultiModelos(ConsultaMultiModelRequestModel objReq, String modelo, bool isComposedInfo) async {
+  getMultiModelos(ConsultaMultiModelRequestModel objReq, String modelo, bool isComposedInfo, String metodoEnviado) async {
 
     String ruta = '';
     final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
@@ -162,6 +162,7 @@ class GenericService extends ChangeNotifier {
           {
             "model": modelo,            
             "filters": [
+              if(modelo != 'account.payment.line.travel')
               ["partner_id","=",objReq.params.partnerId],
               if(modelo.isNotEmpty && modelo == 'ek.travel.subscription.quota')
               ['contract_id', '=', objReq.params.idConsulta],
@@ -171,8 +172,10 @@ class GenericService extends ChangeNotifier {
               ['partner_type', '=', 'customer'],
               if(modelo.isNotEmpty && modelo == 'account.payment')
               ['state', '=', 'posted'],
-              if(modelo.isNotEmpty && modelo == 'account.payment.line.travel')
+              if(modelo.isNotEmpty && modelo == 'account.payment.line.travel' && metodoEnviado.isEmpty)
               ['payment_id', '=', objReq.params.idConsulta],
+              if(modelo.isNotEmpty && modelo == 'account.payment.line.travel' && metodoEnviado.isNotEmpty && metodoEnviado == 'getDetCuotasAccountStatement')
+              ['quota_id', '=', objReq.params.idConsulta],
             ]
           }
         ],
@@ -189,7 +192,7 @@ class GenericService extends ChangeNotifier {
       body: jsonEncode(requestBody),
     );
 
-    //print('Respuesta Reporte: ${response.body}');
+    print('Respuesta Reporte: ${response.body}');
     
     return response.body;
     

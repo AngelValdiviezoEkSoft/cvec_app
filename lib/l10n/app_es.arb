@@ -339,9 +339,13 @@
   "@statePreContLbl": {
     "description": "Pre Contrato"
   },
-  "stateOpenLbl": "Activo",
-  "@stateOpenLbl": {
+  "stateActiveLbl": "Activo",
+  "@stateActiveLbl": {
     "description": "Activo"
+  },
+  "stateOpenLbl": "Abierto",
+  "@stateOpenLbl": {
+    "description": "Abierto"
   },
   "stateAnullLbl": "Anulado",
   "@stateAnullLbl": {

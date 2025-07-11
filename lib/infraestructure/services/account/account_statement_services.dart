@@ -46,7 +46,9 @@ class AccountStatementService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true, '');
+
+      //print('Respuesta: $objRsp');
 
       var rspValidacion = json.decode(objRsp);
 
@@ -98,13 +100,54 @@ class AccountStatementService extends ChangeNotifier{
         )
       );
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true);
+      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true, '');
 
       //print('Rsp Lista DET DEBS $objRsp');
       
       SuscriptionDetResponseModel objConv = SuscriptionDetResponseModel.fromJson(jsonDecode(objRsp));
 
       return objConv.result.data.ekTravelSubscriptionQuota.data;
+    }
+    catch(_){
+      //print('Test DataInit $ex');
+      return [];
+    }
+  }
+
+  Future<List<PaymentLineData>> getDetCuotasAccountStatement(idCuota) async {
+    try {
+
+      var codImei = await storage.read(key: 'codImei') ?? '';
+
+      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
+      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+
+      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
+      var objLogDecode = json.decode(objLog);
+
+      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
+        jsonrpc: EnvironmentsProd().jsonrpc,
+        params: ParamsMultiModels(
+          bearer: obj.result.bearer,
+          company: objLogDecode['result']['current_company'],
+          imei: codImei,
+          key: obj.result.key,
+          tocken: obj.result.tocken,
+          tockenValidDate: obj.result.tockenValidDate,
+          uid: objLogDecode['result']['uid'],
+          partnerId: objLogDecode['result']['partner_id'],
+          idConsulta: idCuota,
+          models: []
+        )
+      );
+
+      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true, 'getDetCuotasAccountStatement');
+
+      //print('Rsp Lista DET DEBS $objRsp');
+      
+      AccountStatementDetPayResponseModel objConv = AccountStatementDetPayResponseModel.fromJson(jsonDecode(objRsp));
+
+      return objConv.result.data.accountPaymentLineTravel.data;
     }
     catch(_){
       //print('Test DataInit $ex');
