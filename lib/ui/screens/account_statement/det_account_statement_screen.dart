@@ -128,7 +128,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(item.paymentSequence, style: TextStyle(fontSize: 16)),
+              Text(item.paymentSequence, style: const TextStyle(fontSize: 16)),
               const SizedBox(height: 2),              
               Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.paymentDate)), style: TextStyle(color: Colors.grey, fontSize: 14)),
             ],

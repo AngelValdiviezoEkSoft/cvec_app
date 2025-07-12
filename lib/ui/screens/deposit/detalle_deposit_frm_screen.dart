@@ -10,7 +10,7 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 
 //ignore: must_be_immutable
 class DetalleDepositFrmScreen extends StatefulWidget {  
@@ -148,9 +148,57 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             color: Colors.transparent,
                             child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
                           ),
-                
+
                           SizedBox(
                             height: size.height * 0.005,
+                          ),
+
+                          if(objReciboDet!.receiptFile.isNotEmpty && _fileImage != null)
+                          Container(
+                            width: size.width * 0.96,
+                            color: Colors.transparent,
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              width: size.width * 0.25,
+                              height: size.height * 0.17,
+                              decoration: !validandoFoto
+                                ? BoxDecoration(
+                                    image: DecorationImage(
+                                      image: CachedNetworkImageProvider(objReciboDet!.receiptFile),
+                                      fit: BoxFit.cover,
+                                    ),                              
+                                  )
+                                : BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(size.width * 0.2),
+                                    border: Border.all(
+                                      width: 3,
+                                      color: objColorsApp.naranja50PorcTrans,
+                                      style: BorderStyle.solid,
+                                    ),
+                                  ),
+                                  /*
+                              child: CachedNetworkImage(
+                                width: size.width * 0.8,
+                                height: size.height * 0.8,
+                                placeholder: (context,url) =>
+                                  Image.asset(
+                                    "assets/loadingEnrolApp.gif",
+                                    height: 40.0,
+                                    width: size.width * 0.2,
+                                  ),
+                                  imageUrl: objReciboDet!.receiptFile,
+                                  fadeInCurve: Curves.bounceIn,
+                                  errorWidget: ((context,error,stackTrace) {
+                                    return Container(
+                                      color: Colors.transparent,
+                                      child: Image.asset('assets/no-image.jpg'),
+                                    );
+                                  }
+                                ),
+                              ),
+                              */
+                            ),
                           ),
                     
                           if(objReciboDet!.receiptFile.isNotEmpty && _fileImage != null)

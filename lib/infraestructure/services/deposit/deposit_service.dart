@@ -52,6 +52,8 @@ class DepositService extends ChangeNotifier{
       
       ReceiptResponseModel objConv = ReceiptResponseModel.fromJson(jsonDecode(objRsp));
 
+      //print('Test DataInit $objRsp');
+
       return objConv.result.data.data;      
     }
     catch(_){
