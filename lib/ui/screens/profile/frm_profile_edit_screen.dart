@@ -105,18 +105,16 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                   child: Column(
                                     children: [
                                       
-                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: displayName, txtInpTp: TextInputType.text,),
-                                      //CustomTextField(label: locGen!.idNumberLbl, initialValue: '0922219480'),
-                                      CustomTextField(label: locGen!.cellNumberLbl, initialValue: '0988665834', txtInpTp: TextInputType.number,),
-                                      CustomTextField(label: locGen!.emailLbl, initialValue: 'angel_elias_valdiviezo_gonzalez@hotmail.com', txtInpTp: TextInputType.emailAddress,),
-                                      CustomTextField(label: locGen!.altEmailLbl, initialValue: 'melanie.vilema@gmail.com', txtInpTp: TextInputType.emailAddress,),
-                                      //CustomTextField(label: locGen!.brDateLbl, initialValue: 'melanie.vilema@gmail.com', txtInpTp: TextInputType.emailAddress,),
+                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: displayName, txtInpTp: TextInputType.text, campoActivo: false,),                                      
+                                      CustomTextField(label: locGen!.cellNumberLbl, initialValue: '0988665834', txtInpTp: TextInputType.number, campoActivo: true),
+                                      CustomTextField(label: locGen!.emailLbl, initialValue: 'angel_elias_valdiviezo_gonzalez@hotmail.com', txtInpTp: TextInputType.emailAddress, campoActivo: true),
+                                      CustomTextField(label: locGen!.altEmailLbl, initialValue: 'melanie.vilema@gmail.com', txtInpTp: TextInputType.emailAddress, campoActivo: true),
 
                                       SizedBox(height: size.height * 0.008,),
 
                                       GestureDetector(
                                         onTap: () {
-                                          openDatePickerProfile(context);
+                                          //openDatePickerProfile(context);
                                         },
                                         child: Container(
                                           width: size.width * 0.92,
@@ -411,15 +409,17 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final String initialValue;
   final TextInputType txtInpTp;
+  final bool campoActivo;
   //final VoidCallback funtionExe;
 
-  const CustomTextField({super.key, required this.label, required this.initialValue, required this.txtInpTp, });//required this.funtionExe});
+  const CustomTextField({super.key, required this.label, required this.initialValue, required this.txtInpTp, required this.campoActivo});//required this.funtionExe});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        enabled: campoActivo,
         initialValue: initialValue,
         decoration: InputDecoration(
           labelText: label,

@@ -363,7 +363,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         SizedBox(
                           height: size.height * 0.005,
                         ),
-                        
+                        /*
                         GestureDetector(
                           onTap: () {
                             openDatePicker(context);
@@ -397,6 +397,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         SizedBox(
                           height: size.height * 0.025,
                         ),
+                        */
                         
                         TextFormField(
                           controller: concController,
