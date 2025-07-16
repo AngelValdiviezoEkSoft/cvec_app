@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+double _fontSize = 12.5; // Tamaño de fuente inicial
+
 class SettingsUserScreen extends StatefulWidget {
   const SettingsUserScreen({super.key});
 
@@ -16,10 +18,16 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
   String selectedMode = 'Claro';
 
   @override
+  void initState() {
+    super.initState();
+    //_fontSize = 16.0;
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
-    final languageProvider = Provider.of<LanguageProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);    
 
     return Scaffold(
       //appBar: AppBar(title: const Text('Configuración')), 
@@ -52,37 +60,8 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                     height: size.height * 0.08,
                     color: Colors.transparent,
                     alignment: Alignment.centerLeft,
-                    child: Text(locGen!.languageLbl, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                    child: Text(locGen!.languageLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold))//fontSize: 16
                   ),
-                  /*
-                  Container(
-                    width: size.width * 0.32,
-                    height: size.height * 0.08,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: DropdownButtonFormField<String>(
-                      value: selectedLanguage,
-                      decoration: InputDecoration(
-                        labelText: '',
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0), // Bordes redondos
-                        ),
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedLanguage = newValue!;
-                        });
-                      },
-                      items: <String>['Español', 'Inglés'].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  */
 
                   Container(
                     width: size.width * 0.32,
@@ -115,11 +94,12 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            SizedBox(height: size.height * 0.035),
 
-            Text(locGen!.brightnessLbl, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(locGen!.brightnessLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold)),//fontize: 16
             
-            const SizedBox(height: 10),
+            SizedBox(height: size.height * 0.025),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -128,6 +108,38 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 brightnessOption(locGen!.automaticLbl, 'Automático', size, 'assets/images/modo_automatico.png'),
               ],
             ),
+
+            SizedBox(height: size.height * 0.045),
+
+            Container(
+              height: size.height * 0.18,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold, color: Colors.white)),
+
+                  Slider(
+                    min: 12.5,
+                    max: 35.0,
+                    divisions: 18,
+                    value: _fontSize,
+                    label: '${_fontSize.toStringAsFixed(1)}%',
+                    onChanged: (newValue) {
+                      setState(() {
+                        _fontSize = newValue;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 30),
           ],
         ),
       ),

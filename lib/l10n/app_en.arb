@@ -86,5 +86,6 @@
     "statePreLiqLbl": "Pre Liquidated",
     "stateLiquidationLbl": "Liquidated",
     "stateFinalizedLbl": "Finalized",
-    "statePaidLbl": "Paid"
+    "statePaidLbl": "Paid",
+    "fontSizeLbl": "Font Size"
 } 

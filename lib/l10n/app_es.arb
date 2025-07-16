@@ -370,5 +370,9 @@
   "statePaidLbl": "Pagado",
   "@statePaidLbl": {
     "description": "Pagado"
+  },
+  "fontSizeLbl": "Tamaño de letra",
+  "@fontSizeLbl": {
+    "description": "Tamaño de letra"
   }
 }
