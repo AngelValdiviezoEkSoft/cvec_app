@@ -67,6 +67,7 @@ class AuthScreenSt extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
+    final fontSizeManager = Provider.of<FontSizeManager>(context);
     //final objRutas = RoutersApp();
 
     return Container(
@@ -90,18 +91,14 @@ class AuthScreenSt extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 locGen!.bienvenidaLogin,
-                style: const TextStyle(
-                  fontSize: 30,
+                style: TextStyle(
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize64),
                   fontWeight: FontWeight.bold,
                   color: Colors.white
                 ),
               ),
             ),
-            /*
-            TextField(
-              decoration: InputDecoration(labelText: 'Usuario'),
-            ),
-            */
+            
             TextFormField(
               style: const TextStyle(color: Colors.white),
               autocorrect: false,
@@ -110,25 +107,13 @@ class AuthScreenSt extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: '',
                 labelText: locGen!.userLbl,
-                labelStyle: const TextStyle(color: Colors.white)
+                labelStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                )
               ),
-              //onChanged: (value) => loginForm.email = value,
-              /*
-              validator: (value) {
-                String pattern = regularExp.regexToEmail;
-                RegExp regExp = RegExp(pattern);
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'El valor ingresado no luce como un correo';
-              },
-              */
             ),
-            /*
-            TextField(
-              decoration: InputDecoration(labelText: 'Contraseña'),
-              obscureText: true,
-            ),
-            */
+            
             SizedBox(height: size.height * 0.07,),
       
             TextField(
@@ -136,7 +121,10 @@ class AuthScreenSt extends StatelessWidget {
                   obscureText: authService.varIsOscured,
                   controller: passWordTxt,
                   decoration: InputDecoration(
-                    labelStyle: const TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                    ),
                     labelText: locGen!.passwordLbl,
                     suffixIcon: 
                     !authService.varIsOscured

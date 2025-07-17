@@ -88,6 +88,10 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
 
     final size = MediaQuery.of(context).size;
 
+    
+    final fontSizeManager = Provider.of<FontSizeManager>(context);
+    fontSizeManager.loadFontSizes();
+
     if(x == null && y == null){
       x = size.width * 0.84;
       y = size.height * 0.74;
@@ -357,9 +361,9 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                   color: Colors.transparent,
                                   width: size.width * 0.75,
                                   height: size.height * 0.03,
-                                  child: const Text(
+                                  child: Text(
                                     "Centro de Viajes Ecuador",
-                                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize40), fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -384,40 +388,15 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                       pause: const Duration(microseconds: 1000),
           
                                       animatedTexts: [
-                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: const TextStyle(color: Colors.black)),
-                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: const TextStyle(color: Colors.black)),
+                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize34))),
+                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize34))),
                                       ],
                                       onTap: () {
                                       },
                                     ),
                                   ),
                                 )
-                                
-                                /*
-                                const Text(
-                                  "VACACIONES SEGURAS",
-                                  style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                                size!dBox(height: size!.height * 0.004),
-                                Text(
-                                  "SIEMPRE",
-                                  style: TextStyle(fontsize!: 20, fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                                size!dBox(height: size!.height * 0.004), // Espacio entre la primera y segunda línea
-                                Text(
-                                  "Centro de Viajes Ecuador",
-                                  style: TextStyle(fontsize!: 19, fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                                size!dBox(height: size!.height * 0.004), // Aumenta el espacio entre la segunda y tercera línea
-                                Text(
-                                  "¡PLANIFICA Y LOGRA LO IMPOSIBLE!",
-                                  style: TextStyle(fontsize!: 15, fontWeight: FontWeight.w400),
-                                  textAlign: TextAlign.center,
-                                ),
-                              */
+                              
                               ],
                             )
                             
@@ -642,6 +621,9 @@ class MenuTile extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
 
+    final fontSizeManager = Provider.of<FontSizeManager>(context);
+    fontSizeManager.loadFontSizes();
+
     return GestureDetector(
       onTap: () {
         String ruta = '';
@@ -672,7 +654,7 @@ class MenuTile extends StatelessWidget {
             width: size.width * 0.45,
             height: size.height * 0.03,
             color: Colors.transparent,
-            child: Text(option.label, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black))
+            child: Text(option.label, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize30), fontWeight: FontWeight.bold, color: Colors.black))
           ),
           Container(
             width: size.width * 0.45,

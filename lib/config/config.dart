@@ -9,3 +9,5 @@ export 'package:cve_app/config/environments/environments.dart';
 export 'package:cve_app/config/routes/routes.dart';
 
 export 'package:cve_app/config/alerts/alerts.dart';
+
+export 'package:cve_app/config/font_sizes/font_sizes.dart';

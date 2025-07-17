@@ -3,6 +3,7 @@ import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 double _fontSize = 12.5; // Tamaño de fuente inicial
 
@@ -28,6 +29,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
 
     final size = MediaQuery.of(context).size;
     final languageProvider = Provider.of<LanguageProvider>(context);    
+    final fontSizeManager = Provider.of<FontSizeManager>(context);
 
     return Scaffold(
       //appBar: AppBar(title: const Text('Configuración')), 
@@ -60,7 +62,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                     height: size.height * 0.08,
                     color: Colors.transparent,
                     alignment: Alignment.centerLeft,
-                    child: Text(locGen!.languageLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold))//fontSize: 16
+                    child: Text(locGen!.languageLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize30'), fontWeight: FontWeight.bold))//fontSize: 16
                   ),
 
                   Container(
@@ -96,7 +98,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
 
             SizedBox(height: size.height * 0.035),
 
-            Text(locGen!.brightnessLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold)),//fontize: 16
+            Text(locGen!.brightnessLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize30'), fontWeight: FontWeight.bold)),//fontize: 16
             
             SizedBox(height: size.height * 0.025),
 
@@ -121,15 +123,19 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: _fontSize, fontWeight: FontWeight.bold, color: Colors.white)),
+                  Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize40'), fontWeight: FontWeight.bold, color: Colors.white)),
 
                   Slider(
-                    min: 12.5,
-                    max: 35.0,
-                    divisions: 18,
+                    min: 0.0,
+                    max: 100.0,
+                    divisions: 10,
                     value: _fontSize,
                     label: '${_fontSize.toStringAsFixed(1)}%',
-                    onChanged: (newValue) {
+                    onChanged: (newValue) async {
+                      final prefs = await SharedPreferences.getInstance();
+                      prefs.setInt('PorcFontSize', newValue.toInt());
+                      await fontSizeManager.loadFontSizes();
+                      
                       setState(() {
                         _fontSize = newValue;
                       });

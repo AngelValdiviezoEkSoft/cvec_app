@@ -54,10 +54,6 @@ class CentroViajesAppState extends State<CentroViajesApp> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-
-    //final locale = context.watch<LanguageProvider>().locale;
-    //final languageProvider = Provider.of<LanguageProvider>(context);
-    //print('Test: $locale');
     
     return ChangeNotifierProvider(
       create: (_) => LanguageProvider(),

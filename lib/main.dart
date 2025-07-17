@@ -12,17 +12,22 @@ import 'infraestructure/services/services.dart';
 import 'package:provider/src/change_notifier_provider.dart' as np;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
 
   setupServiceLocator();
 
   await initializeDateFormatting();
 
+  final fontSizeManager = FontSizeManager();
+  await fontSizeManager.loadFontSizes();
+
   runApp(
     MultiProvider(
       providers:[//
+        np.ChangeNotifierProvider(create: (_) => FontSizeManager()),
         BlocProvider(create: (context) => getIt<AuthBloc>()..add(AppStarted())),
         BlocProvider(create: (context) => getIt<GenericBloc>()),
-        BlocProvider(create: (context) => getIt<LanguageBloc>()),
+        BlocProvider(create: (context) => getIt<LanguageBloc>()),        
       ],
       child: ProviderScope(
         child: SecureApplication(
@@ -32,7 +37,7 @@ void main() async {
               locked: true
             )
           ),
-          child: np.ChangeNotifierProvider(
+          child: np.ChangeNotifierProvider(            
             create: (_) => LanguageProvider(),
             child: const CentroViajesApp(null)
           )

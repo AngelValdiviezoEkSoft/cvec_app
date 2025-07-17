@@ -144,6 +144,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 String searchQueryAcc = '';
 late TextEditingController searchAccTxt;
@@ -181,6 +182,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
 
     final size = MediaQuery.of(context).size;
 
+    final fontSizeManager = Provider.of<FontSizeManager>(context);
+
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
@@ -191,7 +194,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
 
             if(!snapshot.hasData) {
               return Scaffold(
-                  backgroundColor: Colors.white,
+                backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
                     "assets/gifs/gif_carga.gif",
@@ -233,6 +236,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                           child: TextField(
                             controller: searchAccTxt,
                             decoration: InputDecoration(
+                              //hintStyle: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize44)),
                               hintText: locGen!.searchContPlanLbl,//'Buscar por plan del contrato',
                               prefixIcon: const Icon(Icons.search),
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
