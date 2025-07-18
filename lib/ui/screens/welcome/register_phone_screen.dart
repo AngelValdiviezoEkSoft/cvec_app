@@ -28,43 +28,41 @@ class RegisterPhoneScreen extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: const Color(0xFF2EA3F2),        
-          title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-          leading: GestureDetector(
-            onTap: () {
-              //context.push(objRutas.rutaDefault);
-              context.pop();
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Icon(Icons.arrow_back_ios)
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF2EA3F2),        
+        title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
+        leading: GestureDetector(
+          onTap: () {
+            //context.push(objRutas.rutaDefault);
+            context.pop();
+          },
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.arrow_back_ios)
+          ),
+        ),          
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: size.width,
+            height: size.height * 1.02,//0.99,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft, // Punto de inicio del degradado
+                end: Alignment.bottomRight,
+              colors: [Colors.blue.shade600, Colors.white, Colors.white],
             ),
-          ),          
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: size.width,
-              height: size.height * 1.02,//0.99,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft, // Punto de inicio del degradado
-                  end: Alignment.bottomRight,
-                colors: [Colors.blue.shade600, Colors.white, Colors.white],
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ChangeNotifierProvider(
-                    create: (_) => AuthServices(),
-                    child: Welcome2Screen(key),
-                  ),                  
-              ],
-            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ChangeNotifierProvider(
+                  create: (_) => AuthServices(),
+                  child: Welcome2Screen(key),
+                ),                  
+            ],
           ),
         ),
       ),
@@ -105,10 +103,10 @@ class Welcome2Screen extends StatelessWidget {
           height: size.height * 0.02,
         ),
         
-        const Text(
-          '¡Bienvenido!',
+        Text(
+          '¡${locGen!.welcomeLbl}!',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize32),
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -117,12 +115,14 @@ class Welcome2Screen extends StatelessWidget {
           height: size.height * 0.01,
         ),
         
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
-            '¡Acceda o cree su cuenta a continuación y comience su viaje!',
+            '¡${locGen!.msmWelcomeLbl}!',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+            ),
           ),
         ),
     
@@ -144,7 +144,10 @@ class Welcome2Screen extends StatelessWidget {
               //enabled: false,
               controller: serverTxt,
               decoration: InputDecoration(
-                labelText: 'Servidor',
+                labelStyle: TextStyle(
+                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                ),
+                labelText: locGen!.serverLbl,
                 suffixIcon: //const Icon(Icons.qr_code_scanner_outlined),
                 IconButton(
                   onPressed: () {
@@ -178,14 +181,16 @@ class Welcome2Screen extends StatelessWidget {
           child: TextField(
             obscureText: authService.varIsKeyOscured,
             controller: keyTxt,
-            decoration: InputDecoration(                  
-              labelText: 'Key',
+            decoration: InputDecoration(  
+              labelStyle: TextStyle(
+                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                ),                
+              labelText: locGen!.keyLbl,
               suffixIcon: //const Icon(Icons.key),
               !authService.varIsKeyOscured
                 ? IconButton(
                     onPressed: () {
-                      authService.varIsKeyOscured =
-                          !authService.varIsKeyOscured;
+                      authService.varIsKeyOscured = !authService.varIsKeyOscured;
                     },
                     icon: Icon(Icons.key,
                         size: 24,
@@ -378,9 +383,9 @@ class Welcome2Screen extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15), // Espaciado interno del botón
-          child: const Text(
-            'Comenzar',
-            style: TextStyle(
+          child: Text(
+            locGen!.beginLbl,//'Comenzar',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.bold,

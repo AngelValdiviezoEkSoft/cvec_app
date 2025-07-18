@@ -374,5 +374,25 @@
   "fontSizeLbl": "Tamaño de letra",
   "@fontSizeLbl": {
     "description": "Tamaño de letra"
+  },
+  "serverLbl": "Servidor",
+  "@serverLbl": {
+    "description": "Servidor"
+  },
+  "keyLbl": "Llave",
+  "@serverLbl": {
+    "description": "Llave"
+  },
+  "welcomeLbl": "Bienvenido",
+  "@welcomeLbl": {
+    "description": "Bienvenido"
+  },
+  "msmWelcomeLbl": "Acceda o cree su cuenta a continuación y comience su viaje",
+  "@msmWelcomeLbl": {
+    "description": "Acceda o cree su cuenta a continuación y comience su viaje"
+  },
+  "beginLbl": "Comenzar",
+  "@beginLbl": {
+    "description": "Comenzar"
   }
 }

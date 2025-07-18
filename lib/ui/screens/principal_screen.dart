@@ -15,6 +15,7 @@ RoutersApp objRouts = RoutersApp();
 double? x;
 double? y;
 DonePermissions? objPermisosGen;
+FontSizeManager fontSizeManagerGen = FontSizeManager();
 
 class PrincipalScreen extends StatelessWidget {
 
@@ -89,8 +90,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
     final size = MediaQuery.of(context).size;
 
     
-    final fontSizeManager = Provider.of<FontSizeManager>(context);
-    fontSizeManager.loadFontSizes();
+    fontSizeManagerGen = Provider.of<FontSizeManager>(context);
+    fontSizeManagerGen.loadFontSizes();
 
     if(x == null && y == null){
       x = size.width * 0.84;
@@ -363,7 +364,7 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                   height: size.height * 0.03,
                                   child: Text(
                                     "Centro de Viajes Ecuador",
-                                    style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize40), fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize40), fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -383,13 +384,11 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                       fontFamily: 'Canterbury',
                                     ),
                                     child: AnimatedTextKit(
-                                      repeatForever: true,
-                                      
-                                      pause: const Duration(microseconds: 1000),
-          
+                                      repeatForever: true,                                      
+                                      pause: const Duration(microseconds: 1000),          
                                       animatedTexts: [
-                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize34))),
-                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize34))),
+                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize34))),
+                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize34))),
                                       ],
                                       onTap: () {
                                       },

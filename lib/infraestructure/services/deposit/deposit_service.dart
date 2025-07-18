@@ -56,8 +56,8 @@ class DepositService extends ChangeNotifier{
 
       return objConv.result.data.data;      
     }
-    catch(_){
-      //print('Test DataInit $ex');
+    catch(ex){
+      print('Test DataInit $ex');
       return [];
     }
   }

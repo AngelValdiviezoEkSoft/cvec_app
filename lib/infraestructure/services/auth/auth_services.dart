@@ -119,10 +119,15 @@ class AuthServices extends ChangeNotifier {
     //print("Test: " + response.body);
 
     var obj = RegisterDeviceResponseModel.fromJson(reponseRs);
+    await storage.write(key: 'codImei', value: objRegister.imei);
 
-    if(obj.result.estado == 200){
-      await storage.write(key: 'codImei', value: objRegister.imei);
+    if(obj.result.estado == 200){      
       await storage.write(key: 'RespuestaRegistro', value: reponseRs);
+    }
+
+    if(obj.result.estado == 404){
+      RegisterDeviceResponseModel rsp = await doneGetTocken(objRegister.imei, objRegister.key);
+      return rsp;
     }
 
     return obj;

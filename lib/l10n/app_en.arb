@@ -87,5 +87,10 @@
     "stateLiquidationLbl": "Liquidated",
     "stateFinalizedLbl": "Finalized",
     "statePaidLbl": "Paid",
-    "fontSizeLbl": "Font Size"
+    "fontSizeLbl": "Font Size",
+    "serverLbl": "Server",
+    "keyLbl": "Key",
+    "welcomeLbl": "Welcome",
+    "beginLbl": "Begin",
+    "msmWelcomeLbl": "Log in or create your account below and start your journey."
 } 

@@ -290,7 +290,11 @@ class DepositViewSt extends State<DepositView> {
                                         ),
                                         alignment: Alignment.center,
                                         child: Text(locGen!.tabAlsDebsLbl,
-                                            style: TextStyle(color: tabTodas ? Colors.white : const Color(0xFF007AFF))),
+                                            style: TextStyle(
+                                                color: tabTodas ? Colors.white : const Color(0xFF007AFF),
+                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                              )                                              
+                                            ),
                                       ),
                                     ),
                                   ),
@@ -318,7 +322,10 @@ class DepositViewSt extends State<DepositView> {
                                         alignment: Alignment.center,
                                         child: Text(locGen!.approveReviewLbl,maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(color: tabAprobadas ? Colors.white : const Color(0xFF007AFF))
+                                          style: TextStyle(
+                                            color: tabAprobadas ? Colors.white : const Color(0xFF007AFF),
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                          )
                                         ),
                                       ),
                                     ),
@@ -345,7 +352,11 @@ class DepositViewSt extends State<DepositView> {
                                         alignment: Alignment.center,
                                         child: Text(locGen!.rejectedReviewLbl,maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(color: tabRechazadas ? Colors.white : const Color(0xFF007AFF))),
+                                          style: TextStyle(
+                                              color: tabRechazadas ? Colors.white : const Color(0xFF007AFF),
+                                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                            )
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -373,7 +384,10 @@ class DepositViewSt extends State<DepositView> {
                                         alignment: Alignment.center,
                                         child: Text(locGen!.pendingReviewLbl,maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(color: tabProgreso ? Colors.white : const Color(0xFF007AFF))),
+                                            style: TextStyle(color: tabProgreso ? Colors.white : const Color(0xFF007AFF),
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                          )
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -440,7 +454,5 @@ class DepositViewSt extends State<DepositView> {
         );
       }
     );
-  
-
   }
 }
