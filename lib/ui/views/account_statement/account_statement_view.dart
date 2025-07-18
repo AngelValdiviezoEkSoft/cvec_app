@@ -347,6 +347,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                         
                                                         SizedBox(height: size.height * 0.008),
                                                         
+                                                        if(item.contractInscriptionDate.isNotEmpty && item.contractDueDate.isNotEmpty)
                                                         Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
 
                                                         SizedBox(height: size.height * 0.008),

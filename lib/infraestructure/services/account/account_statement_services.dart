@@ -62,6 +62,8 @@ class AccountStatementService extends ChangeNotifier{
           await getAccountStatement();
         }
       }
+
+      print('Test $objRsp');
       
       SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(jsonDecode(objRsp));
 

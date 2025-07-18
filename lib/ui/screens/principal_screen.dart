@@ -364,7 +364,7 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                   height: size.height * 0.03,
                                   child: Text(
                                     "Centro de Viajes Ecuador",
-                                    style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize40), fontWeight: FontWeight.bold),
+                                    style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize22), fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -387,8 +387,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                       repeatForever: true,                                      
                                       pause: const Duration(microseconds: 1000),          
                                       animatedTexts: [
-                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize34))),
-                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize34))),
+                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
+                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
                                       ],
                                       onTap: () {
                                       },
@@ -653,7 +653,7 @@ class MenuTile extends StatelessWidget {
             width: size.width * 0.45,
             height: size.height * 0.03,
             color: Colors.transparent,
-            child: Text(option.label, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize30), fontWeight: FontWeight.bold, color: Colors.black))
+            child: Text(option.label, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16), fontWeight: FontWeight.bold, color: Colors.black))
           ),
           Container(
             width: size.width * 0.45,

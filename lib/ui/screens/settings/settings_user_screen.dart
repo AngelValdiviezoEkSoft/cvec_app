@@ -1,3 +1,4 @@
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                     height: size.height * 0.08,
                     color: Colors.transparent,
                     alignment: Alignment.centerLeft,
-                    child: Text(locGen!.languageLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize30'), fontWeight: FontWeight.bold))//fontSize: 16
+                    child: Text(locGen!.languageLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18), fontWeight: FontWeight.bold))//fontSize: 16
                   ),
 
                   Container(
@@ -98,7 +99,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
 
             SizedBox(height: size.height * 0.035),
 
-            Text(locGen!.brightnessLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize30'), fontWeight: FontWeight.bold)),//fontize: 16
+            Text(locGen!.brightnessLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18), fontWeight: FontWeight.bold)),//fontize: 16
             
             SizedBox(height: size.height * 0.025),
 
@@ -123,7 +124,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get('FontSize40'), fontWeight: FontWeight.bold, color: Colors.white)),
+                  Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold, color: Colors.white)),
 
                   Slider(
                     min: 0.0,

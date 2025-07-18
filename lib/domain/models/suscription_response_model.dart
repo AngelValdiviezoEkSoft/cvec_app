@@ -13,7 +13,8 @@ class SubscriptionResponseModel {
     return SubscriptionResponseModel(
       jsonrpc: json['jsonrpc'] ?? '',
       id: json['id'] ?? 0,
-      result: SubscriptionResponse.fromJson(json['result']),
+      result: json['result'] != null ? SubscriptionResponse.fromJson(json['result']) 
+      : SubscriptionResponse(data: SaleSubscriptionData(data: [], fields: '', length: 0), estado: 0),
     );
   }
 }
@@ -30,7 +31,8 @@ class SubscriptionResponse {
   factory SubscriptionResponse.fromJson(Map<String, dynamic> json) {
     return SubscriptionResponse(
       estado: json['estado'] ?? '',
-      data: SaleSubscriptionData.fromJson(json['data']['sale.subscription']),
+      data: json['data']['sale.subscription'] != null ? SaleSubscriptionData.fromJson(json['data']['sale.subscription'])
+      : SaleSubscriptionData(data: [], fields: '', length: 0),
     );
   }
 }
@@ -47,12 +49,17 @@ class SaleSubscriptionData {
   });
 
   factory SaleSubscriptionData.fromJson(Map<String, dynamic> json) {
+    print('Result: ${json['data']}');
+
     return SaleSubscriptionData(
       length: json['length'] ?? 0,
-      fields: json['fields'] ?? '',
-      data: (json['data'] as List)
+      fields: '',//json['fields'] ?? '',
+      data: json['data'] != null ? //List<Subscription>.from(json['data'].map((x) => Subscription.fromJson(x))) : [],
+      
+      (json['data'] as List)
           .map((item) => Subscription.fromJson(item))
-          .toList(),
+          .toList() : [],
+          
     );
   }
 }

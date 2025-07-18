@@ -107,7 +107,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   title: Text(
                     locGen!.menuAccountStatementLbl, 
                     style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
                       color: state.viewAccountStatement ? Colors.grey : Colors.black
                     ),
                   ),
@@ -129,7 +129,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   title: Text(
                     locGen!.menuDebtsLbl, 
                     style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
                       color: state.viewViewDebts ? Colors.grey : Colors.black
                     ),
                   ),
@@ -150,7 +150,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   title: Text(
                     locGen!.menuSendDepositsLbl, 
                     style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
                       color: state.viewSendDeposits ? Colors.grey : Colors.black
                     ),
                   ),
@@ -171,7 +171,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   title: Text(
                     locGen!.menuPrintReceiptsLbl, 
                     style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
                       color: state.viewPrintReceipts ? Colors.grey : Colors.black),
                   ),
                   onTap: () {
@@ -191,7 +191,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   title: Text(
                     locGen!.menuSeeReservationsLbl, 
                     style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
                       color: state.viewViewReservations ? Colors.grey : Colors.black
                     ),
                   ),
@@ -232,7 +232,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.web_rounded),
-                  title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize32)),),
+                  title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
                   onTap: () {
                     /*
                     gnrBloc.setShowViewAccountStatementEvent(false);
@@ -249,7 +249,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
-                  title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize32)),),
+                  title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
                   onTap: () async {
 
                     showDialog(
@@ -322,7 +322,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 children: [
                   Container(
                     width: size.width,
-                    height: size.height * 0.15,
+                    height: size.height * 0.29,
                     color: Colors.transparent,
                     alignment: Alignment.center,
                     child: Stack(
@@ -345,49 +345,35 @@ class PrincipalClientStScreen extends StatelessWidget {
                         ),
                         Container(
                           width: size.width * 0.85,
-                          height: size.height * 0.12,
+                          height: size.height * 0.95,
                           color: Colors.transparent,
                           alignment: Alignment.center,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: size.height * 0.02,),
+                              //SizedBox(height: size.height * 0.02,),
         
-                              Container(
-                                color: Colors.transparent,
-                                width: size.width * 0.75,
-                                height: size.height * 0.03,
-                                child: Text(
-                                  "Centro de Viajes Ecuador",
-                                  style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize44), fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
+                              Text(
+                                "Centro de Viajes Ecuador",
+                                style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize25), fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
                               ),
             
-                              SizedBox(
-                                height: size.height * 0.02,
-                              ),
         
-                              Container(
-                                color: Colors.transparent,
-                                width: size.width * 0.97,
-                                height: size.height * 0.035,
-                                alignment: Alignment.center,
-                                child: DefaultTextStyle(
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    fontFamily: 'Canterbury',
-                                  ),
-                                  child: AnimatedTextKit(
-                                    repeatForever: true,
-                                    pause: const Duration(microseconds: 1000),
-                                    animatedTexts: [
-                                      ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize35))),
-                                      ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize35))),
-                                    ],
-                                    onTap: () {
-                                    },
-                                  ),
+                              DefaultTextStyle(
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: 'Canterbury',
+                                ),
+                                child: AnimatedTextKit(
+                                  repeatForever: true,
+                                  pause: const Duration(microseconds: 1000),
+                                  animatedTexts: [
+                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                  ],
+                                  onTap: () {
+                                  },
                                 ),
                               )
                             ],
@@ -425,7 +411,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                         height: size.height * 0.06,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text(locGen!.menuAccountStatementLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize44)),)
+                        child: Text(locGen!.menuAccountStatementLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20)),)
                       ),
                   
                       Container(
@@ -484,7 +470,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     height: size.height * 0.055,
                     color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: Text(locGen!.menuDebtsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize48)),)
+                    child: Text(locGen!.menuDebtsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize26)),)
                   ),
               
                   const DebtView(null),
@@ -528,7 +514,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     height: size.height * 0.06,
                     color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: Text(locGen!.receiptsLbl, style: const TextStyle(fontSize: 25),)
+                    child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20)),)
                   ),
               
                   const PrintReceiptView(null),
@@ -554,7 +540,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                     height: size.height * 0.06,
                     color: Colors.transparent,
                     alignment: Alignment.center,
-                    child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize50)),)
+                    child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize22)),)
                   ),
               
                   const ReservationsView(null),
@@ -616,19 +602,19 @@ class PrincipalClientStScreen extends StatelessWidget {
                   displayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize32)),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),
                 ),
                 SizedBox(height: size.height * 0.002),
                 Text(
                   'Duran City - Etapa Bromelia, MZ14-V13',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize28)),
+                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
                 ),
                 SizedBox(height: size.height * 0.002),
                 Text(
                   'Propietario',
-                  style: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize28)),
+                  style: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
                 ),
               ],
             ),

@@ -92,7 +92,7 @@ class AuthScreenSt extends StatelessWidget {
               child: Text(
                 locGen!.bienvenidaLogin,
                 style: TextStyle(
-                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize64),
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize30),
                   fontWeight: FontWeight.bold,
                   color: Colors.white
                 ),
@@ -109,7 +109,7 @@ class AuthScreenSt extends StatelessWidget {
                 labelText: locGen!.userLbl,
                 labelStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize17),
                 )
               ),
             ),
@@ -123,7 +123,7 @@ class AuthScreenSt extends StatelessWidget {
                   decoration: InputDecoration(
                     labelStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize32),
+                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize17),
                     ),
                     labelText: locGen!.passwordLbl,
                     suffixIcon: 
