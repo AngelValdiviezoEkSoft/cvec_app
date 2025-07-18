@@ -180,6 +180,7 @@ class DebtViewSt extends State<DebtView> {
                                                       
                                                       SizedBox(height: size.height * 0.008),
                                                       
+                                                      if(item.contractInscriptionDate.isNotEmpty)
                                                       Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
                                                       
                                                     ],

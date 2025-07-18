@@ -112,9 +112,10 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                           height: sizeScreen.height * 0.5,
                           alignment: Alignment.center,
                           child: AiBarcodeScanner(
+                            /*
                             canPop: false,
                             onScan: (String value) async {
-                              /*
+                              
                               //debugPrint(value);
                   
                               setState(() {
@@ -141,8 +142,9 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                                               oWalletTransaccionResponse,
                                         )),
                               );
-                              */
+                              
                             },
+                            */
                             onDetect: (value) async {
                               String valorScaneado = '';
                               
@@ -167,6 +169,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                               detectionSpeed: DetectionSpeed.normal,
                               autoStart: true,
                             ),
+                            /*
                             borderColor: AppLightColors().primary,
                             borderRadius: 16,
                             bottomBar: Container(
@@ -177,6 +180,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                             ),
                             bottomBarText: '',
                             bottomBarTextStyle: const TextStyle(fontSize: 1),
+                            */
                           ),
                         ),
                         
