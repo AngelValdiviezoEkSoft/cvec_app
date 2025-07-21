@@ -155,12 +155,18 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.photoPaymentReceiptLbl),
+                          child: Text(
+                            locGen!.photoPaymentReceiptLbl,
+                            style: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                            ),
+                          ),
                         ),
                         
                         SizedBox(
-                          height: size.height * 0.005,
+                          height: size.height * 0.007,
                         ),
+
                         if (rutaPagoAdj.isEmpty && !state.levantaModal)
                           Container(
                             width: size.width * 0.96,
@@ -168,7 +174,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             alignment: Alignment.centerLeft,
                             child: Container(
                               width: size.width * 0.25,
-                              height: size.height * 0.11,
+                              height: size.height * 0.13,
                               decoration: BoxDecoration(
                                 color: Colors.grey[350], // Color de fondo
                                 borderRadius: BorderRadius.circular(12), // Bordes redondeados
@@ -235,44 +241,49 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           inputFormatters: [currencyFormatter],
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           decoration: InputDecoration(
-                              labelText: locGen!.amountLbl,
-                              enabledBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey,
-                                    width: 2), // Borde cuando no está enfocado
-                              ),
-                              focusedBorder: const UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.grey,
-                                    width: 3), // Borde cuando está enfocado
-                              ),
-                              prefixIcon: const Icon(Icons.monetization_on_outlined),
-                              hintText: "0.00",
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  amountController.text = '';
-          
-                                  if(observationsController.text.isEmpty || amountController.text.isEmpty 
-                                    || compController.text.isEmpty || concController.text.isEmpty){
-                                    setState(() {
-                                      btnGuardar = false;
-                                    });
-                                  }
-                                },
-                                icon: state.cargando 
-                                ?
-                                LoadingAnimationWidget.fallingDot(
-                                  color: const Color(0xFF1A1A3F),
-                                  size: 12,
-                                )
-                                :
-                                const Icon(
-                                  Icons.cancel,
-                                  size: 12,
-                                  color: Colors.black,
-                                ),
-                              )
+                            labelStyle: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                             ),
+                            labelText: locGen!.amountLbl,
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2
+                              ),
+                            ),
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 3
+                              ), // Borde cuando está enfocado
+                            ),
+                            prefixIcon: const Icon(Icons.monetization_on_outlined),
+                            hintText: "0.00",
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                amountController.text = '';
+        
+                                if(observationsController.text.isEmpty || amountController.text.isEmpty 
+                                  || compController.text.isEmpty || concController.text.isEmpty){
+                                  setState(() {
+                                    btnGuardar = false;
+                                  });
+                                }
+                              },
+                              icon: state.cargando 
+                              ?
+                              LoadingAnimationWidget.fallingDot(
+                                color: const Color(0xFF1A1A3F),
+                                size: 12,
+                              )
+                              :
+                              const Icon(
+                                Icons.cancel,
+                                size: 12,
+                                color: Colors.black,
+                              ),
+                            )
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return locGen!.msmValidateAmounLbl;//'Por favor ingrese el monto';
@@ -298,6 +309,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           controller: compController,
                           decoration: InputDecoration(
                               labelText: locGen!.receiptNumberLbl,
+                              labelStyle: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                            ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.grey,
@@ -352,7 +366,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         SizedBox(
                           height: size.height * 0.025,
                         ),
-                        
+                /*        
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
@@ -363,7 +377,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         SizedBox(
                           height: size.height * 0.005,
                         ),
-                        /*
+                        
                         GestureDetector(
                           onTap: () {
                             openDatePicker(context);
@@ -403,6 +417,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           controller: concController,
                           decoration: InputDecoration(
                               labelText: locGen!.conceptLbl,
+                              labelStyle: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                            ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.grey,
@@ -464,6 +481,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           maxLines: 3,
                           decoration: InputDecoration(
                               labelText: locGen!.notesLbl,
+                              labelStyle: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                            ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
                                     color: Colors.grey,
@@ -507,74 +527,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           },
                           onTapOutside: (event) => FocusScope.of(context).unfocus(),
                         ),
-                        /*
-                        SizedBox(
-                          height: size.height * 0.025,
-                        ),
                         
-                        Container(
-                          width: size.width * 0.96,
-                          height: size.height * 0.028,
-                          color: Colors.transparent,
-                          child: Text(locGen!.paymentLbl),
-                        ),
-                        
-                        Container(
-                          width: size.width * 0.96,
-                          height: size.height * 0.07,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent, // Color de fondo (opcional)
-                            border: Border.all(
-                              color: Colors.black54, // Color del borde
-                              width: 0.5, // Grosor del borde
-                            ),
-                            borderRadius: BorderRadius.circular(8), // Bordes redondeados (opcional)
-                          ),
-                          child: DropdownButton<String>(
-                            value: cmbBancoCve.contains(selectedValueBanco) ? selectedValueBanco : null,
-                            hint: const Text("Selecciona un banco", style: TextStyle(fontSize: 11)),
-                            onChanged: (String? newValue) {
-                              if (cmbBancoCve.contains(newValue)) {
-                                setState(() {
-                                  selectedValueBanco = newValue!;
-                                  showHolder = true;
-
-                                  for (int i = 0; i < lstBankAccount.length; i++) {
-                                    if (lstBankAccount[i].bankName == selectedValueBanco) {
-                                      holderName = lstBankAccount[i].bankAccountHolder;
-                                    }
-                                  }
-                                });
-                              }
-                            },
-                            items: cmbBancoCve.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value, style: const TextStyle(fontSize: 11)),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        
-                        SizedBox(
-                          height: size.height * 0.025,
-                        ),
-                        
-                        Container(
-                          width: size.width * 0.88,
-                          height: size.height * 0.028,
-                          color: Colors.transparent,
-                          child: Text(locGen!.holderLbl),
-                        ),
-
-                        Container(
-                          width: size.width * 0.88,
-                          height: size.height * 0.028,
-                          color: Colors.transparent,
-                          child: Text(holderName),
-                        ),
-*/
                         SizedBox(
                           height: size.height * 0.025,
                         ),
@@ -631,8 +584,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                             ),
                                             Text(
                                               locGen!.confirmInfoDebLbl,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
+                                              style: TextStyle(
+                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
                                                   fontWeight: FontWeight.bold),
                                             ),
                                           ],
@@ -646,11 +599,30 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('${locGen!.amountPaymentLbl}: ${amountController.text}'),
-                                              Text('${locGen!.receiptNumberLbl}: ${compController.text}'),
-                                              Text('${locGen!.dateLbl}: $fechaHoraEscogidaMuestra'),
-                                              Text('${locGen!.conceptLbl}: ${concController.text}'),
-                                              //Text('${locGen!.paymentLbl}: $selectedValueBanco'),                                            
+                                              Text(
+                                                '${locGen!.amountPaymentLbl}: ${amountController.text}',
+                                                style: TextStyle(
+                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${locGen!.receiptNumberLbl}: ${compController.text}',
+                                                style: TextStyle(
+                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${locGen!.dateLbl}: $fechaHoraEscogidaMuestra',
+                                                style: TextStyle(
+                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                                ),
+                                              ),
+                                              Text(
+                                                '${locGen!.conceptLbl}: ${concController.text}',
+                                                style: TextStyle(
+                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -658,15 +630,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                           ElevatedButton(
                                             onPressed: () async {
                                               if (_formKey.currentState!.validate()) {
-                                                /*
-                                                // Aquí podrías enviar la información al backend o procesarla.
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                      content: const Text(
-                                                          'Pago guardado exitosamente')),
-                                                );
-                                                */
           
                                                 gnrBloc.setShowViewAccountStatementEvent(false);
                                                 gnrBloc.setShowViewDebts(false);
@@ -676,13 +639,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 gnrBloc.setShowViewWebSite(false);
                                                 gnrBloc.setShowViewFrmDeposit(false);
           
-                                                // Limpiar formulario (opcional)
-                                                /*
-                                                amountController.clear();
-                                                compController.clear();
-                                                observationsController.clear();
-                                                */
-
                                                 int idBank = 0;
                                                 double idPartner = 0;
                                                 int idUser = 0;
@@ -824,7 +780,10 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             ),
                             child: Text(
                               locGen!.saveLbl,
-                              style: TextStyle( color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, 
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),

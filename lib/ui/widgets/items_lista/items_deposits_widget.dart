@@ -1,5 +1,3 @@
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -173,11 +171,10 @@ class ListaDeposits extends StatelessWidget {
               children: [
                 Container(
                   width: sizeLstNot.width,
-                  height: sizeLstNot.height * 0.13,
+                  height: sizeLstNot.height * 0.17,
                   //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
                   margin: const EdgeInsets.all(3), 
                   decoration: BoxDecoration(
-                    //color: Colors.red,
                     boxShadow: <BoxShadow>[
                       BoxShadow( color: Colors.black.withOpacity(0.2), offset: const Offset(4,6), blurRadius: 10 ),
                     ],
@@ -196,7 +193,7 @@ class ListaDeposits extends StatelessWidget {
                     minVerticalPadding: 15,
                     title:  Container( 
                       width: sizeLstNot.width * 0.98,//65,
-                      height: sizeLstNot.height * 0.11,
+                      height: sizeLstNot.height * 0.45,
                       //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
                       alignment: Alignment.center, 
                       color: Colors.transparent,
@@ -204,110 +201,82 @@ class ListaDeposits extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          
-                          if(texto2 == null || texto2!.isEmpty)
-                          Container(
-                            width: sizeLstNot.width * 0.5,
-                            height: sizeLstNot.height * 0.04,
-                            color: Colors.transparent,
-                            alignment: Alignment.center,
-                            child: Column(
-                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  color: Colors.transparent, 
-                                  width: sizeLstNot.width * 0.55, 
-                                  child: AutoSizeText( 
-                                    texto!, 
-                                    style: TextStyle(
-                                      color: Colors.black, fontWeight: FontWeight.bold,
-                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize48)
-                                    ),
-                                    presetFontSizes: const [18,16,14,12], maxLines: 2,)),
-                              ],
-                            ),
-                          ),
             
                           if(texto2 != null && texto2!.isNotEmpty )
                           Container(
                             width: sizeLstNot.width * 0.75,
-                            height: sizeLstNot.height * 0.3,
+                            height: sizeLstNot.height * 0.45,
                             color: Colors.transparent,
                             alignment: Alignment.centerLeft,
                             child: Column(
                               children: [
                                 Container(
-                                  color: Colors.blue, 
+                                  color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.025,
-                                  child: AutoSizeText( 
-                                    varIconoNot!, 
-                                    style: TextStyle( 
-                                        color: colorTexto, 
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize35)
-                                      ), 
-                                      presetFontSizes: const [18, 16,14,12], 
-                                      maxLines: 2,
-                                    )
+                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  child: Text( 
+                                      varIconoNot!, 
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle( 
+                                          color: colorTexto, 
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                                        ),
+                                        maxLines: 1,
+                                      ),
                                 ),
                                 
                                 Container(
-                                  color: Colors.yellow, 
+                                  color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.025,
-                                  child: AutoSizeText(
-                                    amount!, 
-                                    style: TextStyle( color: Colors.grey, fontWeight: FontWeight.bold, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28) ), 
-                                    presetFontSizes: const [18, 16,14,12], maxLines: 2,
-                                  )
+                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  child: Text(
+                                      amount!, 
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle( 
+                                        color: Colors.grey, 
+                                        fontWeight: FontWeight.bold, 
+                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17) 
+                                      ), 
+                                      //presetFontSizes: const [18, 16,14,12], 
+                                      maxLines: 1,
+                                    ),
                                 ),
 
                                 if(texto != null && texto!.isNotEmpty)
                                 Container(
-                                    color: Colors.purple, 
+                                    color: Colors.transparent, 
                                     width: sizeLstNot.width * 0.7, 
-                                    height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.025,
-                                    child: AutoSizeText(
+                                    height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                    child: Text(
                                       texto!, 
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle( 
                                         color: Colors.black, 
                                         fontWeight: FontWeight.bold,
-                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
                                     ), 
-                                    presetFontSizes: const [16,14,12], 
-                                    maxLines: 2,
+                                    //presetFontSizes: const [16,14,12], 
+                                    maxLines: 1,
                                   )
                                 ),
                                 
                                 if(texto2 != null && texto2!.isNotEmpty)
                                 Container(
-                                  color: Colors.orange, 
+                                  color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.025,
-                                  child: AutoSizeText(
+                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  child: Text(
                                     texto2!, 
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle( 
                                       color: Colors.black,
-                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
                                     ), 
-                                    presetFontSizes: const [14,12,10,8], 
-                                    maxLines: 2,
+                                    maxLines: 1,
                                   )
                                 ),
-                                
-                                if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty)
-                                Container(
-                                  color: Colors.pink, 
-                                  width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.025,
-                                  child: AutoSizeText( 
-                                    varNumIdentifLst ?? '', 
-                                    style: TextStyle( color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)), 
-                                    presetFontSizes: const [14,12,10,8], 
-                                    maxLines: 2,
-                                  )
-                                ),
+                              
                               ],
                             ),
                           ),

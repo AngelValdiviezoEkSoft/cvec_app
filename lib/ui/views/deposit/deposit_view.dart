@@ -10,6 +10,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+List<ItemBoton> lstMenu = [];
+List<Widget> itemMap = [];
 String searchQueryDeposit = '';
 List<ReceiptModelResponse> lstReceipts = [];
 ReceiptModelResponse? objReciboDet;
@@ -33,12 +35,13 @@ class DepositViewSt extends State<DepositView> {
     super.initState();
 
     searchQueryDeposit = '';
+    lstMenu = [];
 
     tabTodas = true;
     tabProgreso = false;
     tabAprobadas = false;
     tabRechazadas = false;
-
+    itemMap = [];
     lstReceipts = [];
     objReciboDet = ReceiptModelResponse(
       receiptAmount: 0,
@@ -88,8 +91,6 @@ class DepositViewSt extends State<DepositView> {
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
                 lstReceipts = snapshot.data as List<ReceiptModelResponse>;
-
-                List<ItemBoton> lstMenu = [];//state.deserializeItemBotonMenuList(objPerm);
 
                 for(int i = 0; i < lstReceipts.length; i++){
                   String statusDeposit = lstReceipts[i].receiptState;
@@ -177,7 +178,6 @@ class DepositViewSt extends State<DepositView> {
                       )
                     );
                   }
-
                   
                 }
 
@@ -202,7 +202,7 @@ class DepositViewSt extends State<DepositView> {
                   }                  
                 }
 
-                List<Widget> itemMap = lstMenu.map(
+                itemMap = lstMenu.map(
                 (item) => FadeInLeft(
                   duration: const Duration( milliseconds: 250 ),
                   child: 
@@ -234,7 +234,9 @@ class DepositViewSt extends State<DepositView> {
 
                 gnrBloc.setCargando(false);
                 
-                return !state.cargando ?
+              }
+              
+              return !state.cargando ?
                 Scaffold(
                   body: Container(
                     width: size.width,
@@ -246,26 +248,7 @@ class DepositViewSt extends State<DepositView> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            //AQUI PONER TABS
-                  /*
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: locGen!.searchLbl,
-                                  prefixIcon: const Icon(Icons.search),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                ),
-                                onEditingComplete: () {
-                                  FocusScope.of(context).unfocus();
-                  
-                                  setState(() {
-                                    searchQuery = searchTxt.text;
-                                  });
-                                },
-                              ),
-                            ),
-                  */
+                            
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
                               child: Row(
@@ -292,7 +275,7 @@ class DepositViewSt extends State<DepositView> {
                                         child: Text(locGen!.tabAlsDebsLbl,
                                             style: TextStyle(
                                                 color: tabTodas ? Colors.white : const Color(0xFF007AFF),
-                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                               )                                              
                                             ),
                                       ),
@@ -324,7 +307,7 @@ class DepositViewSt extends State<DepositView> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             color: tabAprobadas ? Colors.white : const Color(0xFF007AFF),
-                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                           )
                                         ),
                                       ),
@@ -354,7 +337,7 @@ class DepositViewSt extends State<DepositView> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               color: tabRechazadas ? Colors.white : const Color(0xFF007AFF),
-                                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                             )
                                         ),
                                       ),
@@ -385,7 +368,7 @@ class DepositViewSt extends State<DepositView> {
                                         child: Text(locGen!.pendingReviewLbl,maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                             style: TextStyle(color: tabProgreso ? Colors.white : const Color(0xFF007AFF),
-                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize28)
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                           )
                                         ),
                                       ),
@@ -439,17 +422,9 @@ class DepositViewSt extends State<DepositView> {
                   child: Image.asset(AppConfig().rutaGifLoading),
                 );
               
-              }
-              
+
             }
 
-            return Container(
-              color: Colors.transparent,
-              width: size.width,
-              height: size.height * 0.78,
-              alignment: Alignment.center,
-              child: const Text("No hay datos"),
-            );
           }
         );
       }

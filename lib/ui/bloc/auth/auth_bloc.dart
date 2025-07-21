@@ -20,6 +20,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:trust_location/trust_location.dart';
 
 part 'auth_event.dart';

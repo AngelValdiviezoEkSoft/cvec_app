@@ -135,7 +135,16 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(state, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: colorTextoEstado)),
+                            child: Text(
+                              state, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize18),
+                                fontWeight: FontWeight.bold,                                 
+                                color: colorTextoEstado,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -146,7 +155,15 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
+                            child: Text(
+                              locGen!.photoPaymentReceiptLbl, 
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
 
                           SizedBox(
@@ -162,42 +179,21 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               width: size.width * 0.25,
                               height: size.height * 0.17,
                               decoration: !validandoFoto
-                                ? BoxDecoration(
-                                    image: DecorationImage(
-                                      image: CachedNetworkImageProvider(objReciboDet!.receiptFile),
-                                      fit: BoxFit.cover,
-                                    ),                              
-                                  )
-                                : BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(size.width * 0.2),
-                                    border: Border.all(
-                                      width: 3,
-                                      color: objColorsApp.naranja50PorcTrans,
-                                      style: BorderStyle.solid,
-                                    ),
+                              ? BoxDecoration(
+                                  image: DecorationImage(
+                                    image: CachedNetworkImageProvider(objReciboDet!.receiptFile),
+                                    fit: BoxFit.cover,
+                                  ),                              
+                                )
+                              : BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(size.width * 0.2),
+                                  border: Border.all(
+                                    width: 3,
+                                    color: objColorsApp.naranja50PorcTrans,
+                                    style: BorderStyle.solid,
                                   ),
-                                  /*
-                              child: CachedNetworkImage(
-                                width: size.width * 0.8,
-                                height: size.height * 0.8,
-                                placeholder: (context,url) =>
-                                  Image.asset(
-                                    "assets/loadingEnrolApp.gif",
-                                    height: 40.0,
-                                    width: size.width * 0.2,
-                                  ),
-                                  imageUrl: objReciboDet!.receiptFile,
-                                  fadeInCurve: Curves.bounceIn,
-                                  errorWidget: ((context,error,stackTrace) {
-                                    return Container(
-                                      color: Colors.transparent,
-                                      child: Image.asset('assets/no-image.jpg'),
-                                    );
-                                  }
                                 ),
-                              ),
-                              */
                             ),
                           ),
                     
@@ -240,14 +236,30 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.amountPaymentLbl, style: const TextStyle(color: Colors.grey),),
+                            child: Text(
+                              locGen!.amountPaymentLbl, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text('\$${objReciboDet!.receiptAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              '\$${objReciboDet!.receiptAmount.toStringAsFixed(2)}', 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black,
+                              overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -258,14 +270,31 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.paymentDateLbl, style: const TextStyle(color: Colors.grey)),
+                            child: Text(
+                              locGen!.paymentDateLbl, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
+                          if(objReciboDet!.receiptDate.isNotEmpty)
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(DateFormat('dd/MM/yyyy hh:MM').format(DateTime.parse(objReciboDet!.receiptDate)), style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              DateFormat('dd/MM/yyyy hh:MM').format(DateTime.parse(objReciboDet!.receiptDate)), 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -276,14 +305,30 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.conceptLbl, style: const TextStyle(color: Colors.grey)),
+                            child: Text(
+                              locGen!.conceptLbl, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(objReciboDet!.receiptConcept, style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              objReciboDet!.receiptConcept, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -294,14 +339,30 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.notesLbl, style: const TextStyle(color: Colors.grey)),
+                            child: Text(
+                              locGen!.notesLbl, 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(objReciboDet!.receiptNotes ?? '', style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              objReciboDet!.receiptNotes ?? '', 
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -312,14 +373,30 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.bankLbl, style: const TextStyle(color: Colors.grey)),
+                            child: Text(
+                              locGen!.bankLbl, 
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.grey
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(objReciboDet!.receiptBankName, style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              objReciboDet!.receiptBankName, 
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                 
                           SizedBox(
@@ -330,14 +407,30 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(locGen!.holderLbl , style: const TextStyle(color: Colors.grey)),
+                            child: Text(
+                              locGen!.holderLbl, 
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.grey
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                           
                           Container(
                             width: size.width * 0.96,
                             height: size.height * 0.028,
                             color: Colors.transparent,
-                            child: Text(objReciboDet!.receiptBankAccountHolder, style: const TextStyle(fontSize: 15, color: Colors.black)),
+                            child: Text(
+                              objReciboDet!.receiptBankAccountHolder, 
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
+                                color: Colors.black,                                
+                              ),
+                              maxLines: 1,
+                            ),
                           ),
                           
                           SizedBox(

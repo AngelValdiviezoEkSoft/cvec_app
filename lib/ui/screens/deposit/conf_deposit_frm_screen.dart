@@ -101,7 +101,13 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.pendingReviewLbl, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+                          child: Text(
+                            locGen!.pendingReviewLbl, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -112,7 +118,13 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.photoPaymentReceiptLbl, style: const TextStyle(color: Colors.grey),),
+                          child: Text(
+                            locGen!.photoPaymentReceiptLbl, 
+                            style: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                              color: Colors.grey
+                            ),
+                          ),
                         ),
 
                         SizedBox(
@@ -157,14 +169,26 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.amountPaymentLbl, style: const TextStyle(color: Colors.grey),),
+                          child: Text(
+                            locGen!.amountPaymentLbl, 
+                            style: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                              color: Colors.grey
+                            ),
+                          ),
                         ),
 
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(amountController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            '\$${amountController.text}', 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -175,14 +199,26 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.paymentDateLbl, style: const TextStyle(color: Colors.grey)),
+                          child: Text(
+                            locGen!.paymentDateLbl, 
+                            style: TextStyle(
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                              color: Colors.grey
+                            )
+                          ),
                         ),
 
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(fechaHoraEscogidaMuestra, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            fechaHoraEscogidaMuestra, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -193,14 +229,26 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.conceptLbl, style: const TextStyle(color: Colors.grey)),
+                          child: Text(
+                            locGen!.conceptLbl, 
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize18),
+                            )
+                          ),
                         ),
 
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(concController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            concController.text, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -211,14 +259,26 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.notesLbl, style: const TextStyle(color: Colors.grey)),
+                          child: Text(
+                            locGen!.notesLbl, 
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(observationsController.text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            observationsController.text, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -229,14 +289,26 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.bankLbl, style: const TextStyle(color: Colors.grey)),
+                          child: Text(
+                            locGen!.bankLbl, 
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(selectedValueBanco, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            selectedValueBanco, 
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
 
                         SizedBox(
@@ -247,14 +319,28 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(locGen!.holderLbl , style: const TextStyle(color: Colors.grey)),
+                          child: Text(
+                            locGen!.holderLbl, 
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                            )
+                          ),
                         ),
                         
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
                           color: Colors.transparent,
-                          child: Text(holderName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          child: Text(
+                            holderName,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold, 
+                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
+                              overflow: TextOverflow.ellipsis
+                            )
+                          ),
                         ),
                         
                         SizedBox(

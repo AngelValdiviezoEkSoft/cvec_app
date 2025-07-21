@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../../config/routes/routes.dart';
 
@@ -341,4 +342,16 @@ class GenericService extends ChangeNotifier {
     return lstOp;
   }
 
+  Future<String> settingsLoad() async {
+    double fontSize = 0;
+    final prefs = await SharedPreferences.getInstance();
+
+    if(prefs.getInt('PorcFontSize') != null){
+      String porcentaje = '${prefs.getInt('PorcFontSize')}';
+
+      fontSize = double.parse(porcentaje);
+    }    
+
+    return fontSize.toString();
+  }
 }
