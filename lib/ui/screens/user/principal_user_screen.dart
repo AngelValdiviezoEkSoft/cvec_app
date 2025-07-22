@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +11,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+String direccionUserPrp = '';
 
 class PrincipalUserScreen extends StatelessWidget {
 
@@ -85,220 +90,236 @@ class PrincipalClientStScreen extends StatelessWidget {
           AppBar(
             backgroundColor: const Color(0xFF53C9EC),
           ),
-          drawer: Drawer(
-            backgroundColor: Colors.white,
-            shadowColor: Colors.white,
-            surfaceTintColor: Colors.white,
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[                
+          drawer: FutureBuilder(
+            future: AuthServices().getDatosPerfil(),
+            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
 
-                SizedBox(height: size.height * 0.075,),
+              if(snapshot.hasData){
+                direccionUserPrp = '';
 
-                GestureDetector(
-                  onTap: () {
-                    context.push(objRutas.rutaPerfilScreen);
-                  },
-                  child: _buildProfileCard(context, size),
-                ),
-                
-                ListTile(
-                  leading: Icon(Icons.document_scanner, color: state.viewAccountStatement ? Colors.grey : Colors.black),
-                  title: Text(
-                    locGen!.menuAccountStatementLbl, 
-                    style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                      color: state.viewAccountStatement ? Colors.grey : Colors.black
-                    ),
-                  ),
-                  onTap: () {
-                    
-                    gnrBloc.setShowViewAccountStatementEvent(true);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
+                var rsp = jsonDecode('${snapshot.data}');
+              
+                direccionUserPrp = rsp['result']['data'][0]['street'] ?? '';
+              }
 
-                    Navigator.pop(context); // Cierra el menú 
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.home, color: state.viewViewDebts ? Colors.grey : Colors.black),
-                  title: Text(
-                    locGen!.menuDebtsLbl, 
-                    style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                      color: state.viewViewDebts ? Colors.grey : Colors.black
-                    ),
-                  ),
-                  onTap: () {
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(true);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
-                    
-                    Navigator.pop(context); // Cierra el menú 
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.send, color: state.viewSendDeposits ? Colors.grey : Colors.black),
-                  title: Text(
-                    locGen!.menuSendDepositsLbl, 
-                    style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                      color: state.viewSendDeposits ? Colors.grey : Colors.black
-                    ),
-                  ),
-                  onTap: () {
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(true);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
-                    
-                    Navigator.pop(context); // Cierra el menú 
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.print, color: state.viewPrintReceipts ? Colors.grey : Colors.black),
-                  title: Text(
-                    locGen!.menuPrintReceiptsLbl, 
-                    style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                      color: state.viewPrintReceipts ? Colors.grey : Colors.black),
-                  ),
-                  onTap: () {
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(true);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
-
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.visibility, color: state.viewViewReservations ? Colors.grey : Colors.black),
-                  title: Text(
-                    locGen!.menuSeeReservationsLbl, 
-                    style: TextStyle(
-                      fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                      color: state.viewViewReservations ? Colors.grey : Colors.black
-                    ),
-                  ),
-                  onTap: () {
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(true);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(false);
-                    gnrBloc.setShowViewFrmDeposit(false);
-
-                    Navigator.pop(context);
-                  },
-                ),
-                
-                ListTile(
-                  leading: const Icon(Icons.web_rounded),
-                  title: Text(locGen!.menuWebSiteLbl),
-                  onTap: () {
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);                    
-                    gnrBloc.setShowViewFrmDeposit(false);
-
-                    context.pop(objRutas.rutaDefault);
-                    /*                    
-
-                    Navigator.pop(context);
-                    */
-                  },
-                ),
-                
-                
-                SizedBox(height: size.height * 0.17,),
-                const Divider(),
-                ListTile(
-                  leading: const Icon(Icons.web_rounded),
-                  title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
-                  onTap: () {
-                    /*
-                    gnrBloc.setShowViewAccountStatementEvent(false);
-                    gnrBloc.setShowViewDebts(false);
-                    gnrBloc.setShowViewPrintRecipts(false);
-                    gnrBloc.setShowViewReservetions(false);
-                    gnrBloc.setShowViewSendDeposits(false);
-                    gnrBloc.setShowViewWebSite(true);
-                    gnrBloc.setShowViewFrmDeposit(false);
-
-                    Navigator.pop(context);
-                    */
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.exit_to_app),
-                  title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
-                  onTap: () async {
-
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('¿Está seguro que desea cerrar su sesión?'),
-                          
-                          actions: [
-                            TextButton(
-                              onPressed: () async {
-
-                                gnrBloc.setShowViewAccountStatementEvent(false);
-                                gnrBloc.setShowViewDebts(false);
-                                gnrBloc.setShowViewPrintRecipts(false);
-                                gnrBloc.setShowViewReservetions(false);
-                                gnrBloc.setShowViewSendDeposits(false);
-                                gnrBloc.setShowViewWebSite(false);
-                                gnrBloc.setShowViewFrmDeposit(false);
-                                
-                                Navigator.pop(context); // Cierra el menú 
-
-                                await AuthService().logOut();
-
-                                //ignore: use_build_context_synchronously
-                                context.push(objRutas.rutaAuth);
-
-                              },
-                              child: Text('Sí', style: TextStyle(color: Colors.blue[200]),),
-                            ),
-                            TextButton(
-                              onPressed: () {
-
-                                Navigator.of(context).pop();
-
-                                //context.push(objRutasGen.rutaBienvenida);
-
-                              },
-                              child: const Text('No', style: TextStyle(color: Colors.black),),
-                            ),
-                          ],
-                        );
+              return Drawer(
+                backgroundColor: Colors.white,
+                shadowColor: Colors.white,
+                surfaceTintColor: Colors.white,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[                
+              
+                    SizedBox(height: size.height * 0.075,),
+              
+                    GestureDetector(
+                      onTap: () {
+                        context.push(objRutas.rutaPerfilScreen);
                       },
-                    );
-
-                  },
+                      child: _buildProfileCard(context, size),
+                    ),
+                    
+                    ListTile(
+                      leading: Icon(Icons.document_scanner, color: state.viewAccountStatement ? Colors.grey : Colors.black),
+                      title: Text(
+                        locGen!.menuAccountStatementLbl, 
+                        style: TextStyle(
+                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                          color: state.viewAccountStatement ? Colors.grey : Colors.black
+                        ),
+                      ),
+                      onTap: () {
+                        
+                        gnrBloc.setShowViewAccountStatementEvent(true);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(false);
+                        gnrBloc.setShowViewWebSite(false);
+                        gnrBloc.setShowViewFrmDeposit(false);
+              
+                        Navigator.pop(context); // Cierra el menú 
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.home, color: state.viewViewDebts ? Colors.grey : Colors.black),
+                      title: Text(
+                        locGen!.menuDebtsLbl, 
+                        style: TextStyle(
+                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                          color: state.viewViewDebts ? Colors.grey : Colors.black
+                        ),
+                      ),
+                      onTap: () {
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(true);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(false);
+                        gnrBloc.setShowViewWebSite(false);
+                        gnrBloc.setShowViewFrmDeposit(false);
+                        
+                        Navigator.pop(context); // Cierra el menú 
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.send, color: state.viewSendDeposits ? Colors.grey : Colors.black),
+                      title: Text(
+                        locGen!.menuSendDepositsLbl, 
+                        style: TextStyle(
+                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                          color: state.viewSendDeposits ? Colors.grey : Colors.black
+                        ),
+                      ),
+                      onTap: () {
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(true);
+                        gnrBloc.setShowViewWebSite(false);
+                        gnrBloc.setShowViewFrmDeposit(false);
+                        
+                        Navigator.pop(context); // Cierra el menú 
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.print, color: state.viewPrintReceipts ? Colors.grey : Colors.black),
+                      title: Text(
+                        locGen!.menuPrintReceiptsLbl, 
+                        style: TextStyle(
+                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                          color: state.viewPrintReceipts ? Colors.grey : Colors.black),
+                      ),
+                      onTap: () {
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(true);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(false);
+                        gnrBloc.setShowViewWebSite(false);
+                        gnrBloc.setShowViewFrmDeposit(false);
+              
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.visibility, color: state.viewViewReservations ? Colors.grey : Colors.black),
+                      title: Text(
+                        locGen!.menuSeeReservationsLbl, 
+                        style: TextStyle(
+                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                          color: state.viewViewReservations ? Colors.grey : Colors.black
+                        ),
+                      ),
+                      onTap: () {
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(true);
+                        gnrBloc.setShowViewSendDeposits(false);
+                        gnrBloc.setShowViewWebSite(false);
+                        gnrBloc.setShowViewFrmDeposit(false);
+              
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.web_rounded),
+                      title: Text(
+                        locGen!.menuWebSiteLbl,
+                        style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),),
+                      ),
+                      onTap: () {
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(false);                    
+                        gnrBloc.setShowViewFrmDeposit(false);
+              
+                        context.pop(objRutas.rutaDefault);
+                        /*                    
+              
+                        Navigator.pop(context);
+                        */
+                      },
+                    ),
+                    
+                    SizedBox(height: size.height * 0.17,),
+                    const Divider(),
+              
+                    ListTile(
+                      leading: const Icon(Icons.web_rounded),
+                      title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
+                      onTap: () {
+                        /*
+                        gnrBloc.setShowViewAccountStatementEvent(false);
+                        gnrBloc.setShowViewDebts(false);
+                        gnrBloc.setShowViewPrintRecipts(false);
+                        gnrBloc.setShowViewReservetions(false);
+                        gnrBloc.setShowViewSendDeposits(false);
+                        gnrBloc.setShowViewWebSite(true);
+                        gnrBloc.setShowViewFrmDeposit(false);
+              
+                        Navigator.pop(context);
+                        */
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.exit_to_app),
+                      title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
+                      onTap: () async {
+              
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('¿Está seguro que desea cerrar su sesión?'),
+                              
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+              
+                                    gnrBloc.setShowViewAccountStatementEvent(false);
+                                    gnrBloc.setShowViewDebts(false);
+                                    gnrBloc.setShowViewPrintRecipts(false);
+                                    gnrBloc.setShowViewReservetions(false);
+                                    gnrBloc.setShowViewSendDeposits(false);
+                                    gnrBloc.setShowViewWebSite(false);
+                                    gnrBloc.setShowViewFrmDeposit(false);
+                                    
+                                    Navigator.pop(context); // Cierra el menú 
+              
+                                    await AuthService().logOut();
+              
+                                    //ignore: use_build_context_synchronously
+                                    context.push(objRutas.rutaAuth);
+              
+                                  },
+                                  child: Text('Sí', style: TextStyle(color: Colors.blue[200]),),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+              
+                                    Navigator.of(context).pop();
+              
+                                    //context.push(objRutasGen.rutaBienvenida);
+              
+                                  },
+                                  child: const Text('No', style: TextStyle(color: Colors.black),),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+              
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            }
           ),
           body: 
           !state.viewAccountStatement && !state.viewPrintReceipts 
@@ -344,23 +365,24 @@ class PrincipalClientStScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          width: size.width * 0.85,
-                          height: size.height * 0.95,
+                          width: size.width * 0.95,
+                          height: size.height * 0.97,
                           color: Colors.transparent,
                           alignment: Alignment.center,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              //SizedBox(height: size.height * 0.02,),
         
                               Text(
                                 "Centro de Viajes Ecuador",
                                 style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize25), fontWeight: FontWeight.bold),
                                 textAlign: TextAlign.center,
                               ),
-            
+
+                              SizedBox(height: size.height * 0.02,),
         
                               DefaultTextStyle(
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 18.0,
                                   fontFamily: 'Canterbury',
@@ -369,8 +391,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                                   repeatForever: true,
                                   pause: const Duration(microseconds: 1000),
                                   animatedTexts: [
-                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
-                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
                                   ],
                                   onTap: () {
                                   },
@@ -606,7 +628,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.002),
                 Text(
-                  'Duran City - Etapa Bromelia, MZ14-V13',
+                  direccionUserPrp,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),

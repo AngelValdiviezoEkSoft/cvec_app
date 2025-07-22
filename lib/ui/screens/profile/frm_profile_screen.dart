@@ -140,11 +140,17 @@ class ProfileField extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           text: '$label\n',
-          style: const TextStyle(color: Colors.grey, fontSize: 14),
+          style: TextStyle(
+            color: Colors.grey, 
+            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14)
+          ),
           children: [
             TextSpan(
               text: value,
-              style: const TextStyle(color: Colors.black, fontSize: 16),
+              style: TextStyle(
+                color: Colors.black, 
+                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+              ),
             ),
           ],
         ),

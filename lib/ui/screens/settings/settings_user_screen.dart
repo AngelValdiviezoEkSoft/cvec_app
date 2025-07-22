@@ -33,7 +33,6 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
     final fontSizeManager = Provider.of<FontSizeManager>(context);
 
     return Scaffold(
-      //appBar: AppBar(title: const Text('Configuración')), 
       appBar: AppBar(
         title: Text(locGen!.settingLbl),
         centerTitle: true,
@@ -124,7 +123,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 SizedBox(height: size.height * 0.045),
           
                 Container(
-                  height: size.height * 0.18,
+                  height: size.height * 0.22,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade300,
                     borderRadius: BorderRadius.circular(10),
@@ -134,11 +133,13 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold, color: Colors.white)),
+                      
+                      Text('${_fontSize.toStringAsFixed(0)}%', style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold, color: Colors.white)),
           
                       Slider(
                         min: 0.0,
-                        max: 100.0,
-                        divisions: 10,
+                        max: 150.0,
+                        divisions: 15,
                         value: _fontSize,
                         label: '${_fontSize.toStringAsFixed(1)}%',
                         onChanged: (newValue) async {

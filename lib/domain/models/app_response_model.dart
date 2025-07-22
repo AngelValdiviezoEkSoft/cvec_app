@@ -745,6 +745,10 @@ class ResPartnerDatumAppModel {
     String? name;
     String? ref;
 
+    String? street;
+    String? phone;
+    String? vat;
+
     ResPartnerDatumAppModel({
         required this.id,
         required this.accountRepresentedCompanyIds,
@@ -759,6 +763,10 @@ class ResPartnerDatumAppModel {
         required this.mobile,
         required this.name,
         required this.ref,
+
+        required this.street,
+        required this.phone,
+        required this.vat
     });
 
     factory ResPartnerDatumAppModel.fromRawJson(String str) => ResPartnerDatumAppModel.fromJson(json.decode(str));
@@ -784,6 +792,9 @@ class ResPartnerDatumAppModel {
         mobile: json["mobile"] ?? '',
         name: json["name"] ?? '',
         ref: json["ref"] ?? '',
+        street: json["street"] ?? '',
+        phone: json["phone"] ?? '',
+        vat: json["vat"] ?? '',
     );
 
     Map<String, dynamic> toJson() => {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,16 +125,28 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                             children: [
                                               Container(
                                                 width: size.width * 0.92,
-                                                height: size.height * 0.02,
+                                                height: size.height * 0.025,
                                                 color: Colors.transparent,
-                                                child: Text(locGen!.brDateLbl, style: TextStyle(color: Colors.grey[300]),),
+                                                child: Text(
+                                                  locGen!.brDateLbl, 
+                                                  style: TextStyle(
+                                                    color: Colors.grey[300],
+                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
+                                                  ),
+                                                ),
                                               ),
                                               SizedBox(height: size.height * 0.007,),
                                               Container(
                                                 width: size.width * 0.92,
-                                                height: size.height * 0.02,
+                                                height: size.height * 0.025,
                                                 color: Colors.transparent,
-                                                child: Text(fechaCumpleAnios, style: const TextStyle(color: Colors.black),),
+                                                child: Text(
+                                                  fechaCumpleAnios, 
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -423,6 +436,7 @@ class CustomTextField extends StatelessWidget {
         initialValue: initialValue,
         decoration: InputDecoration(
           labelText: label,
+          labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),
           border: const UnderlineInputBorder(),
           suffixIcon: GestureDetector(
             //onTap: funtionExe,

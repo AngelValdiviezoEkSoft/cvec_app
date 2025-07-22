@@ -310,13 +310,21 @@ class AuthServices extends ChangeNotifier {
 
       String emailUser = rspCorreo["result"]["data"][0]["email"] ?? '';
 
+      await storage.write(key: 'DataUser', value: rsp);
       await storage.write(key: 'CorreoUser', value: emailUser);
       //#endregion
 
       return response.body;
-    } catch (ex) {
-      print('Test Error1: $ex');
+    } catch (_) {
+      //print('Test Error1: $ex');
     }
+  }
+
+  Future<String> getDatosPerfil() async {    
+    final rspLogin = await storage.read(key: 'DataUser') ?? '';
+    //final jsonLog = json.decode(rspLogin);
+
+    return rspLogin;//jsonEncode(objFiltrado);
   }
 
 

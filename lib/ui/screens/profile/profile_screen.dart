@@ -1,7 +1,13 @@
+
+import 'dart:convert';
+
+import 'package:cve_app/infraestructure/services/services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+String direccionUser = '';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,20 +28,33 @@ class ProfileScreen extends StatelessWidget {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildProfileCard(context, size),
-            const SizedBox(height: 20),
-            _buildOptionCard(context),
-            const SizedBox(height: 20),
-            Text(locGen!.moreLbl, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            _buildAdditionalOptions(context),
-          ],
-        ),
+      body: FutureBuilder(
+        future: AuthServices().getDatosPerfil(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+
+          if(snapshot.hasData){
+            var rsp = jsonDecode('${snapshot.data}');
+              
+            //cellProf = rsp.phone ?? '';
+            direccionUser = rsp['result']['data'][0]['street'] ?? '';
+          }
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildProfileCard(context, size),
+                const SizedBox(height: 20),
+                _buildOptionCard(context),
+                const SizedBox(height: 20),
+                Text(locGen!.moreLbl, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                _buildAdditionalOptions(context),
+              ],
+            ),
+          );
+        }
       ),
     );
   }
@@ -63,12 +82,19 @@ class ProfileScreen extends StatelessWidget {
                   displayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                  style: TextStyle(
+                    color: Colors.white, 
+                    fontWeight: FontWeight.bold, 
+                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16)
+                  ),
                 ),
                 const SizedBox(height: 4),
-                const  Text(
-                  'Duran City - Etapa Bromelia, MZ14-V13\nPropietario',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                Text(
+                  direccionUser,
+                  style: TextStyle(
+                    color: Colors.white70, 
+                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize13)
+                  ),
                 ),
               ],
             ),
@@ -121,8 +147,10 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildListTile(BuildContext context, IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: Colors.black54),
-      title: Text(title),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+      title: Text(title, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize13)),),
+      trailing: Icon(
+        Icons.arrow_forward_ios,        
+      ),
       onTap: () {
         
         if(title == locGen!.chngPasswLbl){

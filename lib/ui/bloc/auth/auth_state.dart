@@ -16,10 +16,10 @@ abstract class AuthState extends Equatable {
       await storage.write(key: 'fecMem', value: '');
       await storage.write(key: 'idMem', value: '');
 
-      final prefs = await SharedPreferences.getInstance();        
-
+      final prefs = await SharedPreferences.getInstance();
+      
       if(prefs.getInt('PorcFontSize') == null){
-        prefs.setInt('PorcFontSize', 50);
+        prefs.setInt('PorcFontSize', 100);
       }
 
       displayName = await storage.read(key: 'PartnerDisplayName') ?? '';

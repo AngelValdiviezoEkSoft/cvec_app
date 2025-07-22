@@ -45,9 +45,11 @@ class AuthScreen extends StatelessWidget {
           
         ),
         body: Center(
-          child: ChangeNotifierProvider(
-            create: (_) => AuthService(),
-            child: AuthScreenSt(size: size),
+          child: SingleChildScrollView(
+            child: ChangeNotifierProvider(
+              create: (_) => AuthService(),
+              child: AuthScreenSt(size: size),
+            ),
           )        
         ),
       ),
@@ -115,7 +117,7 @@ class AuthScreenSt extends StatelessWidget {
             ),
             
             SizedBox(height: size.height * 0.07,),
-      
+              
             TextField(
               style: const TextStyle(color: Colors.white),
                   obscureText: authService.varIsOscured,
@@ -159,7 +161,7 @@ class AuthScreenSt extends StatelessWidget {
                 onPressed: () async {
                   
                   if(userTxt.text.isEmpty || passWordTxt.text.isEmpty){
-
+        
                     showDialog(
                       barrierDismissible: false,
                       context: context,
@@ -179,10 +181,10 @@ class AuthScreenSt extends StatelessWidget {
                         );
                       },
                     );
-
+        
                     return;
                   }
-
+        
                   showDialog(
                     context: context,
                     barrierDismissible: false,
@@ -197,31 +199,31 @@ class AuthScreenSt extends StatelessWidget {
                       ]
                     ),
                   );
-
+        
                   const storage = FlutterSecureStorage();
                   final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
-  
+          
                   if(objStr.isNotEmpty){
-
+        
                     var obj = RegisterDeviceResponseModel.fromJson(objStr);
-
+        
                     AuthRequest objAuthRequest  = AuthRequest(
                       db: obj.result.database,
                       login: userTxt.text,
                       password: passWordTxt.text
                     );
-
+        
                     try {
                       
                       var resp = await AuthServices().login(objAuthRequest);
-
+        
                       userTxt = TextEditingController();
                       passWordTxt = TextEditingController();
-
+        
                       if(resp == 'NI'){
                         //ignore: use_build_context_synchronously
                         context.pop();
-
+        
                         showDialog(
                           //ignore: use_build_context_synchronously
                           context: context,
@@ -239,7 +241,7 @@ class AuthScreenSt extends StatelessWidget {
                                       height: size.height * 0.1,
                                       child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
                                     ),
-
+        
                                     Container(
                                       color: Colors.transparent,
                                       width: size.width * 0.95,
@@ -276,19 +278,19 @@ class AuthScreenSt extends StatelessWidget {
                       
                       //ignore: use_build_context_synchronously
                       context.pop();
-
+        
                       if(objError == null) {
                         displayName = data["result"]["partner_display_name"] ?? '';
-
+        
                         const storage = FlutterSecureStorage();
-
+        
                         await storage.write(key: 'PartnerDisplayName', value: displayName);
-
+        
                         //ignore: use_build_context_synchronously
                         context.push(objRutas.rutaPrincipalUser);
                       } else {
                         final msmError = data['error']['data']['name'];
-
+        
                         showDialog(
                           //ignore: use_build_context_synchronously
                           context: context,
@@ -306,7 +308,7 @@ class AuthScreenSt extends StatelessWidget {
                                       height: size.height * 0.1,
                                       child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
                                     ),
-
+        
                                     Container(
                                       color: Colors.transparent,
                                       width: size.width * 0.95,
@@ -340,7 +342,7 @@ class AuthScreenSt extends StatelessWidget {
                     catch(ex){
                       //ignore: use_build_context_synchronously
                       context.pop();
-
+        
                       showDialog(
                         //ignore: use_build_context_synchronously
                         context: context,
@@ -358,7 +360,7 @@ class AuthScreenSt extends StatelessWidget {
                                     height: size.height * 0.1,
                                     child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
                                   ),
-
+        
                                   Container(
                                     color: Colors.transparent,
                                     width: size.width * 0.95,
@@ -403,7 +405,7 @@ class AuthScreenSt extends StatelessWidget {
                 ),
               ),
             ),
-      
+              
           ],
         ),
       ),
