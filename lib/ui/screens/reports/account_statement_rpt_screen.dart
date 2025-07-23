@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'dart:io';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 /*
 import 'package:intl/intl.dart';
@@ -14,106 +17,230 @@ import 'package:pdf/widgets.dart' as pw;
 
 bool varTieneCorreo = false;
 String rolPagoPeriodoGen = '';
+String cabecera = '';
+int idTbl = 0;
 
-Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String correo, String periodoDesc, String periodo) async {
-  rolPagoPeriodoGen = periodoDesc;
-  final String endPoint = '';//CadenaConexion().apiUtilsEndpoint;
-  varTieneCorreo = correo != '';
+Map<String, List<CustomerStatementItem>> agruparPorContrato(List<CustomerStatementItem> items) {
+  final Map<String, List<CustomerStatementItem>> agrupado = {};
+
+  for (var item in items) {
+    var nombreAgrupado = '${item.contractName} - ${item.planName} - ${item.contractState}';
+
+    agrupado.putIfAbsent(nombreAgrupado, () => []);
+
+    if(agrupado[nombreAgrupado] != null){
+      agrupado[nombreAgrupado]!.add(item);
+    }
+    
+  }
+
+  return agrupado;
+}
+
+
+//Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String correo, String periodoDesc, String periodo) async {
+Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
+  
   initializeDateFormatting('es');
-  //final DateTime now = DateTime.now();
-  //final String formatter = DateFormat('dd-MM-yyyy').format(now);
+
+  final agrupado = agruparPorContrato(items);
 
   final pdf = Document();
-  //String? observacion;
- /*
-  final imageFirma = MemoryImage(
-      (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List());
-  
-  observacion = rolDePago.cabeceraRol?.observacion;
-  */
-/*
-  if (rolDePago.observacion == null) {
-    observacion = '';
-  } else {
-    observacion = rolDePago.cabeceraRol?.observacion;
-  }
-  */
 
-  Widget renderIngresos() {
-    return ListView(
-      children: rolDePago.listaIngresos!
-          .map(
-            (item) => Container(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Text(item.descripcion,
-                                style: const TextStyle(fontSize: 6)))),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.bottomRight,
-                            child: Text(item.cantidad!.toStringAsFixed(2),
-                                style: const TextStyle(fontSize: 6)))),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.bottomRight,
-                            child: Text(item.valor!.toStringAsFixed(2),
-                                style: const TextStyle(fontSize: 6)))),
-                  ]),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget renderEgresos() {
-    return ListView(
-      children: rolDePago.listaEgresos!
-          .map(
-            (item) => Container(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: Text(item.descripcion,
-                                style: const TextStyle(fontSize: 6)))),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.bottomRight,
-                            child: Text(item.cantidad!.toStringAsFixed(2),
-                                style: const TextStyle(fontSize: 6)))),
-                    Expanded(
-                        child: Container(
-                            alignment: Alignment.bottomRight,
-                            child: Text(item.valor!.toStringAsFixed(2),
-                                style: const TextStyle(fontSize: 6)))),
-                  ]),
-            ),
-          )
-          .toList(),
-    );
-  }
-
-    pdf.addPage(
+  pdf.addPage(
       pw.MultiPage(
-        //pageFormat: format,
         build: (context) => [
           pw.Text('REPORTE DE ESTADOS DE CUENTA',
               style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),
           pw.SizedBox(height: 10),
-          pw.Text('Cliente: MAYA CALDERON CRISTHIAN ESLAN'),
-          pw.Text('Tipo: Cuotas y gastos administrativos'),
+          pw.Text('Cliente: $displayName'),
+          //pw.Text('Tipo: Cuotas y gastos administrativos'),
           pw.SizedBox(height: 10),
+/*
+          pw.Table(
+            columnWidths: {
+              0: const pw.FixedColumnWidth(55),
+            },
+            border: pw.TableBorder.all(),
+            children: [
 
+              // Filas agrupadas por Rubro
+              ...agrupado.entries.expand((entry) {
+                final rubro = entry.key;
+
+                return [
+                  
+                  pw.TableRow(
+                    children: [
+                      
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text(rubro, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 14)),
+                      ),                        
+                      pw.Container(),
+                      pw.Container(),
+                    ],
+                  ),
+                
+                ];
+              }).toList()
+            ],
+          ),
+*/
+          // Tabla agrupada
+          pw.Table(
+            columnWidths: {
+              0: const pw.FixedColumnWidth(55),
+              1: const pw.FixedColumnWidth(90),
+              2: const pw.FixedColumnWidth(35),
+              3: const pw.FixedColumnWidth(50),
+              4: const pw.FixedColumnWidth(50),
+              5: const pw.FixedColumnWidth(50),
+              6: const pw.FixedColumnWidth(60),
+              7: const pw.FixedColumnWidth(55),
+              8: const pw.FixedColumnWidth(40),
+              9: const pw.FixedColumnWidth(55),
+              10: const pw.FixedColumnWidth(50),
+              //11: const pw.FixedColumnWidth(50),
+            },
+            border: pw.TableBorder.all(),
+            children: [
+
+              // Filas agrupadas por Rubro
+              ...agrupado.entries.expand((entry) {
+                final rubro = entry.key;
+                final rows = entry.value;
+
+                if(cabecera != rubro){
+                  cabecera = '';
+                  cabecera = rubro;
+                }
+
+                cabecera = rubro;
+
+                idTbl = idTbl + 1;
+                
+                return [
+                  
+                  pw.TableRow(
+                    children: [
+                      /*
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("ID", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      */
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Fecha venc.", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Descripción", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Tipo", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Valor cuota", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Estado cuota", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Recibo", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Forma pago", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Valor pagado", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Saldo", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text("Fecha pago", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(1),
+                        child: pw.Text('Estado pago', textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      ),
+                    ],
+                  ),
+                  
+                  ...rows.map((item) => 
+
+                  pw.TableRow(
+                      children: [
+                        /*
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text('$idTbl', style: const pw.TextStyle(fontSize: 6)),
+                        ),
+                        */
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.quotaDueDate, style: const pw.TextStyle(fontSize: 6)),
+                        ),
+                        //if(item.rubro.isNotEmpty)
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.quotaName, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text('ANT', textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.quotaAmount.toStringAsFixed(2), textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.quotaState, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.paymentSequence, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.paymentMethodName, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text('${item.paymentAmount?.toStringAsFixed(2)}', textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text('${item.quotaResidual?.toStringAsFixed(2)}', textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.paymentDate, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                        pw.Padding(
+                          padding: const pw.EdgeInsets.all(1),
+                          child: pw.Text(item.paymentState, textAlign: TextAlign.end, style: const pw.TextStyle(fontSize: 6,)),
+                        ),
+                      ],
+                    )
+                  )
+                ];
+              }).toList()
+            ],
+          ),
+
+/*
           // Grupo 1
           pw.Text('CVECAD-018749 - Casa Adjudicada - Activo',
               style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 14)),
@@ -148,38 +275,20 @@ Future<Uint8List> accountStatementRpt(AccountStatementModel rolDePago, String co
             _row(['05/02/2022', 'CVE09MALI-21201 CT', 'CT', '18.00', 'Pagada', '004015', 'EFECTIVO WEI', '18.00', '0.90', '19/10/2022', 'Pagado']),
             _row(['05/03/2022', 'CVE09MALI-21201 CT', 'CT', '20.00', 'Pagada', '005163', 'EFECTIVO WEI', '8.00', '12.00', '26/02/2022', 'Pagado']),
           ]),
+        */
         ],
       ),
     );
-
 
   final bytes = await pdf.save();
   final dir = await getApplicationDocumentsDirectory();
   final file = File('${dir.path}/rolpago.pdf');
   await file.writeAsBytes(bytes);
   
-  List<int> documento = file.readAsBytesSync();
+  //List<int> documento = file.readAsBytesSync();
   
-  String base64documento = base64Encode(documento);
+  //String base64documento = base64Encode(documento);
   
-  void certificadoAE() async {
-    var url = Uri.parse("${endPoint}Notificaciones/SendEmail");
-    var _ = await http.post(url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          "para": correo,
-          "alias": rolDePago.cabeceraRol!.nombres!,
-          "plantilla": "DocEmpleado",
-          "archivoBase64": base64documento,
-          "nombreArchivo": "rol_de_pago.pdf",
-          "asunto": "Rol de Pago"
-        }));
-  }
-
-  if (varTieneCorreo) certificadoAE();
-
   return pdf.save();
 
 }

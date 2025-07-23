@@ -52,6 +52,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     super.initState();
     convertBase64();    
     payments = [];
+   /*
     payments.add(
       PaymentItem(
         amount: '\$ 100',
@@ -82,6 +83,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
         dueDate: '17/05/2024'
       ),
     );
+ */
   }
 
   @override
@@ -196,11 +198,27 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(nameContratoAccountStatement, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                              Text(
+                                nameContratoAccountStatement, 
+                                style: TextStyle(
+                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize18),//18, 
+                                  fontWeight: FontWeight.bold
+                                )
+                              ),
                 
-                              Text(namePlanAccountStatement, style: const TextStyle(fontSize: 16)),
+                              Text(
+                                namePlanAccountStatement, 
+                                style: TextStyle(
+                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),//16
+                                )
+                              ),
                 
-                              Text(fechaInscAccountStatement, style: const TextStyle(fontSize: 14)),
+                              Text(
+                                fechaInscAccountStatement, 
+                                style: TextStyle(
+                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14
+                                )
+                              ),
                             ],
                           ),
                         ),
@@ -235,49 +253,6 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                               
                               return GestureDetector(
                                 onTap: () {
-                                /*
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => Dialog(
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Text(
-                                              "Payments for\nInstallment 3",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                            ),
-                                            const SizedBox(height: 8),
-                                            const Text(
-                                              "\$200",
-                                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                            ),
-                                            const Divider(height: 30),
-                                            _paymentItem("Mar 14, 2024", "14/05/2024", "\$100"),
-                                            const SizedBox(height: 10),
-                                            _paymentItem("Mar 15, 2024", "15/05/2024", "\$150"),
-                                            const SizedBox(height: 20),
-                                            const Divider(height: 30),
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(context),
-                                              child: const Text(
-                                                "Close",
-                                                style: TextStyle(
-                                                  color: Colors.blue,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                */
 
                                   showDialog(
                                     context: context,
@@ -381,7 +356,6 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                   alignment: Alignment.center,
                                   child: Stack(
                                     children: [
-                                        
                                     
                                       Container(
                                         width: size.width * 0.95,
@@ -402,7 +376,14 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                 color: Colors.transparent,
                                                 width: size.width * 0.1,
                                                 alignment: Alignment.center,
-                                                child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
+                                                child: Text(
+                                                  formattedDateQuote, 
+                                                  style: TextStyle(
+                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14, 
+                                                    color: Colors.blue[600]
+                                                  ), 
+                                                  textAlign: TextAlign.center,
+                                                ),
                                               ),
                           
                                               SizedBox(width: size.width * 0.02),
@@ -410,14 +391,26 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                               Container(
                                                 color: Colors.transparent,
                                                 width: size.width * 0.22,
-                                                child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                child: Text(
+                                                  item.quotaName, 
+                                                  style: TextStyle(
+                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14, 
+                                                    fontWeight: FontWeight.w600,
+                                                  )
+                                                ),
                                               ),
                             
                                               Container(
                                                 color: Colors.transparent,
                                                 width: size.width * 0.3,
                                                 alignment: Alignment.center,
-                                                child: Text('\$${item.quotaPaidAmount.toStringAsFixed(2)} / \$${item.quotaAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                child: Text(
+                                                  '\$${item.quotaPaidAmount.toStringAsFixed(2)} / \$${item.quotaAmount.toStringAsFixed(2)}', 
+                                                  style: TextStyle(
+                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14, 
+                                                    fontWeight: FontWeight.w600,
+                                                  )
+                                                ),
                                               ),
                             
                                               SizedBox(width: size.width * 0.0004),

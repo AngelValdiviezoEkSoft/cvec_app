@@ -342,6 +342,38 @@ class GenericState extends Equatable {
     }
   }
 
+  Future<String> getRptAccountStatement(List<int> contractIds) async {
+
+    try{
+      //List<Payment>? rsp = await ReceiptsService().getReceipts();
+      List<CustomerStatementItem>? rsp = await AccountStatementService().getRptAccountStatement(contractIds);
+
+      final items = <ItemBoton>[];
+
+      if(rsp.isNotEmpty){
+        for(int i = 0; i < rsp.length; i++){
+          items.add(
+            //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].partnerId, Icons.group_add, rsp[i].planName, rsp[i].paymentDate, '\$${rsp[i].paymentAmount?.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+              RoutersApp().routPrintReceiptView,
+              () {
+                
+              }
+            ),
+          );
+        }
+      }
+
+      final jsonString = serializeItemBotonMenuList(items);
+
+      return jsonString;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
+
   Future<String> waitCarga() async {
     
     return await Future.delayed(

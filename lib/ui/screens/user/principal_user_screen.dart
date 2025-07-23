@@ -40,7 +40,6 @@ class PrincipalUserScreen extends StatelessWidget {
   }
 }
 
-
 class PrincipalClientStScreen extends StatelessWidget {
 
   static const platform = MethodChannel('call_channel');
@@ -417,63 +416,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child:             
-             Column(
-              children: [
-
-                Container(
-                  color: Colors.transparent,
-                  width: size.width * 0.94,
-                  height: size.height * 0.08,
-                  child: Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: size.width * 0.65,
-                        height: size.height * 0.06,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: Text(locGen!.menuAccountStatementLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20)),)
-                      ),
-                  
-                      Container(
-                        width: size.width * 0.25,
-                        height: size.height * 0.06,
-                        color: Colors.transparent,
-                        //alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: () {
-                            context.push(RoutersApp().routPdfView);
-                          },
-                          child: Container(
-                            width: size.width * 0.04,
-                            height: size.height * 0.03,
-                            decoration: const BoxDecoration(
-                              color: Colors.green, // Color de fondo
-                              shape: BoxShape.circle, // Forma circular
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 4,
-                                  offset: Offset(2, 2),
-                                ),
-                              ],
-                            ),
-                            alignment: Alignment.center,
-                            child: const Icon(Icons.picture_as_pdf, color: Colors.white), // Ícono dentro del botón
-                          ),
-                        ),
-                  
-                      ),
-                             
-                    ],
-                  ),
-                ),
-
-                const AccountStatementView(null),
-                
-              ],
-            ),
+            child: const AccountStatementView(null),
           )
 
           :
@@ -634,10 +577,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
                 ),
                 SizedBox(height: size.height * 0.002),
+                /*
                 Text(
                   'Propietario',
                   style: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
                 ),
+                */
               ],
             ),
           ),
