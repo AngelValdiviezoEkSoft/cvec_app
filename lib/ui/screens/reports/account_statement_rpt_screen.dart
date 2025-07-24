@@ -113,7 +113,19 @@ Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
                 headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8),
                 border: pw.TableBorder.all(color: PdfColors.grey),
                 cellAlignment: pw.Alignment.centerLeft,
-                cellStyle: const pw.TextStyle(fontSize: 6)
+                cellStyle: const pw.TextStyle(fontSize: 6),
+                 cellAlignments: {
+                  0: pw.Alignment.centerLeft,   // Fecha
+                  1: pw.Alignment.centerLeft,   // Descripción
+                  2: pw.Alignment.centerRight,  // Monto cuota
+                  3: pw.Alignment.centerLeft,   // Estado cuota
+                  4: pw.Alignment.centerLeft,   // Recibo
+                  5: pw.Alignment.centerLeft,   // Método pago
+                  6: pw.Alignment.centerRight,  // Monto pagado
+                  7: pw.Alignment.centerRight,  // Saldo
+                  8: pw.Alignment.centerLeft,   // Fecha pago
+                  9: pw.Alignment.centerLeft,   // Estado pago
+                },
               ),
             );
 
