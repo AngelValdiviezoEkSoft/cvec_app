@@ -253,6 +253,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get statePreContLbl => 'Pre Contrato';
 
   @override
+  String get stateFinishedLbl => 'Terminado';
+
+  @override
   String get stateActiveLbl => 'Activo';
 
   @override
@@ -293,4 +296,43 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get msmWelcomeLbl => 'Acceda o cree su cuenta a continuación y comience su viaje';
+
+  @override
+  String get stateOpenQuotaAccountStatementLbl => 'Abierta';
+
+  @override
+  String get statePaidQuotaAccountStatementLbl => 'Pagada';
+
+  @override
+  String get stateAnnulledQuotaAccountStatementLbl => 'Anulada';
+
+  @override
+  String get dueDateLbl => 'Fecha Venc.';
+
+  @override
+  String get descriptionLbl => 'Descripción';
+
+  @override
+  String get installmentAmountLbl => 'Valor Cuota';
+
+  @override
+  String get installmentStatusLbl => 'Estado Cuota';
+
+  @override
+  String get receiptLbl => 'Recibo';
+
+  @override
+  String get paymentMethodLbl => 'Forma de pago';
+
+  @override
+  String get amountPaidLbl => 'Valor Pagado';
+
+  @override
+  String get paymentStatusLbl => 'Estado Pago';
+
+  @override
+  String get accountStatusReportLbl => 'REPORTE DE ESTADOS DE CUENTA';
+
+  @override
+  String get customerLbl => 'Cliente';
 }

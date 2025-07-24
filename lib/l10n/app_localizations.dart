@@ -575,6 +575,12 @@ abstract class AppLocalizations {
   /// **'Pre Contract'**
   String get statePreContLbl;
 
+  /// No description provided for @stateFinishedLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished'**
+  String get stateFinishedLbl;
+
   /// No description provided for @stateActiveLbl.
   ///
   /// In en, this message translates to:
@@ -658,6 +664,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Log in or create your account below and start your journey.'**
   String get msmWelcomeLbl;
+
+  /// No description provided for @stateOpenQuotaAccountStatementLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get stateOpenQuotaAccountStatementLbl;
+
+  /// No description provided for @statePaidQuotaAccountStatementLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statePaidQuotaAccountStatementLbl;
+
+  /// No description provided for @stateAnnulledQuotaAccountStatementLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Annulled'**
+  String get stateAnnulledQuotaAccountStatementLbl;
+
+  /// No description provided for @dueDateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get dueDateLbl;
+
+  /// No description provided for @descriptionLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLbl;
+
+  /// No description provided for @installmentAmountLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Amount'**
+  String get installmentAmountLbl;
+
+  /// No description provided for @installmentStatusLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Status'**
+  String get installmentStatusLbl;
+
+  /// No description provided for @receiptLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get receiptLbl;
+
+  /// No description provided for @paymentMethodLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethodLbl;
+
+  /// No description provided for @amountPaidLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount Paid'**
+  String get amountPaidLbl;
+
+  /// No description provided for @paymentStatusLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Status'**
+  String get paymentStatusLbl;
+
+  /// No description provided for @accountStatusReportLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Account status report'**
+  String get accountStatusReportLbl;
+
+  /// No description provided for @customerLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get customerLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -337,6 +337,10 @@
   "@statePreContLbl": {
     "description": "Pre Contrato"
   },
+  "stateFinishedLbl": "Terminado",
+  "@stateFinishedLbl": {
+    "description": "Terminado"
+  },
   "stateActiveLbl": "Activo",
   "@stateActiveLbl": {
     "description": "Activo"
@@ -392,5 +396,57 @@
   "beginLbl": "Comenzar",
   "@beginLbl": {
     "description": "Comenzar"
+  },
+  "stateOpenQuotaAccountStatementLbl": "Abierta",
+  "@stateOpenQuotaAccountStatementLbl": {
+    "description": "Abierta"
+  },
+  "statePaidQuotaAccountStatementLbl": "Pagada",
+  "@statePaidQuotaAccountStatementLbl": {
+    "description": "Pagada"
+  },
+  "stateAnnulledQuotaAccountStatementLbl": "Anulada",
+  "@stateAnnulledQuotaAccountStatementLbl": {
+    "description": "Anulada"
+  },
+  "dueDateLbl": "Fecha Venc.",
+  "@dueDateLbl": {
+    "description": "Fecha Venc."
+  },
+  "descriptionLbl": "Descripción",
+  "@descriptionLbl": {
+    "description": "Descripción"
+  },
+  "installmentAmountLbl": "Valor Cuota",
+  "@installmentAmountLbl": {
+    "description": "Valor Cuota"
+  },
+  "installmentStatusLbl": "Estado Cuota",
+  "@installmentStatusLbl": {
+    "description": "Estado Cuota"
+  },
+  "receiptLbl": "Recibo",
+  "@receiptLbl": {
+    "description": "Recibo"
+  },
+  "paymentMethodLbl": "Forma de pago",
+  "@paymentMethodLbl": {
+    "description": "Forma de pago"
+  },
+  "amountPaidLbl": "Valor Pagado",
+  "@amountPaidLbl": {
+    "description": "Valor Pagado"
+  },
+  "paymentStatusLbl": "Estado Pago",
+  "@paymentStatusLbl": {
+    "description": "Estado Pago"
+  },
+  "accountStatusReportLbl": "REPORTE DE ESTADOS DE CUENTA",
+  "@accountStatusReportLbl": {
+    "description": "REPORTE DE ESTADOS DE CUENTA"
+  },
+  "customerLbl": "Cliente",
+  "@customerLbl": {
+    "description": "Cliente"
   }
 }

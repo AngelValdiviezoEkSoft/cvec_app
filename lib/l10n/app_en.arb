@@ -79,6 +79,7 @@
     "balanceLbl": "Balance",
     "stateLbl": "State",
     "statePreContLbl": "Pre Contract",
+    "stateFinishedLbl": "Finished",
     "stateActiveLbl": "Active",
     "stateOpenLbl": "Open",
     "stateAnullLbl": "Anulalled",
@@ -92,5 +93,18 @@
     "keyLbl": "Key",
     "welcomeLbl": "Welcome",
     "beginLbl": "Begin",
-    "msmWelcomeLbl": "Log in or create your account below and start your journey."
+    "msmWelcomeLbl": "Log in or create your account below and start your journey.",
+    "stateOpenQuotaAccountStatementLbl": "Open",
+    "statePaidQuotaAccountStatementLbl": "Paid",
+    "stateAnnulledQuotaAccountStatementLbl": "Annulled",
+    "dueDateLbl": "Due Date",
+    "descriptionLbl": "Description",
+    "installmentAmountLbl": "Installment Amount",
+    "installmentStatusLbl": "Installment Status",
+    "receiptLbl": "Receipt",
+    "paymentMethodLbl": "Payment Method",
+    "amountPaidLbl": "Amount Paid",  
+    "paymentStatusLbl": "Payment Status",
+    "accountStatusReportLbl": "Account status report",
+    "customerLbl": "Customer"
 } 
