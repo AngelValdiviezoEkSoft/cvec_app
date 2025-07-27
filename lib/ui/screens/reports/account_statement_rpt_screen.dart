@@ -2,10 +2,7 @@ import 'dart:typed_data';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart';
-import 'dart:io';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pdf/widgets.dart' as pw;
 
