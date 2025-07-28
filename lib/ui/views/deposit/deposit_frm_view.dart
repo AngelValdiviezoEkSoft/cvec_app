@@ -280,7 +280,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                               const Icon(
                                 Icons.cancel,
                                 size: 12,
-                                color: Colors.black,
+                                //color: Colors.black,
                               ),
                             )
                           ),
@@ -343,7 +343,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                 const Icon(
                                   Icons.cancel,
                                   size: 12,
-                                  color: Colors.black,
+                                  //color: Colors.black,
                                 ),
                               )),
                           validator: (value) {
@@ -451,7 +451,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                 const Icon(
                                   Icons.cancel,
                                   size: 12,
-                                  color: Colors.black,
+                                  //color: Colors.black,
                                 ),
                               )
                             ),
@@ -514,7 +514,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                 const Icon(
                                   Icons.cancel,
                                   size: 12,
-                                  color: Colors.black,
+                                  //color: Colors.black,
                                 ),
                               )),
                           onChanged: (value) {

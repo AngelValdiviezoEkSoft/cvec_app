@@ -255,7 +255,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               '\$${objReciboDet!.receiptAmount.toStringAsFixed(2)}', 
                               style: TextStyle(
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black,
+                                //color: Colors.black,
                               overflow: TextOverflow.ellipsis,
                               ),
                               maxLines: 1,
@@ -290,7 +290,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               DateFormat('dd/MM/yyyy hh:MM').format(DateTime.parse(objReciboDet!.receiptDate)), 
                               style: TextStyle(
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black,
+                                //color: Colors.black,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               maxLines: 1,
@@ -324,7 +324,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               objReciboDet!.receiptConcept, 
                               style: TextStyle(
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black,
+                                //color: Colors.black,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               maxLines: 1,
@@ -358,7 +358,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               objReciboDet!.receiptNotes ?? '', 
                               style: TextStyle(
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black,
+                                //color: Colors.black,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               maxLines: 1,
@@ -393,7 +393,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black
+                                //color: Colors.black
                               ),
                               maxLines: 1,
                             ),
@@ -427,7 +427,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize16),
-                                color: Colors.black,                                
+                                //color: Colors.black,                                
                               ),
                               maxLines: 1,
                             ),

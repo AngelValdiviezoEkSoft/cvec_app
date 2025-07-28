@@ -44,7 +44,7 @@ class DebtViewSt extends State<DebtView> {
 
         if(!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            //backgroundColor: Colors.white,
             body: Center(
               child: Image.asset(
                 "assets/gifs/gif_carga.gif",
@@ -139,9 +139,8 @@ class DebtViewSt extends State<DebtView> {
                                 children: [
                                   Container(
                                     width: size.width,
-                                    color: Colors.grey[100],
+                                    //color: Colors.grey[100],
                                     alignment: Alignment.center,
-                                    //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                     child: Stack(
                                       children: [
                                         Container(
@@ -171,12 +170,12 @@ class DebtViewSt extends State<DebtView> {
                                                       SizedBox(height: size.height * 0.019),
 
                                                       Text(item.contractName,
-                                                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                        style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                       ),
                                                       
                                                       SizedBox(height: size.height * 0.005),
                                                       
-                                                      Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
+                                                      Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey,),),
                                                       
                                                       SizedBox(height: size.height * 0.008),
                                                       
@@ -193,7 +192,7 @@ class DebtViewSt extends State<DebtView> {
                                                   alignment: Alignment.centerRight,
                                                   child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
                                                       style: const TextStyle(
-                                                          fontWeight: FontWeight.w600, fontSize: 20)),
+                                                          fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,)),
                                                 ),
                               
                                                 SizedBox(width: size.width * 0.0004),

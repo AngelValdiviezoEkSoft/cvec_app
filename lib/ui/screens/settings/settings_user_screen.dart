@@ -90,8 +90,8 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                           ),
                           value: languageProvider.locale.languageCode,
                           items: const [
-                            DropdownMenuItem(value: 'en', child: Text('English', style: TextStyle(color: Colors.black,  ),)),
-                            DropdownMenuItem(value: 'es', child: Text('Español', style: TextStyle(color: Colors.black, ))),
+                            DropdownMenuItem(value: 'en', child: Text('English',)),
+                            DropdownMenuItem(value: 'es', child: Text('Español')),
                           ],
                           onChanged: (value) {
                             if (value != null) {
@@ -125,16 +125,16 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 Container(
                   height: size.height * 0.22,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color: Colors.grey.shade500,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold, color: Colors.white)),
+                      Text(locGen!.fontSizeLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold)),
                       
-                      Text('${_fontSize.toStringAsFixed(0)}%', style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold, color: Colors.white)),
+                      Text('${_fontSize.toStringAsFixed(0)}%', style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20), fontWeight: FontWeight.bold)),
           
                       Slider(
                         min: 0.0,
@@ -170,6 +170,22 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     bool isSelected = selectedMode == mode;
+
+    int modoSelect = 0;
+
+    if (mode == locGen!.lghtModeLbl) {
+      modoSelect = 1;
+    } else if (mode == locGen!.drkModeLbl) {
+      modoSelect = 2;
+    }
+
+    if(!isSelected){
+      if(modoSelect == themeProvider.themeMode.index){
+        isSelected = true;
+      }
+    }
+
+    // Guardar como int (0=system,1=light,2=dark)
 
     return GestureDetector(
       onTap: () {

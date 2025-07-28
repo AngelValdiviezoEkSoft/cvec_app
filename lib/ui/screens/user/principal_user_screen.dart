@@ -21,6 +21,8 @@ class PrincipalUserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -30,11 +32,11 @@ class PrincipalUserScreen extends StatelessWidget {
       onWillPop: () async => false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Info App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: PrincipalClientStScreen()
+        title: 'Flutter Info App',        
+        home: PrincipalClientStScreen(),
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: themeProvider.themeMode,
       ),
     );
   }
@@ -101,10 +103,37 @@ class PrincipalClientStScreen extends StatelessWidget {
                 direccionUserPrp = rsp['result']['data'][0]['street'] ?? '';
               }
 
+              final themeProvider = Provider.of<ThemeProvider>(context);
+
+              Color colorLblEstadoCuenta = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+              Color colorLblDeuda = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+              Color colorLblDepositos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+              Color colorLblRecibos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+              Color colorLblReservaciones = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;              
+
+              if(state.viewAccountStatement){
+                colorLblEstadoCuenta = Colors.grey;
+              }
+
+              if(state.viewViewDebts){
+                colorLblDeuda = Colors.grey;
+              }
+
+              if(state.viewSendDeposits){
+                colorLblDepositos = Colors.grey;
+              }
+
+              if(state.viewPrintReceipts){
+                colorLblRecibos = Colors.grey;
+              }
+
+              if(state.viewViewReservations){
+                colorLblReservaciones = Colors.grey;
+              }
+
+              //
+
               return Drawer(
-                backgroundColor: Colors.white,
-                shadowColor: Colors.white,
-                surfaceTintColor: Colors.white,
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: <Widget>[                
@@ -119,12 +148,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                     ),
                     
                     ListTile(
-                      leading: Icon(Icons.document_scanner, color: state.viewAccountStatement ? Colors.grey : Colors.black),
+                      leading: Icon(Icons.document_scanner, color: colorLblEstadoCuenta,),//, color: state.viewAccountStatement ? Colors.grey : Colors.black),
                       title: Text(
                         locGen!.menuAccountStatementLbl, 
                         style: TextStyle(
                           fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: state.viewAccountStatement ? Colors.grey : Colors.black
+                          color: colorLblEstadoCuenta
                         ),
                       ),
                       onTap: () {
@@ -141,12 +170,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.home, color: state.viewViewDebts ? Colors.grey : Colors.black),
+                      leading: Icon(Icons.home, color: colorLblDeuda,),
                       title: Text(
                         locGen!.menuDebtsLbl, 
                         style: TextStyle(
                           fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: state.viewViewDebts ? Colors.grey : Colors.black
+                          color: colorLblDeuda
                         ),
                       ),
                       onTap: () {
@@ -162,12 +191,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.send, color: state.viewSendDeposits ? Colors.grey : Colors.black),
+                      leading: Icon(Icons.send, color: colorLblDepositos),
                       title: Text(
                         locGen!.menuSendDepositsLbl, 
                         style: TextStyle(
                           fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: state.viewSendDeposits ? Colors.grey : Colors.black
+                          color: colorLblDepositos
                         ),
                       ),
                       onTap: () {
@@ -183,12 +212,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.print, color: state.viewPrintReceipts ? Colors.grey : Colors.black),
+                      leading: Icon(Icons.print, color: colorLblRecibos),
                       title: Text(
                         locGen!.menuPrintReceiptsLbl, 
                         style: TextStyle(
                           fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: state.viewPrintReceipts ? Colors.grey : Colors.black),
+                          color: colorLblRecibos),
                       ),
                       onTap: () {
                         gnrBloc.setShowViewAccountStatementEvent(false);
@@ -203,12 +232,12 @@ class PrincipalClientStScreen extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      leading: Icon(Icons.visibility, color: state.viewViewReservations ? Colors.grey : Colors.black),
+                      leading: Icon(Icons.visibility, color: colorLblReservaciones),
                       title: Text(
                         locGen!.menuSeeReservationsLbl, 
                         style: TextStyle(
                           fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: state.viewViewReservations ? Colors.grey : Colors.black
+                          color: colorLblReservaciones
                         ),
                       ),
                       onTap: () {
@@ -390,8 +419,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                                   repeatForever: true,
                                   pause: const Duration(microseconds: 1000),
                                   animatedTexts: [
-                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
-                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
                                   ],
                                   onTap: () {
                                   },
@@ -567,14 +596,14 @@ class PrincipalClientStScreen extends StatelessWidget {
                   displayName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),
                 ),
                 SizedBox(height: size.height * 0.002),
                 Text(
                   direccionUserPrp,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
                 ),
                 SizedBox(height: size.height * 0.002),
                 /*

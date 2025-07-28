@@ -75,7 +75,7 @@ class DepositViewSt extends State<DepositView> {
 
             if(!snapshot.hasData) {
               return Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
                     "assets/gifs/gif_carga.gif",
@@ -256,6 +256,7 @@ class DepositViewSt extends State<DepositView> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
+                                        lstMenu = [];
                                         tabTodas = true;
                                         tabProgreso = false;
                                         tabAprobadas = false;
@@ -273,11 +274,11 @@ class DepositViewSt extends State<DepositView> {
                                         ),
                                         alignment: Alignment.center,
                                         child: Text(locGen!.tabAlsDebsLbl,
-                                            style: TextStyle(
-                                                color: tabTodas ? Colors.white : const Color(0xFF007AFF),
-                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
-                                              )                                              
-                                            ),
+                                          style: TextStyle(
+                                              color: tabTodas ? Colors.white : const Color(0xFF007AFF),
+                                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                                            )
+                                          ),
                                       ),
                                     ),
                                   ),
@@ -287,6 +288,9 @@ class DepositViewSt extends State<DepositView> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
+
+                                        lstMenu = [];
+
                                         tabTodas = false;
                                         tabProgreso = false;
                                         tabAprobadas = true;
@@ -317,6 +321,8 @@ class DepositViewSt extends State<DepositView> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
+                                        lstMenu = [];
+
                                         tabTodas = false;
                                         tabProgreso = false;
                                         tabAprobadas = false;
@@ -349,6 +355,8 @@ class DepositViewSt extends State<DepositView> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
+                                        lstMenu = [];
+
                                         tabTodas = false;
                                         tabProgreso = true;
                                         tabAprobadas = false;

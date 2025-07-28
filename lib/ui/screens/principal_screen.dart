@@ -29,14 +29,16 @@ class PrincipalScreen extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return WillPopScope(      
       onWillPop: () async => false,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Info App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        title: 'Flutter Info App',        
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: themeProvider.themeMode,
         home: const ContenidoPrincipalScreen(null)
       ),
     );
@@ -123,6 +125,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
     }
 
     final languageProvider = Provider.of<LanguageProvider>(context);
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return WillPopScope(
       onWillPop: () async => false,
@@ -387,8 +391,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                       repeatForever: true,                                      
                                       pause: const Duration(microseconds: 1000),          
                                       animatedTexts: [
-                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
-                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(color: Colors.black, fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
+                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
+                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
                                       ],
                                       onTap: () {
                                       },
@@ -447,7 +451,9 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
           ),
         ),
         bottomNavigationBar: Container(
-          color: const Color(0xFF142950),
+          //color: const Color(0xFF142950),
+          color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+          Color(0xFF142950) : Colors.white,
           height: size.height * 0.08,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -466,8 +472,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.youtube, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.youtube),
+                    //color: Colors.white,                  
                     onPressed: () async {                                        
                       Navigator.push(
                         context,
@@ -490,8 +496,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.facebook, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.facebook),
+                    //color: Colors.white,                  
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -514,8 +520,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.instagram, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.instagram),
+                    //color: Colors.white,                  
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -535,8 +541,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.whatsapp, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.whatsapp),
+                    //color: Colors.white,                  
                     onPressed: () async {
                       launchUrl(Uri.parse('https://wa.me/593979856428?text=Unos%20de%20nuestros%20asesores%20se%20comunicara%20con%20usted'));
                     },
@@ -556,8 +562,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.linkedin, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.linkedin),
+                    //color: Colors.white,                  
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -580,8 +586,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.tiktok, color: Colors.white,),
-                    color: Colors.white,                  
+                    icon: const FaIcon(FontAwesomeIcons.tiktok),
+                    //color: Colors.white,                  
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -653,7 +659,7 @@ class MenuTile extends StatelessWidget {
             width: size.width * 0.45,
             height: size.height * 0.03,
             color: Colors.transparent,
-            child: Text(option.label, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16), fontWeight: FontWeight.bold, color: Colors.black))
+            child: Text(option.label, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16), fontWeight: FontWeight.bold))
           ),
           Container(
             width: size.width * 0.45,

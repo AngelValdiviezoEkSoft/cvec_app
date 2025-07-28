@@ -52,6 +52,7 @@ class CentroViajesAppState extends State<CentroViajesApp> {
   Widget build(BuildContext context) {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
+    themeProvider.loadTheme();
     
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

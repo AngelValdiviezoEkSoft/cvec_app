@@ -47,14 +47,12 @@ class AccountStatementViewSt extends State<AccountStatementView> {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          //future: state.getEstadoCuentas(),
           future: AccountStatementService().getAccountStatement(),
-          //builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           builder: (context, snapshot) {
 
             if(!snapshot.hasData) {
               return Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
                     "assets/gifs/gif_carga.gif",
@@ -221,7 +219,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                   children: [
                                     Container(
                                       width: size.width,
-                                      color: Colors.grey[100],
+                                      //color: Colors.grey[100],
                                       height: size.height * 0.19,
                                       alignment: Alignment.center,
                                       //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -254,16 +252,18 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                         SizedBox(height: size.height * 0.019),
 
                                                         Text(item.contractName,
-                                                          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                         ),
                                                         
                                                         SizedBox(height: size.height * 0.008),
                                                         
                                                         if(item.contractInscriptionDate.isNotEmpty && item.contractDueDate.isNotEmpty)
-                                                        Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                        Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',
+                                                          style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
 
                                                         SizedBox(height: size.height * 0.008),
-                                                        Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
+                                                        Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',
+                                                        style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
 
                                                         SizedBox(height: size.height * 0.008),
                                                         LinearProgressIndicator(
@@ -297,7 +297,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                         
                                                         SizedBox(height: size.height * 0.02,),
                                                         
-                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
+                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(color: Colors.grey,),),
                                                         
                                                         SizedBox(height: size.height * 0.02,),
 
