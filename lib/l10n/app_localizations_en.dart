@@ -313,10 +313,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get descriptionLbl => 'Description';
 
   @override
-  String get installmentAmountLbl => 'Installment Amount';
+  String get installmentAmountLbl => 'Quote Amount';
 
   @override
-  String get installmentStatusLbl => 'Installment Status';
+  String get installmentStatusLbl => 'Quote Status';
 
   @override
   String get receiptLbl => 'Receipt';

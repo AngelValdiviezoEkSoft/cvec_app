@@ -698,13 +698,13 @@ abstract class AppLocalizations {
   /// No description provided for @installmentAmountLbl.
   ///
   /// In en, this message translates to:
-  /// **'Installment Amount'**
+  /// **'Quote Amount'**
   String get installmentAmountLbl;
 
   /// No description provided for @installmentStatusLbl.
   ///
   /// In en, this message translates to:
-  /// **'Installment Status'**
+  /// **'Quote Status'**
   String get installmentStatusLbl;
 
   /// No description provided for @receiptLbl.

@@ -69,17 +69,17 @@ Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
                         : locGen!.stateAnnulledQuotaAccountStatementLbl,
                 item.paymentSequence,
                 item.paymentMethodName,
-                item.paymentAmount?.toStringAsFixed(2) ?? "-",
-                item.quotaResidual?.toStringAsFixed(2) ?? "-",
+                item.paymentAmount?.toStringAsFixed(2) ?? " ",
+                item.quotaResidual?.toStringAsFixed(2) ?? " ",
                 item.paymentDate.isNotEmpty
                     ? dateFormat.format(DateTime.parse(item.paymentDate))
-                    : "-",
+                    : " ",
                 item.paymentState.toLowerCase() == "posted"
                     ? locGen!.statePaidQuotaAccountStatementLbl
-                    : "",
+                    : " ",
               ]).toList();
 
-          final chunks = chunkList(tableRows, 40);
+          final chunks = chunkList(tableRows, tableRows.length);
 
           // Título del contrato
           widgets.add(pw.Text(
@@ -93,6 +93,18 @@ Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
           for (var chunk in chunks) {
             widgets.add(
               pw.TableHelper.fromTextArray(
+                columnWidths: {
+                  0: const pw.FixedColumnWidth(30),  // Fecha
+                  1: const pw.FlexColumnWidth(35),    // Descripción (más ancho)
+                  2: const pw.FixedColumnWidth(35),  // Monto cuota
+                  3: const pw.FixedColumnWidth(45),  // Estado cuota
+                  4: const pw.FixedColumnWidth(40),  // Recibo
+                  5: const pw.FixedColumnWidth(60),  // Método pago
+                  6: const pw.FixedColumnWidth(50),  // Monto pagado
+                  7: const pw.FixedColumnWidth(50),  // Saldo
+                  8: const pw.FixedColumnWidth(50),  // Fecha pago
+                  9: const pw.FixedColumnWidth(60),  // Estado pago
+                },
                 headers: [
                   locGen!.dueDateLbl,
                   locGen!.descriptionLbl,
@@ -108,10 +120,18 @@ Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
                 data: chunk,
                 headerDecoration: const pw.BoxDecoration(color: PdfColors.grey300),
                 headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 8),
-                border: pw.TableBorder.all(color: PdfColors.grey),
+                //border: pw.TableBorder.all(color: PdfColors.grey),
+                border: const pw.TableBorder(
+                  top: pw.BorderSide(color: PdfColors.grey, width: 1),
+                  bottom: pw.BorderSide(color: PdfColors.grey, width: 1),
+                  horizontalInside: pw.BorderSide(color: PdfColors.grey, width: 1),
+                  left: pw.BorderSide.none,
+                  right: pw.BorderSide.none,
+                  verticalInside: pw.BorderSide.none,
+                ),
                 cellAlignment: pw.Alignment.centerLeft,
                 cellStyle: const pw.TextStyle(fontSize: 6),
-                 cellAlignments: {
+                cellAlignments: {
                   0: pw.Alignment.centerLeft,   // Fecha
                   1: pw.Alignment.centerLeft,   // Descripción
                   2: pw.Alignment.centerRight,  // Monto cuota
