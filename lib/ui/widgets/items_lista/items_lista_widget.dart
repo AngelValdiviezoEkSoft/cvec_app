@@ -306,7 +306,13 @@ class ListaNotificaciones extends StatelessWidget {
           
                         if(texto != null && texto!.isNotEmpty )
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            const storage = FlutterSecureStorage();
+
+                            await storage.write(key: 'IdReservaciones', value: '');
+                            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
+
+                            //ignore: use_build_context_synchronously
                             context.push(rutaNavegacionFin!);
                           },
                           child: Stack(
@@ -334,7 +340,13 @@ class ListaNotificaciones extends StatelessWidget {
           
                         if(texto2 == null || texto2!.isEmpty)
                         GestureDetector(
-                          onTap: () {    
+                          onTap: () async {    
+                            const storage = FlutterSecureStorage();
+
+                            await storage.write(key: 'IdReservaciones', value: '');
+                            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
+
+                            //ignore: use_build_context_synchronously
                             context.push(rutaNavegacionFin!);
                           },
                           child: Container(
@@ -344,7 +356,13 @@ class ListaNotificaciones extends StatelessWidget {
                             color: Colors.transparent,
                             child: Center(
                               child: GestureDetector(
-                                onTap: () {                                  
+                                onTap: () async {
+                                  const storage = FlutterSecureStorage();
+
+                                  await storage.write(key: 'IdReservaciones', value: '');
+                                  await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
+
+                                  //ignore: use_build_context_synchronously
                                   context.push(rutaNavegacionFin!);
                                 },
                                 child: Icon(icon, color: Colors.black,))
