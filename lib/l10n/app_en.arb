@@ -106,5 +106,11 @@
     "amountPaidLbl": "Amount Paid",  
     "paymentStatusLbl": "Payment Status",
     "accountStatusReportLbl": "Account status report",
-    "customerLbl": "Customer"
-} 
+    "customerLbl": "Customer",
+    "orderValidatePasswordLbl": "Your password must contain at least",
+    "capitalLetterValidatePasswordLbl": "A capital letter",
+    "lowerLetterValidatePasswordLbl": "A lowercase letter",
+    "numberValidatePasswordLbl": "A number",
+    "specialCharacterValidatePasswordLbl": "A special character",
+    "minimumTenCharacterValidatePasswordLbl": "Minimum 10 characters"
+}

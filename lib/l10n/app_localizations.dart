@@ -742,6 +742,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Customer'**
   String get customerLbl;
+
+  /// No description provided for @orderValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Your password must contain at least'**
+  String get orderValidatePasswordLbl;
+
+  /// No description provided for @capitalLetterValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'A capital letter'**
+  String get capitalLetterValidatePasswordLbl;
+
+  /// No description provided for @lowerLetterValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'A lowercase letter'**
+  String get lowerLetterValidatePasswordLbl;
+
+  /// No description provided for @numberValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'A number'**
+  String get numberValidatePasswordLbl;
+
+  /// No description provided for @specialCharacterValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'A special character'**
+  String get specialCharacterValidatePasswordLbl;
+
+  /// No description provided for @minimumTenCharacterValidatePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 10 characters'**
+  String get minimumTenCharacterValidatePasswordLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

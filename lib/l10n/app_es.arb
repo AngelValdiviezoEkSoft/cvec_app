@@ -448,5 +448,29 @@
   "customerLbl": "Cliente",
   "@customerLbl": {
     "description": "Cliente"
+  },
+  "orderValidatePasswordLbl": "Tu contraseña debe contener mínimo",
+  "@orderValidatePasswordLbl": {
+    "description": "Tu contraseña debe contener mínimo"
+  },
+  "capitalLetterValidatePasswordLbl": "Una mayúscula",
+  "@capitalLetterValidatePasswordLbl": {
+    "description": "Una mayúscula"
+  },
+  "lowerLetterValidatePasswordLbl": "Una minúscula",
+  "@lowerLetterValidatePasswordLbl": {
+    "description": "Una minúscula"
+  },
+  "numberValidatePasswordLbl": "Un número",
+  "@numberValidatePasswordLbl": {
+    "description": "Un número"
+  },
+  "specialCharacterValidatePasswordLbl": "Un caracter especial",
+  "@specialCharacterValidatePasswordLbl": {
+    "description": "Un caracter especial"
+  },
+  "minimumTenCharacterValidatePasswordLbl": "Mínimo 10 caracteres",
+  "@minimumTenCharacterValidatePasswordLbl": {
+    "description": "Mínimo 10 caracteres"
   }
 }

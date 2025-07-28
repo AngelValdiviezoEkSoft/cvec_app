@@ -335,4 +335,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get customerLbl => 'Cliente';
+
+  @override
+  String get orderValidatePasswordLbl => 'Tu contraseña debe contener mínimo';
+
+  @override
+  String get capitalLetterValidatePasswordLbl => 'Una mayúscula';
+
+  @override
+  String get lowerLetterValidatePasswordLbl => 'Una minúscula';
+
+  @override
+  String get numberValidatePasswordLbl => 'Un número';
+
+  @override
+  String get specialCharacterValidatePasswordLbl => 'Un caracter especial';
+
+  @override
+  String get minimumTenCharacterValidatePasswordLbl => 'Mínimo 10 caracteres';
 }
