@@ -1,5 +1,6 @@
 
 import 'package:cve_app/infraestructure/infraestructure.dart';
+import 'package:cve_app/ui/ui.dart';
 //import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +50,8 @@ class CentroViajesAppState extends State<CentroViajesApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
     
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -63,25 +66,20 @@ class CentroViajesAppState extends State<CentroViajesApp> {
           return 
           
           MaterialApp.router(
-              locale: Locale(languageProvider.localeStr),//languageProvider.locale,
-              supportedLocales: AppLocalizations.supportedLocales,                    
-              /*
-              supportedLocales: const [
-                Locale('es'), // Spanish, no country code
-                Locale('en'), // Spanish, no country code
-              ],
-              */
+              locale: Locale(languageProvider.localeStr),
+              supportedLocales: AppLocalizations.supportedLocales,
               localizationsDelegates: const [
                 AppLocalizations.delegate,
-                //S.delegate, // Clase generada para traducciones
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              //supportedLocales: S.delegate.supportedLocales,
               title: 'Centro de viajes',
               debugShowCheckedModeBanner: false,        
               routerConfig: appRouter,
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: themeProvider.themeMode,
             );
         },
         

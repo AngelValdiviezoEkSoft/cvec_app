@@ -1,3 +1,5 @@
+export 'package:cve_app/ui/themes/theme_provider.dart';
+
 export 'package:cve_app/ui/themes/spacing.dart';
 
 export 'package:cve_app/ui/themes/text_style.dart';

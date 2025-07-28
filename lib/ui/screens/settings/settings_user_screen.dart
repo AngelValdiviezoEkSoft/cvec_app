@@ -114,9 +114,9 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    brightnessOption(locGen!.lghtModeLbl, 'Claro', size, 'assets/images/modo_claro.png'),
-                    brightnessOption(locGen!.drkModeLbl, 'Oscuro', size, 'assets/images/modo_oscuro.png'),
-                    brightnessOption(locGen!.automaticLbl, 'Automático', size, 'assets/images/modo_automatico.png'),
+                    brightnessOption(locGen!.lghtModeLbl, locGen!.lghtModeLbl, size, 'assets/images/modo_claro.png'),
+                    brightnessOption(locGen!.drkModeLbl, locGen!.drkModeLbl, size, 'assets/images/modo_oscuro.png'),
+                    brightnessOption(locGen!.automaticLbl, locGen!.automaticLbl, size, 'assets/images/modo_automatico.png'),
                   ],
                 ),
           
@@ -166,13 +166,30 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
   }
 
   Widget brightnessOption(String label, String mode, Size size, String image) {
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     bool isSelected = selectedMode == mode;
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedMode = mode;
-        });
+        if(locGen != null){
+          ThemeMode objThemeMode = ThemeMode.system;
+
+          if (mode == locGen!.lghtModeLbl) {
+            objThemeMode = ThemeMode.light;
+          } else if (mode == locGen!.drkModeLbl) {
+            objThemeMode = ThemeMode.dark;
+          } else {
+            objThemeMode = ThemeMode.system;
+          }
+
+          themeProvider.setTheme(objThemeMode);
+
+          setState(() {
+            selectedMode = mode;
+          });
+        }
       },
       child: Column(
         children: [

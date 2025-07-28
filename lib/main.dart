@@ -25,6 +25,7 @@ void main() async {
     MultiProvider(
       providers:[//
         np.ChangeNotifierProvider(create: (_) => FontSizeManager()),
+        np.ChangeNotifierProvider(create: (_) => ThemeProvider()),
         BlocProvider(create: (context) => getIt<AuthBloc>()..add(AppStarted())),
         BlocProvider(create: (context) => getIt<GenericBloc>()),
         BlocProvider(create: (context) => getIt<LanguageBloc>()),        
