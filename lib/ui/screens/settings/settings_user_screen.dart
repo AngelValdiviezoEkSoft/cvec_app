@@ -32,6 +32,8 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
     final languageProvider = Provider.of<LanguageProvider>(context);    
     final fontSizeManager = Provider.of<FontSizeManager>(context);
 
+    languageProvider.loadLanguageLocale();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(locGen!.settingLbl),
@@ -114,9 +116,9 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    brightnessOption(locGen!.lghtModeLbl, locGen!.lghtModeLbl, size, 'assets/images/modo_claro.png'),
-                    brightnessOption(locGen!.drkModeLbl, locGen!.drkModeLbl, size, 'assets/images/modo_oscuro.png'),
-                    brightnessOption(locGen!.automaticLbl, locGen!.automaticLbl, size, 'assets/images/modo_automatico.png'),
+                    brightnessOption(locGen!.lghtModeLbl, locGen!.lghtModeLbl, size, '${RoutersApp().rutaImages}modo_claro.png'),
+                    brightnessOption(locGen!.drkModeLbl, locGen!.drkModeLbl, size, '${RoutersApp().rutaImages}modo_oscuro.png'),
+                    brightnessOption(locGen!.automaticLbl, locGen!.automaticLbl, size, '${RoutersApp().rutaImages}modo_automatico.png'),
                   ],
                 ),
           
@@ -185,7 +187,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
       }
     }
 
-    // Guardar como int (0=system,1=light,2=dark)
+    // Tipo de fondo (0=system,1=light,2=dark)
 
     return GestureDetector(
       onTap: () {
@@ -205,6 +207,7 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
           setState(() {
             selectedMode = mode;
           });
+
         }
       },
       child: Column(
@@ -222,8 +225,8 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(8),                
                 image: DecorationImage(
-                  image: AssetImage(image), // Imagen local
-                  fit: BoxFit.fill, // Ajusta la imagen al contenedor
+                  image: AssetImage(image),
+                  fit: BoxFit.fill,
                 ),
               ),
               alignment: Alignment.center,

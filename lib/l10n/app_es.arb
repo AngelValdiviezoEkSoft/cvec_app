@@ -568,5 +568,9 @@
   "phoneLbl": "Teléfono",
   "@phoneLbl": {
     "description": "Teléfono"
+  },
+  "orderQrLbl": "Encuadra el código QR dentro del marco violeta",
+  "@orderQrLbl": {
+    "description": "Encuadra el código QR dentro del marco violeta"
   }
 }

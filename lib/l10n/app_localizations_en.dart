@@ -425,4 +425,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phoneLbl => 'Phone';
+
+  @override
+  String get orderQrLbl => 'Frame the QR code within the purple frame';
 }

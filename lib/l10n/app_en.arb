@@ -136,5 +136,6 @@
     "thkYourPaymentLbl": "Thank you for your payment",
     "establishmentLbl": "Establishment",
     "officeLbl": "Office",
-    "phoneLbl": "Phone"
+    "phoneLbl": "Phone",
+    "orderQrLbl": "Frame the QR code within the purple frame"
 }

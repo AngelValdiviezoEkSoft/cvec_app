@@ -922,6 +922,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone'**
   String get phoneLbl;
+
+  /// No description provided for @orderQrLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Frame the QR code within the purple frame'**
+  String get orderQrLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

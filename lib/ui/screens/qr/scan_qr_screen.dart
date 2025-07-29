@@ -83,7 +83,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Image.asset(
-                              'assets/images/scan_qr_img.png',
+                              '${RoutersApp().rutaImages}scan_qr_img.png',
                               width: sizeScreen.width * 0.07,
                               fit: BoxFit.contain,
                             ),
@@ -93,7 +93,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                             SizedBox(
                               width: sizeScreen.width * 0.8,
                               child: Text(
-                                'Encuadra el código QR dentro del marco violeta',
+                                locGen!.orderQrLbl,
                                 style: AppTextStyles.h4Bold(
                                     width: sizeScreen.width,
                                     color: AppLightColors().white),
@@ -163,7 +163,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                               }
                             },
                             onDispose: () {
-                              debugPrint("Barcode scanner disposed!");
+                              //debugPrint("Barcode scanner disposed!");
                             },
                             controller: MobileScannerController(
                               detectionSpeed: DetectionSpeed.normal,
@@ -195,7 +195,7 @@ class ScanQrScreenState extends State<ScanQrScreen> {
                             context.pop();
                           },
                           child: ButtonWidget(
-                            text: 'Cancelar',
+                            text: locGen!.cancelLbl,
                             textStyle: AppTextStyles.h3Bold(
                                 width: sizeScreen.width,
                                 color: AppLightColors().white),

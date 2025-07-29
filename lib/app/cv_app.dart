@@ -33,10 +33,6 @@ class CentroViajesAppState extends State<CentroViajesApp> {
 
   @override
   void dispose() {
-    /*
-    cron.close();
-    tokenManager.stopTokenCheck();
-    */
     super.dispose();
   }
 
@@ -52,7 +48,10 @@ class CentroViajesAppState extends State<CentroViajesApp> {
   Widget build(BuildContext context) {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final languageProvid = Provider.of<LanguageProvider>(context);
+
     themeProvider.loadTheme();
+    languageProvid.loadLanguageLocale();
     
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -67,21 +66,21 @@ class CentroViajesAppState extends State<CentroViajesApp> {
           return 
           
           MaterialApp.router(
-              locale: Locale(languageProvider.localeStr),
-              supportedLocales: AppLocalizations.supportedLocales,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              title: 'Centro de viajes',
-              debugShowCheckedModeBanner: false,        
-              routerConfig: appRouter,
-              theme: ThemeData.light(),
-              darkTheme: ThemeData.dark(),
-              themeMode: themeProvider.themeMode,
-            );
+            locale: Locale(languageProvid.localeStr),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            title: 'Centro de viajes',
+            debugShowCheckedModeBanner: false,        
+            routerConfig: appRouter,
+            theme: ThemeData.light(),
+            darkTheme: ThemeData.dark(),
+            themeMode: themeProvider.themeMode,
+          );
         },
         
       )

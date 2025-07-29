@@ -126,6 +126,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
 
     final languageProvider = Provider.of<LanguageProvider>(context);
 
+    languageProvider.loadLanguageLocale();
+
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return WillPopScope(

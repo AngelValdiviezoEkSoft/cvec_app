@@ -425,4 +425,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get phoneLbl => 'Teléfono';
+
+  @override
+  String get orderQrLbl => 'Encuadra el código QR dentro del marco violeta';
 }

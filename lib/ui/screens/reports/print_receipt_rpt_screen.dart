@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 //import 'package:cve_app/domain/domain.dart';
 //import 'package:path_provider/path_provider.dart';
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:pdf/widgets.dart';
@@ -36,7 +37,7 @@ Map<String, List<PagoItem>> agruparPorRubro(List<PagoItem> items) {
 Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) async {
 
   final imageFirma = MemoryImage(
-    (await rootBundle.load('assets/images/imgFirmaMZ.png')).buffer.asUint8List()
+    (await rootBundle.load('${RoutersApp().rutaImages}imgFirmaMZ.png')).buffer.asUint8List()
   );
 
   final imageLogo = MemoryImage(
