@@ -56,8 +56,8 @@ class DepositService extends ChangeNotifier{
 
       return objConv.result.data.data;      
     }
-    catch(ex){
-      print('Test DataInit $ex');
+    catch(_){
+      //print('Test DataInit $ex');
       return [];
     }
   }
@@ -154,19 +154,12 @@ class DepositService extends ChangeNotifier{
       
         var rspValidacion = json.decode(response.body);
 
-/*
-        if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MensajeValidacion().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MensajeValidacion().tockenExpirado)){
-          await tokenManager.checkTokenExpiration();
-          await registroActividades(objDeposit);
-        }
-        */
-
         var objRespuestaFinal = DepositResponseModel.fromJson(rspValidacion);
 
         return objRespuestaFinal;
       } 
-      catch(ex){
-        print('Error al grabar: $ex');
+      catch(_){
+        //print('Error al grabar: $ex');
       }
     }
     /*

@@ -269,8 +269,8 @@ class Welcome2Screen extends StatelessWidget {
             children: [
               SimpleDialogLoad(
                 null,
-                mensajeMostrar: 'Estamos registrando',
-                mensajeMostrarDialogCargando: 'tu dispositivo',
+                mensajeMostrar: locGen!.msmSafeLbl,
+                mensajeMostrarDialogCargando: locGen!.msmSafeDeviceLbl,
               ),
             ]
           ),

@@ -1,6 +1,7 @@
 
 import 'dart:typed_data';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -14,7 +15,7 @@ Future<Uint8List> generateReservation(Booking objReservation) async {
         build: (pw.Context context) {
           return pw.Column(
             children: [
-              pw.Text('Reporte de Reservas', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+              pw.Text(locGen!.reservReportLbl, style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 10),
               pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -22,42 +23,42 @@ Future<Uint8List> generateReservation(Booking objReservation) async {
                     pw.Container(
                       width: 53,
                       alignment: pw.Alignment.center,                      
-                      child: pw.Text('Secuencia de reserva', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.reservSeqLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Fecha de ingreso', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.checkInDateLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Fecha de salida', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.checkOutDateLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Hotel', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.hotelLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Reserva incluye', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.includesLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 55,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Secuencia de contrato', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.contractSeqLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Habitaciones', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.roomsLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     pw.Container(
                       width: 48,
                       alignment: pw.Alignment.center,
-                      child: pw.Text('Estado', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 5)),
+                      child: pw.Text(locGen!.statusLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
                     ),
                     
                   ],

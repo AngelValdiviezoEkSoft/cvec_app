@@ -3,6 +3,7 @@ import 'dart:typed_data';
 //import 'package:cve_app/domain/domain.dart';
 //import 'package:path_provider/path_provider.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:pdf/widgets.dart';
 //import 'dart:io';
 //import 'package:http/http.dart' as http;
@@ -113,7 +114,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
               ),
             ),
             pw.Center(
-              child: pw.Text('Telfs: ${objPayment.companyPhone}',
+              child: pw.Text('${locGen!.phoneLbl}: ${objPayment.companyPhone}',
               style: const pw.TextStyle(
                   fontSize: 7
                 ),
@@ -158,7 +159,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('ESTABLECIMIENTO: OFICINA', style: const pw.TextStyle(
+                pw.Text('${locGen!.establishmentLbl}: ${locGen!.officeLbl}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
@@ -168,7 +169,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
-                pw.Text('RECIBO # ${objPayment.paymentName}', style: const pw.TextStyle(
+                pw.Text('${locGen!.receiptLbl} # ${objPayment.paymentName}', style: const pw.TextStyle(
                         fontSize: 6
                       ),),
                 pw.Text(' ', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
@@ -178,8 +179,8 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
             pw.SizedBox(height: 10),
             pw.Divider(),
 
-            pw.Text('Cliente: ${objPayment.customerName}', style: const pw.TextStyle(fontSize: 6),),
-            pw.Text('Fecha: ${objPayment.paymentDate}', style: const pw.TextStyle(fontSize: 6),),
+            pw.Text('${locGen!.customerLbl}: ${objPayment.customerName}', style: const pw.TextStyle(fontSize: 6),),
+            pw.Text('${locGen!.dateLbl}: ${objPayment.paymentDate}', style: const pw.TextStyle(fontSize: 6),),
             
             pw.SizedBox(height: 2),
             pw.Divider(),
@@ -197,15 +198,15 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                   children: [
                     pw.Padding(
                       padding: const pw.EdgeInsets.all(1),
-                      child: pw.Text("Rubro", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      child: pw.Text(locGen!.categoryLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                     pw.Padding(
                       padding: const pw.EdgeInsets.all(1),
-                      child: pw.Text("Descripción", style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      child: pw.Text(locGen!.descriptionLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                     pw.Padding(
                       padding: const pw.EdgeInsets.all(1),
-                      child: pw.Text("Pagado", textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
+                      child: pw.Text(locGen!.paidLbl, textAlign: TextAlign.end, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 7)),
                     ),
                   ],
                 ),
@@ -255,8 +256,8 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
 
             pw.Divider(),
             pw.SizedBox(height: 10),
-            pw.Text('Forma de pago: ${objPayment.journalName}', style: const TextStyle(fontSize: 6)),            
-            pw.SizedBox(height: 2),            
+            pw.Text('${locGen!.paymentMethodLbl}: ${objPayment.journalName}', style: const TextStyle(fontSize: 6)),
+            pw.SizedBox(height: 2),
             
             Container(
                 width: 170,
@@ -287,7 +288,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                 Container(
                   width: 107,
                   height: 10,
-                  child: pw.Text('Servicios Adm.', style: const TextStyle(fontSize: 7)),
+                  child: pw.Text(locGen!.adminServLbl, style: const TextStyle(fontSize: 7)),
                 ),
                 
                 Container(
@@ -320,7 +321,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
           ),
 
             pw.SizedBox(height: 10),
-            pw.Text('Observación: ${objPayment.paymentRef}', style: const TextStyle(fontSize: 7)),
+            pw.Text('${locGen!.observationLbl}: ${objPayment.paymentRef}', style: const TextStyle(fontSize: 7)),
             pw.SizedBox(height: 10),
             
             pw.Row(
@@ -340,7 +341,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                       ),
                       Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
                       Text(
-                        'Firma Autorizada',
+                        locGen!.authSignatLbl,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 6)
                       ),                    
@@ -361,10 +362,13 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                     ),
                     Padding(padding: const EdgeInsets.fromLTRB(0, 1, 0, 0)),
                     Text(
-                        'Firma Cliente',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 6)),
+                      locGen!.clientSignatLbl,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, 
+                        fontSize: 6
+                      )
+                    ),
                     
                   ]
                 )
@@ -374,10 +378,11 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
             ),
 
             pw.SizedBox(height: 10),
-            pw.Text('Responsable Ingreso: ${objPayment.userName}', style: const pw.TextStyle(
-                        fontSize: 6
-                      ),),
-            pw.Text('GRACIAS POR SU PAGO', style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
+            pw.Text(
+              '${locGen!.persRespAdmLbl}: ${objPayment.userName}', 
+              style: const pw.TextStyle(fontSize: 6),
+            ),
+            pw.Text(locGen!.thkYourPaymentLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6)),
           ],
         );
       },

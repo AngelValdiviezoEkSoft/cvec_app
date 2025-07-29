@@ -92,95 +92,133 @@ class DepositViewSt extends State<DepositView> {
 
                 lstReceipts = snapshot.data as List<ReceiptModelResponse>;
 
-                for(int i = 0; i < lstReceipts.length; i++){
-                  String statusDeposit = lstReceipts[i].receiptState;
-                  Color colorStatus = Colors.transparent;
+                if(lstReceipts.isNotEmpty){
+                  var lstAprobadas = lstReceipts.where((x) => x.receiptState.toLowerCase() == locGen!.approveReviewLbl.toLowerCase()).toList();
+                  var lstRechazadas = lstReceipts.where((x) => x.receiptState.toLowerCase() == locGen!.rejectedReviewLbl.toLowerCase()).toList();
+                  var lstPendientes = lstReceipts.where((x) => x.receiptState.toLowerCase() == 'draft').toList();
 
-                  String fechaStr = lstReceipts[i].receiptDate;
+                  for(int i = 0; i < lstReceipts.length; i++){
+                    String statusDeposit = lstReceipts[i].receiptState;
+                    Color colorStatus = Colors.transparent;
 
-                  DateTime fecha = DateTime.parse(fechaStr);
+                    String fechaStr = lstReceipts[i].receiptDate;
 
-                  String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
+                    DateTime fecha = DateTime.parse(fechaStr);
 
-                  fechaFormateada = fechaFormateada[0].toUpperCase() + fechaFormateada.substring(1);
+                    String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
 
-                  if(statusDeposit.toLowerCase() == 'draft'){
-                    statusDeposit = locGen!.pendingReviewLbl;
-                    colorStatus = Colors.grey;
+                    fechaFormateada = fechaFormateada[0].toUpperCase() + fechaFormateada.substring(1);
+
+                    if(statusDeposit.toLowerCase() == 'draft'){
+                      statusDeposit = locGen!.pendingReviewLbl;
+                      colorStatus = Colors.grey;
+                    }
+
+                    if(statusDeposit.toLowerCase() == locGen!.rejectedReviewLbl.toLowerCase()){
+                      statusDeposit = locGen!.rejectedReviewLbl;
+                      colorStatus = Colors.red;
+                    }
+
+                    if(statusDeposit.toLowerCase() == locGen!.approveReviewLbl.toLowerCase()){
+                      statusDeposit = locGen!.approveReviewLbl;
+                      colorStatus = Colors.green;
+                    }
+
+                    if(tabTodas && lstMenu.length <= lstReceipts.length){
+                      lstMenu.add(
+                        ItemBoton(
+                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          Colors.white,colorStatus,false,false,'','','','','',
+                          objRutas.rutaDetalleDepositFrmScrn,
+                          (){
+                            objReciboDet = lstReceipts[i];
+                            context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                          }
+                        )
+                      );
+                    }
+
+                    if(tabProgreso && statusDeposit.toLowerCase() == locGen!.pendingReviewLbl.toLowerCase() && lstMenu.length <= lstPendientes.length){
+                      lstMenu.add(
+                        ItemBoton(
+                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          Colors.white,colorStatus,false,false,'','','','','',
+                          objRutas.rutaDetalleDepositFrmScrn,
+                          (){
+                            objReciboDet = lstReceipts[i];
+                            context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                          }
+                        )
+                      );
+                    }
+
+                    if(tabAprobadas && statusDeposit.toLowerCase() == locGen!.approveReviewLbl.toLowerCase() && lstMenu.length <= lstAprobadas.length){
+                      lstMenu.add(
+                        ItemBoton(
+                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          Colors.white,colorStatus,false,false,'','','','','',
+                          objRutas.rutaDetalleDepositFrmScrn,
+                          (){
+                            objReciboDet = lstReceipts[i];
+                            context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                          }
+                        )
+                      );
+                    }
+
+                    if(tabRechazadas && statusDeposit.toLowerCase() == locGen!.rejectedReviewLbl.toLowerCase() && lstMenu.length <= lstRechazadas.length){
+                      lstMenu.add(
+                        ItemBoton(
+                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          Colors.white,colorStatus,false,false,'','','','','',
+                          objRutas.rutaDetalleDepositFrmScrn,
+                          (){
+                            objReciboDet = lstReceipts[i];
+                            context.push(objRutas.rutaDetalleDepositFrmScrn);                        
+                          }
+                        )
+                      );
+                    }
+                    
                   }
 
-                  if(statusDeposit.toLowerCase() == 'rejected'){
-                    statusDeposit = locGen!.rejectedReviewLbl;
-                    colorStatus = Colors.red;
-                  }
-
-                  if(statusDeposit.toLowerCase() == 'approved'){
-                    statusDeposit = locGen!.approveReviewLbl;
-                    colorStatus = Colors.green;
-                  }
-
-                  if(tabTodas){
-                    lstMenu.add(
-                      ItemBoton(
-                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
-                        Colors.white,colorStatus,false,false,'','','','','',
-                        objRutas.rutaDetalleDepositFrmScrn,
-                        (){
-                          objReciboDet = lstReceipts[i];
-                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
-                        }
+                  itemMap = lstMenu.map(
+                    (item) => FadeInLeft(
+                      duration: const Duration( milliseconds: 250 ),
+                      child: 
+                        ItemsDepositsWidget(
+                          null,
+                          colorTexto: item.color2,
+                          varIdPosicionMostrar: 0,
+                          varEsRelevante: item.esRelevante,
+                          varIdNotificacion: item.ordenNot,
+                          varNumIdenti: item.fechaNotificacion,                      
+                          icon: item.icon,
+                          texto: item.mensajeNotificacion,
+                          texto2: item.mensaje2,
+                          color1: item.color1,
+                          color2: item.color1,
+                          onPress: item.onPress,
+                          varMuestraNotificacionesTrAp: 0,
+                          varMuestraNotificacionesTrProc: 0,
+                          varMuestraNotificacionesTrComp: 0,
+                          varMuestraNotificacionesTrInfo: 0,
+                          varIconoNot: item.idNotificacionGen,
+                          varIconoNotTrans: item.rutaImagen,
+                          permiteGestion: permiteGestion,
+                          rutaNavegacion: item.rutaNavegacion,
+                          amount: item.idSolicitud
+                        ),
                       )
-                    );
-                  }
+                    ).toList();
 
-                  if(tabProgreso && statusDeposit.toLowerCase() == locGen!.pendingReviewLbl.toLowerCase()){
-                    lstMenu.add(
-                      ItemBoton(
-                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
-                        Colors.white,colorStatus,false,false,'','','','','',
-                        objRutas.rutaDetalleDepositFrmScrn,
-                        (){
-                          objReciboDet = lstReceipts[i];
-                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
-                        }
-                      )
-                    );
-                  }
-
-                  if(tabAprobadas && statusDeposit.toLowerCase() == 'approved'){
-                    lstMenu.add(
-                      ItemBoton(
-                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
-                        Colors.white,colorStatus,false,false,'','','','','',
-                        objRutas.rutaDetalleDepositFrmScrn,
-                        (){
-                          objReciboDet = lstReceipts[i];
-                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
-                        }
-                      )
-                    );
-                  }
-
-                  if(tabRechazadas && statusDeposit.toLowerCase() == 'rejected'){
-                    lstMenu.add(
-                      ItemBoton(
-                        '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                        i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
-                        Colors.white,colorStatus,false,false,'','','','','',
-                        objRutas.rutaDetalleDepositFrmScrn,
-                        (){
-                          objReciboDet = lstReceipts[i];
-                          context.push(objRutas.rutaDetalleDepositFrmScrn);                        
-                        }
-                      )
-                    );
-                  }
-                  
                 }
 
+                /*
                 if(searchQueryDeposit.isNotEmpty){
                   filteredTransactions = lstMenu
                     .where((tx) => tx.mensajeNotificacion.toLowerCase().contains(searchQueryDeposit.toLowerCase()))
@@ -201,36 +239,7 @@ class DepositViewSt extends State<DepositView> {
                     }
                   }                  
                 }
-
-                itemMap = lstMenu.map(
-                (item) => FadeInLeft(
-                  duration: const Duration( milliseconds: 250 ),
-                  child: 
-                    ItemsDepositsWidget(
-                      null,
-                      colorTexto: item.color2,
-                      varIdPosicionMostrar: 0,
-                      varEsRelevante: item.esRelevante,
-                      varIdNotificacion: item.ordenNot,
-                      varNumIdenti: item.fechaNotificacion,                      
-                      icon: item.icon,
-                      texto: item.mensajeNotificacion,
-                      texto2: item.mensaje2,
-                      color1: item.color1,
-                      color2: item.color1,
-                      onPress: item.onPress,
-                      varMuestraNotificacionesTrAp: 0,
-                      varMuestraNotificacionesTrProc: 0,
-                      varMuestraNotificacionesTrComp: 0,
-                      varMuestraNotificacionesTrInfo: 0,
-                      varIconoNot: item.idNotificacionGen,
-                      varIconoNotTrans: item.rutaImagen,
-                      permiteGestion: permiteGestion,
-                      rutaNavegacion: item.rutaNavegacion,
-                      amount: item.idSolicitud
-                    ),
-                  )
-                ).toList();                
+                */
 
                 gnrBloc.setCargando(false);
                 

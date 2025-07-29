@@ -193,8 +193,8 @@ class AuthScreenSt extends StatelessWidget {
                       children: [
                         SimpleDialogLoad(
                           null,
-                          mensajeMostrar: 'Estamos validando',
-                          mensajeMostrarDialogCargando: 'tus credenciales',
+                          mensajeMostrar: locGen!.msmLog1Lbl,
+                          mensajeMostrarDialogCargando: locGen!.msmLog2Lbl,
                         ),
                       ]
                     ),

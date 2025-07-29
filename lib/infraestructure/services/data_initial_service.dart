@@ -129,7 +129,7 @@ class DataInicialService extends ChangeNotifier{
 
       return respCmbLst;
     }
-    catch(ex){
+    catch(_){
       //print('Error gen: $ex');
       return '';
     }

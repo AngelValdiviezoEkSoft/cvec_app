@@ -472,9 +472,10 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   height: size.height * 0.05,
                   color: Colors.transparent,
                   child: IconButton(
-                    icon: const FaIcon(FontAwesomeIcons.youtube),
-                    //color: Colors.white,                  
-                    onPressed: () async {                                        
+                    icon: const FaIcon(FontAwesomeIcons.youtube),                    
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
+                    onPressed: () async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => NavigationScreen(null, ruta: 'https://www.youtube.com/@centrodeviajesecuador',)),
@@ -497,7 +498,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     icon: const FaIcon(FontAwesomeIcons.facebook),
-                    //color: Colors.white,                  
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -521,7 +523,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     icon: const FaIcon(FontAwesomeIcons.instagram),
-                    //color: Colors.white,                  
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -542,7 +545,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     icon: const FaIcon(FontAwesomeIcons.whatsapp),
-                    //color: Colors.white,                  
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
                     onPressed: () async {
                       launchUrl(Uri.parse('https://wa.me/593979856428?text=Unos%20de%20nuestros%20asesores%20se%20comunicara%20con%20usted'));
                     },
@@ -563,7 +567,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     icon: const FaIcon(FontAwesomeIcons.linkedin),
-                    //color: Colors.white,                  
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
                     onPressed: () async {
                       Navigator.push(
                         context,
@@ -587,7 +592,8 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                   color: Colors.transparent,
                   child: IconButton(
                     icon: const FaIcon(FontAwesomeIcons.tiktok),
-                    //color: Colors.white,                  
+                    color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                     Colors.white : Color(0xFF142950),
                     onPressed: () async {
                       Navigator.push(
                         context,

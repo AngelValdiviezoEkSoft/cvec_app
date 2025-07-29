@@ -353,4 +353,76 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get minimumTenCharacterValidatePasswordLbl => 'Minimum 10 characters';
+
+  @override
+  String get msmLog1Lbl => 'We are validating';
+
+  @override
+  String get msmLog2Lbl => 'your credentials';
+
+  @override
+  String get msmSafeLbl => 'We are recording';
+
+  @override
+  String get msmSafePayLbl => 'your payment';
+
+  @override
+  String get msmSafeDeviceLbl => 'your device';
+
+  @override
+  String get reservReportLbl => 'Reservation Report';
+
+  @override
+  String get reservSeqLbl => 'Reservation Sequence';
+
+  @override
+  String get checkInDateLbl => 'Check-in Date';
+
+  @override
+  String get checkOutDateLbl => 'Check-out Date';
+
+  @override
+  String get hotelLbl => 'Hotel';
+
+  @override
+  String get includesLbl => 'Includes';
+
+  @override
+  String get contractSeqLbl => 'Contract Sequence';
+
+  @override
+  String get roomsLbl => 'Rooms';
+
+  @override
+  String get statusLbl => 'Status';
+
+  @override
+  String get categoryLbl => 'Category';
+
+  @override
+  String get adminServLbl => 'Administrative Services';
+
+  @override
+  String get observationLbl => 'Observation';
+
+  @override
+  String get authSignatLbl => 'Authorized signature';
+
+  @override
+  String get clientSignatLbl => 'Client signature';
+
+  @override
+  String get persRespAdmLbl => 'Person responsible for admission';
+
+  @override
+  String get thkYourPaymentLbl => 'Thank you for your payment';
+
+  @override
+  String get establishmentLbl => 'Establishment';
+
+  @override
+  String get officeLbl => 'Office';
+
+  @override
+  String get phoneLbl => 'Phone';
 }

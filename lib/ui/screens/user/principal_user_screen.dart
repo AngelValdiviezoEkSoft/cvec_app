@@ -83,6 +83,7 @@ class PrincipalClientStScreen extends StatelessWidget {
     final gnrBloc = Provider.of<GenericBloc>(context);
 
     final fontSizeManager = Provider.of<FontSizeManager>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
@@ -103,7 +104,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                 direccionUserPrp = rsp['result']['data'][0]['street'] ?? '';
               }
 
-              final themeProvider = Provider.of<ThemeProvider>(context);
+              //final themeProvider = Provider.of<ThemeProvider>(context);
 
               Color colorLblEstadoCuenta = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
               Color colorLblDeuda = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
@@ -419,8 +420,24 @@ class PrincipalClientStScreen extends StatelessWidget {
                                   repeatForever: true,
                                   pause: const Duration(microseconds: 1000),
                                   animatedTexts: [
-                                    ScaleAnimatedText(locGen!.titulo1Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
-                                    ScaleAnimatedText(locGen!.titulo2Introduccion, textAlign: TextAlign.center, textStyle: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize18))),
+                                    ScaleAnimatedText(
+                                      locGen!.titulo1Introduccion, 
+                                      textAlign: TextAlign.center, 
+                                      textStyle: TextStyle(
+                                        fontSize: fontSizeManager.get(FontSizesConfig().fontSize18),
+                                        color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                          Colors.black : Colors.white,
+                                      )
+                                    ),
+                                    ScaleAnimatedText(
+                                      locGen!.titulo2Introduccion, 
+                                      textAlign: TextAlign.center, 
+                                      textStyle: TextStyle(
+                                        fontSize: fontSizeManager.get(FontSizesConfig().fontSize18),
+                                        color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                          Colors.black : Colors.white,
+                                      )
+                                    ),
                                   ],
                                   onTap: () {
                                   },

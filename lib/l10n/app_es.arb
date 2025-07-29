@@ -472,5 +472,101 @@
   "minimumTenCharacterValidatePasswordLbl": "Mínimo 10 caracteres",
   "@minimumTenCharacterValidatePasswordLbl": {
     "description": "Mínimo 10 caracteres"
+  },
+  "msmLog1Lbl": "Estamos validando",
+  "@msmLog1Lbl": {
+    "description": "Estamos validando"
+  },
+  "msmLog2Lbl": "tus credenciales",
+  "@msmLog2Lbl": {
+    "description": "tus credenciales"
+  },
+  "msmSafeLbl": "Estamos registrando",
+  "@msmSafeLbl": {
+    "description": "Estamos registrando"
+  },
+  "msmSafePayLbl": "tu pago",
+  "@msmSafePayLbl": {
+    "description": "tu pago"
+  },
+  "msmSafeDeviceLbl": "tu dispositivo",
+  "@msmSafeDeviceLbl": {
+    "description": "tu dispositivo"
+  },
+  "reservReportLbl": "Reporte de Reservas",
+  "@reservReportLbl": {
+    "description": "Reporte de Reservas"
+  },
+  "reservSeqLbl": "Secuencia de reserva",
+  "@reservSeqLbl": {
+    "description": "Secuencia de reserva"
+  },
+  "checkInDateLbl": "Fecha de ingreso",
+  "@checkInDateLbl": {
+    "description": "Fecha de ingreso"
+  },
+  "checkOutDateLbl": "Fecha de salida",
+  "@checkOutDateLbl": {
+    "description": "Fecha de salida"
+  },
+  "hotelLbl": "Hotel",
+  "@hotelLbl": {
+    "description": "Hotel"
+  },
+  "includesLbl": "Incluye",
+  "@includesLbl": {
+    "description": "Incluye"
+  },
+  "contractSeqLbl": "Secuencia de contrato",
+  "@contractSeqLbl": {
+    "description": "Secuencia de contrato"
+  },
+  "roomsLbl": "Habitaciones",
+  "@roomsLbl": {
+    "description": "Habitaciones"
+  },
+  "statusLbl": "Estado",
+  "@statusLbl": {
+    "description": "Estado"
+  },
+  "categoryLbl": "Rubro",
+  "@categoryLbl": {
+    "description": "Rubro"
+  },
+  "adminServLbl": "Servicios Adm.",
+  "@adminServLbl": {
+    "description": "Servicios Adm."
+  },
+  "observationLbl": "Observación",
+  "@observationLbl": {
+    "description": "Observación"
+  },
+  "authSignatLbl": "Firma autorizada",
+  "@authSignatLbl": {
+    "description": "Firma autorizada"
+  },
+  "clientSignatLbl": "Firma cliente",
+  "@clientSignatLbl": {
+    "description": "Firma cliente"
+  },
+  "persRespAdmLbl": "Responsable del ingreso",
+  "@persRespAdmLbl": {
+    "description": "Responsable del ingreso"
+  },
+  "thkYourPaymentLbl": "Gracias por su pago",
+  "@thkYourPaymentLbl": {
+    "description": "Gracias por su pago"
+  },
+  "establishmentLbl": "Establecimiento",
+  "@establishmentLbl": {
+    "description": "Establecimiento"
+  },
+  "officeLbl": "Oficina",
+  "@officeLbl": {
+    "description": "Oficina"
+  },
+  "phoneLbl": "Teléfono",
+  "@phoneLbl": {
+    "description": "Teléfono"
   }
 }

@@ -778,6 +778,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Minimum 10 characters'**
   String get minimumTenCharacterValidatePasswordLbl;
+
+  /// No description provided for @msmLog1Lbl.
+  ///
+  /// In en, this message translates to:
+  /// **'We are validating'**
+  String get msmLog1Lbl;
+
+  /// No description provided for @msmLog2Lbl.
+  ///
+  /// In en, this message translates to:
+  /// **'your credentials'**
+  String get msmLog2Lbl;
+
+  /// No description provided for @msmSafeLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'We are recording'**
+  String get msmSafeLbl;
+
+  /// No description provided for @msmSafePayLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'your payment'**
+  String get msmSafePayLbl;
+
+  /// No description provided for @msmSafeDeviceLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'your device'**
+  String get msmSafeDeviceLbl;
+
+  /// No description provided for @reservReportLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation Report'**
+  String get reservReportLbl;
+
+  /// No description provided for @reservSeqLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Reservation Sequence'**
+  String get reservSeqLbl;
+
+  /// No description provided for @checkInDateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in Date'**
+  String get checkInDateLbl;
+
+  /// No description provided for @checkOutDateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-out Date'**
+  String get checkOutDateLbl;
+
+  /// No description provided for @hotelLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel'**
+  String get hotelLbl;
+
+  /// No description provided for @includesLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes'**
+  String get includesLbl;
+
+  /// No description provided for @contractSeqLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Contract Sequence'**
+  String get contractSeqLbl;
+
+  /// No description provided for @roomsLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Rooms'**
+  String get roomsLbl;
+
+  /// No description provided for @statusLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get statusLbl;
+
+  /// No description provided for @categoryLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryLbl;
+
+  /// No description provided for @adminServLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrative Services'**
+  String get adminServLbl;
+
+  /// No description provided for @observationLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Observation'**
+  String get observationLbl;
+
+  /// No description provided for @authSignatLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorized signature'**
+  String get authSignatLbl;
+
+  /// No description provided for @clientSignatLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Client signature'**
+  String get clientSignatLbl;
+
+  /// No description provided for @persRespAdmLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Person responsible for admission'**
+  String get persRespAdmLbl;
+
+  /// No description provided for @thkYourPaymentLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your payment'**
+  String get thkYourPaymentLbl;
+
+  /// No description provided for @establishmentLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Establishment'**
+  String get establishmentLbl;
+
+  /// No description provided for @officeLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Office'**
+  String get officeLbl;
+
+  /// No description provided for @phoneLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phoneLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

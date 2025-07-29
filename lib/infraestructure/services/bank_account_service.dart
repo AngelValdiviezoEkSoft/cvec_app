@@ -52,8 +52,8 @@ class BankAccountService extends ChangeNotifier{
       return objConv.result.data.resPartnerBank.data;
       
     }
-    catch(ex){
-      print('Test DataInit $ex');
+    catch(_){
+      //print('Test DataInit $ex');
       return [];
     }
   }

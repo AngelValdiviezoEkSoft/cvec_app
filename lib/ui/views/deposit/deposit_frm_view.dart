@@ -629,7 +629,23 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                         actions: [
                                           ElevatedButton(
                                             onPressed: () async {
+                                              
                                               if (_formKey.currentState!.validate()) {
+
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: false,
+                                                  builder: (context) => SimpleDialog(
+                                                    alignment: Alignment.center,
+                                                    children: [
+                                                      SimpleDialogLoad(
+                                                        null,
+                                                        mensajeMostrar: locGen!.msmSafeLbl,
+                                                        mensajeMostrarDialogCargando: locGen!.msmSafePayLbl,
+                                                      ),
+                                                    ]
+                                                  ),
+                                                );
           
                                                 gnrBloc.setShowViewAccountStatementEvent(false);
                                                 gnrBloc.setShowViewDebts(false);
@@ -684,7 +700,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 }
 
                                                 //ignore: use_build_context_synchronously
-                                                //Navigator.of(context).pop();
+                                                context.pop();
 
                                                 showDialog(
                                                   //ignore:use_build_context_synchronously
