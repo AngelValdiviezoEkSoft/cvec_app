@@ -38,6 +38,7 @@ import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' 
 
   String fechaHoraEscogida = '';
   String fechaHoraEscogidaMuestra = '';
+  BuildContext? contextPage;
 
 class DepositFrmView extends StatefulWidget {
   const DepositFrmView(Key? key) : super(key: key);
@@ -112,6 +113,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
     gnrBloc.setCargando(false);
 
     lstBankAccount = [];
+    contextPage = context;
   }
 
   @override
@@ -120,6 +122,8 @@ class DepositFrmViewState extends State<DepositFrmView> {
     final size = MediaQuery.of(context).size;
     contextPrincipalGen = context;
     ColorsApp objColorsApp = ColorsApp();
+
+    final parentContext = Navigator.of(context).context;
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
@@ -632,6 +636,9 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                               
                                               if (_formKey.currentState!.validate()) {
 
+                                                //ignore: use_build_context_synchronously
+                                                Navigator.pop(context);
+
                                                 showDialog(
                                                   context: context,
                                                   barrierDismissible: false,
@@ -700,11 +707,15 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 }
 
                                                 //ignore: use_build_context_synchronously
-                                                context.pop();
+                                                //contextPrincipalGen!.pop();
+
+                                                //final parentContext = Navigator.of(context).context; error aqui
+                                                //ignore: use_build_context_synchronously
+                                                Navigator.pop(parentContext);
 
                                                 showDialog(
                                                   //ignore:use_build_context_synchronously
-                                                  context: context,
+                                                  context: parentContext,
                                                   builder: (BuildContext context) {
                                                     return AlertDialog(
                                                       title: Container(
@@ -747,7 +758,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 );
                                                 
                                                 //ignore: use_build_context_synchronously
-                                                context.push(objRutas.rutaConfDepositScreen);
+                                                parentContext.push(objRutas.rutaConfDepositScreen);
           /*
                                                 setState(() {
                                                   //_pickedFile = null;
