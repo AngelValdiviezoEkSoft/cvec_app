@@ -9,6 +9,10 @@ final objRutas = RoutersApp();
 final GoRouter appRouter = GoRouter(
   routes: [//
   GoRoute(
+    path: objRutas.rutaGpsAccessScrn,
+    builder: (context, state) => const GpsAccessScreen(null),
+  ),
+  GoRoute(
     path: objRutas.rutaAccountDetScrn,
     builder: (context, state) => const DetAccountStatementScreen(null),
   ),
@@ -69,16 +73,19 @@ final GoRouter appRouter = GoRouter(
                   if(snapshot.data == 'log') {
                     return const AuthScreen(null);
                   }
+                  /*
                   if(snapshot.data == 'termCond') {
                     return const TermsAndConditionsScreen(null);
                   }
+                  */
                   if(snapshot.data == 'home') {                    
                     return const PrincipalUserScreen(null);
                   }
                 }
               }
               
-              return RegisterPhoneScreen(null);
+              //return RegisterPhoneScreen(null);
+              return const AuthScreen(null);
             }
           );
         

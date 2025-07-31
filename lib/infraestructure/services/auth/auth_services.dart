@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
-import 'package:cve_app/infraestructure/services/data_initial_service.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -184,7 +181,7 @@ class AuthServices extends ChangeNotifier {
   }
   //#endregion
 
-  
+  /*
   login(AuthRequest authRequest) async {
     try {
 
@@ -319,12 +316,61 @@ class AuthServices extends ChangeNotifier {
       //print('Test Error1: $ex');
     }
   }
+*/
+
+  login(AuthRequest authRequest) async {
+    try {
+
+      String resInt = await ValidationsUtils().validaInternet();
+
+      if(resInt.isNotEmpty){
+        return 'NI';
+      }
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}auth/user';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": jsonRpc,
+        "params": {
+          "login": authRequest.login,
+          "password": authRequest.password
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return response.body;
+      }
+
+      await storage.write(key: 'RespuestaLogin', value: response.body);
+
+      return response.body;
+    } catch (_) {
+      //print('Test Error1: $ex');
+    }
+  }
+
 
   Future<String> getDatosPerfil() async {    
     final rspLogin = await storage.read(key: 'DataUser') ?? '';
     //final jsonLog = json.decode(rspLogin);
 
     return rspLogin;//jsonEncode(objFiltrado);
+    //return "TST";//jsonEncode(objFiltrado);
   }
 
 

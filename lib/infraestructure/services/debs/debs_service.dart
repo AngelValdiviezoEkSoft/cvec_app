@@ -66,7 +66,7 @@ class DebsService extends ChangeNotifier{
       
       SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(jsonDecode(objRsp));
 
-      return objConv.result.data.data;      
+      return objConv.result.data.customerStatementContracts.data;      
     }
     catch(_){
       //print('Test DataInit $ex');

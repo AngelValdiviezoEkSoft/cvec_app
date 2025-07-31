@@ -34,10 +34,11 @@ class ProfileScreen extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
 
           if(snapshot.hasData){
+            direccionUser = '';
+
             var rsp = jsonDecode('${snapshot.data}');
               
-            //cellProf = rsp.phone ?? '';
-            direccionUser = rsp['result']['data'][0]['street'] ?? '';
+            direccionUser = rsp['result']['street'] ?? '';
           }
 
           return SingleChildScrollView(

@@ -199,150 +199,24 @@ class AuthScreenSt extends StatelessWidget {
                       ]
                     ),
                   );
-        
-                  const storage = FlutterSecureStorage();
-                  final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
-          
-                  if(objStr.isNotEmpty){
-        
-                    var obj = RegisterDeviceResponseModel.fromJson(objStr);
-        
-                    AuthRequest objAuthRequest  = AuthRequest(
-                      db: obj.result.database,
-                      login: userTxt.text,
-                      password: passWordTxt.text
-                    );
-        
-                    try {
-                      
-                      var resp = await AuthServices().login(objAuthRequest);
-        
-                      userTxt = TextEditingController();
-                      passWordTxt = TextEditingController();
-        
-                      if(resp == 'NI'){
-                        //ignore: use_build_context_synchronously
-                        context.pop();
-        
-                        showDialog(
-                          //ignore: use_build_context_synchronously
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Container(
-                                color: Colors.transparent,
-                                height: size.height * 0.22,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    
-                                    Container(
-                                      color: Colors.transparent,
-                                      height: size.height * 0.1,
-                                      child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
-                                    ),
-        
-                                    Container(
-                                      color: Colors.transparent,
-                                      width: size.width * 0.95,
-                                      height: size.height * 0.11,
-                                      alignment: Alignment.center,
-                                      child: const AutoSizeText(
-                                        'No tiene acceso a internet',
-                                        maxLines: 2,
-                                        minFontSize: 2,
-                                      ),
-                                    ),
-                                    
-                                  ],
-                                )
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      
-                        return;
-                      }
+      
+                  AuthRequest objAuthRequest  = AuthRequest(
+                    db: '',
+                    login: userTxt.text,
+                    password: passWordTxt.text
+                  );
+      
+                  try {
                     
-                      final data = json.decode(resp);
-                      
-                      final objError = data['error'];
-                      
+                    var resp = await AuthServices().login(objAuthRequest);
+      
+                    userTxt = TextEditingController();
+                    passWordTxt = TextEditingController();
+      
+                    if(resp == 'NI'){
                       //ignore: use_build_context_synchronously
                       context.pop();
-        
-                      if(objError == null) {
-                        displayName = data["result"]["partner_display_name"] ?? '';
-        
-                        const storage = FlutterSecureStorage();
-        
-                        await storage.write(key: 'PartnerDisplayName', value: displayName);
-        
-                        //ignore: use_build_context_synchronously
-                        context.push(objRutas.rutaPrincipalUser);
-                      } else {
-                        final msmError = data['error']['data']['name'];
-        
-                        showDialog(
-                          //ignore: use_build_context_synchronously
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Container(
-                                color: Colors.transparent,
-                                height: size.height * 0.22,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    
-                                    Container(
-                                      color: Colors.transparent,
-                                      height: size.height * 0.1,
-                                      child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
-                                    ),
-        
-                                    Container(
-                                      color: Colors.transparent,
-                                      width: size.width * 0.95,
-                                      height: size.height * 0.11,
-                                      alignment: Alignment.center,
-                                      child: AutoSizeText(
-                                        msmError,
-                                        maxLines: 2,
-                                        minFontSize: 4,
-                                      ),
-                                    ),
-                                    
-                                  ],
-                                )
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    // Acción para solicitar revisión
-                                    Navigator.of(context).pop();
-                                    //Navigator.of(context).pop();
-                                  },
-                                  child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      }
-                    }
-                    catch(ex){
-                      //ignore: use_build_context_synchronously
-                      context.pop();
-        
+      
                       showDialog(
                         //ignore: use_build_context_synchronously
                         context: context,
@@ -360,16 +234,16 @@ class AuthScreenSt extends StatelessWidget {
                                     height: size.height * 0.1,
                                     child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
                                   ),
-        
+      
                                   Container(
                                     color: Colors.transparent,
                                     width: size.width * 0.95,
                                     height: size.height * 0.11,
                                     alignment: Alignment.center,
-                                    child: AutoSizeText(
-                                      ex.toString(),
+                                    child: const AutoSizeText(
+                                      'No tiene acceso a internet',
                                       maxLines: 2,
-                                      minFontSize: 4,
+                                      minFontSize: 2,
                                     ),
                                   ),
                                   
@@ -386,8 +260,131 @@ class AuthScreenSt extends StatelessWidget {
                             ],
                           );
                         },
-                      );                        
+                      );
+                    
+                      return;
                     }
+                  
+                    final data = json.decode(resp);
+                    
+                    final objError = data['error'];
+                    
+                    //ignore: use_build_context_synchronously
+                    context.pop();
+      
+                    if(objError == null) {
+                      displayName = data["result"]["user_name"] ?? '';
+      
+                      const storage = FlutterSecureStorage();
+      
+                      await storage.write(key: 'DataUser', value: resp);
+                      await storage.write(key: 'PartnerDisplayName', value: displayName);
+                      /*
+                      await storage.write(key: 'StreetUser', value: data["result"]["street"] ?? '');
+                      await storage.write(key: 'EmailUser', value: data["result"]["email"] ?? '');
+                      await storage.write(key: 'PhoneUser', value: data["result"]["phone"] ?? '');
+      */
+                      //ignore: use_build_context_synchronously
+                      context.push(objRutas.rutaPrincipalUser);
+                    } else {
+                      final msmError = data['error']['data']['name'];
+      
+                      showDialog(
+                        //ignore: use_build_context_synchronously
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Container(
+                              color: Colors.transparent,
+                              height: size.height * 0.22,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  
+                                  Container(
+                                    color: Colors.transparent,
+                                    height: size.height * 0.1,
+                                    child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
+                                  ),
+      
+                                  Container(
+                                    color: Colors.transparent,
+                                    width: size.width * 0.95,
+                                    height: size.height * 0.11,
+                                    alignment: Alignment.center,
+                                    child: AutoSizeText(
+                                      msmError,
+                                      maxLines: 2,
+                                      minFontSize: 4,
+                                    ),
+                                  ),
+                                  
+                                ],
+                              )
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  // Acción para solicitar revisión
+                                  Navigator.of(context).pop();
+                                  //Navigator.of(context).pop();
+                                },
+                                child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  }
+                  catch(ex){
+                    //ignore: use_build_context_synchronously
+                    context.pop();
+      
+                    showDialog(
+                      //ignore: use_build_context_synchronously
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Container(
+                            color: Colors.transparent,
+                            height: size.height * 0.22,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                
+                                Container(
+                                  color: Colors.transparent,
+                                  height: size.height * 0.1,
+                                  child: Image.asset('assets/gifs/gifErrorBlanco.gif'),
+                                ),
+      
+                                Container(
+                                  color: Colors.transparent,
+                                  width: size.width * 0.95,
+                                  height: size.height * 0.11,
+                                  alignment: Alignment.center,
+                                  child: AutoSizeText(
+                                    ex.toString(),
+                                    maxLines: 2,
+                                    minFontSize: 4,
+                                  ),
+                                ),
+                                
+                              ],
+                            )
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                            ),
+                          ],
+                        );
+                      },
+                    );                        
                   }
                     
                 },

@@ -229,7 +229,7 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                     color: Colors.white, 
                   ),
                   color: Colors.white,
-                  tooltip: 'Ingrese',
+                  tooltip: locGen!.enterLbl,
                   onPressed: () async {
                     context.push(objRutas.rutaAuth);
                     /*

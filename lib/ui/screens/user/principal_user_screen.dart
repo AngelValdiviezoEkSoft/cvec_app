@@ -99,9 +99,12 @@ class PrincipalClientStScreen extends StatelessWidget {
               if(snapshot.hasData){
                 direccionUserPrp = '';
 
-                var rsp = jsonDecode('${snapshot.data}');
+                if(snapshot.data != null){
+                  var rsp = jsonDecode('${snapshot.data}');
               
-                direccionUserPrp = rsp['result']['data'][0]['street'] ?? '';
+                  direccionUserPrp = rsp["result"]["street"] ?? '';
+                }
+
               }
 
               //final themeProvider = Provider.of<ThemeProvider>(context);

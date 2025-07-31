@@ -928,6 +928,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Frame the QR code within the purple frame'**
   String get orderQrLbl;
+
+  /// No description provided for @pleaseWaitLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Wait'**
+  String get pleaseWaitLbl;
+
+  /// No description provided for @enterLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter'**
+  String get enterLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

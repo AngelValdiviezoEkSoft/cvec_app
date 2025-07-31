@@ -137,5 +137,7 @@
     "establishmentLbl": "Establishment",
     "officeLbl": "Office",
     "phoneLbl": "Phone",
-    "orderQrLbl": "Frame the QR code within the purple frame"
+    "orderQrLbl": "Frame the QR code within the purple frame",
+    "pleaseWaitLbl": "Please Wait",
+    "enterLbl": "Enter"
 }

@@ -572,5 +572,13 @@
   "orderQrLbl": "Encuadra el código QR dentro del marco violeta",
   "@orderQrLbl": {
     "description": "Encuadra el código QR dentro del marco violeta"
+  },
+  "pleaseWaitLbl": "Por favor espera",
+  "@pleaseWaitLbl": {
+    "description": "Por favor espera"
+  },
+  "enterLbl": "Ingrese",
+  "@enterLbl": {
+    "description": "Ingrese"
   }
 }

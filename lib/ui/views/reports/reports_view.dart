@@ -136,7 +136,7 @@ class PdfView extends StatelessWidget {
       
       final bookingResponse = AccountStatementReportResponseModel.fromJson(jsonDecode(objRsp));
 
-      detalleRptCustStatement = bookingResponse.result.data.customerStatement.data;
+      detalleRptCustStatement = bookingResponse.result.data.customerStatementReport.data;
 
       //objCustomerStatementItem = bookingList.firstWhere((x) => x.contractId == idFinal);
 

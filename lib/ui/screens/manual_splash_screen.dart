@@ -51,10 +51,13 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
             if(snapshot.hasData){
               userNameSplash = '';
 
-              var rsp = jsonDecode('${snapshot.data}');
+              if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+                var rsp = jsonDecode('${snapshot.data}');
             
-              if(rsp != null && rsp['result'] != null && rsp['result']['data'] != null){
-                userNameSplash = rsp['result']['data'][0]['name'] ?? '';
+                if(rsp != null && rsp['result'] != null){
+                  //userNameSplash = rsp['result']['data'][0]['name'] ?? '';
+                  userNameSplash = rsp["result"]["user_name"] ?? '';
+                }
               }
               
             }

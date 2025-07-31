@@ -20,6 +20,7 @@ class AccountStatementService extends ChangeNotifier{
     return formKey.currentState?.validate() ?? false;
   }
 
+/*
   Future<List<Subscription>> getAccountStatement() async {
     try {
 
@@ -84,6 +85,78 @@ class AccountStatementService extends ChangeNotifier{
       return [];
     }
   }
+*/
+
+  Future<List<Subscription>> getAccountStatement() async {
+    try {
+
+      String resInt = await ValidationsUtils().validaInternet();
+
+      if(resInt.isNotEmpty){
+        return [];
+      }
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      //var tmp = data["result"]["company_id"];
+
+      //String compIdStr = data["result"]["company_id"] ?? '0';
+      int compId = data["result"]["company_id"] ?? 0;//int.parse(compIdStr);
+
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_statement_contracts",
+          "filters": [
+            ["partner_id", "=", '$partnerId']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
+
+      SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(rspValidacion);
+
+      List<int> lstIdsContratos = [];
+
+      for(int i = 0; i < objConv.result.data.customerStatementContracts.data.length; i++){
+        lstIdsContratos.add(objConv.result.data.customerStatementContracts.data[i].contractId);
+      }
+
+      var _ = await getRptAccountStatement(lstIdsContratos);
+
+      return objConv.result.data.customerStatementContracts.data;      
+    }
+    catch(_){
+      //print('Test DataInit $ex');
+      return [];
+    }
+  }
+
 
   Future<List<Quota>> getDetAccountStatement(idContract) async {
     try {
@@ -170,6 +243,7 @@ class AccountStatementService extends ChangeNotifier{
   Future<List<CustomerStatementItem>> getRptAccountStatement(List<int> contractIds) async {
     try {
 
+/*
       final Map<String, dynamic> body = {
         "jsonrpc": "2.0",
         "params": {
@@ -197,15 +271,47 @@ class AccountStatementService extends ChangeNotifier{
         },
         body: jsonEncode(body),
       );
+      */
 
-      //print('Rsp Lista DET DEBS ${jsonDecode(response.body)}');
+      String resInt = await ValidationsUtils().validaInternet();
+
+      if(resInt.isNotEmpty){
+        return [];
+      }
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
       
-      AccountStatementReportResponseModel objConv = AccountStatementReportResponseModel.fromJson(jsonDecode(response.body));
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "query_type": "customer_statement_report",
+          "filters": [
+            ["contract_ids", "=", jsonEncode(contractIds)]
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      //var rspValidacion = json.decode(response.body);
+      
+      //AccountStatementReportResponseModel objConv = AccountStatementReportResponseModel.fromJson(jsonDecode(response.body));
 
       await storage.write(key: 'ListadoEstadoCuentas', value: '');
       await storage.write(key: 'ListadoEstadoCuentas', value: response.body);
 
-      return objConv.result.data.customerStatement.data;
+      return [];//objConv.result.data.customerStatementReport.data;
     }
     catch(_){
       //print('Test DataInit $ex');

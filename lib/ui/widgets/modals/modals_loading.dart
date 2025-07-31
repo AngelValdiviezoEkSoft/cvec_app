@@ -1,5 +1,6 @@
  
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 
 //ignore: must_be_immutable
@@ -35,7 +36,7 @@ class SimpleDialogLoad extends StatelessWidget {
             ),
 
             const SizedBox(height: 20,),
-            const Text("Por favor espera.", style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontFamily: 'Montserrat',fontSize: 14, fontWeight: FontWeight.bold),),
+            Text(locGen!.pleaseWaitLbl, style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontFamily: 'Montserrat',fontSize: 14, fontWeight: FontWeight.bold),),
 
             Container(
               color: Colors.transparent,

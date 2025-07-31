@@ -28,6 +28,7 @@ class RoutersApp{
   String rutaDetalleDepositFrmScrn = '/rutaDetalleDepositFrmScrn';
   String rutaDebsDetScrn = '/rutaDebsDetScrn';
   String rutaAccountDetScrn = '/rutaAccountDetScrn';
+  String rutaGpsAccessScrn = '/rutaAccountDetScrn';
   //
 
   //imágenes 
