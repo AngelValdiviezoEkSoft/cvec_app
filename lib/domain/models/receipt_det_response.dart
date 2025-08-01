@@ -72,6 +72,12 @@ class PaymentLine {
   String? quotaName;
   String? quotaCode;
   double? lineAmount;
+  String companyStreet;
+  String companyStreet2;
+  String companyWebsite;
+  String customerName;
+  String paymentRef;
+  String companyPhone;
 
   PaymentLine({
     this.lineId,
@@ -83,6 +89,12 @@ class PaymentLine {
     this.quotaName,
     this.quotaCode,
     this.lineAmount,
+    required this.companyStreet,
+    required this.companyStreet2,
+    required this.companyWebsite,
+    required this.customerName,
+    required this.paymentRef,
+    required this.companyPhone,
   });
 
   factory PaymentLine.fromJson(Map<String, dynamic> json) {
@@ -94,8 +106,14 @@ class PaymentLine {
       quotaType: json['quota_type'] ?? '',
       quotaId: json['quota_id'] ?? 0,
       quotaName: json['quota_name'] ?? '',
-      lineAmount: json['line_amount']?.toDouble(),
+      lineAmount: json['line_amount'] != null ? json['line_amount']?.toDouble() : 0,
       quotaCode: json['quota_code'],
+      companyStreet: json['company_street'] ?? '',
+      companyStreet2: json['company_street2'] ?? '',
+      companyWebsite: json['company_website'] ?? '',
+      customerName: json['customer_name'] ?? '',
+      paymentRef: json['payment_ref'] ?? '',
+      companyPhone: json['company_phone'] ?? '',
     );
   }
 }

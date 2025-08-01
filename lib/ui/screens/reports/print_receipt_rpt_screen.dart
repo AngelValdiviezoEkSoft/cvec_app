@@ -48,9 +48,34 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
   double subTot = 0;
 
   if(detRpt.isNotEmpty) {
-    for(int i = 0; i < detRpt.length; i++){
-      var amount = detRpt[i].lineAmount?.toStringAsFixed(2) ?? 0;
 
+    if(objPayment.companyStreet.isEmpty){
+      objPayment.companyStreet = detRpt.last.companyStreet;
+    }
+
+    if(objPayment.companyPhone.isEmpty){
+      objPayment.companyPhone = detRpt.last.companyPhone;
+    }
+
+    if(objPayment.companyStreet2.isEmpty){
+      objPayment.companyStreet2 = detRpt.last.companyStreet2;
+    }
+
+    if(objPayment.companyWebsite.isEmpty){
+      objPayment.companyWebsite = detRpt.last.companyWebsite;
+    }
+
+    if(objPayment.customerName.isEmpty){
+      objPayment.customerName = detRpt.last.customerName;
+    }
+
+    if(objPayment.paymentRef.isEmpty){
+      objPayment.paymentRef = detRpt.last.paymentRef;
+    }
+
+    for(int i = 0; i < detRpt.length; i++){
+      
+      var amount = detRpt[i].lineAmount?.toStringAsFixed(2) ?? 0;
 
       if(detRpt[i].quotaCode != 'CPT'){
         subTot = subTot + (detRpt[i].lineAmount ?? 0);
