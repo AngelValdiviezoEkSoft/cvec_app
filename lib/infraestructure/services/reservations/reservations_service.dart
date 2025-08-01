@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-//import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 const storageProspecto = FlutterSecureStorage();
 AlertsMessages objMensajesProspectoService = AlertsMessages();
@@ -28,44 +27,57 @@ class ReservationsService extends ChangeNotifier{
   Future<List<Booking>?> getReservations() async {
     try{
 
-      var codImei = await storageProspecto.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storageProspecto.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storageProspecto.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      List<MultiModel> lstMultiModel = [];
+      final data = json.decode(resp);
 
-      lstMultiModel.add(
-        MultiModel(model: 'crm.lead')
-      );
+      int compId = data["result"]["company_id"] ?? 0;
+      int partnerId = data["result"]["partner_id"] ?? 0;
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: 0,
-          models: lstMultiModel
-        )
-      );
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.contract.bookings", false, '');
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_bookings",
+          "filters": [
+            ["partner_id", "=", '$partnerId']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
 
       await storage.write(key: 'ListadoReservaciones', value: '');
-      await storage.write(key: 'ListadoReservaciones', value: objRsp);
+      await storage.write(key: 'ListadoReservaciones', value: response.body);
 
-      final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
+      final bookingResponse = BookingResponse.fromJson(rspValidacion);
 
-      List<Booking> bookingList = bookingResponse.result.data.bookings.data;
+      List<Booking> bookingList = bookingResponse.result.data.customerBookings.data;
 
       return bookingList;
     }

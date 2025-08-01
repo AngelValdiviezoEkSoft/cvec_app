@@ -2,10 +2,10 @@
 import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 
 class DebsService extends ChangeNotifier{
 
@@ -22,49 +22,52 @@ class DebsService extends ChangeNotifier{
   Future<List<Subscription>> getDebts() async {
     try {
 
-      var codImei = await storage.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: 0,
-          models: []
-        )
-      );
+      final data = json.decode(resp);
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "sale.subscription", true, '');
+      int compId = data["result"]["company_id"] ?? 0;
+      int partnerId = data["result"]["partner_id"] ?? 0;
 
-      var rspValidacion = json.decode(objRsp);
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
-      if(rspValidacion['result']['mensaje'] != null){
-        final TokenManager tokenManager = TokenManager();
-        
-        String msmFinal = rspValidacion['result']['mensaje'].toString().trim().toLowerCase();
-
-        //rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado
-
-        //if(rspValidacion['result']['mensaje'] != null && (rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenNoValido || rspValidacion['result']['mensaje'].toString().trim().toLowerCase() == MessageValidation().tockenExpirado)){
-        if(msmFinal.contains(MessageValidation().tockenNoValido) || msmFinal.contains(MessageValidation().tockenExpirado)){
-          await tokenManager.checkTokenExpiration();
-          await getDebts();
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_debts_contracts",
+          "filters": [
+            ["partner_id", "=", '$partnerId']
+          ]
         }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
       }
       
-      SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(jsonDecode(objRsp));
+      SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(rspValidacion);
 
       return objConv.result.data.customerStatementContracts.data;      
     }
@@ -77,37 +80,55 @@ class DebsService extends ChangeNotifier{
   Future<List<Quota>> getDetDebts(idContract) async {
     try {
 
-      var codImei = await storage.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: idContract,
-          models: []
-        )
-      );
+      final data = json.decode(resp);
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true, '');
+      int compId = data["result"]["company_id"] ?? 0;
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_debts_quotas",
+          "filters": [
+            ["contract_id", "=", '$idContract']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
 
       //print('Rsp Lista DET DEBS $objRsp');
       
-      SuscriptionDetResponseModel objConv = SuscriptionDetResponseModel.fromJson(jsonDecode(objRsp));
+      CustomerStatementQuotasResponse objConv = CustomerStatementQuotasResponse.fromJson(rspValidacion);
 
-      return objConv.result.data.ekTravelSubscriptionQuota.data;
+      return objConv.result.data.customerStatementQuotas.data;
     }
     catch(_){
       //print('Test DataInit $ex');

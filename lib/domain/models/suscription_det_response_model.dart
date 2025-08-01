@@ -1,4 +1,4 @@
-
+/*
 class SuscriptionDetResponseModel {
   final String jsonrpc;
   final dynamic id;
@@ -107,4 +107,140 @@ class Quota {
       quotaState: json['quota_state'] ?? '',
     );
   }
+}
+*/
+
+class CustomerStatementQuotasResponse {
+  final String jsonrpc;
+  final dynamic id;
+  final ResultCustomerStatementQuota result;
+
+  CustomerStatementQuotasResponse({
+    required this.jsonrpc,
+    required this.id,
+    required this.result,
+  });
+
+  factory CustomerStatementQuotasResponse.fromJson(Map<String, dynamic> json) {
+    return CustomerStatementQuotasResponse(
+      jsonrpc: json['jsonrpc'],
+      id: json['id'],
+      result: ResultCustomerStatementQuota.fromJson(json['result']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'jsonrpc': jsonrpc,
+        'id': id,
+        'result': result.toJson(),
+      };
+}
+
+class ResultCustomerStatementQuota {
+  final int estado;
+  final DataCustomerStatementQuota data;
+
+  ResultCustomerStatementQuota({
+    required this.estado,
+    required this.data,
+  });
+
+  factory ResultCustomerStatementQuota.fromJson(Map<String, dynamic> json) {
+    return ResultCustomerStatementQuota(
+      estado: json['estado'],
+      data: DataCustomerStatementQuota.fromJson(json['data']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'estado': estado,
+        'data': data.toJson(),
+      };
+}
+
+class DataCustomerStatementQuota {
+  final CustomerStatementQuotas customerStatementQuotas;
+
+  DataCustomerStatementQuota({
+    required this.customerStatementQuotas,
+  });
+
+  factory DataCustomerStatementQuota.fromJson(Map<String, dynamic> json) {
+    return DataCustomerStatementQuota(
+      customerStatementQuotas:
+          CustomerStatementQuotas.fromJson(json['customer_debts_quotas']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'customer_debts_quotas': customerStatementQuotas.toJson(),
+      };
+}
+
+class CustomerStatementQuotas {
+  final int length;
+  final List<Quota> data;
+
+  CustomerStatementQuotas({
+    required this.length,
+    required this.data,
+  });
+
+  factory CustomerStatementQuotas.fromJson(Map<String, dynamic> json) {
+    return CustomerStatementQuotas(
+      length: json['length'],
+      data: List<Quota>.from(json['data'].map((x) => Quota.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'length': length,
+        'data': List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+}
+
+class Quota {
+  final int quotaId;
+  final String contractName;
+  final String quotaDueDate;
+  final String quotaName;
+  final double quotaPaidAmount;
+  final double quotaAmount;
+  final String quotaPaidDate;
+  final String quotaState;
+
+  Quota({
+    required this.quotaId,
+    required this.contractName,
+    required this.quotaDueDate,
+    required this.quotaName,
+    required this.quotaPaidAmount,
+    required this.quotaAmount,
+    required this.quotaPaidDate,
+    required this.quotaState,
+  });
+
+  factory Quota.fromJson(Map<String, dynamic> json) {
+    return Quota(
+      quotaId: json['quota_id'] ?? 0,
+      contractName: json['contract_name'] ?? '',
+      quotaDueDate: json['quota_due_date'] ?? '',
+      quotaName: json['quota_name'] ?? '',
+      quotaPaidAmount: json['quota_paid_amount'] != null ? (json['quota_paid_amount'] as num).toDouble() : 0,
+      quotaAmount: json['quota_amount'] != null ? (json['quota_amount'] as num).toDouble() : 0,
+      quotaPaidDate: json['quota_paid_date'] ?? '',
+      quotaState: json['quota_state'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'quota_id': quotaId,
+        'contract_name': contractName,
+        'quota_due_date': quotaDueDate,
+        'quota_name': quotaName,
+        'quota_paid_amount': quotaPaidAmount,
+        'quota_amount': quotaAmount,
+        'quota_paid_date': quotaPaidDate,
+        'quota_state': quotaState,
+      };
 }

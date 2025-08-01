@@ -269,7 +269,7 @@ class GenericState extends Equatable {
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
           items.add(
-            ItemBoton('','','',rsp[i].id, Icons.group_add, rsp[i].name, rsp[i].tradeNameHotel, rsp[i].roomInclude,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].bookingId, Icons.group_add, rsp[i].bookingName, rsp[i].bookingHotelName, rsp[i].bookingContent,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routReservationView,
               () {
                 
@@ -354,7 +354,7 @@ class GenericState extends Equatable {
         for(int i = 0; i < rsp.length; i++){
           items.add(
             //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-            ItemBoton('','','',rsp[i].partnerId, Icons.group_add, rsp[i].planName, rsp[i].paymentDate, '\$${rsp[i].paymentAmount?.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].partnerId, Icons.group_add, rsp[i].planName, rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 

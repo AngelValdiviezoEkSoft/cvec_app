@@ -35,9 +35,9 @@ class DataReceiptDet {
 
   factory DataReceiptDet.fromJson(Map<String, dynamic> json) {
     return DataReceiptDet(
-      accountPaymentLineTravel: json['account.payment.line.travel'] != null
+      accountPaymentLineTravel: json['customer_payment_receipts_report'] != null
           ? AccountPaymentLineTravel.fromJson(
-              json['account.payment.line.travel'])
+              json['customer_payment_receipts_report'])
           : null,
     );
   }

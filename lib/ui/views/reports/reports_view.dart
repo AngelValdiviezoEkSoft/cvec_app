@@ -58,11 +58,11 @@ class PdfView extends StatelessWidget {
       
       final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
 
-      List<Booking> bookingList = bookingResponse.result.data.bookings.data;
+      List<Booking> bookingList = bookingResponse.result.data.customerBookings.data;
 
       //Booking objReservation = bookingList.where(x => x.id == id);
 
-      objReservation = bookingList.firstWhere((x) => x.id == idFinal);
+      objReservation = bookingList.firstWhere((x) => x.bookingId == idFinal);
 
       return objReservation;
 

@@ -4,7 +4,6 @@ import 'package:cve_app/ui/ui.dart';
 import 'package:http/http.dart' as http;
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
@@ -24,33 +23,52 @@ class DepositService extends ChangeNotifier{
   Future<List<ReceiptModelResponse>> getDeposit() async {
     try {
 
-      var codImei = await storage.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: 0,
-          models: []
-        )
-      );
+      final data = json.decode(resp);
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.customer.receipt.record", true, '');
+      int compId = data["result"]["company_id"] ?? 0;
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
       
-      ReceiptResponseModel objConv = ReceiptResponseModel.fromJson(jsonDecode(objRsp));
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_receipt_records_read",
+          "filters": [
+            ["partner_id", "=", '$partnerId']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
+
+      ReceiptResponseModel objConv = ReceiptResponseModel.fromJson(rspValidacion);
 
       //print('Test DataInit $objRsp');
 

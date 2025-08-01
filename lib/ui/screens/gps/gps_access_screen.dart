@@ -100,7 +100,7 @@ class AccessButton extends StatelessWidget {
           color: Colors.transparent,
           width: size.width * 0.92,
           height: size.height * 0.3,
-          child: const Image(image: AssetImage('assets/geolocalizacion.gif'),),
+          child: const Image(image: AssetImage('assets/gifs/geolocalizacion.gif'),),
         ),
 
         SizedBox(height: size.height * 0.05,),

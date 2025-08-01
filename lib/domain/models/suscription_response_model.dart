@@ -169,13 +169,13 @@ class SaleSubscriptionData {
 
   factory SaleSubscriptionData.fromJson(Map<String, dynamic> json) {
     return SaleSubscriptionData(
-      customerStatementContracts: CustomerStatementContracts.fromJson(json['customer_statement_contracts']),
+      customerStatementContracts: CustomerStatementContracts.fromJson(json['customer_debts_contracts']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'customer_statement_contracts': customerStatementContracts.toJson(),
+      'customer_debts_contracts': customerStatementContracts.toJson(),
     };
   }
 }

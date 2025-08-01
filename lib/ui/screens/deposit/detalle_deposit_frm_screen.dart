@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 //ignore: must_be_immutable
@@ -24,7 +20,7 @@ class DetalleDepositFrmScreen extends StatefulWidget {
 class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
 
   Timer? _timer;
-  FileImage? _fileImage;
+  //FileImage? _fileImage;
   String state = '';
   Color colorTextoEstado = Colors.transparent;
 
@@ -35,7 +31,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
   @override
   void initState() {
     super.initState();
-    convertBase64();    
+    //convertBase64();    
 
     if(objReciboDet!.receiptState.toLowerCase() == 'draft'){
       state = locGen!.pendingReviewLbl;
@@ -59,37 +55,6 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
     _timer?.cancel(); // Cancelar el timer si el usuario sale antes
     super.dispose();
   }
-
-  void convertBase64() async {
-    FileImage image = await base64ToFileImage(objReciboDet!.receiptFile, 'mi_imagen.png');
-
-    setState(() {
-      _fileImage = image;
-    });
-  }
-
-  Future<FileImage> base64ToFileImage(String base64String, String fileName) async {
-  // Elimina encabezado si lo tiene
-  final pureBase64 = base64String.contains(',')
-      ? base64String.split(',').last
-      : base64String;
-
-  // Decodifica a bytes
-  Uint8List bytes = base64Decode(pureBase64);
-
-  // Obtén directorio temporal
-  final tempDir = await getTemporaryDirectory();
-
-  // Crea archivo
-  File file = File('${tempDir.path}/$fileName');
-
-  // Escribe los bytes
-  await file.writeAsBytes(bytes);
-
-  // Retorna FileImage
-  return FileImage(file);
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +135,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                             height: size.height * 0.005,
                           ),
 
-                          if(objReciboDet!.receiptFile.isNotEmpty && _fileImage != null)
+                          if(objReciboDet!.receiptFile.isNotEmpty)
                           Container(
                             width: size.width * 0.96,
                             color: Colors.transparent,
@@ -180,10 +145,11 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                               height: size.height * 0.17,
                               decoration: !validandoFoto
                               ? BoxDecoration(
-                                  image: DecorationImage(
+                                  image: 
+                                  DecorationImage(
                                     image: CachedNetworkImageProvider(objReciboDet!.receiptFile),
-                                    fit: BoxFit.cover,
-                                  ),                              
+                                    fit: BoxFit.fill,
+                                  ),
                                 )
                               : BoxDecoration(
                                   borderRadius:
@@ -196,37 +162,6 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                                 ),
                             ),
                           ),
-                    
-                          if(objReciboDet!.receiptFile.isNotEmpty && _fileImage != null)
-                          Container(
-                              width: size.width * 0.96,
-                              color: Colors.transparent,
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  width: size.width * 0.25,
-                                  height: size.height * 0.17,
-                                  decoration: !validandoFoto
-                                      ? BoxDecoration(
-                                          image: DecorationImage(
-                                            image: _fileImage!,
-                                            fit: BoxFit.cover,
-                                          ),                              
-                                        )
-                                      : BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(size.width * 0.2),
-                                          border: Border.all(
-                                            width: 3,
-                                            color: objColorsApp.naranja50PorcTrans,
-                                            style: BorderStyle.solid,
-                                          ),
-                                        ),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      
-                                    },
-                                  )),
-                            ),
                     
                           SizedBox(
                             height: size.height * 0.025,

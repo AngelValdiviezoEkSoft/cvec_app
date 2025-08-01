@@ -294,21 +294,31 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                   
                                                   List<PaymentLineData> lstPaymentLineData = snapshot.data as List<PaymentLineData>;
 
-                                                  return Container(
-                                                  color: Colors.transparent,
-                                                  height: size.height * 0.2,
-                                                  child: SingleChildScrollView(
-                                                    physics: const ScrollPhysics(),                                              
-                                                    child: Column(
-                                                      children: lstPaymentLineData
-                                                          .map((p) => Padding(
-                                                                padding: const EdgeInsets.only(bottom: 2),
-                                                                child: _paymentItem(p),
-                                                              ))
-                                                          .toList(),
+                                                  return 
+                                                  lstPaymentLineData.isNotEmpty && lstPaymentLineData.first.contractName == 'VACIO' ?
+                                                  Container(
+                                                    color: Colors.transparent,
+                                                    height: size.height * 0.2,
+                                                    child: SingleChildScrollView(
+                                                      physics: const ScrollPhysics(),                                              
+                                                      child: Column(
+                                                        children: lstPaymentLineData
+                                                            .map((p) => Padding(
+                                                                  padding: const EdgeInsets.only(bottom: 2),
+                                                                  child: _paymentItem(p),
+                                                                ))
+                                                            .toList(),
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
+                                                  )
+                                                  :
+                                                  Container(
+                                                    color: Colors.transparent,
+                                                    width: size.width,
+                                                    height: size.height * 0.78,
+                                                    alignment: Alignment.center,
+                                                    child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                                                  );
                                                 }
 
                                                 return Container(

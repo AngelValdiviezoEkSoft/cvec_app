@@ -191,8 +191,10 @@ class DebtViewSt extends State<DebtView> {
                                                   width: size.width * 0.3,
                                                   alignment: Alignment.centerRight,
                                                   child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
-                                                      style: const TextStyle(
-                                                          fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,)),
+                                                    style: const TextStyle(
+                                                      fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,
+                                                    )
+                                                  ),
                                                 ),
                               
                                                 SizedBox(width: size.width * 0.0004),

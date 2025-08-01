@@ -47,12 +47,12 @@ class AccountStatementDetPayModel {
   factory AccountStatementDetPayModel.fromJson(Map<String, dynamic> json) {
     return AccountStatementDetPayModel(
       accountPaymentLineTravel:
-          PaymentLineTravel.fromJson(json['account.payment.line.travel']),
+          PaymentLineTravel.fromJson(json['customer_statement_payments']),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'account.payment.line.travel': accountPaymentLineTravel.toJson(),
+        'customer_statement_payments': accountPaymentLineTravel.toJson(),
       };
 }
 
@@ -117,19 +117,19 @@ class PaymentLineData {
 
   factory PaymentLineData.fromJson(Map<String, dynamic> json) {
     return PaymentLineData(
-      paymentLineId: json['payment_line_id'],
-      quotaId: json['quota_id'],
-      paymentSequence: json['payment_sequence'],
-      paymentDate: json['payment_date'],
-      paymentAmount: (json['payment_amount'] as num).toDouble(),
-      lineId: json['line_id'],
-      paymentId: json['payment_id'],
-      contractId: json['contract_id'],
-      contractName: json['contract_name'],
-      quotaType: json['quota_type'],
-      quotaName: json['quota_name'],
-      quotaCode: json['quota_code'],
-      lineAmount: (json['line_amount'] as num).toDouble(),
+      paymentLineId: json['payment_line_id'] ?? 0,
+      quotaId: json['quota_id'] ?? 0,
+      paymentSequence: json['payment_sequence'] ?? '',
+      paymentDate: json['payment_date'] ?? '',
+      paymentAmount: json['payment_amount'] != null ? (json['payment_amount'] as num).toDouble() : 0,
+      lineId: json['line_id'] ?? 0,
+      paymentId: json['payment_id'] ?? 0,
+      contractId: json['contract_id'] ?? 0,
+      contractName: json['contract_name'] ?? '',
+      quotaType: json['quota_type'] ?? '',
+      quotaName: json['quota_name'] ?? '',
+      quotaCode: json['quota_code'] ?? '',
+      lineAmount: json['line_amount'] != null ? (json['line_amount'] as num).toDouble() : 0,
     );
   }
 

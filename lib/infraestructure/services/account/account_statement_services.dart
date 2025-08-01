@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -100,10 +99,7 @@ class AccountStatementService extends ChangeNotifier{
 
       final data = json.decode(resp);
 
-      //var tmp = data["result"]["company_id"];
-
-      //String compIdStr = data["result"]["company_id"] ?? '0';
-      int compId = data["result"]["company_id"] ?? 0;//int.parse(compIdStr);
+      int compId = data["result"]["company_id"] ?? 0;
 
       int partnerId = data["result"]["partner_id"] ?? 0;
 
@@ -160,7 +156,7 @@ class AccountStatementService extends ChangeNotifier{
 
   Future<List<Quota>> getDetAccountStatement(idContract) async {
     try {
-
+/*
       var codImei = await storage.read(key: 'codImei') ?? '';
 
       var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
@@ -186,12 +182,56 @@ class AccountStatementService extends ChangeNotifier{
       );
 
       var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true, '');
-
+*/
       //print('Rsp Lista DET DEBS $objRsp');
-      
-      SuscriptionDetResponseModel objConv = SuscriptionDetResponseModel.fromJson(jsonDecode(objRsp));
 
-      return objConv.result.data.ekTravelSubscriptionQuota.data;
+      String resInt = await ValidationsUtils().validaInternet();
+
+      if(resInt.isNotEmpty){
+        return [];
+      }
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int compId = data["result"]["company_id"] ?? 0;
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_statement_quotas",
+          "filters": [
+            ["contract_id", "=", '$idContract']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
+      
+      CustomerStatementQuotasResponse objConv = CustomerStatementQuotasResponse.fromJson(jsonDecode(response.body));
+
+      return objConv.result.data.customerStatementQuotas.data;
     }
     catch(_){
       //print('Test DataInit $ex');
@@ -202,39 +242,76 @@ class AccountStatementService extends ChangeNotifier{
   Future<List<PaymentLineData>> getDetCuotasAccountStatement(idCuota) async {
     try {
 
-      var codImei = await storage.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: idCuota,
-          models: []
-        )
-      );
+      final data = json.decode(resp);
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true, 'getDetCuotasAccountStatement');
+      int compId = data["result"]["company_id"] ?? 0;
 
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_statement_payments",
+          "filters": [
+            ["quota_id", "=", '$idCuota']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
       //print('Rsp Lista DET DEBS $objRsp');
       
-      AccountStatementDetPayResponseModel objConv = AccountStatementDetPayResponseModel.fromJson(jsonDecode(objRsp));
+      AccountStatementDetPayResponseModel objConv = AccountStatementDetPayResponseModel.fromJson(rspValidacion);
+
+      if(objConv.result.data.accountPaymentLineTravel.data.isEmpty){
+        objConv.result.data.accountPaymentLineTravel.data.add(
+          PaymentLineData(
+            contractId: 0,
+            contractName: 'VACIO',
+            lineAmount: 0,
+            lineId: 0,
+            paymentAmount: 0,
+            paymentDate: '',
+            paymentId: 0,
+            paymentLineId: 0,
+            paymentSequence: '',
+            quotaCode: '',
+            quotaId: 0,
+            quotaName: '',
+            quotaType: ''
+          )
+        );
+      }
 
       return objConv.result.data.accountPaymentLineTravel.data;
     }
-    catch(_){
+    catch(ex){
       //print('Test DataInit $ex');
       return [];
     }

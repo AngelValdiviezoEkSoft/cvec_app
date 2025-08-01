@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 //import 'package:fluttertoast/fluttertoast.dart';
 
 const storageReceipts = FlutterSecureStorage();
@@ -28,42 +28,55 @@ class ReceiptsService extends ChangeNotifier{
   Future<List<Payment>?> getReceipts() async {
     try{
 
-      var codImei = await storageReceipts.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storageReceipts.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storageReceipts.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      List<MultiModel> lstMultiModel = [];
+      final data = json.decode(resp);
 
-      lstMultiModel.add(
-        MultiModel(model: 'crm.lead')
-      );
+      int compId = data["result"]["company_id"] ?? 0;
+      int partnerId = data["result"]["partner_id"] ?? 0;
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          models: lstMultiModel,
-          idConsulta: 0
-        )
-      );
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment", true, '');
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_payment_receipts",
+          "filters": [
+            ["partner_id", "=", '$partnerId']
+          ]
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
 
       await storage.write(key: 'ListadoRecibos', value: '');
-      await storage.write(key: 'ListadoRecibos', value: objRsp);
+      await storage.write(key: 'ListadoRecibos', value: response.body);
 
-      final bookingResponse = ReceiptResponse.fromJson(jsonDecode(objRsp));
+      final bookingResponse = ReceiptResponse.fromJson(rspValidacion);
 
       List<Payment> bookingList = bookingResponse.result.data.accountPayment.data;
 
@@ -88,39 +101,51 @@ class ReceiptsService extends ChangeNotifier{
   Future<List<PaymentLine>?> getDetReceipts(int idCab) async {
     try{
 
-      var codImei = await storageReceipts.read(key: 'codImei') ?? '';
+      String resInt = await ValidationsUtils().validaInternet();
 
-      var objReg = await storageReceipts.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
+      if(resInt.isNotEmpty){
+        return [];
+      }
 
-      var objLog = await storageReceipts.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
-      List<MultiModel> lstMultiModel = [];
+      final data = json.decode(resp);
 
-      lstMultiModel.add(
-        MultiModel(model: 'account.payment.line.travel')
-      );
+      int compId = data["result"]["company_id"] ?? 0;
 
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          models: lstMultiModel,
-          idConsulta: idCab
-        )
-      );
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "account.payment.line.travel", true, '');
+      final headers = {
+        "Content-Type": "application/json",
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": "customer_payment_receipts_report",
+          "filters": [
+            ["payment_id", "=", '$idCab']
+          ]
+        }
+      });
 
-      final bookingResponse = ReceiptDetResponse.fromJson(jsonDecode(objRsp));
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      //print('Test: ${response.body}');
+      
+      var rspValidacion = json.decode(response.body);
+
+      if(rspValidacion['error'] != null){
+        return [];
+      }
+
+      final bookingResponse = ReceiptDetResponse.fromJson(rspValidacion);
 
       List<PaymentLine> bookingList = bookingResponse.result?.data?.accountPaymentLineTravel?.data ?? [];
 

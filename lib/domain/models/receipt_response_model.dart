@@ -31,7 +31,7 @@ class ResultReceiptResponse {
   factory ResultReceiptResponse.fromJson(Map<String, dynamic> json) {
     return ResultReceiptResponse(
       estado: json['estado'] ?? 0,
-      data: ReceiptDataModel.fromJson(json['data']['ek.customer.receipt.record']),
+      data: ReceiptDataModel.fromJson(json['data']['customer_receipt_records_read']),
     );
   }
 }

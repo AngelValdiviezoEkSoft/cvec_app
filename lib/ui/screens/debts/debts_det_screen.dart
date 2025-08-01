@@ -203,7 +203,8 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                                                 color: Colors.transparent,
                                                 width: size.width * 0.25,
                                                 alignment: Alignment.centerRight,
-                                                child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                //child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                                child: Text('\$${item.quotaAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
                                               ),
                             
                                               SizedBox(width: size.width * 0.0004),

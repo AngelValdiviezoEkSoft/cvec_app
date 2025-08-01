@@ -64,7 +64,7 @@ Future<Uint8List> generateReservation(Booking objReservation) async {
                   ],
                 ),
                 ...[ 
-                  [objReservation.name, objReservation.dateBookingsStart, objReservation.dateBookingsEnd, objReservation.tradeNameHotel, objReservation.personInclude, objReservation.subscriptionName, objReservation.roomInclude, objReservation.state],                  
+                  [objReservation.bookingName, objReservation.bookingDateCheckIn, objReservation.bookingEndCheckIn, objReservation.bookingHotelName, objReservation.bookingContent, objReservation.contractName, objReservation.bookingContent, objReservation.bookingState],
                 ].map((row) => pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: row.map(
