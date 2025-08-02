@@ -39,7 +39,7 @@ class DepositService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({
@@ -80,6 +80,7 @@ class DepositService extends ChangeNotifier{
     }
   }
 
+/*
   registroDeposito(DepositRequestModel objDeposit) async {
     String internet = await ValidationsUtils().validaInternet();
     
@@ -87,9 +88,6 @@ class DepositService extends ChangeNotifier{
     if(internet.isEmpty){
       
       try{
-
-        //var objRspIrModel = await storage.read(key: 'RespuestaIrModel') ?? '';
-        //IrModel objIrModel = IrModel.fromRawJson(objRspIrModel);
 
         var codImei = await storage.read(key: 'codImei') ?? '';
 
@@ -211,6 +209,60 @@ class DepositService extends ChangeNotifier{
       );
     }
 */
+  }
+*/
+
+  registroDeposito(DepositRequestModel objDeposit) async {
+    String internet = await ValidationsUtils().validaInternet();
+    
+    //VALIDACIÓN DE INTERNET
+    if(internet.isEmpty){      
+      try{
+
+        final url = Uri.parse('${EnvironmentsProd().apiEndpoint}post/create');
+
+        final headers = {
+          'Content-Type': EnvironmentsProd().contentType,
+        };
+
+        final body = {
+          "jsonrpc": "2.0",
+          "params": {
+            "company_id": 1,
+            "query_type": "customer_receipt_records_create",
+            "data_list": [
+              {
+                "name": objDeposit.name,//"test casi finaaaaal",
+                "date": DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date),//"2025-07-30 05:25:41",
+                "amount": objDeposit.amount,
+                "receipt_number": objDeposit.receiptNumber,
+                "user_id": objDeposit.idUser,
+                "partner_id": objDeposit.idPartner,
+                "receipt_file": objDeposit.receiptFile,
+                "customer_notes": objDeposit.customerNotes,
+              }
+            ]
+          }
+        };
+
+        final response = await http.post(
+          url,
+          headers: headers,
+          body: jsonEncode(body),
+        );
+
+      
+        var rspValidacion = json.decode(response.body);
+
+        var objRespuestaFinal = DepositResponseModel.fromJson(rspValidacion);
+
+        return objRespuestaFinal;
+      } 
+      catch(_){
+        //print('Error al grabar: $ex');
+      }
+    }
+    
   }
 
 }

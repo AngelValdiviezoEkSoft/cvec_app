@@ -106,7 +106,7 @@ class AccountStatementService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({
@@ -200,7 +200,7 @@ class AccountStatementService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({
@@ -257,7 +257,7 @@ class AccountStatementService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({
@@ -320,36 +320,6 @@ class AccountStatementService extends ChangeNotifier{
   Future<List<CustomerStatementItem>> getRptAccountStatement(List<int> contractIds) async {
     try {
 
-/*
-      final Map<String, dynamic> body = {
-        "jsonrpc": "2.0",
-        "params": {
-          "company_id": 1,
-          "query_type": "customer_statement",
-          "filters": [
-            ["contract_ids", "=", jsonEncode(contractIds)]
-          ]
-        }
-      };
-
-      String ruta = '';
-      final objStr = await storage.read(key: 'RespuestaRegistro') ?? '';
-      
-      if(objStr.isNotEmpty)
-      {  
-        var obj = RegisterDeviceResponseModel.fromJson(objStr);
-        ruta = '${obj.result.url}/api/v1/cve/get';
-      }
-    
-      final response = await http.post(
-        Uri.parse(ruta),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(body),
-      );
-      */
-
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -359,7 +329,7 @@ class AccountStatementService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({

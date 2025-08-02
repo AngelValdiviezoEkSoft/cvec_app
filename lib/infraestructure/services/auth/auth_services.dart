@@ -330,7 +330,7 @@ class AuthServices extends ChangeNotifier {
       String ruta = '${EnvironmentsProd().apiEndpoint}auth/user';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({

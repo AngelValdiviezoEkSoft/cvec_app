@@ -38,7 +38,7 @@ class DebsService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({
@@ -95,7 +95,7 @@ class DebsService extends ChangeNotifier{
       String ruta = '${EnvironmentsProd().apiEndpoint}get';
 
       final headers = {
-        "Content-Type": "application/json",
+        "Content-Type": EnvironmentsProd().contentType,
       };
       
       final body = jsonEncode({

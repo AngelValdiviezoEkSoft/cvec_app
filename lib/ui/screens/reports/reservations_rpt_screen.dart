@@ -4,7 +4,6 @@ import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart';
 
 /*
 Future<Uint8List> generateReservation(Booking objReservation) async {
