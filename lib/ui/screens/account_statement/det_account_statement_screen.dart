@@ -166,7 +166,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
             }
             else{
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
-                List<Quota> lstSubs = snapshot.data as List<Quota>;
+                List<AccountStatementDet> lstSubs = snapshot.data as List<AccountStatementDet>;
                 
                 return Scaffold(
                   appBar: AppBar(

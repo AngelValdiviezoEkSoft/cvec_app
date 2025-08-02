@@ -66,8 +66,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
             {  
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
-                List<Subscription> lstSubs = snapshot.data as List<Subscription>;
-                List<Subscription> lstSubsResp = [];
+                List<Contract> lstSubs = snapshot.data as List<Contract>;
+                List<Contract> lstSubsResp = [];
 
                 String estadoAccount = '';
 

@@ -86,7 +86,7 @@ class AccountStatementService extends ChangeNotifier{
   }
 */
 
-  Future<List<Subscription>> getAccountStatement() async {
+  Future<List<Contract>> getAccountStatement() async {
     try {
 
       String resInt = await ValidationsUtils().validaInternet();
@@ -135,7 +135,7 @@ class AccountStatementService extends ChangeNotifier{
         return [];
       }
 
-      SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(rspValidacion);
+      AccountStatementResponseModel objConv = AccountStatementResponseModel.fromJson(rspValidacion);
 
       List<int> lstIdsContratos = [];
 
@@ -147,14 +147,14 @@ class AccountStatementService extends ChangeNotifier{
 
       return objConv.result.data.customerStatementContracts.data;      
     }
-    catch(ex){
-      print('Test DataInit $ex');
+    catch(_){
+      //print('Test DataInit $ex');
       return [];
     }
   }
 
 
-  Future<List<Quota>> getDetAccountStatement(idContract) async {
+  Future<List<AccountStatementDet>> getDetAccountStatement(idContract) async {
     try {
 /*
       var codImei = await storage.read(key: 'codImei') ?? '';
@@ -229,11 +229,11 @@ class AccountStatementService extends ChangeNotifier{
         return [];
       }
       
-      CustomerStatementQuotasResponse objConv = CustomerStatementQuotasResponse.fromJson(jsonDecode(response.body));
+      AccountStatementDetResponseModel objConv = AccountStatementDetResponseModel.fromJson(jsonDecode(response.body));
 
       return objConv.result.data.customerStatementQuotas.data;
     }
-    catch(_){
+    catch(ex){
       //print('Test DataInit $ex');
       return [];
     }
