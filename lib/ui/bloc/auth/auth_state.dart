@@ -24,6 +24,11 @@ abstract class AuthState extends Equatable {
 
       displayName = await storage.read(key: 'PartnerDisplayName') ?? '';
 
+      final rspLogin = await storage.read(key: 'DataUser') ?? '';
+      var rsp = jsonDecode(rspLogin);
+  
+      direccionUserPrp = rsp["result"]["street"] ?? '';
+
       if(rspReg.isEmpty && rspLog.isEmpty){
         rspFinal = '';
       }

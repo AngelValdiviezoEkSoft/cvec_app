@@ -280,7 +280,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                             )
                           ),
                         ),
-
+/*
                         SizedBox(
                           height: size.height * 0.025,
                         ),
@@ -310,6 +310,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                             )
                           ),
                         ),
+
 
                         SizedBox(
                           height: size.height * 0.025,
@@ -342,6 +343,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                             )
                           ),
                         ),
+                        */
                         
                         SizedBox(
                           height: size.height * 0.025,

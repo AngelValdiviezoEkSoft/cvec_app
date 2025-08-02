@@ -179,7 +179,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                             child: Container(
                               width: size.width * 0.25,
                               height: size.height * 0.13,
-                              decoration: BoxDecoration(
+                              decoration: BoxDecoration( 
                                 color: Colors.grey[350], // Color de fondo
                                 borderRadius: BorderRadius.circular(12), // Bordes redondeados
                               ),
@@ -246,7 +246,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
-                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                              //fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                             ),
                             labelText: locGen!.amountLbl,
                             enabledBorder: const UnderlineInputBorder(
@@ -314,7 +314,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           decoration: InputDecoration(
                               labelText: locGen!.receiptNumberLbl,
                               labelStyle: TextStyle(
-                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                              //fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                             ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -422,7 +422,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           decoration: InputDecoration(
                               labelText: locGen!.conceptLbl,
                               labelStyle: TextStyle(
-                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                              //fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                             ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -486,7 +486,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                           decoration: InputDecoration(
                               labelText: locGen!.notesLbl,
                               labelStyle: TextStyle(
-                              fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
+                              //fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                             ),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
@@ -672,14 +672,14 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                   }
                                                 }
 
+                                                final bytes = await File(rutaPagoAdj).readAsBytes();
+                                                String base64 = base64Encode(bytes);
+
                                                 var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
                                                 var objLogDecode = json.decode(objLog);
 
                                                 idPartner = double.parse(objLogDecode['result']['partner_id'].toString());
-                                                idUser = int.parse(objLogDecode['result']['user_id'][0].toString());
-
-                                                final bytes = await File(rutaPagoAdj).readAsBytes();
-                                                String base64 = base64Encode(bytes);
+                                                idUser = int.parse(objLogDecode['result']['user_id'].toString());
 
                                                 DepositRequestModel objRqt = DepositRequestModel(
                                                   amount: double.parse(amountController.text),
@@ -696,7 +696,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 String gifRespuesta = '';
                                                 String respuestaReg = '';
 
-                                                DepositResponseModel objRsp = await DepositService().registroDeposito(objRqt);
+                                                ApiRespuestaResponseModel objRsp = await DepositService().registroDeposito(objRqt);
 
                                                 respuestaReg = objRsp.result.mensaje;
 
@@ -706,10 +706,6 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                   gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
                                                 }
 
-                                                //ignore: use_build_context_synchronously
-                                                //contextPrincipalGen!.pop();
-
-                                                //final parentContext = Navigator.of(context).context; error aqui
                                                 //ignore: use_build_context_synchronously
                                                 Navigator.pop(parentContext);
 

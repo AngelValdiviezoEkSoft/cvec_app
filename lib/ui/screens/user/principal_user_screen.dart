@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
@@ -11,8 +9,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-String direccionUserPrp = '';
 
 class PrincipalUserScreen extends StatelessWidget {
 
@@ -94,18 +90,7 @@ class PrincipalClientStScreen extends StatelessWidget {
           ),
           drawer: FutureBuilder(
             future: AuthServices().getDatosPerfil(),
-            builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-
-              if(snapshot.hasData){
-                direccionUserPrp = '';
-
-                if(snapshot.data != null){
-                  var rsp = jsonDecode('${snapshot.data}');
-              
-                  direccionUserPrp = rsp["result"]["street"] ?? '';
-                }
-
-              }
+            builder: (context, snapshot) {
 
               //final themeProvider = Provider.of<ThemeProvider>(context);
 
@@ -351,6 +336,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                   ],
                 ),
               );
+            
             }
           ),
           body: 

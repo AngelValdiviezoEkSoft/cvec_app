@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+String userNameProf = '';
+String identNumbProf = '';
+String phoneProf = '';
+String emailProf = '';
 
 class FrmProfileScreen extends StatelessWidget {
   
@@ -13,19 +21,6 @@ class FrmProfileScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      /*
-      appBar: AppBar(
-        title: Text(locGen!.profileLbl),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {
-              context.push(objRutas.rutaFrmProfileEditScrn);
-            },
-          ),
-        ],
-      ),
-      */
       backgroundColor: Colors.blue,
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -46,82 +41,119 @@ class FrmProfileScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Stack(
-        children: [
+      body: FutureBuilder(
+        future: AuthServices().getDatosPerfil(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
 
-          Column(
-            children: [
-              SizedBox(height: size.height * 0.06),
+          if(snapshot.hasData){
+            userNameProf = '';
+            identNumbProf = '';
+            phoneProf = '';
+            emailProf = '';
 
-              Stack(
-                children: [
-                  Container(
-                    height: size.height * 0.8,
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40),
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
+            if(snapshot.data != null){
+              var rsp = jsonDecode('${snapshot.data}');
+          
+              userNameProf = rsp["result"]["user_name"] ?? '';
+              identNumbProf = rsp["result"]["vat"] ?? '';
+              phoneProf = rsp["result"]["phone"] ?? '';
+              emailProf = rsp["result"]["email"] ?? '';
+            }
+
+          }
+
+          if(!snapshot.hasData){
+            return Center(
+              child: Image.asset(
+                "assets/gifs/gif_carga.gif",
+                height: size.width * 0.9,
+                width: size.width * 0.9,
+              ),
+            );
+          }
+
+          return Container(
+            color: Colors.transparent,
+            width: size.width,
+            alignment: Alignment.center,
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                      SizedBox(height: size.height * 0.06),
+                              
+                      Stack(
                         children: [
-                          
-                          SizedBox(height: size.height * 0.07),
-                          Card(
-                            margin: const EdgeInsets.all(16),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
+                          Container(
+                            width: size.width * 0.95,
+                            height: size.height * 0.8,
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(40),
+                                topRight: Radius.circular(40),
+                                bottomLeft: Radius.circular(40),
+                                bottomRight: Radius.circular(40),
+                              ),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            child: SingleChildScrollView(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ProfileField(label: locGen!.namLastNameLbl, value: displayName),
-                                  ProfileField(label: locGen!.idNumberLbl, value: '0922219480'),
-                                  ProfileField(label: locGen!.cellNumberLbl, value: '0988665834'),
-                                  ProfileField(label: locGen!.emailLbl, value: 'angel_elias_valdiviezo_gonzalez@hotmail.com'),
-                                  ProfileField(label: locGen!.altEmailLbl, value: 'melanie.vilema@gmail.com'),
-                                  ProfileField(label: locGen!.brDateLbl, value: '20/04/1994'),
+                                  
+                                  SizedBox(height: size.height * 0.07),
+                                  Card(
+                                    margin: const EdgeInsets.all(6),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(46.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          ProfileField(label: locGen!.namLastNameLbl, value: userNameProf),
+                                          ProfileField(label: locGen!.idNumberLbl, value: identNumbProf),
+                                          ProfileField(label: locGen!.cellNumberLbl, value: phoneProf),
+                                          ProfileField(label: locGen!.emailLbl, value: emailProf),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ],
                       ),
+                    ],
+                ),
+                
+            
+                Positioned(
+                  left: 143,
+                  child: Container(
+                    padding: const EdgeInsets.all(4), // grosor del borde
+                    decoration: const BoxDecoration(
+                      color: Colors.white, // color del borde
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[350],
+                      child: const Icon(Icons.person_outline, size: 50, color: Colors.white,),
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
-
-          Positioned(
-            left: 143,
-            child: Container(
-              padding: const EdgeInsets.all(4), // grosor del borde
-              decoration: const BoxDecoration(
-                color: Colors.white, // color del borde
-                shape: BoxShape.circle,
-              ),
-              child: CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.grey[350],
-                child: const Icon(Icons.person_outline, size: 50, color: Colors.white,),
-              ),
+                ),
+            
+              ],
             ),
-          ),
-
-        ],
+          );
+        }
       ),
     );
   }
@@ -136,7 +168,7 @@ class ProfileField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       child: RichText(
         text: TextSpan(
           text: '$label\n',

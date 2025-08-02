@@ -1,3 +1,5 @@
+export 'package:cve_app/domain/models/api_respuesta_response_model.dart';
+
 export 'package:cve_app/domain/models/account_statement_det_response_model.dart';
 
 export 'package:cve_app/domain/models/account_statement_response_model.dart';

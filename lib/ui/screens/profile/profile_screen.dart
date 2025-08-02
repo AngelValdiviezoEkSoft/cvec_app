@@ -1,6 +1,3 @@
-
-import 'dart:convert';
-
 import 'package:cve_app/infraestructure/services/services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
@@ -32,14 +29,6 @@ class ProfileScreen extends StatelessWidget {
       body: FutureBuilder(
         future: AuthServices().getDatosPerfil(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-
-          if(snapshot.hasData){
-            direccionUser = '';
-
-            var rsp = jsonDecode('${snapshot.data}');
-              
-            direccionUser = rsp['result']['street'] ?? '';
-          }
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),

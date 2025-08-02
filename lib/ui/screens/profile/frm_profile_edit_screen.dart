@@ -105,14 +105,19 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
                                     children: [
+                                      /*
+                                      userNameProf = '';
+                identNumbProf = '';
+                 = '';
+                emailProf = '';
+                                      */
+                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: userNameProf, txtInpTp: TextInputType.text, campoActivo: false,),                                      
+                                      CustomTextField(label: locGen!.idNumberLbl, initialValue: identNumbProf, txtInpTp: TextInputType.number, campoActivo: true),
+                                      CustomTextField(label: locGen!.cellNumberLbl, initialValue: phoneProf, txtInpTp: TextInputType.number, campoActivo: true),
+                                      CustomTextField(label: locGen!.emailLbl, initialValue: emailProf, txtInpTp: TextInputType.emailAddress, campoActivo: true),
                                       
-                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: displayName, txtInpTp: TextInputType.text, campoActivo: false,),                                      
-                                      CustomTextField(label: locGen!.cellNumberLbl, initialValue: '0988665834', txtInpTp: TextInputType.number, campoActivo: true),
-                                      CustomTextField(label: locGen!.emailLbl, initialValue: 'angel_elias_valdiviezo_gonzalez@hotmail.com', txtInpTp: TextInputType.emailAddress, campoActivo: true),
-                                      CustomTextField(label: locGen!.altEmailLbl, initialValue: 'melanie.vilema@gmail.com', txtInpTp: TextInputType.emailAddress, campoActivo: true),
-
                                       SizedBox(height: size.height * 0.008,),
-
+/*
                                       GestureDetector(
                                         onTap: () {
                                           //openDatePickerProfile(context);
@@ -152,6 +157,9 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                           ),
                                         ),
                                       ),
+
+                                      
+                                      */
 
                                       SizedBox(height: size.height * 0.05,),
 

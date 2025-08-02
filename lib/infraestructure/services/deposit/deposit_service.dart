@@ -237,9 +237,9 @@ class DepositService extends ChangeNotifier{
                 "amount": objDeposit.amount,
                 "receipt_number": objDeposit.receiptNumber,
                 "user_id": objDeposit.idUser,
-                "partner_id": objDeposit.idPartner,
+                //"partner_id": objDeposit.idPartner,
                 "receipt_file": objDeposit.receiptFile,
-                "customer_notes": objDeposit.customerNotes,
+                "customer_notes": objDeposit.customerNotes
               }
             ]
           }
@@ -254,7 +254,7 @@ class DepositService extends ChangeNotifier{
       
         var rspValidacion = json.decode(response.body);
 
-        var objRespuestaFinal = DepositResponseModel.fromJson(rspValidacion);
+        var objRespuestaFinal = ApiRespuestaResponseModel.fromJson(rspValidacion);
 
         return objRespuestaFinal;
       } 

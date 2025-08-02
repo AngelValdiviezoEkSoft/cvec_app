@@ -15,6 +15,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 TextEditingController userTxt = TextEditingController();
 TextEditingController passWordTxt = TextEditingController();
 String displayName = '';
+String direccionUserPrp = '';
 
 class AuthScreen extends StatelessWidget {
 

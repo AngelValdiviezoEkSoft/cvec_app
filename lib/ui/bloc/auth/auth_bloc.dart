@@ -15,6 +15,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 */
 
 
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cve_app/ui/ui.dart';
