@@ -17,6 +17,7 @@ const storage = FlutterSecureStorage();
 class PdfView extends StatelessWidget {
   //ClienteType? invoice;
   Booking? objReservation;
+  List<Booking> lstReservation = [];
   Payment? objPayment;
 
   CustomerStatementItem? objCustomerStatementItem;
@@ -59,6 +60,7 @@ class PdfView extends StatelessWidget {
       final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
 
       List<Booking> bookingList = bookingResponse.result.data.customerBookings.data;
+      lstReservation = bookingResponse.result.data.customerBookings.data;
 
       //Booking objReservation = bookingList.where(x => x.id == id);
 
@@ -272,7 +274,7 @@ class PdfView extends StatelessWidget {
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,
-                    build: (context) => generateReservation(objReservation!),
+                    build: (context) => generateReservation(lstReservation),
                   );
                 }
               }

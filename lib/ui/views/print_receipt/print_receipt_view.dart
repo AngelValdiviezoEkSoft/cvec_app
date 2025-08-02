@@ -164,7 +164,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                           //if(lstMenu.isNotEmpty)  
                           Container(
                             width: size.width,
-                            height: lstMenu.isNotEmpty ? size.height * 0.12 * lstMenu.length : size.height * 0.75,
+                            height: lstMenu.isNotEmpty ? size.height * 0.2 * lstMenu.length : size.height * 0.75,
                             color: Colors.transparent,
                             child: ListView(                      
                               physics: const BouncingScrollPhysics(),

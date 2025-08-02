@@ -1,9 +1,11 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 //import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 //import 'package:provider/provider.dart';
 
 String searchQueryRsv = '';
@@ -105,7 +107,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                       varIconoNot: item.iconoNotificacion,
                       varIconoNotTrans: item.rutaImagen,
                       permiteGestion: permiteGestion,
-                      rutaNavegacion: item.rutaNavegacion,
+                      rutaNavegacion: ''//item.rutaNavegacion,
                     ),
                   )
                 ).toList();
@@ -120,6 +122,56 @@ class ReservationsViewSt extends State<ReservationsView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width * 0.94,
+                          height: size.height * 0.08,
+                          child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: size.width * 0.65,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
+                                child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
+                              ),
+                          
+                              Container(
+                                width: size.width * 0.25,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                //alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.push(RoutersApp().routReservationView);
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.04,
+                                    height: size.height * 0.03,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.green, // Color de fondo
+                                      shape: BoxShape.circle, // Forma circular
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black26,
+                                          blurRadius: 4,
+                                          offset: Offset(2, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Icon(Icons.picture_as_pdf, color: Colors.white), // Ícono dentro del botón
+                                  ),
+                                ),
+                          
+                              ),
+                                    
+                            ],
+                          ),
+                        ),
+
 
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -153,7 +205,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                         Container(
                           width: size.width,
                           //height: size.height * 0.85,
-                          height: size.height * 0.13 * lstMenu.length,
+                          height: size.height * 0.2 * lstMenu.length,
                           color: Colors.transparent,
                           child: ListView(
                             physics: const BouncingScrollPhysics(),

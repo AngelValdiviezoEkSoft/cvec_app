@@ -546,21 +546,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: size.width,
-                    height: size.height * 0.06,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize22)),)
-                  ),
-              
-                  const ReservationsView(null),
-                ],
-              ),
-            ),
+            child: const ReservationsView(null),
           )
 
 /*

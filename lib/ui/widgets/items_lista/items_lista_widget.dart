@@ -216,7 +216,7 @@ class ListaNotificaciones extends StatelessWidget {
     child: GestureDetector(
           onTap: () async {
             if(onPress2 != null){
-              onPress2!();
+              //onPress2!();
             }
             else{
               const storage = FlutterSecureStorage();
@@ -225,7 +225,7 @@ class ListaNotificaciones extends StatelessWidget {
               await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
               
               //ignore: use_build_context_synchronously
-              context.push(rutaNavegacionFin!);
+              //context.push(rutaNavegacionFin!);
             }            
           },
           child: Column(
@@ -313,7 +313,7 @@ class ListaNotificaciones extends StatelessWidget {
                             await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
 
                             //ignore: use_build_context_synchronously
-                            context.push(rutaNavegacionFin!);
+                            //context.push(rutaNavegacionFin!);
                           },
                           child: Stack(
                             alignment: Alignment.center,
@@ -347,7 +347,7 @@ class ListaNotificaciones extends StatelessWidget {
                             await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
 
                             //ignore: use_build_context_synchronously
-                            context.push(rutaNavegacionFin!);
+                            //context.push(rutaNavegacionFin!);
                           },
                           child: Container(
                             
@@ -363,7 +363,7 @@ class ListaNotificaciones extends StatelessWidget {
                                   await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
 
                                   //ignore: use_build_context_synchronously
-                                  context.push(rutaNavegacionFin!);
+                                  //context.push(rutaNavegacionFin!);
                                 },
                                 child: Icon(icon, color: Colors.black,))
                             )
