@@ -1,5 +1,6 @@
 //import 'package:animate_do/animate_do.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/models/models.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +48,10 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
 
             if(!snapshot.hasData) {
               return Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
-                    "assets/gifs/gif_carga.gif",
+                    AppConfig().rutaGifCarga,
                     height: size.width * 0.85,
                     width: size.width * 0.85,
                   ),

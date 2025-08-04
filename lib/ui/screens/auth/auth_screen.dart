@@ -288,7 +288,7 @@ class AuthScreenSt extends StatelessWidget {
                       //ignore: use_build_context_synchronously
                       context.push(objRutas.rutaPrincipalUser);
                     } else {
-                      final msmError = data['error']['data']['name'];
+                      final msmError = data['error']['data']['name'] ?? '';
       
                       showDialog(
                         //ignore: use_build_context_synchronously

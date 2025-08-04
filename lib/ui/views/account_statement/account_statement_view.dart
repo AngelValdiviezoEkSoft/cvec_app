@@ -55,7 +55,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                 //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
-                    "assets/gifs/gif_carga.gif",
+                    AppConfig().rutaGifCarga,
                     height: size.width * 0.85,
                     width: size.width * 0.85,
                   ),

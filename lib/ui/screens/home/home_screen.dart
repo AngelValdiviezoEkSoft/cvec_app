@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 
@@ -54,10 +53,10 @@ class HomeScreenState extends State<HomeScreen> {
                   
                   if(!snapshot.hasData) {
                     return Scaffold(
-                        backgroundColor: Colors.white,
+                        //backgroundColor: Colors.white,
                       body: Center(
                         child: Image.asset(
-                          "assets/gifs/gif_carga.gif",
+                          AppConfig().rutaGifCarga,
                           height: size.width * 0.85,
                           width: size.width * 0.85,
                         ),
@@ -250,122 +249,3 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-  Widget _buildCard({
-    required String title,
-    required String meta,
-    required String amount,
-    required double progress,
-    required Color backgroundColor,
-    required Color progressColor,
-    required Size tamanio,
-    Color textColor = Colors.white,
-  }) {
-    return Container(
-      height: tamanio.height * 0.21,
-      padding: const EdgeInsets.all(0.5),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-
-          Container(
-            width: tamanio.width * 0.35,
-            height: tamanio.height * 0.28,
-            color: Colors.transparent,
-            child: Column(
-              children: [
-
-                SizedBox(
-                  height: tamanio.height * 0.02,
-                ),
-                
-                Container(
-                  width: tamanio.width * 0.3,
-                  color: Colors.transparent,
-                  child: Text(
-                              title,
-                              style: TextStyle(
-                                color: textColor,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                ),
-                
-                Container(
-                  width: tamanio.width * 0.3,
-                  color: Colors.transparent,
-                  child: Text(
-                    meta,
-                    style: TextStyle(
-                      color: textColor.withOpacity(0.7),
-                      fontSize: 14.0,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-
-              ],
-            ),
-          ),
-
-          Container(
-            width: tamanio.width * 0.4,
-            height: tamanio.height * 0.1,
-            color: Colors.transparent,
-            alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                Container(
-                  width: tamanio.width * 0.317,
-                  height: tamanio.height * 0.035,
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: tamanio.width * 0.3,
-                        height: tamanio.height * 0.035,
-                        color: Colors.transparent,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(                      
-                            backgroundColor: Colors.grey.shade700,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              FaIcon(FontAwesomeIcons.chartLine, size: 20, color: Colors.white,),
-                              Text('Detalles', style: TextStyle(color:  Colors.white, fontSize: 12),),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: tamanio.width * 0.01,
-                        color: Colors.transparent,
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }

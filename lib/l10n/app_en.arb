@@ -139,5 +139,8 @@
     "phoneLbl": "Phone",
     "orderQrLbl": "Frame the QR code within the purple frame",
     "pleaseWaitLbl": "Please Wait",
-    "enterLbl": "Enter"
+    "enterLbl": "Enter",
+    "noDataLbl": "No data",
+    "logoutMsmLbl": "Are you sure you want to log out?",
+    "confirmOnlyLbl": "Yes"
 }

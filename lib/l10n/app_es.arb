@@ -580,5 +580,17 @@
   "enterLbl": "Ingrese",
   "@enterLbl": {
     "description": "Ingrese"
+  },
+  "noDataLbl": "No hay datos",
+  "@noDataLbl": {
+    "description": "No hay datos"
+  },
+  "logoutMsmLbl": "¿Está seguro que desea cerrar su sesión?",
+  "@logoutMsmLbl": {
+    "description": "¿Está seguro que desea cerrar su sesión?"
+  },
+  "confirmOnlyLbl": "Sí",
+  "@confirmOnlyLbl": {
+    "description": "Sí"
   }
 }

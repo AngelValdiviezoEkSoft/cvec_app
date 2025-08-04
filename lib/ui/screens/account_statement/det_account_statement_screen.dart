@@ -154,10 +154,10 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
           builder: (context, snapshot) {
             if(!snapshot.hasData) {
               return Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
-                    "assets/gifs/gif_carga.gif",
+                    AppConfig().rutaGifCarga,
                     height: size.width * 0.85,
                     width: size.width * 0.85,
                   ),
@@ -283,7 +283,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                 if(!snapshot.hasData) {
                                                   return Center(
                                                     child: Image.asset(
-                                                      "assets/gifs/gif_carga.gif",
+                                                      AppConfig().rutaGifCarga,
                                                       height: size.width * 0.85,
                                                       width: size.width * 0.85,
                                                     ),
@@ -304,10 +304,9 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                       child: Column(
                                                         children: lstPaymentLineData
                                                             .map((p) => Padding(
-                                                                  padding: const EdgeInsets.only(bottom: 2),
-                                                                  child: _paymentItem(p),
-                                                                ))
-                                                            .toList(),
+                                                              padding: const EdgeInsets.only(bottom: 2),
+                                                              child: _paymentItem(p),
+                                                            )).toList(),
                                                       ),
                                                     ),
                                                   )
@@ -317,7 +316,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                     width: size.width,
                                                     height: size.height * 0.78,
                                                     alignment: Alignment.center,
-                                                    child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                                                    child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
                                                   );
                                                 }
 
@@ -326,7 +325,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                   width: size.width,
                                                   height: size.height * 0.78,
                                                   alignment: Alignment.center,
-                                                  child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                                                  child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
                                                 );
                                               }
                                             ),
@@ -435,8 +434,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                               ),
                             
                                               SizedBox(width: size.width * 0.0004),
-                          
-                          
+                                                    
                                             ],
                                           ),
                                         ),
@@ -482,7 +480,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                   width: size.width,
                   height: size.height * 0.78,
                   alignment: Alignment.center,
-                  child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                  child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
                 ),
               ),
             );

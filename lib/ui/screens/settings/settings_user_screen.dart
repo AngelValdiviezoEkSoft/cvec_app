@@ -34,6 +34,8 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
 
     languageProvider.loadLanguageLocale();
 
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(locGen!.settingLbl),
@@ -127,7 +129,9 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                 Container(
                   height: size.height * 0.22,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
+                    //color: Colors.grey.shade500,
+                    border: Border.all(color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                          Colors.black : Colors.white,),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(16),
@@ -142,8 +146,14 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                         min: 0.0,
                         max: 150.0,
                         divisions: 15,
-                        value: _fontSize,
+                        value: _fontSize,                        
                         label: '${_fontSize.toStringAsFixed(1)}%',
+                        thumbColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                          Colors.black : Colors.white,
+                        activeColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                          Colors.black26 : Colors.grey.shade500,
+                        inactiveColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                          Colors.black : Colors.white,
                         onChanged: (newValue) async {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setInt('PorcFontSize', newValue.toInt());

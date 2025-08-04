@@ -1,5 +1,6 @@
  
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class SimpleDialogLoad extends StatelessWidget {
         child: Column(
           children: [
             Image.asset(
-              "assets/gifs/gif_carga.gif",
+              AppConfig().rutaGifCarga,
               width: size.width * 0.69,
               height: size.height * 0.11,
             ),

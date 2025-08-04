@@ -48,7 +48,7 @@ class DepositService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_receipt_records_read",
           "filters": [
-            ["partner_id", "=", '$partnerId']
+            "partner_id", "=", '$partnerId'
           ]
         }
       });

@@ -94,7 +94,7 @@ class DebsDetScreenState extends State<DebsDetScreen> {
             backgroundColor: Colors.white,
             body: Center(
               child: Image.asset(
-                "assets/gifs/gif_carga.gif",
+                AppConfig().rutaGifCarga,
                 height: size.width * 0.85,
                 width: size.width * 0.85,
               ),
@@ -158,67 +158,64 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                           //String formatted = DateFormat("dd MMM", "en_US").format(date);
                           
                           return Container(
-                                  width: size.width,
-                                  //height: size.height * 0.25,
-                                  color: Colors.grey[100],
+                            width: size.width,
+                            //height: size.height * 0.25,
+                            color: Colors.grey[100],
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                  
+                              
+                                Container(
+                                  width: size.width * 0.95,
+                                  height: size.height * 0.08,
                                   alignment: Alignment.center,
-                                  child: Stack(
-                                    children: [
-                                        
-                                    
-                                      Container(
-                                        width: size.width * 0.95,
-                                        height: size.height * 0.08,
-                                        alignment: Alignment.center,
-                                        //color: Colors.transparent,
-                                        
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          //borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Container(
-                                          width: size.width * 0.85,
-                                          color: Colors.transparent,
-                                          alignment: Alignment.center,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                color: Colors.transparent,
-                                                width: size.width * 0.1,
-                                                alignment: Alignment.center,
-                                                child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
-                                              ),
-
-                                              SizedBox(width: size.width * 0.02),
-                
-                                              Container(
-                                                color: Colors.transparent,
-                                                width: size.width * 0.36,
-                                                child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
-                                              ),
-                            
-                                              Container(
-                                                color: Colors.transparent,
-                                                width: size.width * 0.25,
-                                                alignment: Alignment.centerRight,
-                                                //child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
-                                                child: Text('\$${item.quotaAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
-                                              ),
-                            
-                                              SizedBox(width: size.width * 0.0004),
-                                            ],
-                                          ),
-                                        ),
-                                      
-                                      ),
-                            
-                                      SizedBox(height: size.height * 0.09,),
-                                    
-                                    ],
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
                                   ),
-                                );
+                                  child: Container(
+                                    width: size.width * 0.85,
+                                    color: Colors.transparent,
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          color: Colors.transparent,
+                                          width: size.width * 0.1,
+                                          alignment: Alignment.center,
+                                          child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
+                                        ),
+
+                                        SizedBox(width: size.width * 0.02),
+          
+                                        Container(
+                                          color: Colors.transparent,
+                                          width: size.width * 0.36,
+                                          child: Text(item.quotaName, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                        ),
+                      
+                                        Container(
+                                          color: Colors.transparent,
+                                          width: size.width * 0.25,
+                                          alignment: Alignment.centerRight,
+                                          //child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                          child: Text('\$${item.quotaAmount.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
+                                        ),
+                      
+                                        SizedBox(width: size.width * 0.0004),
+                                      ],
+                                    ),
+                                  ),
+                                
+                                ),
+                      
+                                SizedBox(height: size.height * 0.09,),
+                              
+                              ],
+                            ),
+                          );
                         },
                       ),
                     ),
@@ -251,7 +248,7 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                   width: size.width,
                   height: size.height * 0.78,
                   alignment: Alignment.center,
-                  child: const Text("No hay datos", style: TextStyle(fontSize: 30),),
+                  child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
                 ),
               ),
             );

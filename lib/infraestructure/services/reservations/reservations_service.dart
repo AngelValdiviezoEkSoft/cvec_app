@@ -52,7 +52,7 @@ class ReservationsService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_bookings",
           "filters": [
-            ["partner_id", "=", '$partnerId']
+            "partner_id", "=", '$partnerId'
           ]
         }
       });

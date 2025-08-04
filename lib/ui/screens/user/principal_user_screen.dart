@@ -120,8 +120,6 @@ class PrincipalClientStScreen extends StatelessWidget {
                 colorLblReservaciones = Colors.grey;
               }
 
-              //
-
               return Drawer(
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -292,7 +290,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('¿Está seguro que desea cerrar su sesión?'),
+                              title: Text(locGen!.logoutMsmLbl),
                               
                               actions: [
                                 TextButton(
@@ -314,17 +312,15 @@ class PrincipalClientStScreen extends StatelessWidget {
                                     context.push(objRutas.rutaAuth);
               
                                   },
-                                  child: Text('Sí', style: TextStyle(color: Colors.blue[200]),),
+                                  child: Text(locGen!.confirmOnlyLbl, style: TextStyle(color: Colors.blue[200]),),
                                 ),
                                 TextButton(
                                   onPressed: () {
               
-                                    Navigator.of(context).pop();
-              
-                                    //context.push(objRutasGen.rutaBienvenida);
+                                    Navigator.of(context).pop();              
               
                                   },
-                                  child: const Text('No', style: TextStyle(color: Colors.black),),
+                                  child: const Text('No'),
                                 ),
                               ],
                             );

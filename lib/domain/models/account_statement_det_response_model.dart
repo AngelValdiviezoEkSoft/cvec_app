@@ -58,7 +58,7 @@ class DataAccountStatementDetModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'customer_statement_quotas': customerStatementQuotas?.toJson(),
+      'customer_statement_quotas': customerStatementQuotas.toJson(),
     };
   }
 }

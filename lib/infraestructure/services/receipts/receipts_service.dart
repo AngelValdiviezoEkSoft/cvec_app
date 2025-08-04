@@ -53,7 +53,7 @@ class ReceiptsService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_payment_receipts",
           "filters": [
-            ["partner_id", "=", '$partnerId']
+            "partner_id", "=", '$partnerId'
           ]
         }
       });
@@ -125,7 +125,7 @@ class ReceiptsService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_payment_receipts_report",
           "filters": [
-            ["payment_id", "=", '$idCab']
+            "payment_id", "=", '$idCab'
           ]
         }
       });

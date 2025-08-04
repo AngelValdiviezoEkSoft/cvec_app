@@ -940,6 +940,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter'**
   String get enterLbl;
+
+  /// No description provided for @noDataLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noDataLbl;
+
+  /// No description provided for @logoutMsmLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get logoutMsmLbl;
+
+  /// No description provided for @confirmOnlyLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get confirmOnlyLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

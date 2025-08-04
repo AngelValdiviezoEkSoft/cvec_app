@@ -1,4 +1,5 @@
 
+import 'package:cve_app/config/config.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cve_app/ui/ui.dart';
@@ -35,14 +36,14 @@ class FrmLoadScreen extends StatelessWidget {
         child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context,state) { 
               return Scaffold(
-                backgroundColor: Colors.white,
+                //backgroundColor: Colors.white,
                 body: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Scaffold(
-                    backgroundColor: Colors.white,
+                    //backgroundColor: Colors.white,
                     body: Center(
                       child: Image.asset(
-                        "assets/gifs/gif_carga.gif",
+                        AppConfig().rutaGifCarga,
                         height: size.width * 0.85,//150.0,
                         width: size.width * 0.85,//150.0,
                       ),

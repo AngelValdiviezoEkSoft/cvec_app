@@ -47,7 +47,7 @@ class DebsService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_debts_contracts",
           "filters": [
-            ["partner_id", "=", '$partnerId']
+            "partner_id", "=", '$partnerId'
           ]
         }
       });
@@ -104,7 +104,7 @@ class DebsService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_debts_quotas",
           "filters": [
-            ["contract_id", "=", '$idContract']
+            "contract_id", "=", '$idContract'
           ]
         }
       });

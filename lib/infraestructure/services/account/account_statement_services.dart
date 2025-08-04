@@ -115,7 +115,7 @@ class AccountStatementService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_statement_contracts",
           "filters": [
-            ["partner_id", "=", '$partnerId']
+            "partner_id", "=", '$partnerId'
           ]
         }
       });
@@ -209,7 +209,7 @@ class AccountStatementService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_statement_quotas",
           "filters": [
-            ["contract_id", "=", '$idContract']
+            "contract_id", "=", '$idContract'
           ]
         }
       });
@@ -266,7 +266,7 @@ class AccountStatementService extends ChangeNotifier{
           "company_id": compId,
           "query_type": "customer_statement_payments",
           "filters": [
-            ["quota_id", "=", '$idCuota']
+            "quota_id", "=", '$idCuota'
           ]
         }
       });
@@ -337,7 +337,7 @@ class AccountStatementService extends ChangeNotifier{
         "params": {
           "query_type": "customer_statement_report",
           "filters": [
-            ["contract_ids", "=", jsonEncode(contractIds)]
+            "contract_ids", "=", jsonEncode(contractIds)
           ]
         }
       });

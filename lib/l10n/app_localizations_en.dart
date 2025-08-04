@@ -434,4 +434,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enterLbl => 'Enter';
+
+  @override
+  String get noDataLbl => 'No data';
+
+  @override
+  String get logoutMsmLbl => 'Are you sure you want to log out?';
+
+  @override
+  String get confirmOnlyLbl => 'Yes';
 }

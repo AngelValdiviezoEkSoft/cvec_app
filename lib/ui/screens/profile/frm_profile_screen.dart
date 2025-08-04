@@ -65,7 +65,7 @@ class FrmProfileScreen extends StatelessWidget {
           if(!snapshot.hasData){
             return Center(
               child: Image.asset(
-                "assets/gifs/gif_carga.gif",
+                AppConfig().rutaGifCarga,
                 height: size.width * 0.9,
                 width: size.width * 0.9,
               ),

@@ -47,7 +47,7 @@ class DebtViewSt extends State<DebtView> {
             //backgroundColor: Colors.white,
             body: Center(
               child: Image.asset(
-                "assets/gifs/gif_carga.gif",
+                AppConfig().rutaGifCarga,
                 height: size.width * 0.85,
                 width: size.width * 0.85,
               ),
@@ -258,7 +258,7 @@ class DebtViewSt extends State<DebtView> {
               width: size.width,
               height: size.height * 0.78,
               alignment: Alignment.center,
-              child: const Text("No hay datos"),
+              child: Text(locGen!.noDataLbl),
             );
       }
     );

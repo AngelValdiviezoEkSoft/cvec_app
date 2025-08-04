@@ -69,8 +69,8 @@ Future<Uint8List> accountStatementRpt(List<CustomerStatementItem> items) async {
                         : locGen!.stateAnnulledQuotaAccountStatementLbl,
                 item.paymentSequence,
                 item.paymentMethodName,
-                item.paymentAmount?.toStringAsFixed(2) ?? " ",
-                item.quotaResidual?.toStringAsFixed(2) ?? " ",
+                item.paymentAmount.toStringAsFixed(2),
+                item.quotaResidual.toStringAsFixed(2),
                 item.paymentDate.isNotEmpty
                     ? dateFormat.format(DateTime.parse(item.paymentDate))
                     : " ",
