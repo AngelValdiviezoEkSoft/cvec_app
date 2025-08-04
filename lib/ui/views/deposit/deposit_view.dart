@@ -32,7 +32,7 @@ class DepositView extends StatefulWidget {
 
 class DepositViewSt extends State<DepositView> {
 
-  late Future<List<ReceiptModelResponse>> _futureDeposits; // <-- Nuevo
+  late Future<List<ReceiptModelResponse>> _futureDeposits;
   bool showButtonScrool = false;
   final ScrollController scrollListaClt = ScrollController();
 

@@ -11,7 +11,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:path_provider/path_provider.dart';
+
+List<PaymentLineData> lstPaymentLineData = [];
+int idDet = 0;
 
 class PaymentItem {
   final String date;
@@ -38,6 +42,7 @@ class DetAccountStatementScreen extends StatefulWidget {
 
 class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
 
+  //late Future<List<PaymentLineData>> _futureDetAccount;
   Timer? _timer;
   //FileImage? _fileImage;
   String state = '';
@@ -52,38 +57,8 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     super.initState();
     convertBase64();    
     payments = [];
-   /*
-    payments.add(
-      PaymentItem(
-        amount: '\$ 100',
-        date: 'Mar 14, 2024',
-        dueDate: '14/05/2024'
-      ),
-    );
-    payments.add(
-      PaymentItem(
-        amount: '\$ 120',
-        date: 'Mar 15, 2024',
-        dueDate: '15/05/2024'
-      ),
-    );
-
-    payments.add(
-      PaymentItem(
-        amount: '\$ 140',
-        date: 'Mar 16, 2024',
-        dueDate: '16/05/2024'
-      ),
-    );
-
-    payments.add(
-      PaymentItem(
-        amount: '\$ 180',
-        date: 'Mar 17, 2024',
-        dueDate: '17/05/2024'
-      ),
-    );
- */
+    lstPaymentLineData = [];   
+    //_futureDetAccount = getDetAccountStatements(idDet); 
   }
 
   @override
@@ -136,7 +111,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
             ],
           ),
         ),
-        Text('\$${item.lineAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        Text('\$${item.paymentAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       ],
     );
   }
@@ -154,7 +129,6 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
           builder: (context, snapshot) {
             if(!snapshot.hasData) {
               return Scaffold(
-                //backgroundColor: Colors.white,
                 body: Center(
                   child: Image.asset(
                     AppConfig().rutaGifCarga,
@@ -252,7 +226,10 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                               }
                               
                               return GestureDetector(
-                                onTap: () {
+                                onTap: () async {
+
+                                  lstPaymentLineData = [];
+                                  lstPaymentLineData = await AccountStatementService().getDetCuotasAccountStatement(item.quotaId);
 
                                   showDialog(
                                     context: context,
@@ -268,7 +245,9 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                                             ),
+                                            
                                             const SizedBox(height: 8),
+
                                             Text(
                                               "\$${item.quotaPaidAmount.toStringAsFixed(2)}",
                                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -276,59 +255,33 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
 
                                             const Divider(height: 30),
 
-                                            FutureBuilder(
-                                              future: AccountStatementService().getDetCuotasAccountStatement(item.quotaId),
-                                              builder: (context, snapshot) {
-                                                
-                                                if(!snapshot.hasData) {
-                                                  return Center(
-                                                    child: Image.asset(
-                                                      AppConfig().rutaGifCarga,
-                                                      height: size.width * 0.85,
-                                                      width: size.width * 0.85,
+                                            lstPaymentLineData.isNotEmpty && lstPaymentLineData.first.contractName != 'VACIO' ?
+                                              Container(
+                                                color: Colors.transparent,
+                                                height: size.height * 0.2,
+                                                child: LiquidPullToRefresh(
+                                                  onRefresh: () => refreshDetAccountStatements(item.quotaId),
+                                                  color: Colors.blue[300],
+                                                  child: SingleChildScrollView(
+                                                    physics: const ScrollPhysics(),                                              
+                                                    child: Column(
+                                                      children: lstPaymentLineData
+                                                          .map((p) => Padding(
+                                                            padding: const EdgeInsets.only(bottom: 2),
+                                                            child: _paymentItem(p),
+                                                          )).toList(),
                                                     ),
-                                                  );
-                                                }
-                                                
-                                                if(snapshot.hasData) {
-                                                  
-                                                  List<PaymentLineData> lstPaymentLineData = snapshot.data as List<PaymentLineData>;
-
-                                                  return 
-                                                  lstPaymentLineData.isNotEmpty && lstPaymentLineData.first.contractName == 'VACIO' ?
-                                                  Container(
-                                                    color: Colors.transparent,
-                                                    height: size.height * 0.2,
-                                                    child: SingleChildScrollView(
-                                                      physics: const ScrollPhysics(),                                              
-                                                      child: Column(
-                                                        children: lstPaymentLineData
-                                                            .map((p) => Padding(
-                                                              padding: const EdgeInsets.only(bottom: 2),
-                                                              child: _paymentItem(p),
-                                                            )).toList(),
-                                                      ),
-                                                    ),
-                                                  )
-                                                  :
-                                                  Container(
-                                                    color: Colors.transparent,
-                                                    width: size.width,
-                                                    height: size.height * 0.78,
-                                                    alignment: Alignment.center,
-                                                    child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
-                                                  );
-                                                }
-
-                                                return Container(
-                                                  color: Colors.transparent,
-                                                  width: size.width,
-                                                  height: size.height * 0.78,
-                                                  alignment: Alignment.center,
-                                                  child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
-                                                );
-                                              }
-                                            ),
+                                                  ),
+                                                ),
+                                              )
+                                              :
+                                              Container(
+                                                color: Colors.transparent,
+                                                width: size.width,
+                                                height: size.height * 0.4,
+                                                alignment: Alignment.center,
+                                                child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
+                                              ),                                                
 
                                             /*
                                             ...payments.map((p) => Padding(
@@ -461,8 +414,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF2EA3F2),        
-                //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
+                backgroundColor: const Color(0xFF2EA3F2),
                 title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
                 leading: GestureDetector(
                   onTap: () {
@@ -489,5 +441,17 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
       
       }),
     );
+  }
+
+  Future<List<PaymentLineData>> getDetAccountStatements(quotaId) async {
+    lstPaymentLineData = [];
+    lstPaymentLineData = await AccountStatementService().getDetCuotasAccountStatement(quotaId);
+    return Future.delayed(const Duration(seconds: 1));
+  }
+
+  Future<void> refreshDetAccountStatements(quotaId) async {
+    lstPaymentLineData = [];
+    lstPaymentLineData = await AccountStatementService().getDetCuotasAccountStatement(quotaId);
+    return Future.delayed(const Duration(seconds: 1));
   }
 }
