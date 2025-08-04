@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/domain/models/api_respuesta_response_model.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +15,10 @@ import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' 
 
 String rutaFotoPerfilEdit = '';
 String fechaCumpleAnios = '';
+
+late TextEditingController cellController;
+late TextEditingController emailController;
+late TextEditingController directionController;
 
 class FrmProfileEditScreen extends StatefulWidget {
   const FrmProfileEditScreen(Key? key) : super(key: key);
@@ -29,6 +36,15 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
     rutaFotoPerfilEdit = '';
     fechaCumpleAnios = '20/04/1994';
 
+    cellController = TextEditingController(
+      text: phoneProf
+    );
+    emailController = TextEditingController(
+      text: emailProf
+    );
+    directionController = TextEditingController(
+      text: direccionUserPrp
+    );
   } 
 
   void openDatePickerProfile(BuildContext context) {
@@ -66,146 +82,273 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
           body: Stack(
             children: [
              
-              Column(
-                children: [
-                  SizedBox(height: size.height * 0.06),
-              
-                  Stack(
-                    children: [
-                  
-                      Container(
-                        height: size.height * 0.8,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40),
-                            bottomLeft: Radius.circular(40),
-                            bottomRight: Radius.circular(40),
-                          ),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 10,
-                              offset: Offset(0, 5),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height * 0.06),
+                
+                    Stack(
+                      children: [
+                    
+                        Container(
+                          height: size.height * 0.8,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40),
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
                             ),
-                          ],
-                        ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(height: size.height * 0.1),//20),
-                              
-                              //SizedBox(height: size.height * 0.025),//20),
-                              Card(
-                                margin: const EdgeInsets.all(16),
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    children: [
-                                      /*
-                                      userNameProf = '';
-                identNumbProf = '';
-                 = '';
-                emailProf = '';
-                                      */
-                                      CustomTextField(label: locGen!.namLastNameLbl, initialValue: userNameProf, txtInpTp: TextInputType.text, campoActivo: false,),                                      
-                                      CustomTextField(label: locGen!.idNumberLbl, initialValue: identNumbProf, txtInpTp: TextInputType.number, campoActivo: true),
-                                      CustomTextField(label: locGen!.cellNumberLbl, initialValue: phoneProf, txtInpTp: TextInputType.number, campoActivo: true),
-                                      CustomTextField(label: locGen!.emailLbl, initialValue: emailProf, txtInpTp: TextInputType.emailAddress, campoActivo: true),
-                                      
-                                      SizedBox(height: size.height * 0.008,),
-/*
-                                      GestureDetector(
-                                        onTap: () {
-                                          //openDatePickerProfile(context);
-                                        },
-                                        child: Container(
-                                          width: size.width * 0.92,
-                                          height: size.height * 0.08,
-                                          color: Colors.transparent,
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: size.width * 0.92,
-                                                height: size.height * 0.025,
-                                                color: Colors.transparent,
-                                                child: Text(
-                                                  locGen!.brDateLbl, 
-                                                  style: TextStyle(
-                                                    color: Colors.grey[300],
-                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: size.height * 0.007,),
-                                              Container(
-                                                width: size.width * 0.92,
-                                                height: size.height * 0.025,
-                                                color: Colors.transparent,
-                                                child: Text(
-                                                  fechaCumpleAnios, 
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-
-                                      
-                                      */
-
-                                      SizedBox(height: size.height * 0.05,),
-
-                                      Container(
-                                        width: size.width * 0.96,
-                                        color: Colors.transparent,
-                                        alignment: Alignment.center,
-                                        child: ElevatedButton(                      
-                                          onPressed:
-                                          () {
-
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(15),
-                                              //side: BorderSide(color: btnGuardar && btnGuardarFoto ? Colors.green : Colors.grey, width: 2),
-                                            ),
-                                            backgroundColor: Colors.blue,
-                                            elevation: 0,
-                                          ),
-                                          child: Text(
-                                            locGen!.saveLbl,
-                                            style: const TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
-                                          ),
-                                        ),
-                                      ),
-                                      
-                                      SizedBox(height: size.height * 0.02,),
-                                    ],
-                                  ),
-                                ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 10,
+                                offset: Offset(0, 5),
                               ),
                             ],
                           ),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                SizedBox(height: size.height * 0.08),//20),
+                                
+                                //SizedBox(height: size.height * 0.025),//20),
+                                Card(
+                                  margin: const EdgeInsets.all(16),
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                
+                                        CustomTextField(label: locGen!.namLastNameLbl, initialValue: userNameProf, txtInpTp: TextInputType.text, campoActivo: false,),                                      
+                                        CustomTextField(label: locGen!.idNumberLbl, initialValue: identNumbProf, txtInpTp: TextInputType.number, campoActivo: false),
+                
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 8),
+                                          child: TextFormField(
+                                            controller: cellController,                                          
+                                            maxLines: 1,
+                                            decoration: InputDecoration(
+                                              labelText: locGen!.cellNumberLbl,
+                                              labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),
+                                              border: const UnderlineInputBorder(),
+                                              suffixIcon: GestureDetector(
+                                                child: const Icon(Icons.cancel, size: 12,)
+                                              )
+                                            ),
+                                            keyboardType: TextInputType.number,
+                                          ),
+                                        ),
+                
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 8),
+                                          child: TextFormField(
+                                            controller: emailController,                                          
+                                            maxLines: 1,
+                                            decoration: InputDecoration(
+                                              labelText: locGen!.emailLbl,
+                                              labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),
+                                              border: const UnderlineInputBorder(),
+                                              suffixIcon: GestureDetector(
+                                                //onTap: funtionExe,
+                                                child: const Icon(Icons.cancel, size: 12,)
+                                              )
+                                            ),
+                                            keyboardType: TextInputType.emailAddress,
+                                          ),
+                                        ),
+                
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 8),
+                                          child: TextFormField(                                          
+                                            controller: directionController,
+                                            maxLines: 3,
+                                            decoration: InputDecoration(
+                                              labelText: locGen!.directionLbl,
+                                              labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),
+                                              border: const UnderlineInputBorder(),
+                                              suffixIcon: GestureDetector(
+                                                //onTap: funtionExe,
+                                                onTap: () {
+                                                  directionController.text = '';
+                                                },
+                                                child: const Icon(Icons.cancel, size: 12,)
+                                              )
+                                            ),
+                                            keyboardType: TextInputType.text,
+                                          ),
+                                        ),
+                                        
+                                        SizedBox(height: size.height * 0.008,),
+                /*
+                                        GestureDetector(
+                                          onTap: () {
+                                            //openDatePickerProfile(context);
+                                          },
+                                          child: Container(
+                                            width: size.width * 0.92,
+                                            height: size.height * 0.08,
+                                            color: Colors.transparent,
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  width: size.width * 0.92,
+                                                  height: size.height * 0.025,
+                                                  color: Colors.transparent,
+                                                  child: Text(
+                                                    locGen!.brDateLbl, 
+                                                    style: TextStyle(
+                                                      color: Colors.grey[300],
+                                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(height: size.height * 0.007,),
+                                                Container(
+                                                  width: size.width * 0.92,
+                                                  height: size.height * 0.025,
+                                                  color: Colors.transparent,
+                                                  child: Text(
+                                                    fechaCumpleAnios, 
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                
+                                        
+                                        */
+                
+                                        SizedBox(height: size.height * 0.05,),
+                
+                  //NO ELIMINAAAAR
+                /*
+                                        Container(
+                                          width: size.width * 0.96,
+                                          color: Colors.transparent,
+                                          alignment: Alignment.center,
+                                          child: ElevatedButton(                      
+                                            onPressed:
+                                            () async {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) => SimpleDialog(
+                                                  alignment: Alignment.center,
+                                                  children: [
+                                                    SimpleDialogLoad(
+                                                      null,
+                                                      mensajeMostrar: locGen!.msmUpdateLbl,
+                                                      mensajeMostrarDialogCargando: locGen!.msmSafeInfoProfLbl,
+                                                    ),
+                                                  ]
+                                                ),
+                                              );
+        
+                                              String gifRespuesta = '';
+                                              String respuestaReg = '';
+                
+                                              ApiRespuestaResponseModel objRsp = await UserService().editUserDate(cellController.text, emailController.text, directionController.text);
+                
+                                              respuestaReg = objRsp.result.mensaje;
+                
+                                              if(objRsp.result.estado == 200){
+                                                gifRespuesta = 'assets/gifs/exito.gif';                                                
+                                              } else {
+                                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+                                              }
+                
+                                              //ignore: use_build_context_synchronously
+                                              Navigator.pop(context);
+                
+                                              showDialog(
+                                                //ignore:use_build_context_synchronously
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Container(
+                                                      color: Colors.transparent,
+                                                      height: size.height * 0.17,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            height: size.height * 0.09,
+                                                            child: Image.asset(gifRespuesta),
+                                                          ),
+                              
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            width: size.width * 0.95,
+                                                            height: size.height * 0.08,
+                                                            alignment: Alignment.center,
+                                                            child: AutoSizeText(
+                                                              respuestaReg,
+                                                              maxLines: 2,
+                                                              minFontSize: 2,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      )
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context).pop();
+                                                        },
+                                                        child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              
+                
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              padding: const EdgeInsets.symmetric(horizontal: 130, vertical: 20),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15),
+                                              ),
+                                              backgroundColor: Colors.blue,
+                                              elevation: 0,
+                                            ),
+                                            child: Text(
+                                              locGen!.saveLbl,
+                                              style: const TextStyle( color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                                            ),
+                                          ),
+                                        ),
+                                        
+                                        SizedBox(height: size.height * 0.02,),
+                                        */
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                  
-                    ],
-                  ),
-                ],
+                    
+                      ],
+                    ),
+                  ],
+                ),
               ),
             
               if (rutaFotoPerfilEdit.isEmpty && !state.levantaModal)
               Positioned(
-                //top: -1,
                 left: 137,
                 child: GestureDetector(
                   onTap: () {
@@ -442,6 +585,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         enabled: campoActivo,
         initialValue: initialValue,
+        maxLines: label != locGen!.directionLbl ? 1 : 3,
         decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),

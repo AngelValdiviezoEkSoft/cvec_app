@@ -199,6 +199,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailLbl => 'Email';
 
   @override
+  String get directionLbl => 'Direction';
+
+  @override
   String get altEmailLbl => 'Alternative Email';
 
   @override
@@ -368,6 +371,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get msmSafeDeviceLbl => 'your device';
+
+  @override
+  String get msmUpdateLbl => 'We are updating';
+
+  @override
+  String get msmSafeInfoProfLbl => 'your information';
 
   @override
   String get reservReportLbl => 'Reservation Report';

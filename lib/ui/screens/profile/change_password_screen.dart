@@ -534,6 +534,8 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                         
                         SizedBox(height: size.height * 0.06),
                         
+                        //NO ELIMINAAAAR
+                        /*
                         SizedBox(
                           width: double.infinity,
                           height: 50,
@@ -553,7 +555,9 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                             ),
                           ),
                         )
+                      */
                       ],
+
                     ),
                   ),
                 ],

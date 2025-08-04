@@ -467,6 +467,12 @@ abstract class AppLocalizations {
   /// **'Email'**
   String get emailLbl;
 
+  /// No description provided for @directionLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get directionLbl;
+
   /// No description provided for @altEmailLbl.
   ///
   /// In en, this message translates to:
@@ -808,6 +814,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'your device'**
   String get msmSafeDeviceLbl;
+
+  /// No description provided for @msmUpdateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'We are updating'**
+  String get msmUpdateLbl;
+
+  /// No description provided for @msmSafeInfoProfLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'your information'**
+  String get msmSafeInfoProfLbl;
 
   /// No description provided for @reservReportLbl.
   ///

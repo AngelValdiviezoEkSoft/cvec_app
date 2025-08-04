@@ -120,6 +120,7 @@ class FrmProfileScreen extends StatelessWidget {
                                           ProfileField(label: locGen!.idNumberLbl, value: identNumbProf),
                                           ProfileField(label: locGen!.cellNumberLbl, value: phoneProf),
                                           ProfileField(label: locGen!.emailLbl, value: emailProf),
+                                          ProfileField(label: locGen!.directionLbl, value: direccionUserPrp),
                                         ],
                                       ),
                                     ),

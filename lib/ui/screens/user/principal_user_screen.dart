@@ -261,26 +261,20 @@ class PrincipalClientStScreen extends StatelessWidget {
                       },
                     ),
                     
-                    SizedBox(height: size.height * 0.17,),
+                    //SizedBox(height: size.height * 0.17,),
+                    SizedBox(height: size.height * 0.29,),
                     const Divider(),
               
+                //NO ELIMINAAAAR
+              /*
                     ListTile(
                       leading: const Icon(Icons.web_rounded),
                       title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
                       onTap: () {
-                        /*
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(false);
-                        gnrBloc.setShowViewWebSite(true);
-                        gnrBloc.setShowViewFrmDeposit(false);
-              
-                        Navigator.pop(context);
-                        */
+                      
                       },
                     ),
+                    */
                     ListTile(
                       leading: const Icon(Icons.exit_to_app),
                       title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),

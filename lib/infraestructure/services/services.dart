@@ -1,3 +1,5 @@
+export 'package:cve_app/infraestructure/services/user/user.dart';
+
 export 'package:cve_app/infraestructure/services/bank_account_service.dart';
 
 export 'package:cve_app/infraestructure/services/auth/auth.dart';

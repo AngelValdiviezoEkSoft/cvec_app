@@ -61,6 +61,7 @@
     "idNumberLbl": "Identification number",
     "cellNumberLbl": "Cell phone",
     "emailLbl": "Email",
+    "directionLbl": "Direction",
     "altEmailLbl": "Alternative Email",
     "brDateLbl": "Birthdate",
     "languageLbl": "Language",
@@ -118,6 +119,10 @@
     "msmSafeLbl": "We are recording",
     "msmSafePayLbl": "your payment",
     "msmSafeDeviceLbl": "your device",
+    
+    "msmUpdateLbl": "We are updating",
+    "msmSafeInfoProfLbl": "your information",    
+
     "reservReportLbl": "Reservation Report",
     "reservSeqLbl": "Reservation Sequence",
     "checkInDateLbl": "Check-in Date",

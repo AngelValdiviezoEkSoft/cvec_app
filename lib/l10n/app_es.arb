@@ -129,6 +129,10 @@
   "@searchLbl": {
     "description": "Buscar"
   },
+  "directionLbl": "Dirección",
+  "@directionLbl": {
+    "description": "Dirección"
+  },
   "photoPaymentReceiptLbl": "Foto recibo de pago",
   "@photoPaymentReceiptLbl": {
     "description": "Foto recibo de pago"
@@ -600,5 +604,13 @@
   "confirmOnlyLbl": "Sí",
   "@confirmOnlyLbl": {
     "description": "Sí"
+  },
+  "msmUpdateLbl": "Estamos actualizando",
+  "@msmUpdateLbl": {
+    "description": "Estamos actualizando"
+  },
+  "msmSafeInfoProfLbl": "tu información",
+  "@msmSafeInfoProfLbl": {
+    "description": "tu información"
   }
 }
