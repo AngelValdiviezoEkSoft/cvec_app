@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:provider/provider.dart';
 
 List<ItemBoton> lstMenu = [];
@@ -31,6 +32,7 @@ class DepositView extends StatefulWidget {
 
 class DepositViewSt extends State<DepositView> {
 
+  late Future<List<ReceiptModelResponse>> _futureDeposits; // <-- Nuevo
   bool showButtonScrool = false;
   final ScrollController scrollListaClt = ScrollController();
 
@@ -45,6 +47,8 @@ class DepositViewSt extends State<DepositView> {
   @override
   void initState() {    
     super.initState();
+
+    _futureDeposits = getDeposits();
 
     searchQueryDeposit = '';
     lstMenu = [];
@@ -91,7 +95,7 @@ class DepositViewSt extends State<DepositView> {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          future: DepositService().getDeposit(),
+          future: _futureDeposits,
           builder: (context, snapshot) {
 
             gnrBloc.setCargando(true);
@@ -401,293 +405,33 @@ class DepositViewSt extends State<DepositView> {
                             child: Scaffold(
                               body: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                                
-                                      Container(
-                                        width: size.width,
-                                        height: size.height * 0.18 * lstMenu.length,
-                                        color: Colors.transparent,
-                                        child: 
+                                child: LiquidPullToRefresh(
+                                  onRefresh: refreshDeposits,
+                                  color: Colors.blue[300],
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                                  
+                                        Container(
+                                          width: size.width,
+                                          height: size.height * 0.18 * lstMenu.length,
+                                          color: Colors.transparent,
+                                          child: 
+                                          
+                                          ListView(
+                                            controller: scrollListaClt,
+                                            physics: const BouncingScrollPhysics(),
+                                            children: <Widget>[
+                                              const SizedBox( height: 3, ),
+                                              ...itemMap,
+                                            ],
+                                          ),
                                         
-                                        ListView(
-                                          controller: scrollListaClt,
-                                          //physics: const BouncingScrollPhysics(),
-                                          children: <Widget>[
-                                            const SizedBox( height: 3, ),
-                                            ...itemMap,
-                                          ],
                                         ),
                                         
-/*
-                                        ListView.builder(
-                                          controller: scrollListaClt,
-                                          itemCount: lstMenu.length,
-                                          itemBuilder: ( _, int index ) {
-
-                                            Color colorEstado = Colors.transparent;
-
-                                            if(lstMenu[index].idNotificacionGen == locGen!.pendingReviewLbl){
-                                              //statusDeposit = locGen!.pendingReviewLbl;
-                                              colorEstado = Colors.grey;
-                                            }
-
-                                            if(lstMenu[index].idNotificacionGen == locGen!.rejectedReviewLbl){
-                                              //statusDeposit = locGen!.rejectedReviewLbl;
-                                              colorEstado = Colors.red;
-                                            }
-
-                                            if(lstMenu[index].idNotificacionGen == locGen!.approveReviewLbl){
-                                              //statusDeposit = locGen!.approveReviewLbl;
-                                              colorEstado = Colors.green;
-                                            }
-                                        
-                                            return ListTile(
-                                                title: Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    border: Border.all(
-                                                        color: const Color.fromARGB(255, 217, 217, 217)),
-                                                    borderRadius: const BorderRadius.all(Radius.circular(10))
-                                                  ),
-                                                width: size.width * 0.98,
-                                                height: size.height * 0.195,
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    //AQUIII
-                                                    /*
-                                                    Container(
-                                                      color: Colors.transparent,
-                                                      width: size.width * 0.7,
-                                                      height: size.height * 0.25,
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          SizedBox(width: size.width * 0.01,),
-                                                          Container(
-                                                            color: Colors.transparent,
-                                                            width: size.width * 0.14,
-                                                            height: size.height * 0.1,
-                                                            child: CircleAvatar(
-                                                              radius: 30.0,
-                                                              backgroundColor: Colors.grey[200],
-                                                              child: const Icon(Icons.person, color: Colors.grey, size: 40.0),
-                                                            ),
-                                                          ),
-                                                          SizedBox(width: size.width * 0.02,),
-                                                          Container(
-                                                            color: Colors.transparent,
-                                                            width: size.width * 0.52,
-                                                            height: size.height * 0.25,
-                                                          child: Column(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                                            children: [
-                                                              Container(
-                                                                color: Colors.transparent,
-                                                                width: size.width * 0.54,
-                                                                height: size.height * 0.04,
-                                                                child: Text(
-                                                                  lstMenu[index].mensajeNotificacion,
-                                                                  style: const TextStyle(
-                                                                    fontWeight: FontWeight.bold,                                                                
-                                                                    color: Colors.black
-                                                                  ),
-                                                                  maxLines: 1,
-                                                                  overflow: TextOverflow.ellipsis,
-                                                                  textAlign: TextAlign.left,
-                                                                ),
-                                                              ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          
-                                                          
-                                                        ],
-                                                      )
-                                                    ),
-                                                    SizedBox(width: size.width * 0.01,)
-                                                    */
-                                                
-                                                    GestureDetector(
-                                                      onTap: () async {
-                                                        const storage = FlutterSecureStorage();
-                                                    
-                                                        await storage.write(key: 'IdReservaciones', value: '');
-                                                        //await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-                                                        
-                                                        //ignore: use_build_context_synchronously
-                                                        //context.push(rutaNavegacionFin!);           
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          Container(
-                                                            width: size.width * 0.82,
-                                                            height: size.height * 0.17,
-                                                            margin: const EdgeInsets.all(3), 
-                                                            child: ListTile(
-                                                              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                                                              dense: true,
-                                                              minVerticalPadding: 10,
-                                                              title:  Container( 
-                                                                width: size.width * 0.95,//65,
-                                                                height: size.height * 0.45,
-                                                                //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? size.height * 0.11 : size.height * 0.3,
-                                                                alignment: Alignment.center, 
-                                                                color: Colors.white,
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                  children: [
-                                                      
-                                                                    Container(
-                                                                      width: size.width * 0.72,
-                                                                      height: size.height * 0.45,
-                                                                      color: Colors.transparent,
-                                                                      alignment: Alignment.centerLeft,
-                                                                      child: Column(
-                                                                        children: [
-                                                                          Container(
-                                                                            color: Colors.transparent, 
-                                                                            width: size.width * 0.7, 
-                                                                            height: size.height * 0.035,
-                                                                            child: Text( 
-                                                                                lstMenu[index].mensajeNotificacion, 
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                style: TextStyle( 
-                                                                                    color: Colors.black, 
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
-                                                                                  ),
-                                                                                  maxLines: 1,
-                                                                                ),
-                                                                          ),
-                                                                          
-                                                                          Container(
-                                                                            color: Colors.transparent, 
-                                                                            width: size.width * 0.7, 
-                                                                            height: size.height * 0.035,
-                                                                            child: Text(
-                                                                                lstMenu[index].idSolicitud,
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                style: TextStyle( 
-                                                                                  color: Colors.grey, 
-                                                                                  fontWeight: FontWeight.bold, 
-                                                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17) 
-                                                                                ), 
-                                                                                //presetFontSizes: const [18, 16,14,12], 
-                                                                                maxLines: 1,
-                                                                              ),
-                                                                          ),
-                                                    
-                                                                          Container(
-                                                                              color: Colors.transparent, 
-                                                                              width: size.width * 0.7, 
-                                                                              height: size.height * 0.035,
-                                                                              child: Text(
-                                                                                lstMenu[index].idNotificacionGen,
-                                                                                overflow: TextOverflow.ellipsis,
-                                                                                style: TextStyle( 
-                                                                                  color: colorEstado, 
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
-                                                                              ), 
-                                                                              //presetFontSizes: const [16,14,12], 
-                                                                              maxLines: 1,
-                                                                            )
-                                                                          ),
-                                                                          
-                                                                          Container(
-                                                                            color: Colors.transparent, 
-                                                                            width: size.width * 0.7, 
-                                                                            height: size.height * 0.035,
-                                                                            child: Text(
-                                                                              lstMenu[index].mensaje2, 
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              style: TextStyle( 
-                                                                                color: Colors.black,
-                                                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
-                                                                              ), 
-                                                                              maxLines: 1,
-                                                                            )
-                                                                          ),
-                                                                        
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                      
-                                                                    
-                                                                    GestureDetector(
-                                                                      onTap: () {
-                                                                        //context.push(rutaNavegacionFin!);
-                                                                      },
-                                                                      child: Stack(
-                                                                        alignment: Alignment.center,
-                                                                        children: [
-                                                                          // El círculo de fondo
-                                                                          Container(
-                                                                            width: size.width * 0.1,  // Tamaño del círculo (ajusta según sea necesario)
-                                                                            height: size.height * 0.08,
-                                                                            decoration: const BoxDecoration(
-                                                                              shape: BoxShape.circle,
-                                                                              color: Color.fromARGB(255, 224, 232, 235),  // Color de fondo
-                                                                            ),
-                                                                          ),
-                                                                          // El icono central (usamos un icono de grupo de personas)
-                                                                          Icon(
-                                                                            Icons.arrow_forward_ios_rounded, // Icono similar al de personas
-                                                                            size: 18,  // Tamaño del icono
-                                                                            color: Colors.blue[900],  // Color del icono
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                      
-                                                                    ),
-                                                      /*
-                                                                    if(texto2 == null || texto2!.isEmpty)
-                                                                    GestureDetector(
-                                                                      onTap: () {    
-                                                                        context.push(rutaNavegacionFin!);
-                                                                      },
-                                                                      child: Container(
-                                                                        
-                                                                        width: size.width * 0.14,//44,
-                                                                        height: size.height * 0.13,//44, 
-                                                                        color: Colors.transparent,
-                                                                        child: Center(
-                                                                          child: GestureDetector(
-                                                                            onTap: () {                                  
-                                                                              context.push(rutaNavegacionFin!);
-                                                                            },
-                                                                            child: Icon(icon, color: Colors.black,))
-                                                                        )
-                                                                      ),
-                                                                    ),
-                                                                    */
-                                                                  ],
-                                                                ),                
-                                                              ),
-                                                            ),
-                                                          ),
-                                                              
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                      */
-                                      ),
-                                      
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -735,4 +479,21 @@ class DepositViewSt extends State<DepositView> {
       }
     );
   }
+  
+  Future<void> refreshDeposits() async {
+    lstReceipts = [];
+    final data = await DepositService().getDeposit();
+    setState(() {
+      lstReceipts = data;
+      _futureDeposits = Future.value(data); // Actualizamos el future
+    });
+    
+    return Future.delayed(const Duration(seconds: 1));
+  }
+}
+
+
+Future<List<ReceiptModelResponse>> getDeposits() async {
+  lstReceipts = [];
+  return await DepositService().getDeposit();
 }

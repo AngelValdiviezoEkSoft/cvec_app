@@ -393,12 +393,13 @@ class GenericState extends Equatable {
 
     return "$cmbCamp---$cmbOrigen---$cmbMedia---$cmbAct---$cmbPais---$cmbLstAct";
   }
-
+/*
   readDatosPerfil() async {    
     String objLogin = await storage.read(key: 'RespuestaLogin') ?? '';
 
     return objLogin;
   }
+  */
   
   Future<String> lstProspectos() async {
     var rsp = await storage.read(key: 'RespuestaProspectos') ?? '';

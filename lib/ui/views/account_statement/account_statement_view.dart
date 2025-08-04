@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 String searchQueryAcc = '';
 late TextEditingController searchAccTxt;
@@ -15,6 +16,7 @@ int idContratoAccountStatement = 0;
 String nameContratoAccountStatement = '';
 String namePlanAccountStatement = '';
 String fechaInscAccountStatement = '';
+List<Contract> lstAccountStatResp = [];
 
 class AccountStatementView extends StatefulWidget {  
 
@@ -37,6 +39,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
     nameContratoAccountStatement = '';
     namePlanAccountStatement = '';
     fechaInscAccountStatement = '';
+    lstAccountStatResp = [];
   }
 
   @override
@@ -47,7 +50,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          future: AccountStatementService().getAccountStatement(),
+          future: getAccountStatements(),//AccountStatementService().getAccountStatement(),
           builder: (context, snapshot) {
 
             if(!snapshot.hasData) {
@@ -66,8 +69,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
             {  
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
-                List<Contract> lstSubs = snapshot.data as List<Contract>;
-                List<Contract> lstSubsResp = [];
+                List<Contract> lstSubs = snapshot.data as List<Contract>;                
 
                 String estadoAccount = '';
 
@@ -75,12 +77,12 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                   
                   for(int i = 0; i < lstSubs.length; i++){
                     if(lstSubs[i].contractPlan.toLowerCase().contains(searchQueryAcc.toLowerCase())){
-                      lstSubsResp.add(lstSubs[i]);
+                      lstAccountStatResp.add(lstSubs[i]);
                     }
                   }
 
                   lstSubs = [];
-                  lstSubs = lstSubsResp;
+                  lstSubs = lstAccountStatResp;
                 }
 
                 return Container(
@@ -173,220 +175,224 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                         SizedBox(height: size.height * 0.009,),
                         
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: lstSubs.length,
-                            itemBuilder: (context, index) {
-                              final item = lstSubs[index];
-
-                              switch (item.contractState) {
-                                case Constants.stateAnulled:
-                                  estadoAccount = locGen!.stateAnullLbl;
-                                  break;
-                                case Constants.stateClosed:
-                                  estadoAccount = locGen!.stateClosLbl;
-                                  break;
-                                case Constants.stateDraft:
-                                  estadoAccount = locGen!.statePreContLbl;
-                                  break;
-                                case Constants.stateFin:
-                                  estadoAccount = locGen!.stateFinalizedLbl;
-                                  break;
-                                case Constants.stateOpen:
-                                  estadoAccount = locGen!.stateOpenLbl;
-                                  break;
-                                case Constants.statePreLiq:
-                                  estadoAccount = locGen!.statePreLiqLbl;
-                                  break;
-                                case Constants.stateLiq:
-                                  estadoAccount = locGen!.stateLiquidationLbl;
-                                  break;
-                                default:
-                                  estadoAccount = ''; // o algún valor por defecto apropiado
-                              }
-
-                              return GestureDetector(
-                                onTap: () {
-                                  idContratoAccountStatement = item.contractId;
-                                  nameContratoAccountStatement = item.contractName;
-                                  namePlanAccountStatement = item.contractPlan;
-
-                                  DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
-                                  fechaInscAccountStatement = DateFormat("dd/MM/yyyy").format(dateQuote);
-
-                                  context.push(objRutas.rutaAccountDetScrn);
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      width: size.width,
-                                      //color: Colors.grey[100],
-                                      height: size.height * 0.19,
-                                      alignment: Alignment.center,
-                                      //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: size.width * 0.85,
-                                            height: size.height * 0.17,
-                                            alignment: Alignment.centerRight,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                            //alignment: Alignment.center,
-                                            child: Container(
-                                              width: size.width * 0.78,
-                                              color: Colors.transparent,
-                                              alignment: Alignment.center,
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Container(
-                                                    color: Colors.transparent,
-                                                    width: size.width * 0.45,
-                                                    alignment: Alignment.centerLeft,
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        
-                                                        SizedBox(height: size.height * 0.019),
-
-                                                        Text(item.contractName,
-                                                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
-                                                        ),
-                                                        
-                                                        SizedBox(height: size.height * 0.008),
-                                                        
-                                                        if(item.contractInscriptionDate.isNotEmpty && item.contractDueDate.isNotEmpty)
-                                                        Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',
-                                                          style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
-
-                                                        SizedBox(height: size.height * 0.008),
-                                                        Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',
-                                                        style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
-
-                                                        SizedBox(height: size.height * 0.008),
-                                                        LinearProgressIndicator(
-                                                          value: item.contractPaidPercent,//0.75, // 0.0 a 1.0
-                                                          minHeight: 10,
-                                                          backgroundColor: Colors.grey[300],
-                                                          color: Colors.blue,
-                                                        ),
-                                                        
-                                                      ],
-                                                    ),
-                                                  ),
-                                
-                                                  Container(
-                                                    width: size.width * 0.3,
-                                                    color: Colors.transparent,
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        Container(
-                                                          color: Colors.transparent,
-                                                          width: size.width * 0.3,
-                                                          alignment: Alignment.centerRight,
-                                                          /*
-                                                          child: Text('${locGen!.totalLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.w600, fontSize: 15)),
-                                                                  */
-                                                        ),
-                                                        
-                                                        SizedBox(height: size.height * 0.02,),
-                                                        
-                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(color: Colors.grey,),),
-                                                        
-                                                        SizedBox(height: size.height * 0.02,),
-
-                                                        Container(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                                          decoration: BoxDecoration(
-                                                            color: const Color(0xFFE3F0FF),
-                                                            borderRadius: BorderRadius.circular(12),
-                                                          ),
-                                                          child: Text(estadoAccount,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
-                                                        ),
-                                                        /*
-                                                        SizedBox(height: size.height * 0.02,),
-                                                        Container(
-                                                          color: Colors.transparent,
-                                                          width: size.width * 0.3,
-                                                          alignment: Alignment.centerRight,
-                                                          child: Text('${locGen!.balanceLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
-                                                              style: const TextStyle(
-                                                                  fontWeight: FontWeight.w600, fontSize: 15)),
-                                                        ),
-                                                        */
-                                                      ],
-                                                    ),
-                                                  ),
-                                
-                                                  SizedBox(width: size.width * 0.0004),
-                                                ],
-                                              ),
-                                            ),
-                                          
-                                          ),
-                                /*
-                                          SizedBox(height: size.height * 0.14,),
-                                        
-                                          Positioned(
-                                            left: size.width * 0.075,//5,
-                                            top: size.height * 0.12,
-                                            child: Container(
-                                            padding:
-                                                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFE3F0FF),
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                            child: Text(locGen!.stateLbl,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.w500, color: Colors.black)),
-                                                                                    ),
-                                          )
-                                          */
-                                        ],
-                                      ),
-                                    ),
-                                
-                                    SizedBox(height: size.height * 0.04,),
-                                
-                                      
-                                      // Ícono exterior al card
-                                      Positioned(
-                                        left: size.width * 0.028,//5,
-                                        top: size.height * 0.042,
-                                        child: const Stack(
-                                          alignment: Alignment.topLeft,
+                          child: LiquidPullToRefresh(
+                            onRefresh: refreshAccountStatements,
+                            color: Colors.blue[300],
+                            child: ListView.builder(
+                              itemCount: lstSubs.length,
+                              itemBuilder: (context, index) {
+                                final item = lstSubs[index];
+                            
+                                switch (item.contractState) {
+                                  case Constants.stateAnulled:
+                                    estadoAccount = locGen!.stateAnullLbl;
+                                    break;
+                                  case Constants.stateClosed:
+                                    estadoAccount = locGen!.stateClosLbl;
+                                    break;
+                                  case Constants.stateDraft:
+                                    estadoAccount = locGen!.statePreContLbl;
+                                    break;
+                                  case Constants.stateFin:
+                                    estadoAccount = locGen!.stateFinalizedLbl;
+                                    break;
+                                  case Constants.stateOpen:
+                                    estadoAccount = locGen!.stateOpenLbl;
+                                    break;
+                                  case Constants.statePreLiq:
+                                    estadoAccount = locGen!.statePreLiqLbl;
+                                    break;
+                                  case Constants.stateLiq:
+                                    estadoAccount = locGen!.stateLiquidationLbl;
+                                    break;
+                                  default:
+                                    estadoAccount = ''; // o algún valor por defecto apropiado
+                                }
+                            
+                                return GestureDetector(
+                                  onTap: () {
+                                    idContratoAccountStatement = item.contractId;
+                                    nameContratoAccountStatement = item.contractName;
+                                    namePlanAccountStatement = item.contractPlan;
+                            
+                                    DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
+                                    fechaInscAccountStatement = DateFormat("dd/MM/yyyy").format(dateQuote);
+                            
+                                    context.push(objRutas.rutaAccountDetScrn);
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: size.width,
+                                        //color: Colors.grey[100],
+                                        height: size.height * 0.19,
+                                        alignment: Alignment.center,
+                                        //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                                        child: Stack(
                                           children: [
-                                            CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundColor: Color(0xFF007AFF),
-                                                  child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
-                                                      color: Colors.white),
+                                            Container(
+                                              width: size.width * 0.85,
+                                              height: size.height * 0.17,
+                                              alignment: Alignment.centerRight,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              //alignment: Alignment.center,
+                                              child: Container(
+                                                width: size.width * 0.78,
+                                                color: Colors.transparent,
+                                                alignment: Alignment.center,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      color: Colors.transparent,
+                                                      width: size.width * 0.45,
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          
+                                                          SizedBox(height: size.height * 0.019),
+                            
+                                                          Text(item.contractName,
+                                                            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          
+                                                          SizedBox(height: size.height * 0.008),
+                                                          
+                                                          if(item.contractInscriptionDate.isNotEmpty && item.contractDueDate.isNotEmpty)
+                                                          Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',
+                                                            style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                            
+                                                          SizedBox(height: size.height * 0.008),
+                                                          Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',
+                                                          style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
+                            
+                                                          SizedBox(height: size.height * 0.008),
+                                                          LinearProgressIndicator(
+                                                            value: item.contractPaidPercent,//0.75, // 0.0 a 1.0
+                                                            minHeight: 10,
+                                                            backgroundColor: Colors.grey[300],
+                                                            color: Colors.blue,
+                                                          ),
+                                                          
+                                                        ],
+                                                      ),
+                                                    ),
+                                  
+                                                    Container(
+                                                      width: size.width * 0.3,
+                                                      color: Colors.transparent,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: [
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            width: size.width * 0.3,
+                                                            alignment: Alignment.centerRight,
+                                                            /*
+                                                            child: Text('${locGen!.totalLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.w600, fontSize: 15)),
+                                                                    */
+                                                          ),
+                                                          
+                                                          SizedBox(height: size.height * 0.02,),
+                                                          
+                                                          Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,
+                                                            style: TextStyle(color: Colors.grey,),),
+                                                          
+                                                          SizedBox(height: size.height * 0.02,),
+                            
+                                                          Container(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                                            decoration: BoxDecoration(
+                                                              color: const Color(0xFFE3F0FF),
+                                                              borderRadius: BorderRadius.circular(12),
+                                                            ),
+                                                            child: Text(estadoAccount,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
+                                                          ),
+                                                          /*
+                                                          SizedBox(height: size.height * 0.02,),
+                                                          Container(
+                                                            color: Colors.transparent,
+                                                            width: size.width * 0.3,
+                                                            alignment: Alignment.centerRight,
+                                                            child: Text('${locGen!.balanceLbl}: \$${item.contractResidual.toStringAsFixed(2)}',
+                                                                style: const TextStyle(
+                                                                    fontWeight: FontWeight.w600, fontSize: 15)),
+                                                          ),
+                                                          */
+                                                        ],
+                                                      ),
+                                                    ),
+                                  
+                                                    SizedBox(width: size.width * 0.0004),
+                                                  ],
                                                 ),
+                                              ),
                                             
-                                                //if (item['unread'] as bool)
-                                                   Positioned(
-                                                    left: -2,
-                                                    top: -2,
-                                                    child: Icon(Icons.circle,
-                                                        size: 10, color: Colors.blue),
-                                                  )
+                                            ),
+                                  /*
+                                            SizedBox(height: size.height * 0.14,),
                                           
+                                            Positioned(
+                                              left: size.width * 0.075,//5,
+                                              top: size.height * 0.12,
+                                              child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFFE3F0FF),
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: Text(locGen!.stateLbl,
+                                                  style: const TextStyle(
+                                                      fontWeight: FontWeight.w500, color: Colors.black)),
+                                                                                      ),
+                                            )
+                                            */
                                           ],
                                         ),
                                       ),
-                                    
-                                  ],
-                                ),
-                              );
-                            },
+                                  
+                                      SizedBox(height: size.height * 0.04,),
+                                  
+                                        
+                                        // Ícono exterior al card
+                                        Positioned(
+                                          left: size.width * 0.028,//5,
+                                          top: size.height * 0.042,
+                                          child: const Stack(
+                                            alignment: Alignment.topLeft,
+                                            children: [
+                                              CircleAvatar(
+                                                    radius: 20,
+                                                    backgroundColor: Color(0xFF007AFF),
+                                                    child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
+                                                        color: Colors.white),
+                                                  ),
+                                              
+                                                  //if (item['unread'] as bool)
+                                                     Positioned(
+                                                      left: -2,
+                                                      top: -2,
+                                                      child: Icon(Icons.circle,
+                                                          size: 10, color: Colors.blue),
+                                                    )
+                                            
+                                            ],
+                                          ),
+                                        ),
+                                      
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -405,3 +411,13 @@ class AccountStatementViewSt extends State<AccountStatementView> {
   }
 }
 
+Future<List<Contract>> getAccountStatements() async {
+  lstAccountStatResp = [];
+  return await AccountStatementService().getAccountStatement();   
+}
+
+Future<void> refreshAccountStatements() async {
+  lstAccountStatResp = [];
+  lstAccountStatResp = await AccountStatementService().getAccountStatement();
+  return Future.delayed(const Duration(seconds: 1));
+}

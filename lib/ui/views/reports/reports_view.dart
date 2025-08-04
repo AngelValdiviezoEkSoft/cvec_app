@@ -56,95 +56,51 @@ class PdfView extends StatelessWidget {
       var objRsp = await storage.read(key: 'ListadoReservaciones') ?? '';
       var id = await storage.read(key: 'IdReservaciones') ?? '0';
       int idFinal = int.parse(id);
+
+      if (objRsp.isEmpty) return null;
       
       final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
 
       List<Booking> bookingList = bookingResponse.result.data.customerBookings.data;
-      lstReservation = bookingResponse.result.data.customerBookings.data;
+      lstReservation = bookingList;
 
-      //Booking objReservation = bookingList.where(x => x.id == id);
+      //objReservation = bookingList.where((x) => x.bookingId == idFinal).first;
 
-      objReservation = bookingList.firstWhere((x) => x.bookingId == idFinal);
+       objReservation = bookingList.firstWhere(
+        (x) => x.bookingId == idFinal,
+        orElse: () => Booking(
+          bookingId: 0,
+          contractName: '',
+          bookingName: '',
+          bookingContent: '',
+          bookingDate: '',
+          bookingDateCheckIn: '',
+          bookingEndCheckIn: '',
+          bookingHotelName: '',
+          bookingState: ''
+        ),
+      );
 
       return objReservation;
 
     } on Exception catch (_) {
-      /*
-      Fluttertoast.showToast(
-          msg: '$error',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 5,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    */
+    
     }
   }
 
   //method to make http request
   Future<dynamic> estadoCuentas() async {
-    /*
-    try {
-    
-      return rolDePago = AccountStatementModel(
-        netoPagar: 20,
-        totalEgresos: 100,
-        totalIngresos: 50,
-        listaIngresos: [
-          ListaGreso(descripcion: 'Ingreso 1', cantidad: 20, tipoRubro: 'Rubro 1', valor: 20),
-          ListaGreso(descripcion: 'Ingreso 2', cantidad: 21, tipoRubro: 'Rubro 2', valor: 21),
-          ListaGreso(descripcion: 'Ingreso 3', cantidad: 22, tipoRubro: 'Rubro 3', valor: 22),
-        ],
-        listaEgresos: [
-          ListaGreso(descripcion: 'Egreso 1', cantidad: 10, tipoRubro: 'Rubro 10', valor: 10),          
-          ListaGreso(descripcion: 'Egreso 2', cantidad: 11, tipoRubro: 'Rubro 11', valor: 11),          
-          ListaGreso(descripcion: 'Egreso 3', cantidad: 12, tipoRubro: 'Rubro 12', valor: 12),          
-        ],
-        cabeceraRol: CabeceraRol(
-          apellidos: 'Valdiviezo G.',
-          area: 'Test',
-          cargo: 'Programador',
-          cargoCorporativoRRHH: 'Cargo 2',
-          centroCosto: 'CC',
-          division: 'Div 1',
-          empresa: 'Empresa',
-          encargadoCoporativoRRHH: 'Test encargado',
-          nombres: 'Angel Elías',
-          observacion: 'Test Obs.',
-          periodo: 'Periodo 1',
-          proceso: 'Proceso 1',
-          sueldo: 200,
-          tipoPago: 'Efectivo',
-          tipoNomina: 'Nómina de prueba',
-          sucursal: 'Sucursal 1',
-          subCentroCosto: 'Centro de costo 1'
-        )
-      );
-
-    } on Exception catch (_) {
-    
-    }
-    */
 
     try {
       try {
 
       var objRsp = await storage.read(key: 'ListadoEstadoCuentas') ?? '';
-      /*
-      var id = await storage.read(key: 'IdRecibo') ?? '0';
-      int idFinal = int.parse(id);
-      */
       
       final bookingResponse = AccountStatementReportResponseModel.fromJson(jsonDecode(objRsp));
 
       detalleRptCustStatement = bookingResponse.result.data.customerStatementReport.data;
 
-      //objCustomerStatementItem = bookingList.firstWhere((x) => x.contractId == idFinal);
-
-      //detalleRptReceipt = await ReceiptsService().getDetReceipts(idFinal) ?? [];
-
-      return detalleRptCustStatement;//jsonDecode(objRsp);
+      return detalleRptCustStatement;
 
     } on Exception catch (_) {
       
@@ -175,16 +131,7 @@ class PdfView extends StatelessWidget {
       return objPayment;
 
     } on Exception catch (_) {
-      /*
-      Fluttertoast.showToast(
-          msg: '$error',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 5,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
-          */
+    
     }
 
     } on Exception catch (_) {

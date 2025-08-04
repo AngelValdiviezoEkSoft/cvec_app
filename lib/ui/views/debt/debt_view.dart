@@ -6,6 +6,7 @@ import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 String searchQueryDebt = '';
 List<ItemBoton> filteredTransactionsDeb = [];
@@ -14,6 +15,7 @@ int idContrato = 0;
 String nameContrato = '';
 String namePlan = '';
 String fechaInsc = '';
+List<Subscription> lstSubsResp = [];
 
 class DebtView extends StatefulWidget {
   //const DebtView(Key? key) : super (key: key);  
@@ -32,6 +34,7 @@ class DebtViewSt extends State<DebtView> {
     searchQueryDebt = '';
     searchDebTxt = TextEditingController();
     filteredTransactionsDeb = [];
+    lstSubsResp = [];
   }
 
   @override
@@ -39,7 +42,7 @@ class DebtViewSt extends State<DebtView> {
     final size = MediaQuery.of(context).size;
     
     return FutureBuilder(
-      future: DebsService().getDebts(),
+      future: getDebts(),
       builder: (context, snapshot) {
 
         if(!snapshot.hasData) {
@@ -64,8 +67,7 @@ class DebtViewSt extends State<DebtView> {
             namePlan = '';
             fechaInsc = '';
 
-            List<Subscription> lstSubs = snapshot.data as List<Subscription>;
-            List<Subscription> lstSubsResp = [];
+            List<Subscription> lstSubs = snapshot.data as List<Subscription>;            
 
             if(searchQueryDebt.isNotEmpty){
               
@@ -119,130 +121,134 @@ class DebtViewSt extends State<DebtView> {
                       SizedBox(height: size.height * 0.009,),
                       
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: lstSubs.length,
-                          itemBuilder: (context, index) {
-                            final item = lstSubs[index];
-                            
-                            return GestureDetector(
-                              onTap: () {
-                                idContrato = item.contractId;
-                                nameContrato = item.contractName;
-                                namePlan = item.contractPlan;
-
-                                DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
-                                fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
-
-                                context.push(objRutas.rutaDebsDetScrn);
-                              },
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: size.width,
-                                    //color: Colors.grey[100],
-                                    alignment: Alignment.center,
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          width: size.width * 0.85,
-                                          height: size.height * 0.13,
-                                          alignment: Alignment.centerRight,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          //alignment: Alignment.center,
-                                          child: Container(
-                                            width: size.width * 0.75,
-                                            color: Colors.transparent,
-                                            alignment: Alignment.center,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                  color: Colors.transparent,
-                                                  width: size.width * 0.42,
-                                                  alignment: Alignment.centerLeft,
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      
-                                                      SizedBox(height: size.height * 0.019),
-
-                                                      Text(item.contractName,
-                                                        style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
-                                                      ),
-                                                      
-                                                      SizedBox(height: size.height * 0.005),
-                                                      
-                                                      Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey,),),
-                                                      
-                                                      SizedBox(height: size.height * 0.008),
-                                                      
-                                                      if(item.contractInscriptionDate.isNotEmpty)
-                                                      Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
-                                                      
-                                                    ],
-                                                  ),
-                                                ),
+                        child: LiquidPullToRefresh(
+                          onRefresh: refreshDebts,
+                          color: Colors.blue[300],
+                          child: ListView.builder(
+                            itemCount: lstSubs.length,
+                            itemBuilder: (context, index) {
+                              final item = lstSubs[index];
                               
-                                                Container(
-                                                  color: Colors.transparent,
-                                                  width: size.width * 0.3,
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
-                                                    style: const TextStyle(
-                                                      fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,
-                                                    )
-                                                  ),
-                                                ),
-                              
-                                                SizedBox(width: size.width * 0.0004),
-                                              ],
-                                            ),
-                                          ),
-                                        
-                                        ),
-                              
-                                        SizedBox(height: size.height * 0.14,),
-                                      
-                                      ],
-                                    ),
-                                  ),
-                              
-                                  SizedBox(height: size.height * 0.04,),
-                              
-                                    
-                                    // Ícono exterior al card
-                                    Positioned(
-                                      left: size.width * 0.028,//5,
-                                      top: size.height * 0.042,
-                                      child: const Stack(
-                                        alignment: Alignment.topLeft,
+                              return GestureDetector(
+                                onTap: () {
+                                  idContrato = item.contractId;
+                                  nameContrato = item.contractName;
+                                  namePlan = item.contractPlan;
+                          
+                                  DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
+                                  fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
+                          
+                                  context.push(objRutas.rutaDebsDetScrn);
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: size.width,
+                                      //color: Colors.grey[100],
+                                      alignment: Alignment.center,
+                                      child: Stack(
                                         children: [
-                                          CircleAvatar(
-                                                radius: 20,
-                                                backgroundColor: Color(0xFF007AFF),
-                                                child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
-                                                    color: Colors.white),
+                                          Container(
+                                            width: size.width * 0.85,
+                                            height: size.height * 0.13,
+                                            alignment: Alignment.centerRight,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                            //alignment: Alignment.center,
+                                            child: Container(
+                                              width: size.width * 0.75,
+                                              color: Colors.transparent,
+                                              alignment: Alignment.center,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    color: Colors.transparent,
+                                                    width: size.width * 0.42,
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        
+                                                        SizedBox(height: size.height * 0.019),
+                          
+                                                        Text(item.contractName,
+                                                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                        ),
+                                                        
+                                                        SizedBox(height: size.height * 0.005),
+                                                        
+                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey,),),
+                                                        
+                                                        SizedBox(height: size.height * 0.008),
+                                                        
+                                                        if(item.contractInscriptionDate.isNotEmpty)
+                                                        Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                        
+                                                      ],
+                                                    ),
+                                                  ),
+                                
+                                                  Container(
+                                                    color: Colors.transparent,
+                                                    width: size.width * 0.3,
+                                                    alignment: Alignment.centerRight,
+                                                    child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
+                                                      style: const TextStyle(
+                                                        fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,
+                                                      )
+                                                    ),
+                                                  ),
+                                
+                                                  SizedBox(width: size.width * 0.0004),
+                                                ],
                                               ),
-                                          /*
-                                              if (item['unread'] as bool)
-                                                const Positioned(
-                                                  left: -2,
-                                                  top: -2,
-                                                  child: Icon(Icons.circle,
-                                                      size: 10, color: Colors.blue),
-                                                )
-                                        */
+                                            ),
+                                          
+                                          ),
+                                
+                                          SizedBox(height: size.height * 0.14,),
+                                        
                                         ],
                                       ),
                                     ),
-                                  
-                                ],
-                              ),
-                            );
-                          },
+                                
+                                    SizedBox(height: size.height * 0.04,),
+                                
+                                      
+                                      // Ícono exterior al card
+                                      Positioned(
+                                        left: size.width * 0.028,//5,
+                                        top: size.height * 0.042,
+                                        child: const Stack(
+                                          alignment: Alignment.topLeft,
+                                          children: [
+                                            CircleAvatar(
+                                                  radius: 20,
+                                                  backgroundColor: Color(0xFF007AFF),
+                                                  child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
+                                                      color: Colors.white),
+                                                ),
+                                            /*
+                                                if (item['unread'] as bool)
+                                                  const Positioned(
+                                                    left: -2,
+                                                    top: -2,
+                                                    child: Icon(Icons.circle,
+                                                        size: 10, color: Colors.blue),
+                                                  )
+                                          */
+                                          ],
+                                        ),
+                                      ),
+                                    
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -265,4 +271,16 @@ class DebtViewSt extends State<DebtView> {
     
   }
 
+}
+
+
+Future<List<Subscription>> getDebts() async {
+  lstSubsResp = [];
+  return await DebsService().getDebts();
+}
+
+Future<void> refreshDebts() async {
+  lstSubsResp = [];
+  lstSubsResp = await DebsService().getDebts();
+  return Future.delayed(const Duration(seconds: 1));
 }
