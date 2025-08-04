@@ -156,7 +156,7 @@ class DepositViewSt extends State<DepositView> {
                       lstMenu.add(
                         ItemBoton(
                           '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -171,7 +171,8 @@ class DepositViewSt extends State<DepositView> {
                       lstMenu.add(
                         ItemBoton(
                           '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          i,Icons.person,
+                          lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -186,7 +187,7 @@ class DepositViewSt extends State<DepositView> {
                       lstMenu.add(
                         ItemBoton(
                           '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -201,7 +202,8 @@ class DepositViewSt extends State<DepositView> {
                       lstMenu.add(
                         ItemBoton(
                           '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','',
+                          i,Icons.person,
+                          lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){

@@ -8,6 +8,8 @@ class ItemBoton {
   final IconData icon;
   final String mensajeNotificacion;
   final String mensaje2;
+  final String mensaje3;
+  final String mensaje4;
   final String fechaNotificacion;
   final String tiempoDesde;
   final Color color1;
@@ -22,5 +24,5 @@ class ItemBoton {
   final String rutaNavegacion;
   @required final VoidCallback? onPress;
 
-  ItemBoton(this.tipoNotificacion,this.idSolicitud,this.idNotificacionGen,this.ordenNot, this.icon, this.mensajeNotificacion, this.mensaje2, this.fechaNotificacion,this.tiempoDesde, this.color1, this.color2, this.requiereAccion, this.esRelevante, this.estadoLeido, this.numIdenti, this.iconoNotificacion, this.rutaImagen, this.idTransaccion, this.rutaNavegacion, this.onPress );
+  ItemBoton(this.tipoNotificacion,this.idSolicitud,this.idNotificacionGen,this.ordenNot, this.icon, this.mensajeNotificacion, this.mensaje2, this.mensaje3, this.mensaje4,this.fechaNotificacion,this.tiempoDesde, this.color1, this.color2, this.requiereAccion, this.esRelevante, this.estadoLeido, this.numIdenti, this.iconoNotificacion, this.rutaImagen, this.idTransaccion, this.rutaNavegacion, this.onPress );
 }

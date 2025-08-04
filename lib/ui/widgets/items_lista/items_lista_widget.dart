@@ -33,6 +33,8 @@ class ItemsListasWidget extends StatelessWidget {
   final IconData icon;
   @required final String? texto;
   @required final String? texto2;
+  @required final String? texto3;
+  @required final String? texto4;
   final Color color1;
   final Color color2;
   @required final VoidCallback? onPress;
@@ -56,6 +58,8 @@ class ItemsListasWidget extends StatelessWidget {
       this.icon = Icons.circle,
       this.texto,
       this.texto2,
+      this.texto3,
+      this.texto4,
       this.color1 = Colors.grey,
       this.color2 = Colors.blueGrey,
       this.onPress,
@@ -88,6 +92,8 @@ class ItemsListasWidget extends StatelessWidget {
         onPress2: onPress,
         texto: texto,
         texto2: texto2,
+        texto3: texto3,
+        texto4: texto4,
         esRelevante: varEsRelevante,
         varContadorNotificacionLst: varContadorNotificacion,
         varMuestraNotificacionesTrApLst: varMuestraNotificacionesTrAp,
@@ -117,6 +123,8 @@ class ListaNotificaciones extends StatelessWidget {
   final IconData icon;
   @required final String? texto;
   @required final String? texto2;
+  @required final String? texto3;
+  @required final String? texto4;
   Color color1;
   final Color color2;
   @required final VoidCallback? onPress2;
@@ -141,6 +149,8 @@ class ListaNotificaciones extends StatelessWidget {
     this.icon = Icons.circle,
     this.texto,
     this.texto2,
+    this.texto3,
+    this.texto4,
     this.color1 = Colors.grey,
     this.color2 = Colors.blueGrey,
     this.onPress2,
@@ -148,66 +158,19 @@ class ListaNotificaciones extends StatelessWidget {
     this.varMuestraNotificacionesTrProcLst,
     this.varMuestraNotificacionesTrCompLst,
     this.varMuestraNotificacionesTrInfoLst,
-    //this.objUserSolicVacLst,
     this.varIconoNotTransLstNot,
     this.rutaNavegacionFin
   }) : super (key: key);
   
   @override
   Widget build(BuildContext context) {
-
-    //int numNotificacionesTrAp = varMuestraNotificacionesTrApLst!;
-    //int numNotificacionesTrProc = varMuestraNotificacionesTrProcLst!;
-    //int numNotificacionesTrComp = varMuestraNotificacionesTrCompLst!;
-    //int numNotificacionesTrInfo = varMuestraNotificacionesTrInfoLst!;
-
-    //List<int> varLstIdNot = [];
     contextWidget = context;
-    //bool esRelevantesObj = false;
-    //int PosicionMostrar = 0;
-    //bool muestraDesplegado = false;
 
     numeroIdentificacionNotificaciones = varNumIdentifLst!;
     
-    //bool boolMuestraNotificacionesTrAp = false;//Provider.of<NotificacionesService>(context,listen: false).muestraNotificacionesTramApr;
-    //bool boolMuestraNotificacionesTrProc = false;//Provider.of<NotificacionesService>(context,listen: false).muestraNotificacionesTramProc;
-    //bool boolMuestraNotificacionesTrComp = false;//Provider.of<NotificacionesService>(context,listen: false).muestraNotificacionesTramComp;
-    //bool boolMuestraNotificacionesTrInfo = false;//Provider.of<NotificacionesService>(context,listen: false).muestraNotificacionesTramInfo;
-
-/*
-    final int varNumNotificacionesTrAp = 0;//Provider.of<NotificacionesService>(context,listen: false).contNotificacionesTramApr;
-    final int varNumNotificacionesTrProc = 0;//Provider.of<NotificacionesService>(context,listen: false).contNotificacionesTramProc;
-    final int varNumNotificacionesComp = 0;//Provider.of<NotificacionesService>(context,listen: false).contNotificacionesCompras;
-    final int varNumNotificacionesInfo = 0;//Provider.of<NotificacionesService>(context,listen: false).contNotificacionesInformativo;
-    */
-    //int numNot = 0;
-
     final sizeLstNot = MediaQuery.of(context).size;
     initializeDateFormatting('es'); 
     
-    //ItemBoton varObjBoton = ItemBoton('','','',1,icon, '', '','', '', color1, color2,false,false,'','','','','','', () => {},);
-    //List<ItemBoton> itemsNot = [];
-
-  if(varIdNotificacionLst == 1) {
-    //numNot = 0;
-    //numNot = varNumNotificacionesTrAp;
-  }
-
-  if(varIdNotificacionLst == 2) {
-    //numNot = 0;
-    //numNot = varNumNotificacionesTrProc;
-  }
-  
-  if(varIdNotificacionLst == 3) {
-    //numNot = 0;
-    //numNot = varNumNotificacionesComp;
-  }
-  
-  if(varIdNotificacionLst == 4) {
-    //numNot = 0;
-    //numNot = varNumNotificacionesInfo;
-  }
-
   return Container(
     color: Colors.transparent,
     width: sizeLstNot.width,
@@ -219,19 +182,15 @@ class ListaNotificaciones extends StatelessWidget {
             }
             else{
               const storage = FlutterSecureStorage();
-
               await storage.write(key: 'IdReservaciones', value: '');
-              await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-              
-              //ignore: use_build_context_synchronously
-              //context.push(rutaNavegacionFin!);
+              await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");              
             }            
           },
           child: Column(
             children: [
               Container(
                 width: sizeLstNot.width,
-                height: sizeLstNot.height * 0.13,
+                height: sizeLstNot.height * 0.25,
                 //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
                 margin: const EdgeInsets.all(3), 
                 decoration: BoxDecoration(
@@ -254,7 +213,7 @@ class ListaNotificaciones extends StatelessWidget {
                   minVerticalPadding: 15,
                   title:  Container( 
                     width: sizeLstNot.width * 0.98,//65,
-                    height: sizeLstNot.height * 0.11,
+                    height: sizeLstNot.height * 0.28,
                     //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
                     alignment: Alignment.center, 
                     color: Colors.transparent,
@@ -278,97 +237,62 @@ class ListaNotificaciones extends StatelessWidget {
                                 child: AutoSizeText( 
                                   texto!, 
                                   style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), 
-                                  presetFontSizes: const [18,16,14,12], maxLines: 2,)),
+                                  presetFontSizes: const [18,16,14,12], maxLines: 2,
+                                )
+                              ),
                             ],
                           ),
                         ),
           
                         if(texto2 != null && texto2!.isNotEmpty )
                         Container(
-                          width: sizeLstNot.width * 0.72,
-                          height: sizeLstNot.height * 0.3,
+                          width: sizeLstNot.width * 0.85,
+                          height: sizeLstNot.height * 0.25,
                           color: Colors.transparent,
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: [
                               if(texto != null && texto!.isNotEmpty)
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
-                              
-                              if(texto2 != null && texto2!.isNotEmpty)
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                              
-                              if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty)
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                            ],
-                          ),
-                        ),
-          
-                        if(texto != null && texto!.isNotEmpty )
-                        GestureDetector(
-                          onTap: () async {
-                            const storage = FlutterSecureStorage();
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.8, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
 
-                            await storage.write(key: 'IdReservaciones', value: '');
-                            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-
-                            //ignore: use_build_context_synchronously
-                            //context.push(rutaNavegacionFin!);
-                          },
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // El círculo de fondo
                               Container(
-                                width: sizeLstNot.width * 0.15,  // Tamaño del círculo (ajusta según sea necesario)
-                                height: sizeLstNot.height * 0.1,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 224, 232, 235),  // Color de fondo
+                                color: Colors.transparent, 
+                                width: sizeLstNot.width * 0.8, 
+                                height: sizeLstNot.height * 0.05,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      color: Colors.transparent, 
+                                      width: sizeLstNot.width * 0.4, 
+                                      height: sizeLstNot.height * 0.03,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                      child: Text( texto3 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+                                    ),
+
+                                    Container(
+                                      color: Colors.transparent, 
+                                      width: sizeLstNot.width * 0.4, 
+                                      height: sizeLstNot.height * 0.03,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                      child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+                                    ),
+                                  ],
                                 ),
                               ),
-                              // El icono central (usamos un icono de grupo de personas)
-                              Icon(
-                                icon, // Icono similar al de personas
-                                size: 30,  // Tamaño del icono
-                                color: Colors.blue[900],  // Color del icono
+
+                              if(texto2 != null && texto2!.isNotEmpty)
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.8, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
+                              
+                              if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty)
+                              Container(
+                                color: Colors.transparent, 
+                                width: sizeLstNot.width * 0.8, 
+                                height: sizeLstNot.height * 0.09,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                child: Text( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), maxLines: 5,)
                               ),
                             ],
                           ),
-                          
                         ),
           
-                        if(texto2 == null || texto2!.isEmpty)
-                        GestureDetector(
-                          onTap: () async {    
-                            const storage = FlutterSecureStorage();
-
-                            await storage.write(key: 'IdReservaciones', value: '');
-                            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-
-                            //ignore: use_build_context_synchronously
-                            //context.push(rutaNavegacionFin!);
-                          },
-                          child: Container(
-                            
-                            width: sizeLstNot.width * 0.14,//44,
-                            height: sizeLstNot.height * 0.13,//44, 
-                            color: Colors.transparent,
-                            child: Center(
-                              child: GestureDetector(
-                                onTap: () async {
-                                  const storage = FlutterSecureStorage();
-
-                                  await storage.write(key: 'IdReservaciones', value: '');
-                                  await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");
-
-                                  //ignore: use_build_context_synchronously
-                                  //context.push(rutaNavegacionFin!);
-                                },
-                                child: Icon(icon, color: Colors.black,))
-                            )
-                          ),
-                        ),
-                        
                       ],
                     ),                
                   ),

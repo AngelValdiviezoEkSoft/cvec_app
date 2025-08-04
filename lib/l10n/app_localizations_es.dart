@@ -379,7 +379,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get checkInDateLbl => 'Fecha de ingreso';
 
   @override
+  String get checkInLbl => 'Fecha Ingreso';
+
+  @override
   String get checkOutDateLbl => 'Fecha de salida';
+
+  @override
+  String get checkOutLbl => 'Fecha Salida';
 
   @override
   String get hotelLbl => 'Hotel';

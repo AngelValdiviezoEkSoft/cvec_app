@@ -115,7 +115,7 @@ class DataInicialService extends ChangeNotifier{
 
       final items = <ItemBoton>[
         if(objPermisos.mainMenu.itemListLeads)
-        ItemBoton('','','',1, Icons.group_add, 'Prospectos', 'Seguimiento y control de prospectos','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+        ItemBoton('','','',1, Icons.group_add, 'Prospectos', 'Seguimiento y control de prospectos','','','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
           '',//RoutersApp().rutaListaProspectos, 
           () {
             
@@ -194,6 +194,8 @@ class DataInicialService extends ChangeNotifier{
       iconData,
       json['mensajeNotificacion'] ?? '',
       json['mensaje2'] ?? '',
+      json['mensaje3'] ?? '',
+      json['mensaje4'] ?? '',
       json['fechaNotificacion'] ?? '',
       json['tiempoDesde'] ?? '',
       Color(json['color1'] ?? 0),

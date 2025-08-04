@@ -1,3 +1,4 @@
+import 'package:cve_app/ui/screens/manual_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -95,7 +96,7 @@ class _TransactionListPageState extends State<TransactionListPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Buscar',
+                hintText: locGen!.searchLbl,
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
               ),

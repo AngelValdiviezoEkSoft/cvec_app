@@ -827,11 +827,23 @@ abstract class AppLocalizations {
   /// **'Check-in Date'**
   String get checkInDateLbl;
 
+  /// No description provided for @checkInLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in'**
+  String get checkInLbl;
+
   /// No description provided for @checkOutDateLbl.
   ///
   /// In en, this message translates to:
-  /// **'Check-out Date'**
+  /// **'Check-out'**
   String get checkOutDateLbl;
+
+  /// No description provided for @checkOutLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-out'**
+  String get checkOutLbl;
 
   /// No description provided for @hotelLbl.
   ///

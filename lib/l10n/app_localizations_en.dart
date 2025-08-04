@@ -379,7 +379,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get checkInDateLbl => 'Check-in Date';
 
   @override
-  String get checkOutDateLbl => 'Check-out Date';
+  String get checkInLbl => 'Check-in';
+
+  @override
+  String get checkOutDateLbl => 'Check-out';
+
+  @override
+  String get checkOutLbl => 'Check-out';
 
   @override
   String get hotelLbl => 'Hotel';

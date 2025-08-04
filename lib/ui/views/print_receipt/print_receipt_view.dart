@@ -146,7 +146,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                               child: TextField(
                                 controller: searchTxt,
                                 decoration: InputDecoration(
-                                  hintText: 'Buscar',
+                                  hintText: locGen!.searchLbl,
                                   prefixIcon: const Icon(Icons.search),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                   suffixIcon: IconButton(
@@ -188,142 +188,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                     ),
                   ),
                 );
-                
-/*
-                return Scaffold(
-                  body: Container(
-                    width: size.width,
-                    height: size.height * 0.82,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            controller: searchTxt,
-                            decoration: InputDecoration(
-                              hintText: 'Buscar',
-                              prefixIcon: const Icon(Icons.search),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  FocusScope.of(context).unfocus();
-                  
-                                  setState(() {
-                                    groupedTransactions = {};
-                                    searchQuery = '';
-                                    searchTxt.text = '';
-                                  });
-                  
-                                },
-                                icon: const Icon(Icons.cancel, color: Colors.black,)
-                              ),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            ),
-                            onEditingComplete: () {
-                              FocusScope.of(context).unfocus();
-                  
-                              setState(() {
-                                searchQuery = searchTxt.text;
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView(
-                            children: groupedTransactions.entries.map((entry) {
-                              
-                              String descDia = '';
-                              String descMes = '';
-                              String descAnio = '';
-                    
-                              String fecTrx = '${entry.key.split('/')[2]}-${entry.key.split('/')[1]}-${entry.key.split('/')[0]}';
-                    
-                              DateTime date = DateTime.parse(fecTrx);
-                    
-                              if(date.day == DateTime.now().day){
-                                descDia = 'Hoy';
-                              }
-                              else{
-                                if(date.day == DateTime.now().day - 1){
-                                  descDia = 'Ayer';
-                                }
-                                else{
-                                  descDia = DateFormat('EEEE', 'es_ES').format(date);
-                                  descDia = capitalizarPrimeraLetra(descDia);
-                                }
-                              }
-                    
-                              descMes = DateFormat('MMMM', 'es_ES').format(date);
-                              descMes = capitalizarPrimeraLetra(descMes);
-                              descAnio = '${date.year}';                  
-                    
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [                                
-                                  Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '$descDia ${date.day}',
-                                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          '$descMes $descAnio',
-                                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  ...entry.value.map((tx) => Card(
-                                        margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                        child: GestureDetector(
-                                          onTap: () async {
-                                            const storage = FlutterSecureStorage();
-                    
-                                            await storage.write(key: 'IdRecibo', value: '');
-                                            await storage.write(key: 'IdRecibo', value: '${tx.ordenNot}');
-                                            
-                                            //ignore: use_build_context_synchronously
-                                            context.push(tx.rutaNavegacion);
-                                          },
-                                          child: ListTile(
-                                            title: Text(tx.mensajeNotificacion),
-                                            //subtitle: Text(tx.mensaje2),
-                                            trailing: Text(
-                                              //'${tx.fechaNotificacion < 0 ? '-' : ''} \$${tx.fechaNotificacion.abs().toStringAsFixed(2)}',
-                                              tx.fechaNotificacion,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      )),
-                                ],
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () {
-                      // Acción al presionar el botón
-                      //print('Botón flotante presionado');
-                      //para consultas por fechas
-                    },
-                    backgroundColor: Colors.blue,
-                    child: const Icon(Icons.add),
-                    
-                  ),
-                );
-*/
+              
               }
               
             }
@@ -353,7 +218,7 @@ Future<String> getReceipts() async {
         for(int i = 0; i < rsp.length; i++){
           items.add(
             //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 

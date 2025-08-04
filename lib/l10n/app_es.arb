@@ -505,9 +505,17 @@
   "@checkInDateLbl": {
     "description": "Fecha de ingreso"
   },
+  "checkInLbl": "Fecha Ingreso",
+  "@checkInLbl": {
+    "description": "Fecha Ingreso"
+  },
   "checkOutDateLbl": "Fecha de salida",
   "@checkOutDateLbl": {
     "description": "Fecha de salida"
+  },
+  "checkOutLbl": "Fecha Salida",
+  "@checkOutLbl": {
+    "description": "Fecha Salida"
   },
   "hotelLbl": "Hotel",
   "@hotelLbl": {

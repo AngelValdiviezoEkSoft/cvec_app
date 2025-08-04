@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 //import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 //import 'package:provider/provider.dart';
 
@@ -103,6 +104,8 @@ class ReservationsViewSt extends State<ReservationsView> {
                       icon: item.icon,
                       texto: item.mensajeNotificacion,
                       texto2: item.mensaje2,
+                      texto3: item.mensaje3,
+                      texto4: item.mensaje4,
                       color1: item.color1,
                       color2: item.color2,
                       onPress: () {  },
@@ -187,7 +190,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                             child: TextField(
                               controller: searchRsvtTxt,
                               decoration: InputDecoration(
-                                hintText: 'Buscar',
+                                hintText: locGen!.searchLbl,
                                 prefixIcon: const Icon(Icons.search),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                                 suffixIcon: IconButton(
@@ -212,9 +215,9 @@ class ReservationsViewSt extends State<ReservationsView> {
                           
                                     
                           Container(
-                            width: size.width,
-                            //height: size.height * 0.85,
-                            height: size.height * 0.2 * lstMenu.length,
+                            width: size.width,                            
+                            //height: size.height * 0.2 * lstMenu.length,
+                            height: size.height * 0.27 * lstMenu.length,
                             color: Colors.transparent,
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
@@ -260,8 +263,19 @@ Future<String> getReservations() async {
 
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
+          
+          var fechaCheckIn = DateFormat('dd/MM/yyyy').format(DateTime.parse(rsp[i].bookingDateCheckIn));
+          var fechaCheckOut = DateFormat('dd/MM/yyyy').format(DateTime.parse(rsp[i].bookingEndCheckIn));
+
           items.add(
-            ItemBoton('','','',rsp[i].bookingId, Icons.group_add, rsp[i].bookingName, rsp[i].bookingHotelName, rsp[i].bookingContent,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].bookingId, 
+            Icons.group_add, 
+            rsp[i].bookingName,
+            '${locGen!.hotelLbl}: ${rsp[i].bookingHotelName}',
+            '${locGen!.checkInLbl}: $fechaCheckIn',
+            '${locGen!.checkOutLbl}: $fechaCheckOut',
+            '${locGen!.includesLbl}: ${rsp[i].bookingContent}',
+            '', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routReservationView,
               () {
                 
@@ -295,6 +309,8 @@ Map<String, dynamic> serializeItemBotonReservationMenu(ItemBoton item) {
     'icon': item.icon.codePoint,
     'mensajeNotificacion': item.mensajeNotificacion,
     'mensaje2': item.mensaje2,
+    'mensaje3': item.mensaje3,
+    'mensaje4': item.mensaje4,
     'fechaNotificacion': item.fechaNotificacion,
     'tiempoDesde': item.tiempoDesde,
     'color1': item.color1.value,

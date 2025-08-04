@@ -153,21 +153,21 @@ class GenericState extends Equatable {
       
       final items = <ItemBoton>[
         //if(objPermisos.mainMenu.itemListLeads)
-        ItemBoton('','','',1, Icons.group_add, 'Contrato', 'Cliente 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+        ItemBoton('','','',1, Icons.group_add, 'Contrato', 'Cliente 1','','','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
           RoutersApp().routPdfView, 
           () {
             
           }
         ),
         
-        ItemBoton('','','',2, Icons.groups, 'Contrato', 'Cliente 2','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+        ItemBoton('','','',2, Icons.groups, 'Contrato', 'Cliente 2','','','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
           RoutersApp().routPdfView, 
           () {
             
           }
         ),
         
-        ItemBoton('','','',3, Icons.calendar_month, 'Contrato', 'Cliente 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+        ItemBoton('','','',3, Icons.calendar_month, 'Contrato', 'Cliente 3','','','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
           RoutersApp().routPdfView, 
           () {}
         ),        
@@ -188,21 +188,21 @@ class GenericState extends Equatable {
       
       final items = <ItemBoton>[
         //if(objPermisos.mainMenu.itemListLeads)
-        ItemBoton('Contrato A','Plan Identidad','',1, Icons.group_add, 'Cuota 06/12', 'Cliente 1','05 Jun 2025','\$31.00', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+        ItemBoton('Contrato A','Plan Identidad','',1, Icons.group_add, 'Cuota 06/12', 'Cliente 1','','','05 Jun 2025','\$31.00', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
           RoutersApp().routPdfView, 
           () {
             
           }
         ),
         
-        ItemBoton('Contrato B','Plan Contrato','',2, Icons.groups, 'Cuota 01/03', 'Cliente 2','08 Ago 2024','\$50.00', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+        ItemBoton('Contrato B','Plan Contrato','',2, Icons.groups, 'Cuota 01/03', 'Cliente 2','','','08 Ago 2024','\$50.00', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
           RoutersApp().routPdfView, 
           () {
             
           }
         ),
         
-        ItemBoton('Contrato C','Plan terreno','',3, Icons.calendar_month, 'Cuota 02/09', 'Cliente 3','20 Abr 2020','\$259.00', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+        ItemBoton('Contrato C','Plan terreno','',3, Icons.calendar_month, 'Cuota 02/09', 'Cliente 3','','','20 Abr 2020','\$259.00', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
           RoutersApp().routPdfView, 
           () {}
         ),        
@@ -230,21 +230,21 @@ class GenericState extends Equatable {
 
       final items = <ItemBoton>[
         //if(objPermisos.mainMenu.itemListLeads)
-        ItemBoton('','','',1, Icons.group_add, 'Recibo 1', 'Detalle del Recibo 1','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+        ItemBoton('','','',1, Icons.group_add, 'Recibo 1', 'Detalle del Recibo 1','','','','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
           RoutersApp().routPrintReceiptView,
           () {
             
           }
         ),
         
-        ItemBoton('','','',2, Icons.groups, 'Recibo 2', 'Detalle del Recibo 2','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
+        ItemBoton('','','',2, Icons.groups, 'Recibo 2', 'Detalle del Recibo 2','','','','', Colors.white, Colors.white,false,false,'','','icTramApr.png','icTramAprTrans.png','',
           RoutersApp().routPrintReceiptView, 
           () {
             
           }
         ),
         
-        ItemBoton('','','',3, Icons.calendar_month, 'Recibo 3', 'Detalle del Recibo 3','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
+        ItemBoton('','','',3, Icons.calendar_month, 'Recibo 3', 'Detalle del Recibo 3','','','','', Colors.white, Colors.white,false,false,'','','icTramProc.png','icTramProcTrans.png','',
           RoutersApp().routPrintReceiptView, 
           () {}
         ),        
@@ -269,7 +269,7 @@ class GenericState extends Equatable {
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
           items.add(
-            ItemBoton('','','',rsp[i].bookingId, Icons.group_add, rsp[i].bookingName, rsp[i].bookingHotelName, rsp[i].bookingContent,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].bookingId, Icons.group_add, rsp[i].bookingName, rsp[i].bookingHotelName,'','', rsp[i].bookingContent,'', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routReservationView,
               () {
                 
@@ -323,7 +323,7 @@ class GenericState extends Equatable {
         for(int i = 0; i < rsp.length; i++){
           items.add(
             //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate,'','', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 
@@ -354,7 +354,7 @@ class GenericState extends Equatable {
         for(int i = 0; i < rsp.length; i++){
           items.add(
             //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-            ItemBoton('','','',rsp[i].partnerId, Icons.group_add, rsp[i].planName, rsp[i].paymentDate, '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            ItemBoton('','','',rsp[i].partnerId, Icons.group_add, rsp[i].planName, rsp[i].paymentDate,'','','\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 
@@ -468,6 +468,8 @@ class GenericState extends Equatable {
       iconData,
       json['mensajeNotificacion'] ?? '',
       json['mensaje2'] ?? '',
+      json['mensaje3'] ?? '',
+      json['mensaje4'] ?? '',
       json['fechaNotificacion'] ?? '',
       json['tiempoDesde'] ?? '',
       Color(json['color1'] ?? 0),
