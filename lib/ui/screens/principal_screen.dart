@@ -393,8 +393,22 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
                                       repeatForever: true,                                      
                                       pause: const Duration(microseconds: 1000),          
                                       animatedTexts: [
-                                        ScaleAnimatedText(locGen!.titulo1Introduccion, textStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
-                                        ScaleAnimatedText(locGen!.titulo2Introduccion, textStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17))),
+                                        ScaleAnimatedText(
+                                          locGen!.titulo1Introduccion, 
+                                          textStyle: TextStyle(
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17),
+                                            color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                              Colors.black : Colors.white,
+                                          )
+                                        ),
+                                        ScaleAnimatedText(
+                                          locGen!.titulo2Introduccion, 
+                                          textStyle: TextStyle(
+                                            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17),
+                                            color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                              Colors.black : Colors.white,
+                                          )
+                                        ),
                                       ],
                                       onTap: () {
                                       },

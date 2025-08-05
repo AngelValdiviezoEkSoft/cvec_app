@@ -147,7 +147,7 @@ class AccountStatementService extends ChangeNotifier{
 
       return objConv.result.data.customerStatementContracts.data;      
     }
-    catch(_){
+    catch(ex){
       //print('Test DataInit $ex');
       return [];
     }

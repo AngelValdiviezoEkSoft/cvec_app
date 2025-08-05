@@ -160,7 +160,7 @@ class ListaRecibos extends StatelessWidget {
             children: [
               Container(
                 width: sizeLstNot.width,
-                height: sizeLstNot.height * 0.13,
+                height: sizeLstNot.height * 0.1,
                 margin: const EdgeInsets.all(3), 
                 decoration: BoxDecoration(
                   boxShadow: <BoxShadow>[
@@ -181,7 +181,7 @@ class ListaRecibos extends StatelessWidget {
                   minVerticalPadding: 15,
                   title:  Container( 
                     width: sizeLstNot.width * 0.98,//65,
-                    height: sizeLstNot.height * 0.11,
+                    height: sizeLstNot.height * 0.08,
                     //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
                     alignment: Alignment.center, 
                     color: Colors.transparent,
@@ -199,65 +199,13 @@ class ListaRecibos extends StatelessWidget {
                             children: [
                               Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
                               
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                              
+                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.7, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),                              
                             ],
                           ),
                         ),
           
-                        //if(texto != null && texto!.isNotEmpty )
-                        Container(color: Colors.transparent, width: sizeLstNot.width * 0.25, height: sizeLstNot.height * 0.056, alignment: Alignment.topCenter, child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black, ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                        
-                        /*
-                        GestureDetector(
-                          onTap: () {
-                            context.push(rutaNavegacionFin!);
-                          },
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              // El círculo de fondo
-                              Container(
-                                width: sizeLstNot.width * 0.15,  // Tamaño del círculo (ajusta según sea necesario)
-                                height: sizeLstNot.height * 0.1,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 224, 232, 235),  // Color de fondo
-                                ),
-                              ),
-                              // El icono central (usamos un icono de grupo de personas)
-                              Icon(
-                                icon, // Icono similar al de personas
-                                size: 30,  // Tamaño del icono
-                                color: Colors.blue[900],  // Color del icono
-                              ),
-                            ],
-                          ),
-                          
-                        ),
-          */
-
-/*
-                        if(texto2 == null || texto2!.isEmpty)
-                        GestureDetector(
-                          onTap: () {    
-                            context.push(rutaNavegacionFin!);
-                          },
-                          child: Container(
-                            
-                            width: sizeLstNot.width * 0.14,//44,
-                            height: sizeLstNot.height * 0.13,//44, 
-                            color: Colors.transparent,
-                            child: Center(
-                              child: GestureDetector(
-                                onTap: () {                                  
-                                  context.push(rutaNavegacionFin!);
-                                },
-                                child: Icon(icon, color: Colors.white,))
-                            )
-                          ),
-                        ),
-                        */
+                        Container(color: Colors.transparent, width: sizeLstNot.width * 0.25, height: sizeLstNot.height * 0.056, alignment: Alignment.topCenter, child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black, fontSize: 22), maxLines: 1,)),
+                      
                       ],
                     ),                
                   ),

@@ -383,6 +383,12 @@ abstract class AppLocalizations {
   /// **'Payment details'**
   String get paymentDetLbl;
 
+  /// No description provided for @detailLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Detail'**
+  String get detailLbl;
+
   /// No description provided for @notUpdtPymntLbl.
   ///
   /// In en, this message translates to:

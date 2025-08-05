@@ -47,6 +47,7 @@
     "bankLbl": "Bank",
     "commentsLbl": "Comments",
     "paymentDetLbl": "Payment details",
+    "detailLbl": "Detail",
     "notUpdtPymntLbl": "Updated payment notification",
     "msmNotUpdtPymntLbl": "Your payment notification has changed status to Pending",
     "msmValidateAmounLbl": "Please enter the amount",

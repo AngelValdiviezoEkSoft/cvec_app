@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
 String searchQueryAcc = '';
 late TextEditingController searchAccTxt;
@@ -28,6 +29,8 @@ class AccountStatementView extends StatefulWidget {
 
 class AccountStatementViewSt extends State<AccountStatementView> {
 
+  late Future<List<Contract>> _futureAccountStatements; // <-- Guardamos el Future
+
   @override
   void initState() {
     super.initState();
@@ -40,17 +43,20 @@ class AccountStatementViewSt extends State<AccountStatementView> {
     namePlanAccountStatement = '';
     fechaInscAccountStatement = '';
     lstAccountStatResp = [];
+
+    _futureAccountStatements = getAccountStatements();
   }
 
   @override
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
         return FutureBuilder(
-          future: getAccountStatements(),//AccountStatementService().getAccountStatement(),
+          future: _futureAccountStatements,//AccountStatementService().getAccountStatement(),
           builder: (context, snapshot) {
 
             if(!snapshot.hasData) {
@@ -235,7 +241,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                               height: size.height * 0.17,
                                               alignment: Alignment.centerRight,
                                               decoration: BoxDecoration(
-                                                color: Colors.white,
+                                                color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                                  Colors.white : Colors.grey,
                                                 borderRadius: BorderRadius.circular(12),
                                               ),
                                               //alignment: Alignment.center,
@@ -257,18 +264,18 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           SizedBox(height: size.height * 0.019),
                             
                                                           Text(item.contractName,
-                                                            style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                           ),
                                                           
                                                           SizedBox(height: size.height * 0.008),
                                                           
                                                           if(item.contractInscriptionDate.isNotEmpty && item.contractDueDate.isNotEmpty)
                                                           Text('${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate))} - ${DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractDueDate))}',
-                                                            style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                            style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic,)),
                             
                                                           SizedBox(height: size.height * 0.008),
                                                           Text('\$${item.contractPaidAmount.toStringAsFixed(2)}',
-                                                          style: const TextStyle(fontSize: 25, color: Colors.grey, fontWeight: FontWeight.bold,)),
+                                                          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold,)),
                             
                                                           SizedBox(height: size.height * 0.008),
                                                           LinearProgressIndicator(
@@ -302,8 +309,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                                           
                                                           SizedBox(height: size.height * 0.02,),
                                                           
-                                                          Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,
-                                                            style: TextStyle(color: Colors.grey,),),
+                                                          Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
                                                           
                                                           SizedBox(height: size.height * 0.02,),
                             
@@ -361,7 +367,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                   
                                       SizedBox(height: size.height * 0.04,),
                                   
-                                        
+                                        /*
                                         // Ícono exterior al card
                                         Positioned(
                                           left: size.width * 0.028,//5,
@@ -370,24 +376,23 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                             alignment: Alignment.topLeft,
                                             children: [
                                               CircleAvatar(
-                                                    radius: 20,
-                                                    backgroundColor: Color(0xFF007AFF),
-                                                    child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
-                                                        color: Colors.white),
-                                                  ),
+                                                radius: 20,
+                                                backgroundColor: Color(0xFF007AFF),
+                                                child: Icon(Icons.notifications_none_outlined, //Icon(item['icon'] as IconData,
+                                                    color: Colors.white),
+                                              ),
                                               
-                                                  //if (item['unread'] as bool)
-                                                     Positioned(
-                                                      left: -2,
-                                                      top: -2,
-                                                      child: Icon(Icons.circle,
-                                                          size: 10, color: Colors.blue),
-                                                    )
+                                              Positioned(
+                                              left: -2,
+                                              top: -2,
+                                              child: Icon(Icons.circle,
+                                                  size: 10, color: Colors.blue),
+                                            )
                                             
                                             ],
                                           ),
                                         ),
-                                      
+                                      */
                                     ],
                                   ),
                                 );

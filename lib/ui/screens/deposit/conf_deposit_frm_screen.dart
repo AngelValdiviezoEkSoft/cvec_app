@@ -75,7 +75,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
               foregroundColor: Colors.white,
               backgroundColor: const Color(0xFF2EA3F2),        
               //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-              title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
+              title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
               leading: GestureDetector(
                 onTap: () {
                   context.push(objRutas.rutaPrincipalUser);

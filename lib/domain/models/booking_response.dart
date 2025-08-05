@@ -214,7 +214,7 @@ class Booking {
   final String bookingContent;
   final String bookingDateCheckIn;
   final String bookingEndCheckIn;
-  final String bookingState;
+  String bookingState;
 
   Booking({
     required this.bookingId,

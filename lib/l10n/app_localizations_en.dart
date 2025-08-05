@@ -157,6 +157,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get paymentDetLbl => 'Payment details';
 
   @override
+  String get detailLbl => 'Detail';
+
+  @override
   String get notUpdtPymntLbl => 'Updated payment notification';
 
   @override

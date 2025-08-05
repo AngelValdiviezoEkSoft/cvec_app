@@ -117,9 +117,9 @@
   "@receiptsLbl": {
     "description": "Recibos"
   },
-  "reservationsLbl": "Lista de reservaciones",
+  "reservationsLbl": "Lista de reservas",
   "@reservationsLbl": {
-    "description": "Lista de reservaciones"
+    "description": "Lista de reservas"
   },
   "menuReservationsLbl": "Reservaciones",
   "@menuReservationsLbl": {
@@ -212,6 +212,10 @@
   "paymentDetLbl": "Detalle de pago",
   "@paymentDetLbl": {
     "description": "Detalle de pago"
+  },
+  "detailLbl": "Detalle",
+  "@detailLbl": {
+    "description": "Detalle"
   },
   "notUpdtPymntLbl": "Notificación de pago actualizada",
   "@notUpdtPymntLbl": {

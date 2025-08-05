@@ -88,7 +88,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get receiptsLbl => 'Recibos';
 
   @override
-  String get reservationsLbl => 'Lista de reservaciones';
+  String get reservationsLbl => 'Lista de reservas';
 
   @override
   String get menuReservationsLbl => 'Reservaciones';
@@ -155,6 +155,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get paymentDetLbl => 'Detalle de pago';
+
+  @override
+  String get detailLbl => 'Detalle';
 
   @override
   String get notUpdtPymntLbl => 'Notificación de pago actualizada';

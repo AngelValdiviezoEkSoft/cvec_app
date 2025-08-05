@@ -133,7 +133,8 @@ class DepositViewSt extends State<DepositView> {
 
                     DateTime fecha = DateTime.parse(fechaStr);
 
-                    String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
+                    //String fechaFormateada = DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
+                    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);//DateFormat("EEEE d, MMMM", "es_ES").format(fecha);
 
                     fechaFormateada = fechaFormateada[0].toUpperCase() + fechaFormateada.substring(1);
 
@@ -155,8 +156,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabTodas && lstMenu.length <= lstReceipts.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
+                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          i,Icons.person,
+                          'Concepto: ${lstReceipts[i].receiptConcept}',
+                          'Fecha de envío: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -170,9 +173,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabProgreso && statusDeposit.toLowerCase() == locGen!.pendingReviewLbl.toLowerCase() && lstMenu.length < lstPendientes.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
+                          'Concepto: ${lstReceipts[i].receiptConcept}',
+                          'Fecha de envío: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -186,8 +190,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabAprobadas && lstReceipts[i].receiptState.toLowerCase() == 'approved' && lstMenu.length < lstAprobadas.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
-                          i,Icons.person,lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
+                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          i,Icons.person,
+                          'Concepto: ${lstReceipts[i].receiptConcept}',
+                          'Fecha de envío: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -201,9 +207,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabRechazadas && lstReceipts[i].receiptState.toLowerCase() == 'rejected' && lstMenu.length < lstRechazadas.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','\$${lstReceipts[i].receiptAmount}',statusDeposit,
+                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          lstReceipts[i].receiptConcept,fechaFormateada,'','','','',
+                          'Concepto: ${lstReceipts[i].receiptConcept}',
+                          'Fecha de envío: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){

@@ -62,6 +62,32 @@ class PdfView extends StatelessWidget {
       final bookingResponse = BookingResponse.fromJson(jsonDecode(objRsp));
 
       List<Booking> bookingList = bookingResponse.result.data.customerBookings.data;
+
+      for(int i = 0; i < bookingList.length; i++){
+        if(bookingList[i].bookingState == 'draft'){
+          bookingList[i].bookingState = 'Borrador';
+        }
+        if(bookingList[i].bookingState == 'open'){
+          bookingList[i].bookingState = 'Activa';
+        }
+        if(bookingList[i].bookingState == 'done'){
+          bookingList[i].bookingState = 'Realizada';
+        }
+        if(bookingList[i].bookingState == 'cancel'){
+          bookingList[i].bookingState = 'Anulada';
+        }
+        if(bookingList[i].bookingState == 'traveled'){
+          bookingList[i].bookingState = 'Viajó';
+        }
+        if(bookingList[i].bookingState == 'not_traveled'){
+          bookingList[i].bookingState = 'No viajó';
+        }
+        if(bookingList[i].bookingState == 'to_deliver_voucher'){
+          bookingList[i].bookingState = 'Entregando voucher';
+        }
+
+      }
+
       lstReservation = bookingList;
 
       //objReservation = bookingList.where((x) => x.bookingId == idFinal).first;

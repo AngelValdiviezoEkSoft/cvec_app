@@ -213,7 +213,7 @@ class ListaDeposits extends StatelessWidget {
                                 Container(
                                   color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  height: sizeLstNot.height * 0.036,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
                                   child: Text( 
                                       varIconoNot!, 
                                       overflow: TextOverflow.ellipsis,
@@ -229,7 +229,7 @@ class ListaDeposits extends StatelessWidget {
                                 Container(
                                   color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  height: sizeLstNot.height * 0.036,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
                                   child: Text(
                                       amount!, 
                                       overflow: TextOverflow.ellipsis,
@@ -245,10 +245,10 @@ class ListaDeposits extends StatelessWidget {
 
                                 if(texto != null && texto!.isNotEmpty)
                                 Container(
-                                    color: Colors.transparent, 
-                                    width: sizeLstNot.width * 0.7, 
-                                    height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
-                                    child: Text(
+                                  color: Colors.transparent, 
+                                  width: sizeLstNot.width * 0.7, 
+                                  height: sizeLstNot.height * 0.036,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  child: Text(
                                       texto!, 
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle( 
@@ -265,7 +265,7 @@ class ListaDeposits extends StatelessWidget {
                                 Container(
                                   color: Colors.transparent, 
                                   width: sizeLstNot.width * 0.7, 
-                                  height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
+                                  height: sizeLstNot.height * 0.036,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
                                   child: Text(
                                     texto2!, 
                                     overflow: TextOverflow.ellipsis,

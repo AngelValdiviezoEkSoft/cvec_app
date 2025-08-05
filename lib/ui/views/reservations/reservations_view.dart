@@ -270,7 +270,7 @@ Future<String> getReservations() async {
           items.add(
             ItemBoton('','','',rsp[i].bookingId, 
             Icons.group_add, 
-            rsp[i].bookingName,
+            'Reserva #: ${rsp[i].bookingName}',
             '${locGen!.hotelLbl}: ${rsp[i].bookingHotelName}',
             '${locGen!.checkInLbl}: $fechaCheckIn',
             '${locGen!.checkOutLbl}: $fechaCheckOut',

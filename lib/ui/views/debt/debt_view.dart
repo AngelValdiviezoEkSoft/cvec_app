@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 
 String searchQueryDebt = '';
 List<ItemBoton> filteredTransactionsDeb = [];
@@ -81,6 +82,8 @@ class DebtViewSt extends State<DebtView> {
               lstSubs = lstSubsResp;
             }
 
+            final themeProvider = Provider.of<ThemeProvider>(context);
+
             return Container(
                 width: size.width,
                 height: size.height * 0.85,
@@ -153,7 +156,9 @@ class DebtViewSt extends State<DebtView> {
                                             height: size.height * 0.13,
                                             alignment: Alignment.centerRight,
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
+                                              //color: Colors.white,
+                                              color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                                                Colors.white : Colors.grey,
                                               borderRadius: BorderRadius.circular(12),
                                             ),
                                             //alignment: Alignment.center,
@@ -175,17 +180,17 @@ class DebtViewSt extends State<DebtView> {
                                                         SizedBox(height: size.height * 0.019),
                           
                                                         Text(item.contractName,
-                                                          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
+                                                          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18, ), maxLines: 1, overflow: TextOverflow.ellipsis,
                                                         ),
                                                         
                                                         SizedBox(height: size.height * 0.005),
                                                         
-                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.grey,),),
+                                                        Text(item.contractPlan, maxLines: 1,  overflow: TextOverflow.ellipsis,),
                                                         
                                                         SizedBox(height: size.height * 0.008),
                                                         
                                                         if(item.contractInscriptionDate.isNotEmpty)
-                                                        Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, color: Colors.grey, fontStyle: FontStyle.italic,)),
+                                                        Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(item.contractInscriptionDate)),style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic,)),
                                                         
                                                       ],
                                                     ),
@@ -197,7 +202,7 @@ class DebtViewSt extends State<DebtView> {
                                                     alignment: Alignment.centerRight,
                                                     child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
                                                       style: const TextStyle(
-                                                        fontWeight: FontWeight.w600, fontSize: 20, color: Colors.grey,
+                                                        fontWeight: FontWeight.w600, fontSize: 20
                                                       )
                                                     ),
                                                   ),

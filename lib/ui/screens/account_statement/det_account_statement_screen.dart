@@ -147,7 +147,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF2EA3F2),        
                     //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-                    title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
+                    title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
                     leading: GestureDetector(
                       onTap: () {
                         context.push(objRutas.rutaPrincipalUser);
@@ -415,7 +415,25 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
               appBar: AppBar(
                 foregroundColor: Colors.white,
                 backgroundColor: const Color(0xFF2EA3F2),
-                title: Center(child: Text(locGen!.paymentDetLbl, style: const TextStyle(color: Colors.white),)),
+                /*
+                actions: [
+                  Container(
+                    color: Colors.red,
+
+                    child: GestureDetector(
+                      onTap: () {
+                        context.push(objRutas.rutaPrincipalUser);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.arrow_back_ios)
+                      ),
+                    ),
+                  ),          
+                  Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
+                ],
+                */
+                title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                 leading: GestureDetector(
                   onTap: () {
                     context.push(objRutas.rutaPrincipalUser);
@@ -425,6 +443,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                     child: Icon(Icons.arrow_back_ios)
                   ),
                 ),          
+              
               ),
               body: Center(
                 child: Container(
