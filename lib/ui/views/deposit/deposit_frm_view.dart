@@ -925,20 +925,12 @@ class DepositFrmViewState extends State<DepositFrmView> {
                         blurRadius: 10,
                       ),
                     ],
-                  ),
-                  //child: File(rutaPagoAdj)
+                  ),                  
                 ),
-                /*
-                BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(File(rutaPagoAdj)),
-                                    fit: BoxFit.cover,
-                                  ),                              
-                                )
-                                */
+
                 const SizedBox(height: 20),
+                
                 Container(
-                  //width: size.width * 0.15,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
                     borderRadius: BorderRadius.circular(16),

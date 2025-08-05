@@ -73,10 +73,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuPrintReceiptsLbl => 'Imprimir recibos';
 
   @override
-  String get menuSeeReservationsLbl => 'Ver reservas';
+  String get menuSeeReservationsLbl => 'Reservas';
 
   @override
-  String get menuWebSiteLbl => 'Ver sitio web';
+  String get menuWebSiteLbl => 'Sitio web';
 
   @override
   String get menuHelpSupportLbl => 'Ayuda y soporte';
@@ -391,10 +391,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get checkInDateLbl => 'Fecha de ingreso';
 
   @override
-  String get checkInLbl => 'Fecha Ingreso';
+  String get checkInLbl => 'Ingreso';
 
   @override
-  String get checkOutDateLbl => 'Fecha de salida';
+  String get checkOutDateLbl => 'Salida';
 
   @override
   String get checkOutLbl => 'Fecha Salida';
@@ -461,4 +461,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get confirmOnlyLbl => 'Sí';
+
+  @override
+  String get statusDraftLbl => 'Borrador';
+
+  @override
+  String get statusOpenLbl => 'Activa';
+
+  @override
+  String get statusToDeliverVoucherLbl => 'Entregando voucher';
+
+  @override
+  String get statusToConfirmArrivalLbl => 'Confirmando llegada';
+
+  @override
+  String get statusTraveledLbl => 'Viajó';
+
+  @override
+  String get statusNoTraveledLbl => 'No viajó';
+
+  @override
+  String get statusDoneLbl => 'Realizada';
+
+  @override
+  String get statusCancelLbl => 'Anulada';
 }

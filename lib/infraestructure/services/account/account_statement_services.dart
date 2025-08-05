@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -89,52 +90,20 @@ class AccountStatementService extends ChangeNotifier{
   Future<List<Contract>> getAccountStatement() async {
     try {
 
-      String resInt = await ValidationsUtils().validaInternet();
-
-      if(resInt.isNotEmpty){
-        return [];
-      }
-
       var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
       final data = json.decode(resp);
 
-      int compId = data["result"]["company_id"] ?? 0;
-
       int partnerId = data["result"]["partner_id"] ?? 0;
 
-      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+      var response = await GenericService().getGeneric("customer_statement_contracts", ["partner_id", "=", '$partnerId']);
 
-      final headers = {
-        "Content-Type": EnvironmentsProd().contentType,
-      };
-      
-      final body = jsonEncode({
-        "jsonrpc": "2.0",
-        "params": {
-          "company_id": compId,
-          "query_type": "customer_statement_contracts",
-          "filters": [
-            "partner_id", "=", '$partnerId'
-          ]
-        }
-      });
-
-      final request = http.Request("GET", Uri.parse(ruta))
-        ..headers.addAll(headers)
-        ..body = body;
-      
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      //print('Test: ${response.body}');
-      
-      var rspValidacion = json.decode(response.body);
-
-      if(rspValidacion['error'] != null){
+      if(response.isEmpty){
         return [];
       }
 
+      var rspValidacion = json.decode(response);
+      
       AccountStatementResponseModel objConv = AccountStatementResponseModel.fromJson(rspValidacion);
 
       List<int> lstIdsContratos = [];
@@ -143,7 +112,10 @@ class AccountStatementService extends ChangeNotifier{
         lstIdsContratos.add(objConv.result.data.customerStatementContracts.data[i].contractId);
       }
 
-      var _ = await getRptAccountStatement(lstIdsContratos);
+      await storage.write(key: 'ListadoIdsContratos', value: '');
+      await storage.write(key: 'ListadoIdsContratos', value: jsonEncode(lstIdsContratos));
+
+      //var _ = await getRptAccountStatement(lstIdsContratos);
 
       return objConv.result.data.customerStatementContracts.data;      
     }
@@ -152,7 +124,6 @@ class AccountStatementService extends ChangeNotifier{
       return [];
     }
   }
-
 
   Future<List<AccountStatementDet>> getDetAccountStatement(idContract) async {
     try {
@@ -312,57 +283,23 @@ class AccountStatementService extends ChangeNotifier{
       return objConv.result.data.accountPaymentLineTravel.data;
     }
     catch(ex){
-      //print('Test DataInit $ex');
       return [];
     }
   }
 
-  Future<List<CustomerStatementItem>> getRptAccountStatement(List<int> contractIds) async {
+  Future<String> getRptAccountStatement(List<int> contractIds) async {
     try {
 
-      String resInt = await ValidationsUtils().validaInternet();
-
-      if(resInt.isNotEmpty){
-        return [];
-      }
-
-      String ruta = '${EnvironmentsProd().apiEndpoint}get';
-
-      final headers = {
-        "Content-Type": EnvironmentsProd().contentType,
-      };
-      
-      final body = jsonEncode({
-        "jsonrpc": "2.0",
-        "params": {
-          "query_type": "customer_statement_report",
-          "filters": [
-            "contract_ids", "=", jsonEncode(contractIds)
-          ]
-        }
-      });
-
-      final request = http.Request("GET", Uri.parse(ruta))
-        ..headers.addAll(headers)
-        ..body = body;
-      
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      //print('Test: ${response.body}');
-      
-      //var rspValidacion = json.decode(response.body);
-      
-      //AccountStatementReportResponseModel objConv = AccountStatementReportResponseModel.fromJson(jsonDecode(response.body));
+      var response = await GenericService().getGeneric("customer_statement_report", ["contract_ids", "=", jsonEncode(contractIds)]);
 
       await storage.write(key: 'ListadoEstadoCuentas', value: '');
-      await storage.write(key: 'ListadoEstadoCuentas', value: response.body);
+      await storage.write(key: 'ListadoEstadoCuentas', value: response);
 
-      return [];//objConv.result.data.customerStatementReport.data;
+      return response;
     }
     catch(_){
       //print('Test DataInit $ex');
-      return [];
+      return '';
     }
   }
 

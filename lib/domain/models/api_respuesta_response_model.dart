@@ -27,28 +27,30 @@ class ApiRespuestaResponseModel {
 class ApiResponse {
   final int estado;
   final String mensaje;
-  final CustomerReceiptRecords data;
+  //final CustomerReceiptRecords data;
 
   ApiResponse({
     required this.estado,
     required this.mensaje,
-    required this.data,
+    //required this.data,
   });
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) {
     return ApiResponse(
       estado: json['estado'],
       mensaje: json['mensaje'],
-      data: CustomerReceiptRecords.fromJson(json['data']['customer_receipt_records_create']),
+      //data: CustomerReceiptRecords.fromJson(json['data']['customer_receipt_records_create']),
     );
   }
 
   Map<String, dynamic> toJson() => {
         'estado': estado,
         'mensaje': mensaje,
+        /*
         'data': {
           'customer_receipt_records_create': data.toJson(),
         },
+        */
       };
 }
 

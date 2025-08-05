@@ -16,6 +16,7 @@ TextEditingController userTxt = TextEditingController();
 TextEditingController passWordTxt = TextEditingController();
 String displayName = '';
 String direccionUserPrp = '';
+String fotoUserPrp = '';
 
 class AuthScreen extends StatelessWidget {
 

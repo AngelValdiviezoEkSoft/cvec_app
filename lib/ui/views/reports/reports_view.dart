@@ -5,6 +5,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 
 import 'package:cve_app/ui/bloc/bloc.dart';
 import 'package:cve_app/ui/screens/reports/reports.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -120,9 +121,13 @@ class PdfView extends StatelessWidget {
     try {
       try {
 
-      var objRsp = await storage.read(key: 'ListadoEstadoCuentas') ?? '';
+      var objRsp = await storage.read(key: 'ListadoIdsContratos') ?? '';
+
+      List<int> lstInt = List<int>.from(jsonDecode(objRsp));
+
+      var rsp = await AccountStatementService().getRptAccountStatement(lstInt);
       
-      final bookingResponse = AccountStatementReportResponseModel.fromJson(jsonDecode(objRsp));
+      final bookingResponse = AccountStatementReportResponseModel.fromJson(jsonDecode(rsp));
 
       detalleRptCustStatement = bookingResponse.result.data.customerStatementReport.data;
 
@@ -243,7 +248,7 @@ class PdfView extends StatelessWidget {
                   );
                 } else if (snapshot.hasData) {
                   return PdfPreview(
-                    pdfFileName: "Reservas.pdf",
+                    pdfFileName: "${locGen!.menuSeeReservationsLbl}.pdf",
                     canChangePageFormat: false,
                     canDebug: false,
                     canChangeOrientation: false,

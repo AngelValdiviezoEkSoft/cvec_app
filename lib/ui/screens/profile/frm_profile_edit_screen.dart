@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/models/api_respuesta_response_model.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 
 String rutaFotoPerfilEdit = '';
+String rutaFotoPerfilEditTmp = '';
 String fechaCumpleAnios = '';
 
 late TextEditingController cellController;
@@ -183,54 +186,9 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                         ),
                                         
                                         SizedBox(height: size.height * 0.008,),
-                /*
-                                        GestureDetector(
-                                          onTap: () {
-                                            //openDatePickerProfile(context);
-                                          },
-                                          child: Container(
-                                            width: size.width * 0.92,
-                                            height: size.height * 0.08,
-                                            color: Colors.transparent,
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  width: size.width * 0.92,
-                                                  height: size.height * 0.025,
-                                                  color: Colors.transparent,
-                                                  child: Text(
-                                                    locGen!.brDateLbl, 
-                                                    style: TextStyle(
-                                                      color: Colors.grey[300],
-                                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(height: size.height * 0.007,),
-                                                Container(
-                                                  width: size.width * 0.92,
-                                                  height: size.height * 0.025,
-                                                  color: Colors.transparent,
-                                                  child: Text(
-                                                    fechaCumpleAnios, 
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize12)
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                
-                                        
-                                        */
                 
                                         SizedBox(height: size.height * 0.05,),
                 
-                  //NO ELIMINAAAAR
-                /*
                                         Container(
                                           width: size.width * 0.96,
                                           color: Colors.transparent,
@@ -255,10 +213,16 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
         
                                               String gifRespuesta = '';
                                               String respuestaReg = '';
+
+                                              final bytes = await File(rutaFotoPerfilEdit).readAsBytes();
+                                              String base64 = base64Encode(bytes);
                 
-                                              ApiRespuestaResponseModel objRsp = await UserService().editUserDate(cellController.text, emailController.text, directionController.text);
+                                              ApiRespuestaResponseModel objRsp = await UserService().editUserData(cellController.text, emailController.text, directionController.text, base64);
                 
                                               respuestaReg = objRsp.result.mensaje;
+
+                                              fotoUserPrp = '';
+                                              fotoUserPrp = rutaFotoPerfilEditTmp;
                 
                                               if(objRsp.result.estado == 200){
                                                 gifRespuesta = 'assets/gifs/exito.gif';                                                
@@ -304,7 +268,13 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () {
+                                                          setState(() {
+                                                            
+                                                          });
+                                                          
                                                           Navigator.of(context).pop();
+                                                          Navigator.of(context).pop();
+                                                          
                                                         },
                                                         child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
                                                       ),
@@ -331,7 +301,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                         ),
                                         
                                         SizedBox(height: size.height * 0.02,),
-                                        */
+                                        
                                       ],
                                     ),
                                   ),
@@ -346,8 +316,8 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                   ],
                 ),
               ),
-            
-              if (rutaFotoPerfilEdit.isEmpty && !state.levantaModal)
+
+              if (fotoUserPrp.isEmpty && !state.levantaModal)
               Positioned(
                 left: 137,
                 child: GestureDetector(
@@ -355,20 +325,34 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                     gnrBloc.setLevantaModal(true);
                     mostrarOpciones(context, size);
                   },
-                  child: Container(
+                  child: rutaFotoPerfilEdit.isEmpty && fotoUserPrp.isEmpty?
+                  Container(
                     padding: const EdgeInsets.all(4), // grosor del borde
-                    decoration: const BoxDecoration(
-                      color: Colors.white, // color del borde
-                      shape: BoxShape.circle,
-                    ),
                     child: CircleAvatar(
                       radius: 60,
                       backgroundColor: Colors.grey[350],
                       child: const Icon(Icons.add_a_photo_outlined, size: 50, color: Colors.white,),
                     ),
+                  )
+                  :
+                  Container(
+                    width: size.width * 0.3,
+                    height: size.height * 0.15,
+                    alignment: Alignment.center,                    
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundColor: Colors.grey[350],
+                      backgroundImage: FileImage(File(rutaFotoPerfilEdit)),
+                      child: GestureDetector(
+                        onTap: () async {
+                          gnrBloc.setLevantaModal(true);
+                          mostrarOpciones(context, size);
+                        },
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ),              
 
               if (state.levantaModal)
               Positioned(
@@ -388,9 +372,8 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                 ),
               ),
           
-              if (rutaFotoPerfilEdit.isNotEmpty && !state.levantaModal)
+              if (fotoUserPrp.isNotEmpty && !state.levantaModal)
               Positioned(
-                //top: -1,
                 left: 137,
                 child: Container(
                   padding: const EdgeInsets.all(4), // grosor del borde
@@ -401,7 +384,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                   child: CircleAvatar(
                     radius: 60,
                     backgroundColor: Colors.grey[350],
-                    backgroundImage: FileImage(File(rutaFotoPerfilEdit)),
+                    backgroundImage: CachedNetworkImageProvider(fotoUserPrp),
                     child: GestureDetector(
                       onTap: () async {
                         gnrBloc.setLevantaModal(true);
@@ -473,15 +456,9 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                   ),
                   //child: File(rutaFotoPerfilEdit)
                 ),
-                /*
-                BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(File(rutaFotoPerfilEdit)),
-                                    fit: BoxFit.cover,
-                                  ),                              
-                                )
-                                */
+                
                 const SizedBox(height: 20),
+                
                 Container(
                   //width: size.width * 0.15,
                   decoration: BoxDecoration(
@@ -498,6 +475,8 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                         onTap: () async {
                           Navigator.pop(context);
                           rutaFotoPerfilEdit = '';
+                          rutaFotoPerfilEditTmp = fotoUserPrp;
+                          fotoUserPrp = '';
                         },
                       ),
                       if(rutaFotoPerfilEdit.isNotEmpty)
@@ -511,6 +490,8 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                           final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
 
                           gnrBloc.setCargando(true);
+                          rutaFotoPerfilEditTmp = fotoUserPrp;
+                          fotoUserPrp = '';
 
                           try {
                             if (pickedFile != null) {
@@ -542,6 +523,8 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                             if (pickedFile != null) {
                               //File file = File(pickedFile.path);
                               btnGuardarFoto = true;
+                              rutaFotoPerfilEditTmp = fotoUserPrp;
+                              fotoUserPrp = '';
 
                               rutaFotoPerfilEdit = pickedFile.path;
 
@@ -580,6 +563,9 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
@@ -588,7 +574,11 @@ class CustomTextField extends StatelessWidget {
         maxLines: label != locGen!.directionLbl ? 1 : 3,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)),
+          labelStyle: TextStyle(
+            fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17),
+            color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                  Colors.black : Colors.white,
+          ),
           border: const UnderlineInputBorder(),
           suffixIcon: GestureDetector(
             //onTap: funtionExe,

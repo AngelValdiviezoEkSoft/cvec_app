@@ -108,9 +108,10 @@ class DebsDetScreenState extends State<DebsDetScreen> {
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF2EA3F2),        
+                backgroundColor: const Color(0xFF2EA3F2),  
+                centerTitle: true,      
                 //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-                title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
+                title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                 leading: GestureDetector(
                   onTap: () {
                     context.push(objRutas.rutaPrincipalUser);
@@ -229,9 +230,10 @@ class DebsDetScreenState extends State<DebsDetScreen> {
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF2EA3F2),        
+                backgroundColor: const Color(0xFF2EA3F2),  
+                centerTitle: true,      
                 //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-                title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
+                title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                 leading: GestureDetector(
                   onTap: () {
                     context.push(objRutas.rutaPrincipalUser);

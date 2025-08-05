@@ -9,8 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//import '../../config/routes/routes.dart';
-
 class GenericService extends ChangeNotifier {
   //final env = CadenaConexion();
   final storage = const FlutterSecureStorage();
@@ -254,7 +252,6 @@ class GenericService extends ChangeNotifier {
     
   }
   
-
   getMultiModelosGen(ConsultaMultiModelRequestModel objReq, List<Map<String, dynamic>> lstModels) async {
 
     String ruta = '';
@@ -354,4 +351,49 @@ class GenericService extends ChangeNotifier {
 
     return fontSize.toString();
   }
+
+  Future<String> getGeneric(String metodo, List<dynamic> filters) async {
+    try {
+
+      String resInt = await ValidationsUtils().validaInternet();
+
+      if(resInt.isNotEmpty){
+        return '';
+      }
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int compId = data["result"]["company_id"] ?? 0;
+
+      String ruta = '${EnvironmentsProd().apiEndpoint}get';
+
+      final headers = {
+        "Content-Type": EnvironmentsProd().contentType,
+      };
+      
+      final body = jsonEncode({
+        "jsonrpc": "2.0",
+        "params": {
+          "company_id": compId,
+          "query_type": metodo,
+          "filters": filters
+        }
+      });
+
+      final request = http.Request("GET", Uri.parse(ruta))
+        ..headers.addAll(headers)
+        ..body = body;
+      
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      return response.body;
+    }
+    catch(ex){
+      return '';
+    }
+  }
+
 }

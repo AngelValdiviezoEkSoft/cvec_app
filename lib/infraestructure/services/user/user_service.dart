@@ -19,7 +19,7 @@ class UserService extends ChangeNotifier{
     return formKey.currentState?.validate() ?? false;
   }
 
-  editUserDate(String cell, String email, String direction) async {
+  editUserData(String cell, String email, String direction, String foto) async {
     String internet = await ValidationsUtils().validaInternet();
     
     //VALIDACIÓN DE INTERNET
@@ -49,7 +49,8 @@ class UserService extends ChangeNotifier{
               'partner_id': partnerId,
               'street': direction,
               'phone': cell,
-              'email': email
+              'email': email,
+              'image_128': foto
             }
           }
         };
@@ -63,6 +64,15 @@ class UserService extends ChangeNotifier{
         var rspValidacion = json.decode(response.body);
 
         var objRespuestaFinal = ApiRespuestaResponseModel.fromJson(rspValidacion);
+
+        final rspLogin = await storage.read(key: 'DataUser') ?? '';
+        var rsp = jsonDecode(rspLogin);
+    
+        rsp["result"]["street"] = direction;
+        direccionUserPrp = direction;
+
+        await storage.write(key: 'DataUser', value: '');
+        await storage.write(key: 'DataUser', value: jsonEncode(rsp));
 
         return objRespuestaFinal;
       } 

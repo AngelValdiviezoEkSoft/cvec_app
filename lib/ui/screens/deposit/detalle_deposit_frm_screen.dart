@@ -73,7 +73,8 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
               foregroundColor: Colors.white,
               backgroundColor: const Color(0xFF2EA3F2),        
               //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-              title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
+              centerTitle: true,
+              title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
               leading: GestureDetector(
                 onTap: () {
                   context.push(objRutas.rutaPrincipalUser);
@@ -154,8 +155,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                                     ),
                                   )
                                 : BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(size.width * 0.2),
+                                    borderRadius: BorderRadius.circular(size.width * 0.2),
                                     border: Border.all(
                                       width: 3,
                                       color: objColorsApp.naranja50PorcTrans,

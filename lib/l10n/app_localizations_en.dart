@@ -73,10 +73,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get menuPrintReceiptsLbl => 'Print Receipts';
 
   @override
-  String get menuSeeReservationsLbl => 'See Reservations';
+  String get menuSeeReservationsLbl => 'Bookings';
 
   @override
-  String get menuWebSiteLbl => 'See Web Site';
+  String get menuWebSiteLbl => 'Web Site';
 
   @override
   String get menuHelpSupportLbl => 'Help and support';
@@ -88,10 +88,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receiptsLbl => 'Receipts';
 
   @override
-  String get reservationsLbl => 'Reservation List';
+  String get reservationsLbl => 'Bookings List';
 
   @override
-  String get menuReservationsLbl => 'Reservations';
+  String get menuReservationsLbl => 'Bookings';
 
   @override
   String get searchLbl => 'Search';
@@ -382,7 +382,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get msmSafeInfoProfLbl => 'your information';
 
   @override
-  String get reservReportLbl => 'Reservation Report';
+  String get reservReportLbl => 'Booking Report';
 
   @override
   String get reservSeqLbl => 'Reservation Sequence';
@@ -461,4 +461,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmOnlyLbl => 'Yes';
+
+  @override
+  String get statusDraftLbl => 'Draft';
+
+  @override
+  String get statusOpenLbl => 'Active';
+
+  @override
+  String get statusToDeliverVoucherLbl => 'Delivering Voucher';
+
+  @override
+  String get statusToConfirmArrivalLbl => 'Confirming Arrival';
+
+  @override
+  String get statusTraveledLbl => 'Traveled';
+
+  @override
+  String get statusNoTraveledLbl => 'Didn\'t Traveled';
+
+  @override
+  String get statusDoneLbl => 'Done';
+
+  @override
+  String get statusCancelLbl => 'Anulled';
 }

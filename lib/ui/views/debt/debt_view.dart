@@ -90,6 +90,14 @@ class DebtViewSt extends State<DebtView> {
                 color: Colors.transparent,
                 child: Column(
                     children: [
+                      Container(
+                        width: size.width * 0.55,
+                        height: size.height * 0.055,
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text(locGen!.menuDebtsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
+                      ),
+                      
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(

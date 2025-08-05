@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/infraestructure/services/services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
@@ -59,11 +60,19 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
+          if (fotoUserPrp.isEmpty)
           const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white,
             child: Icon(Icons.person, size: 40, color: Colors.grey),
           ),
+          if (fotoUserPrp.isNotEmpty)
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.white,
+            backgroundImage: CachedNetworkImageProvider(fotoUserPrp)
+          ),
+
           SizedBox(width: size.width * 0.035),//16),
           Expanded(
             child: Column(

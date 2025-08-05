@@ -218,13 +218,13 @@ abstract class AppLocalizations {
   /// No description provided for @menuSeeReservationsLbl.
   ///
   /// In en, this message translates to:
-  /// **'See Reservations'**
+  /// **'Bookings'**
   String get menuSeeReservationsLbl;
 
   /// No description provided for @menuWebSiteLbl.
   ///
   /// In en, this message translates to:
-  /// **'See Web Site'**
+  /// **'Web Site'**
   String get menuWebSiteLbl;
 
   /// No description provided for @menuHelpSupportLbl.
@@ -248,13 +248,13 @@ abstract class AppLocalizations {
   /// No description provided for @reservationsLbl.
   ///
   /// In en, this message translates to:
-  /// **'Reservation List'**
+  /// **'Bookings List'**
   String get reservationsLbl;
 
   /// No description provided for @menuReservationsLbl.
   ///
   /// In en, this message translates to:
-  /// **'Reservations'**
+  /// **'Bookings'**
   String get menuReservationsLbl;
 
   /// No description provided for @searchLbl.
@@ -836,7 +836,7 @@ abstract class AppLocalizations {
   /// No description provided for @reservReportLbl.
   ///
   /// In en, this message translates to:
-  /// **'Reservation Report'**
+  /// **'Booking Report'**
   String get reservReportLbl;
 
   /// No description provided for @reservSeqLbl.
@@ -994,6 +994,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Yes'**
   String get confirmOnlyLbl;
+
+  /// No description provided for @statusDraftLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraftLbl;
+
+  /// No description provided for @statusOpenLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusOpenLbl;
+
+  /// No description provided for @statusToDeliverVoucherLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivering Voucher'**
+  String get statusToDeliverVoucherLbl;
+
+  /// No description provided for @statusToConfirmArrivalLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming Arrival'**
+  String get statusToConfirmArrivalLbl;
+
+  /// No description provided for @statusTraveledLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Traveled'**
+  String get statusTraveledLbl;
+
+  /// No description provided for @statusNoTraveledLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t Traveled'**
+  String get statusNoTraveledLbl;
+
+  /// No description provided for @statusDoneLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get statusDoneLbl;
+
+  /// No description provided for @statusCancelLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Anulled'**
+  String get statusCancelLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

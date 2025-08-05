@@ -97,23 +97,32 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     return FileImage(file);
   }
 
-  static Widget _paymentItem(PaymentLineData item) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(item.paymentSequence, style: const TextStyle(fontSize: 16)),
-              const SizedBox(height: 2),              
-              Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.paymentDate)), style: TextStyle(color: Colors.grey, fontSize: 14)),
-            ],
-          ),
-        ),
-        Text('\$${item.paymentAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-      ],
-    );
+  static Widget _paymentItem(PaymentLineData item, double total, Size size) {
+    return 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(item.paymentSequence, style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 2),              
+                  Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(item.paymentDate)), style: TextStyle(color: Colors.grey, fontSize: 14)),
+                ],
+              ),
+            ),
+            
+            Container(
+              width: size.width * 0.21,
+              color: Colors.transparent,
+              alignment: Alignment.center,
+              child: Text('\$${item.paymentAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500))
+            ),
+            
+          ],
+        );      
   }
 
   @override
@@ -146,8 +155,8 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                   appBar: AppBar(
                     foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFF2EA3F2),        
-                    //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
-                    title: Center(child: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),)),
+                    centerTitle: true,
+                    title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                     leading: GestureDetector(
                       onTap: () {
                         context.push(objRutas.rutaPrincipalUser);
@@ -249,7 +258,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                             const SizedBox(height: 8),
 
                                             Text(
-                                              "\$${item.quotaPaidAmount.toStringAsFixed(2)}",
+                                              "Saldo: \$${item.quotaResidualAmount.toStringAsFixed(2)}",
                                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                             ),
 
@@ -265,11 +274,38 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                   child: SingleChildScrollView(
                                                     physics: const ScrollPhysics(),                                              
                                                     child: Column(
-                                                      children: lstPaymentLineData
-                                                          .map((p) => Padding(
-                                                            padding: const EdgeInsets.only(bottom: 2),
-                                                            child: _paymentItem(p),
-                                                          )).toList(),
+                                                      children: [
+                                                        Column(
+                                                          children: lstPaymentLineData
+                                                              .map((p) => Padding(
+                                                                padding: const EdgeInsets.only(bottom: 2),
+                                                                child: _paymentItem(p, item.quotaPaidAmount, size),
+                                                              )).toList(),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Text('Total:'),
+
+                                                            Container(
+                                                              width: size.width * 0.05,
+                                                            ),
+
+                                                            Container(
+                                                              width: size.width * 0.21,
+                                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                              decoration: BoxDecoration(
+                                                                //border: Border(top: BorderSide(color: Colors.blue)),
+                                                              ),
+                                                              child: Text(
+                                                                '\$${item.quotaPaidAmount.toStringAsFixed(2)}',
+                                                                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
@@ -414,25 +450,8 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF2EA3F2),
-                /*
-                actions: [
-                  Container(
-                    color: Colors.red,
-
-                    child: GestureDetector(
-                      onTap: () {
-                        context.push(objRutas.rutaPrincipalUser);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.arrow_back_ios)
-                      ),
-                    ),
-                  ),          
-                  Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
-                ],
-                */
+                backgroundColor: const Color(0xFF2EA3F2),                
+                centerTitle: true,
                 title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                 leading: GestureDetector(
                   onTap: () {

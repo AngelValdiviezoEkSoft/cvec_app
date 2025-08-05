@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
@@ -273,8 +274,9 @@ class PrincipalClientStScreen extends StatelessWidget {
                       onTap: () {
                       
                       },
-                    ),
+                    ),´
                     */
+                    
                     ListTile(
                       leading: const Icon(Icons.exit_to_app),
                       title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
@@ -451,22 +453,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-              
-                  Container(
-                    width: size.width * 0.55,
-                    height: size.height * 0.055,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: Text(locGen!.menuDebtsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize26)),)
-                  ),
-              
-                  const DebtView(null),
-                ],
-              ),
-            ),
+            child: const DebtView(null),
           )
 
           :
@@ -495,23 +482,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             width: size.width,
             height: size.height,
             color: Colors.transparent,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-              
-                  Container(
-                    width: size.width,
-                    height: size.height * 0.06,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize20)),)
-                  ),
-              
-                  const PrintReceiptView(null),
-              
-                ],
-              ),
-            ),
+            child: const PrintReceiptView(null),
           )
 
 
@@ -560,10 +531,18 @@ class PrincipalClientStScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
+          if (fotoUserPrp.isEmpty)
           const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.grey,
             child: Icon(Icons.person, size: 40, color: Colors.white),
+          ),
+
+          if (fotoUserPrp.isNotEmpty)
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.grey,
+            backgroundImage: CachedNetworkImageProvider(fotoUserPrp)
           ),
 
           SizedBox(width: size.width * 0.02),//16),

@@ -28,6 +28,7 @@ abstract class AuthState extends Equatable {
       var rsp = jsonDecode(rspLogin);
   
       direccionUserPrp = rsp["result"]["street"] ?? '';
+      fotoUserPrp = rsp["result"]["profile_image"] ?? '';
 
       if(rspReg.isEmpty && rspLog.isEmpty){
         rspFinal = '';

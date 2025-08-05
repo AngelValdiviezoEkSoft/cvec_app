@@ -97,13 +97,13 @@
   "@menuPrintReceiptsLbl": {
     "description": "Imprimir recibos"
   },
-  "menuSeeReservationsLbl": "Ver reservas",
+  "menuSeeReservationsLbl": "Reservas",
   "@menuSeeReservationsLbl": {
-    "description": "Ver reservas"
+    "description": "Reservas"
   },
-  "menuWebSiteLbl": "Ver sitio web",
+  "menuWebSiteLbl": "Sitio web",
   "@menuWebSiteLbl": {
-    "description": "Ver sitio web"
+    "description": "Sitio web"
   },
   "menuHelpSupportLbl": "Ayuda y soporte",
   "@menuHelpSupportLbl": {
@@ -513,13 +513,13 @@
   "@checkInDateLbl": {
     "description": "Fecha de ingreso"
   },
-  "checkInLbl": "Fecha Ingreso",
+  "checkInLbl": "Ingreso",
   "@checkInLbl": {
-    "description": "Fecha Ingreso"
+    "description": "Ingreso"
   },
-  "checkOutDateLbl": "Fecha de salida",
+  "checkOutDateLbl": "Salida",
   "@checkOutDateLbl": {
-    "description": "Fecha de salida"
+    "description": "Ssalida"
   },
   "checkOutLbl": "Fecha Salida",
   "@checkOutLbl": {
@@ -616,5 +616,38 @@
   "msmSafeInfoProfLbl": "tu información",
   "@msmSafeInfoProfLbl": {
     "description": "tu información"
+  },
+
+  "statusDraftLbl": "Borrador",
+  "@statusDraftLbl": {
+    "description": "Borrador"
+  },
+  "statusOpenLbl": "Activa",
+  "@statusOpenLbl": {
+    "description": "Activa"
+  },
+  "statusToDeliverVoucherLbl": "Entregando voucher",
+  "@statusToDeliverVoucherLbl": {
+    "description": "Entregando voucher"
+  },
+  "statusToConfirmArrivalLbl": "Confirmando llegada",
+  "@statusToConfirmArrivalLbl": {
+    "description": "Confirmando llegada"
+  },
+  "statusTraveledLbl": "Viajó",
+  "@statusTraveledLbl": {
+    "description": "Viajó"
+  },
+  "statusNoTraveledLbl": "No viajó",
+  "@statusNoTraveledLbl": {
+    "description": "No viajó"
+  },
+  "statusDoneLbl": "Realizada",
+  "@statusDoneLbl": {
+    "description": "Realizada"
+  },
+  "statusCancelLbl": "Anulada",
+  "@statusCancelLbl": {
+    "description": "Anulada"
   }
 }

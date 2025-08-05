@@ -1,5 +1,4 @@
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
@@ -190,7 +189,7 @@ class ListaNotificaciones extends StatelessWidget {
             children: [
               Container(
                 width: sizeLstNot.width,
-                height: sizeLstNot.height * 0.25,
+                height: sizeLstNot.height * 0.16,
                 //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
                 margin: const EdgeInsets.all(3), 
                 decoration: BoxDecoration(
@@ -213,7 +212,7 @@ class ListaNotificaciones extends StatelessWidget {
                   minVerticalPadding: 15,
                   title:  Container( 
                     width: sizeLstNot.width * 0.98,//65,
-                    height: sizeLstNot.height * 0.28,
+                    height: sizeLstNot.height * 0.16,
                     //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
                     alignment: Alignment.center, 
                     color: Colors.transparent,
@@ -222,72 +221,81 @@ class ListaNotificaciones extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         
-                        if(texto2 == null || texto2!.isEmpty)
-                        Container(
-                          width: sizeLstNot.width * 0.5,
-                          height: sizeLstNot.height * 0.04,
-                          color: Colors.transparent,
-                          alignment: Alignment.center,
-                          child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.55, 
-                                child: AutoSizeText( 
-                                  texto!, 
-                                  style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), 
-                                  presetFontSizes: const [18,16,14,12], maxLines: 2,
-                                )
-                              ),
-                            ],
-                          ),
-                        ),
-          
-                        if(texto2 != null && texto2!.isNotEmpty )
                         Container(
                           width: sizeLstNot.width * 0.85,
-                          height: sizeLstNot.height * 0.25,
+                          height: sizeLstNot.height * 0.2,
                           color: Colors.transparent,
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: [
-                              if(texto != null && texto!.isNotEmpty)
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.8, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto!, style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), presetFontSizes: const [18,16,14,12], maxLines: 2,)),
+                              Container(
+                                color: Colors.transparent, 
+                                width: sizeLstNot.width * 0.85, 
+                                height: sizeLstNot.height * 0.03,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      texto!, 
+                                      style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20 ), maxLines: 1,
+                                    ),
+                                    /*
+                                    Text(
+                                      varIconoNot!, 
+                                      style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16 ), maxLines: 1,
+                                    ),
+                                    */
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFE3F0FF),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Text(varIconoNot!,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
+                                    ),
+                                  ],
+                                )
+                              ),
 
                               Container(
                                 color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.8, 
-                                height: sizeLstNot.height * 0.05,
+                                width: sizeLstNot.width * 0.85, 
+                                height: sizeLstNot.height * 0.04,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       color: Colors.transparent, 
                                       width: sizeLstNot.width * 0.4, 
-                                      height: sizeLstNot.height * 0.03,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                      height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
                                       child: Text( texto3 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
                                     ),
 
                                     Container(
                                       color: Colors.transparent, 
                                       width: sizeLstNot.width * 0.4, 
-                                      height: sizeLstNot.height * 0.03,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                      height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
                                       child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
                                     ),
                                   ],
                                 ),
                               ),
 
-                              if(texto2 != null && texto2!.isNotEmpty)
-                              Container(color: Colors.transparent, width: sizeLstNot.width * 0.8, height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,child: AutoSizeText( texto2!, style: const TextStyle( color: Colors.black,   ), presetFontSizes: const [14,12,10,8], maxLines: 2,)),
-                              
-                              if(varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty)
+                              //if(texto2 != null && texto2!.isNotEmpty)
                               Container(
                                 color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.8, 
-                                height: sizeLstNot.height * 0.09,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                child: Text( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), maxLines: 5,)
+                                width: sizeLstNot.width * 0.85, 
+                                height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                child: Text( texto2!, style: const TextStyle( color: Colors.black,  fontSize: 14 ),maxLines: 1,
+                                )
+                              ),
+                              
+                              Container(
+                                color: Colors.transparent, 
+                                width: sizeLstNot.width * 0.85, 
+                                height: sizeLstNot.height * 0.04,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                child: Text( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), maxLines: 1, overflow: TextOverflow.ellipsis)
                               ),
                             ],
                           ),

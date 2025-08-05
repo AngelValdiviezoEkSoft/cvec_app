@@ -44,4 +44,14 @@ class AppConfig {
 
   //GIFS JSON
   final String logoPlux = 'assets/gifs/logo.json';
+
+  //ESTADOS:
+  final String stateDraft = 'draft';
+  final String stateOpen = 'open';
+  final String stateToDeliverVouch = 'to_deliver_voucher';
+  final String stateToConfArriv = 'to_confirm_arrival';
+  final String stateTraveled = 'traveled';
+  final String stateNoTraveled = 'not_traveled';
+  final String stateDone = 'done';
+  final String stateCancel = 'cancel';
 }

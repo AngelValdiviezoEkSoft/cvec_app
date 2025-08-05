@@ -345,8 +345,11 @@ class GenericState extends Equatable {
   Future<String> getRptAccountStatement(List<int> contractIds) async {
 
     try{
-      //List<Payment>? rsp = await ReceiptsService().getReceipts();
-      List<CustomerStatementItem>? rsp = await AccountStatementService().getRptAccountStatement(contractIds);
+      var rspObj = await AccountStatementService().getRptAccountStatement(contractIds);
+
+      final bookingResponse = AccountStatementReportResponseModel.fromJson(jsonDecode(rspObj));
+
+      List<CustomerStatementItem>? rsp = bookingResponse.result.data.customerStatementReport.data;
 
       final items = <ItemBoton>[];
 

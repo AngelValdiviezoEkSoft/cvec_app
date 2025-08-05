@@ -132,59 +132,63 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                   height: size.height * 0.82,
                   color: Colors.transparent,
                   alignment: Alignment.center,
-                  child: LiquidPullToRefresh(
-                    onRefresh: refreshReceipts,
-                    color: Colors.blue[300],
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextField(
-                                controller: searchTxt,
-                                decoration: InputDecoration(
-                                  hintText: locGen!.searchLbl,
-                                  prefixIcon: const Icon(Icons.search),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {                                      
-                                        searchQuery = '';
-                                        searchTxt.text = searchQuery;
-                                      });
-                                    },
-                                    icon: const Icon(Icons.close, color: Colors.black,),
-                                  )
-                                ),
-                                onEditingComplete: () {
-                                  FocusScope.of(context).unfocus();
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.06,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
+                        ),
                         
-                                  setState(() {
-                                    searchQuery = searchTxt.text;
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: searchTxt,
+                            decoration: InputDecoration(
+                              hintText: locGen!.searchLbl,
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {                                      
+                                    searchQuery = '';
+                                    searchTxt.text = searchQuery;
                                   });
                                 },
-                              ),
+                                icon: const Icon(Icons.close, color: Colors.black,),
+                              )
                             ),
-                        
-                            //if(lstMenu.isNotEmpty)  
-                            Container(
-                              width: size.width,
-                              height: lstMenu.isNotEmpty ? size.height * 0.2 * lstMenu.length : size.height * 0.75,
-                              color: Colors.transparent,
-                              child: ListView(                      
-                                physics: const BouncingScrollPhysics(),
-                                children: <Widget>[
-                                  ...itemMap,
-                                ],
-                              ),
-                            ),
-                                  
-                          ],
+                            onEditingComplete: () {
+                              FocusScope.of(context).unfocus();
+                    
+                              setState(() {
+                                searchQuery = searchTxt.text;
+                              });
+                            },
+                          ),
                         ),
-                      ),
+                    
+                        Expanded(
+                          child: LiquidPullToRefresh(
+                            onRefresh: refreshReceipts,
+                            color: Colors.blue[300],
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: <Widget>[
+                                const SizedBox( height: 3, ),
+                                ...itemMap,
+                                const SizedBox( height: 3, ),
+                              ],
+                            ),
+                          ),
+                        ),
+                              
+                      ],
                     ),
                   ),
                 );

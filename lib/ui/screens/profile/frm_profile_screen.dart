@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 String userNameProf = '';
 String identNumbProf = '';
@@ -134,7 +136,7 @@ class FrmProfileScreen extends StatelessWidget {
                     ],
                 ),
                 
-            
+                if (fotoUserPrp.isEmpty)
                 Positioned(
                   left: 143,
                   child: Container(
@@ -147,6 +149,23 @@ class FrmProfileScreen extends StatelessWidget {
                       radius: 50,
                       backgroundColor: Colors.grey[350],
                       child: const Icon(Icons.person_outline, size: 50, color: Colors.white,),
+                    ),
+                  ),
+                ),
+            
+                if (fotoUserPrp.isNotEmpty)
+                Positioned(
+                  left: 143,
+                  child: Container(
+                    padding: const EdgeInsets.all(4), // grosor del borde
+                    decoration: const BoxDecoration(
+                      color: Colors.white, // color del borde
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[350],
+                      backgroundImage: CachedNetworkImageProvider(fotoUserPrp),
                     ),
                   ),
                 ),
@@ -168,6 +187,9 @@ class ProfileField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: RichText(
@@ -181,7 +203,8 @@ class ProfileField extends StatelessWidget {
             TextSpan(
               text: value,
               style: TextStyle(
-                color: Colors.black, 
+                color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
+                  Colors.black : Colors.white,
                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
               ),
             ),
