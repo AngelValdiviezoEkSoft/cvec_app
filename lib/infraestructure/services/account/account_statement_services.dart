@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
-import 'package:cve_app/ui/ui.dart';
+//import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 class AccountStatementService extends ChangeNotifier{
 
@@ -127,34 +127,68 @@ class AccountStatementService extends ChangeNotifier{
 
   Future<List<AccountStatementDet>> getDetAccountStatement(idContract) async {
     try {
+      
+      var response = await GenericService().getGeneric("customer_statement_quotas", ["contract_id", "=", '$idContract']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
+      
+      AccountStatementDetResponseModel objConv = AccountStatementDetResponseModel.fromJson(rspValidacion);
+
+      return objConv.result.data.customerStatementQuotas.data;
+    }
+    catch(ex){
+      //print('Test DataInit $ex');
+      return [];
+    }
+  }
+
+  Future<List<PaymentLineData>> getDetCuotasAccountStatement(idCuota) async {
+    try {
+      
+      var response = await GenericService().getGeneric("customer_statement_payments", ["quota_id", "=", '$idCuota']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
+      
+      AccountStatementDetPayResponseModel objConv = AccountStatementDetPayResponseModel.fromJson(rspValidacion);
+
+      if(objConv.result.data.accountPaymentLineTravel.data.isEmpty){
+        objConv.result.data.accountPaymentLineTravel.data.add(
+          PaymentLineData(
+            contractId: 0,
+            contractName: 'VACIO',
+            lineAmount: 0,
+            lineId: 0,
+            paymentAmount: 0,
+            paymentDate: '',
+            paymentId: 0,
+            paymentLineId: 0,
+            paymentSequence: '',
+            quotaCode: '',
+            quotaId: 0,
+            quotaName: '',
+            quotaType: ''
+          )
+        );
+      }
+
+      return objConv.result.data.accountPaymentLineTravel.data;
+    }
+    catch(ex){
+      return [];
+    }
+  }
+
 /*
-      var codImei = await storage.read(key: 'codImei') ?? '';
-
-      var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
-      var obj = RegisterDeviceResponseModel.fromJson(objReg);
-
-      var objLog = await storage.read(key: 'RespuestaLogin') ?? '';
-      var objLogDecode = json.decode(objLog);
-
-      ConsultaMultiModelRequestModel objReq = ConsultaMultiModelRequestModel(
-        jsonrpc: EnvironmentsProd().jsonrpc,
-        params: ParamsMultiModels(
-          bearer: obj.result.bearer,
-          company: objLogDecode['result']['current_company'],
-          imei: codImei,
-          key: obj.result.key,
-          tocken: obj.result.tocken,
-          tockenValidDate: obj.result.tockenValidDate,
-          uid: objLogDecode['result']['uid'],
-          partnerId: objLogDecode['result']['partner_id'],
-          idConsulta: idContract,
-          models: []
-        )
-      );
-
-      var objRsp = await GenericService().getMultiModelos(objReq, "ek.travel.subscription.quota", true, '');
-*/
-      //print('Rsp Lista DET DEBS $objRsp');
+  Future<List<AccountStatementDet>> getDetAccountStatement(idContract) async {
+    try {
 
       String resInt = await ValidationsUtils().validaInternet();
 
@@ -286,6 +320,7 @@ class AccountStatementService extends ChangeNotifier{
       return [];
     }
   }
+*/
 
   Future<String> getRptAccountStatement(List<int> contractIds) async {
     try {
@@ -304,4 +339,3 @@ class AccountStatementService extends ChangeNotifier{
   }
 
 }
-
