@@ -213,16 +213,21 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
         
                                               String gifRespuesta = '';
                                               String respuestaReg = '';
+                                              String base64 = '';
 
-                                              final bytes = await File(rutaFotoPerfilEdit).readAsBytes();
-                                              String base64 = base64Encode(bytes);
+                                              if(rutaFotoPerfilEdit.isNotEmpty){
+                                                final bytes = await File(rutaFotoPerfilEdit).readAsBytes();
+                                                base64 = base64Encode(bytes);
+                                              }                                              
                 
                                               ApiRespuestaResponseModel objRsp = await UserService().editUserData(cellController.text, emailController.text, directionController.text, base64);
                 
                                               respuestaReg = objRsp.result.mensaje;
 
-                                              fotoUserPrp = '';
-                                              fotoUserPrp = rutaFotoPerfilEditTmp;
+                                              if(rutaFotoPerfilEdit.isNotEmpty){
+                                                fotoUserPrp = '';
+                                                fotoUserPrp = rutaFotoPerfilEditTmp;
+                                              }
                 
                                               if(objRsp.result.estado == 200){
                                                 gifRespuesta = 'assets/gifs/exito.gif';                                                
@@ -272,7 +277,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                                             
                                                           });
                                                           
-                                                          Navigator.of(context).pop();
+                                                          //Navigator.of(context).pop();
                                                           Navigator.of(context).pop();
                                                           
                                                         },

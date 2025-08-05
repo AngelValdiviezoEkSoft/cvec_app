@@ -50,6 +50,7 @@ class UserService extends ChangeNotifier{
               'street': direction,
               'phone': cell,
               'email': email,
+              if(foto.isNotEmpty)
               'image_128': foto
             }
           }
