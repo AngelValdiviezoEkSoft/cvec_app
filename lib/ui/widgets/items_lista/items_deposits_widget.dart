@@ -220,7 +220,7 @@ class ListaDeposits extends StatelessWidget {
                                       style: TextStyle( 
                                           color: colorTexto, 
                                           fontWeight: FontWeight.bold,
-                                          fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                                          fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                         ),
                                         maxLines: 1,
                                       ),
@@ -236,7 +236,7 @@ class ListaDeposits extends StatelessWidget {
                                       style: TextStyle( 
                                         color: Colors.grey, 
                                         fontWeight: FontWeight.bold, 
-                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17) 
+                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15) 
                                       ), 
                                       //presetFontSizes: const [18, 16,14,12], 
                                       maxLines: 1,
@@ -249,12 +249,12 @@ class ListaDeposits extends StatelessWidget {
                                   width: sizeLstNot.width * 0.7, 
                                   height: sizeLstNot.height * 0.036,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.035,
                                   child: Text(
-                                      texto!, 
+                                      texto!,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle( 
-                                        color: Colors.black, 
+                                      style: TextStyle(
+                                        color: Colors.black,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                                        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                     ), 
                                     //presetFontSizes: const [16,14,12], 
                                     maxLines: 1,
@@ -271,7 +271,7 @@ class ListaDeposits extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle( 
                                       color: Colors.black,
-                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                                      fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                                     ), 
                                     maxLines: 1,
                                   )

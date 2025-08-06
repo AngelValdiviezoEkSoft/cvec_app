@@ -242,8 +242,8 @@ class AuthScreenSt extends StatelessWidget {
                                     width: size.width * 0.95,
                                     height: size.height * 0.11,
                                     alignment: Alignment.center,
-                                    child: const AutoSizeText(
-                                      'No tiene acceso a internet',
+                                    child: AutoSizeText(
+                                      locGen!.noInternetLbl,
                                       maxLines: 2,
                                       minFontSize: 2,
                                     ),
@@ -257,7 +257,7 @@ class AuthScreenSt extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
                               ),
                             ],
                           );
@@ -331,7 +331,7 @@ class AuthScreenSt extends StatelessWidget {
                                   Navigator.of(context).pop();
                                   //Navigator.of(context).pop();
                                 },
-                                child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
                               ),
                             ],
                           );
@@ -381,7 +381,7 @@ class AuthScreenSt extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                              child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
                             ),
                           ],
                         );

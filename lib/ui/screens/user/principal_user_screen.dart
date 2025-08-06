@@ -300,7 +300,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                                     gnrBloc.setShowViewWebSite(false);
                                     gnrBloc.setShowViewFrmDeposit(false);
                                     
-                                    Navigator.pop(context); // Cierra el menú 
+                                    //Navigator.pop(context); // Cierra el menú 
               
                                     await AuthService().logOut();
               

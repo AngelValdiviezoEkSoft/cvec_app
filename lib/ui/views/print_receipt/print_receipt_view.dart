@@ -220,9 +220,8 @@ Future<String> getReceipts() async {
 
       if(rsp != null && rsp.isNotEmpty){
         for(int i = 0; i < rsp.length; i++){
-          items.add(
-            //ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', 'Fecha de pago ${rsp[i].paymentDate}', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, 'Recibo #${rsp[i].paymentName}', rsp[i].paymentDate, '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+          items.add(            
+            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, '${locGen!.receiptLbl}# ${rsp[i].paymentName}', '${locGen!.paymentDateLbl}: ${rsp[i].paymentDate}', '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routPrintReceiptView,
               () {
                 

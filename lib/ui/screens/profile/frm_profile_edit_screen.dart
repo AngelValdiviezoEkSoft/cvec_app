@@ -196,6 +196,62 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                           child: ElevatedButton(                      
                                             onPressed:
                                             () async {
+
+                                              String gifRespuesta = '';
+                                              String respuestaReg = '';
+
+                                              if(cellController.text.isEmpty || emailController.text.isEmpty || directionController.text.isEmpty){
+                                                respuestaReg = locGen!.msmValidateFieldsLbl;
+                                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+
+                                                showDialog(
+                                                  //ignore:use_build_context_synchronously
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Container(
+                                                        color: Colors.transparent,
+                                                        height: size.height * 0.17,
+                                                        child: Column(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            
+                                                            Container(
+                                                              color: Colors.transparent,
+                                                              height: size.height * 0.09,
+                                                              child: Image.asset(gifRespuesta),
+                                                            ),
+                                
+                                                            Container(
+                                                              color: Colors.transparent,
+                                                              width: size.width * 0.95,
+                                                              height: size.height * 0.08,
+                                                              alignment: Alignment.center,
+                                                              child: AutoSizeText(
+                                                                respuestaReg,
+                                                                maxLines: 2,
+                                                                minFontSize: 2,
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {                                                            
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                          child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                
+
+                                                return;
+                                              }
+
                                               showDialog(
                                                 context: context,
                                                 barrierDismissible: false,
@@ -211,14 +267,12 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                                 ),
                                               );
         
-                                              String gifRespuesta = '';
-                                              String respuestaReg = '';
                                               String base64 = '';
 
                                               if(rutaFotoPerfilEdit.isNotEmpty){
                                                 final bytes = await File(rutaFotoPerfilEdit).readAsBytes();
                                                 base64 = base64Encode(bytes);
-                                              }                                              
+                                              }
                 
                                               ApiRespuestaResponseModel objRsp = await UserService().editUserData(cellController.text, emailController.text, directionController.text, base64);
                 
@@ -281,7 +335,7 @@ class FrmProfileEditScreenState extends State<FrmProfileEditScreen> {
                                                           Navigator.of(context).pop();
                                                           
                                                         },
-                                                        child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                                        child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
                                                       ),
                                                     ],
                                                   );

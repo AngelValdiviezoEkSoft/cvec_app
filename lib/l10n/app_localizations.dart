@@ -1042,6 +1042,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Anulled'**
   String get statusCancelLbl;
+
+  /// No description provided for @msmValidateFieldsLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter all data'**
+  String get msmValidateFieldsLbl;
+
+  /// No description provided for @aceptLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Acept'**
+  String get aceptLbl;
+
+  /// No description provided for @closeLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get closeLbl;
+
+  /// No description provided for @noInternetLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet access'**
+  String get noInternetLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -157,5 +157,10 @@
     "statusTraveledLbl": "Traveled",
     "statusNoTraveledLbl": "Didn't Traveled",
     "statusDoneLbl": "Done",
-    "statusCancelLbl": "Anulled"
+    "statusCancelLbl": "Anulled",
+
+    "msmValidateFieldsLbl": "Please enter all data",
+    "aceptLbl": "Acept",
+    "closeLbl": "Close",
+    "noInternetLbl": "No internet access"
 }

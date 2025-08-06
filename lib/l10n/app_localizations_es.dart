@@ -485,4 +485,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get statusCancelLbl => 'Anulada';
+
+  @override
+  String get msmValidateFieldsLbl => 'Por favor ingrese todos los datos';
+
+  @override
+  String get aceptLbl => 'Aceptar';
+
+  @override
+  String get closeLbl => 'Cerrar';
+
+  @override
+  String get noInternetLbl => 'No tiene acceso a internet';
 }

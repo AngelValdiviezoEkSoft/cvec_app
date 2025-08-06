@@ -83,7 +83,8 @@ class AuthService extends ChangeNotifier {
   }
 
   Future logOut() async {
-    await storage.write(key: 'RespuestaLogin', value: '');    
+    await storage.write(key: 'RespuestaLogin', value: '');
+    await storage.write(key: 'DataUser', value: '');
     
     return;
   }

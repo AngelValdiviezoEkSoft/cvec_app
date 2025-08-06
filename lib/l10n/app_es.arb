@@ -649,5 +649,21 @@
   "statusCancelLbl": "Anulada",
   "@statusCancelLbl": {
     "description": "Anulada"
+  },
+  "msmValidateFieldsLbl": "Por favor ingrese todos los datos",
+  "@msmValidateFieldsLbl": {
+    "description": "Por favor ingrese todos los datos"
+  },
+  "aceptLbl": "Aceptar",
+  "@aceptLbl": {
+    "description": "Aceptar"
+  },
+  "closeLbl": "Cerrar",
+  "@closeLbl": {
+    "description": "Cerrar"
+  },
+  "noInternetLbl": "No tiene acceso a internet",
+  "@noInternetLbl": {
+    "description": "No tiene acceso a internet"
   }
 }

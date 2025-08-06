@@ -746,7 +746,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                           onPressed: () {
                                                             Navigator.of(context).pop();
                                                           },
-                                                          child: Text('Aceptar', style: TextStyle(color: Colors.blue[200]),),
+                                                          child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
                                                         ),
                                                       ],
                                                     );

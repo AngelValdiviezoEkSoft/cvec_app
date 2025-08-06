@@ -1,4 +1,5 @@
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/ui/ui.dart';
 import 'package:cve_app/ui/widgets/base_text_widget.dart';
 import 'package:cve_app/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -246,7 +247,7 @@ class ContentAlertDialog extends StatelessWidget {
           TextButton(
             child: BaseText(              
               null,
-              'Aceptar',
+              locGen!.aceptLbl,
               size: 0.04,
               color: oColorBotonAceptar,
               align: TextAlign.center,

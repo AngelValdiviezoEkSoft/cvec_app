@@ -1,4 +1,5 @@
 
+import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 
 class GpsAccessScreen extends StatelessWidget {
@@ -141,7 +142,7 @@ class AccessButton extends StatelessWidget {
                   */
 
                 },
-                child: const Text('Aceptar', style: TextStyle( color: Colors.white )),
+                child: Text(locGen!.aceptLbl, style: TextStyle( color: Colors.white )),
               )
             
             ],
