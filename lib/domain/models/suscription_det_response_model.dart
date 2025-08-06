@@ -205,7 +205,7 @@ class Quota {
   final String quotaDueDate;
   final String quotaName;
   final double quotaPaidAmount;
-  final double quotaAmount;
+  final double quotaResidual;
   final String quotaPaidDate;
   final String quotaState;
 
@@ -215,7 +215,7 @@ class Quota {
     required this.quotaDueDate,
     required this.quotaName,
     required this.quotaPaidAmount,
-    required this.quotaAmount,
+    required this.quotaResidual,
     required this.quotaPaidDate,
     required this.quotaState,
   });
@@ -227,7 +227,7 @@ class Quota {
       quotaDueDate: json['quota_due_date'] ?? '',
       quotaName: json['quota_name'] ?? '',
       quotaPaidAmount: json['quota_paid_amount'] != null ? (json['quota_paid_amount'] as num).toDouble() : 0,
-      quotaAmount: json['quota_amount'] != null ? (json['quota_amount'] as num).toDouble() : 0,
+      quotaResidual: json['quota_residual'] != null ? (json['quota_residual'] as num).toDouble() : 0,
       quotaPaidDate: json['quota_paid_date'] ?? '',
       quotaState: json['quota_state'] ?? '',
     );
@@ -239,7 +239,7 @@ class Quota {
         'quota_due_date': quotaDueDate,
         'quota_name': quotaName,
         'quota_paid_amount': quotaPaidAmount,
-        'quota_amount': quotaAmount,
+        'quota_residual': quotaResidual,
         'quota_paid_date': quotaPaidDate,
         'quota_state': quotaState,
       };

@@ -1,7 +1,7 @@
 
 import 'dart:convert';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
-import 'package:http/http.dart' as http;
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class DepositService extends ChangeNotifier{
 
   Future<List<ReceiptModelResponse>> getDeposit() async {
     try {
-
+/*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -67,6 +67,21 @@ class DepositService extends ChangeNotifier{
       if(rspValidacion['error'] != null){
         return [];
       }
+*/
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      var response = await GenericService().getGeneric("customer_receipt_records_read", ["partner_id", "=", '$partnerId']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
 
       ReceiptResponseModel objConv = ReceiptResponseModel.fromJson(rspValidacion);
 
@@ -87,6 +102,7 @@ class DepositService extends ChangeNotifier{
     if(internet.isEmpty){      
       try{
 
+/*
         var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
         final data = json.decode(resp);
@@ -107,7 +123,7 @@ class DepositService extends ChangeNotifier{
             "query_type": "customer_receipt_records_create",
             "data_list": [
               {
-                "name": objDeposit.name,
+                "receipt_concept": objDeposit.name,
                 "date": DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date),
                 "amount": objDeposit.amount,
                 "receipt_number": objDeposit.receiptNumber,
@@ -126,6 +142,29 @@ class DepositService extends ChangeNotifier{
         );
 
         var rspValidacion = json.decode(response.body);
+        */
+
+        //var fechaConv = DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date);
+
+        final List<Map<String, dynamic>> dataList = [
+          {
+            "receipt_concept": objDeposit.name,
+            "date": DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date),
+            "amount": objDeposit.amount,
+            "receipt_number": objDeposit.receiptNumber,
+            "user_id": objDeposit.idUser,
+            "receipt_file": objDeposit.receiptFile,
+            "customer_notes": objDeposit.customerNotes
+          }
+        ];
+
+        var response = await GenericService().postGeneric("create","customer_receipt_records_create", null, dataList);
+
+        if(response.isEmpty){
+          return null;
+        }
+
+        var rspValidacion = json.decode(response);
 
         var objRespuestaFinal = ApiRespuestaResponseModel.fromJson(rspValidacion);
 

@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 
 const storageProspecto = FlutterSecureStorage();
 AlertsMessages objMensajesProspectoService = AlertsMessages();
@@ -26,7 +26,7 @@ class ReservationsService extends ChangeNotifier{
 
   Future<List<Booking>?> getReservations() async {
     try{
-
+/*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -71,9 +71,25 @@ class ReservationsService extends ChangeNotifier{
       if(rspValidacion['error'] != null){
         return [];
       }
+      */
+
+      
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      var response = await GenericService().getGeneric("customer_bookings", ["partner_id", "=", '$partnerId']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
 
       await storage.write(key: 'ListadoReservaciones', value: '');
-      await storage.write(key: 'ListadoReservaciones', value: response.body);
+      await storage.write(key: 'ListadoReservaciones', value: response);
 
       final bookingResponse = BookingResponse.fromJson(rspValidacion);
 

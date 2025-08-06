@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -20,7 +19,7 @@ class BankAccountService extends ChangeNotifier{
 
   Future<List<BankAccount>> getBankAccounts() async {
     try {
-
+/*
       var codImei = await storage.read(key: 'codImei') ?? '';
 
       var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
@@ -44,8 +43,9 @@ class BankAccountService extends ChangeNotifier{
           models: []
         )
       );
+      */
 
-      var objRsp = await GenericService().getMultiModelos(objReq, "res.partner.bank", true, '');
+      var objRsp = '';//await GenericService().getMultiModelos(objReq, "res.partner.bank", true, '');
       
       BankResponse objConv = BankResponse.fromJson(jsonDecode(objRsp));
 

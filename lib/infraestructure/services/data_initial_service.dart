@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -21,7 +20,7 @@ class DataInicialService extends ChangeNotifier{
 
   readModelosApp(List<Map<String, dynamic>> modelo) async {
     try {
-
+/*
       var codImei = await storage.read(key: 'codImei') ?? '';
 
       var objReg = await storage.read(key: 'RespuestaRegistro') ?? '';
@@ -45,8 +44,9 @@ class DataInicialService extends ChangeNotifier{
           models: []
         )
       );
+      */
 
-      await GenericService().getMultiModelosGen(objReq, modelo);
+      //await GenericService().getMultiModelosGen(objReq, modelo);
       
     }
     catch(_){

@@ -1,11 +1,10 @@
-
 import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 
 class UserService extends ChangeNotifier{
 
@@ -25,13 +24,8 @@ class UserService extends ChangeNotifier{
     //VALIDACIÓN DE INTERNET
     if(internet.isEmpty){      
       try{
-
-        var resp = await storage.read(key: 'RespuestaLogin') ?? '';
-
-        final data = json.decode(resp);
-
-        int compId = data["result"]["company_id"] ?? 0;
-        int partnerId = data["result"]["partner_id"] ?? 0;
+        
+        /*
 
         final url = Uri.parse('${EnvironmentsProd().apiEndpoint}post/update');
 
@@ -51,7 +45,7 @@ class UserService extends ChangeNotifier{
               'phone': cell,
               'email': email,
               if(foto.isNotEmpty)
-              'image_128': foto
+              'image_1920': foto
             }
           }
         };
@@ -63,6 +57,29 @@ class UserService extends ChangeNotifier{
         );
       
         var rspValidacion = json.decode(response.body);
+        */
+
+        var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+        final data = json.decode(resp);
+
+        int partnerId = data["result"]["partner_id"] ?? 0;
+
+        final Map<String, dynamic> dataParam = {
+          'partner_id': partnerId,
+          'street': direction,
+          'phone': cell,
+          'email': email,
+          if (foto.isNotEmpty) 'image_1920': foto,
+        };
+
+        var response = await GenericService().postGeneric("update","customer_info_update", dataParam, []);
+
+        if(response.isEmpty){
+          return null;
+        }
+
+        var rspValidacion = json.decode(response);
 
         var objRespuestaFinal = ApiRespuestaResponseModel.fromJson(rspValidacion);
 

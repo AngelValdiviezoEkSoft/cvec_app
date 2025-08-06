@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
-//import 'package:fluttertoast/fluttertoast.dart';
 
 const storageReceipts = FlutterSecureStorage();
 AlertsMessages objMessageReceipt = AlertsMessages();
@@ -27,7 +26,7 @@ class ReceiptsService extends ChangeNotifier{
 
   Future<List<Payment>?> getReceipts() async {
     try{
-
+/*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -72,9 +71,24 @@ class ReceiptsService extends ChangeNotifier{
       if(rspValidacion['error'] != null){
         return [];
       }
+      */
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      var response = await GenericService().getGeneric("customer_payment_receipts", ["partner_id", "=", '$partnerId']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
 
       await storage.write(key: 'ListadoRecibos', value: '');
-      await storage.write(key: 'ListadoRecibos', value: response.body);
+      await storage.write(key: 'ListadoRecibos', value: response);
 
       final bookingResponse = ReceiptResponse.fromJson(rspValidacion);
 
@@ -101,6 +115,7 @@ class ReceiptsService extends ChangeNotifier{
   Future<List<PaymentLine>?> getDetReceipts(int idCab) async {
     try{
 
+/*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -144,6 +159,15 @@ class ReceiptsService extends ChangeNotifier{
       if(rspValidacion['error'] != null){
         return [];
       }
+      */
+
+      var response = await GenericService().getGeneric("customer_payment_receipts_report", ["payment_id", "=", '$idCab']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
 
       final bookingResponse = ReceiptDetResponse.fromJson(rspValidacion);
 

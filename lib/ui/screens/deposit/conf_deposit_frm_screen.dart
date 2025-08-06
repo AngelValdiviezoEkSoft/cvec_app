@@ -142,7 +142,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                                 decoration: !validandoFoto
                                     ? BoxDecoration(
                                         image: DecorationImage(
-                                          image: FileImage(File(rutaPagoAdj)),
+                                          image: FileImage(File(rutaPagoAdjDep)),
                                           fit: BoxFit.cover,
                                         ),                              
                                       )
@@ -184,7 +184,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           height: size.height * 0.028,
                           color: Colors.transparent,
                           child: Text(
-                            '\$${amountController.text}', 
+                            '\$${amountDepController.text}', 
                             style: TextStyle(
                               fontWeight: FontWeight.bold, 
                               fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
@@ -214,7 +214,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           height: size.height * 0.028,
                           color: Colors.transparent,
                           child: Text(
-                            fechaHoraEscogidaMuestra, 
+                            fechaHoraEscogidaDepMuestra, 
                             style: TextStyle(
                               fontWeight: FontWeight.bold, 
                               fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
@@ -244,7 +244,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           height: size.height * 0.028,
                           color: Colors.transparent,
                           child: Text(
-                            concController.text, 
+                            concDepController.text, 
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),
@@ -274,7 +274,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           height: size.height * 0.028,
                           color: Colors.transparent,
                           child: Text(
-                            observationsController.text, 
+                            observationsDepController.text, 
                             style: TextStyle(
                               fontWeight: FontWeight.bold, 
                               fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15),

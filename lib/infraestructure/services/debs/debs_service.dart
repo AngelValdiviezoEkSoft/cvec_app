@@ -2,10 +2,9 @@
 import 'dart:convert';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/ui/ui.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart' as http;
 
 class DebsService extends ChangeNotifier{
 
@@ -21,7 +20,7 @@ class DebsService extends ChangeNotifier{
 
   Future<List<Subscription>> getDebts() async {
     try {
-
+    /*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -59,13 +58,26 @@ class DebsService extends ChangeNotifier{
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
 
-      //print('Test: ${response.body}');
-      
       var rspValidacion = json.decode(response.body);
 
       if(rspValidacion['error'] != null){
         return [];
       }
+      */
+
+      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
+
+      final data = json.decode(resp);
+
+      int partnerId = data["result"]["partner_id"] ?? 0;
+
+      var response = await GenericService().getGeneric("customer_debts_contracts", ["partner_id", "=", '$partnerId']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
       
       SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(rspValidacion);
 
@@ -79,7 +91,7 @@ class DebsService extends ChangeNotifier{
 
   Future<List<Quota>> getDetDebts(idContract) async {
     try {
-
+/*
       String resInt = await ValidationsUtils().validaInternet();
 
       if(resInt.isNotEmpty){
@@ -123,8 +135,15 @@ class DebsService extends ChangeNotifier{
       if(rspValidacion['error'] != null){
         return [];
       }
+*/
 
-      //print('Rsp Lista DET DEBS $objRsp');
+      var response = await GenericService().getGeneric("customer_debts_quotas", ["contract_id", "=", '$idContract']);
+
+      if(response.isEmpty){
+        return [];
+      }
+
+      var rspValidacion = json.decode(response);
       
       CustomerStatementQuotasResponse objConv = CustomerStatementQuotasResponse.fromJson(rspValidacion);
 

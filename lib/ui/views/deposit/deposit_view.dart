@@ -459,6 +459,7 @@ class DepositViewSt extends State<DepositView> {
                   ),
                   floatingActionButton: FloatingActionButton(                
                     onPressed: () {
+                      /*
                       gnrBloc.setShowViewAccountStatementEvent(false);
                       gnrBloc.setShowViewDebts(false);
                       gnrBloc.setShowViewPrintRecipts(false);
@@ -466,6 +467,8 @@ class DepositViewSt extends State<DepositView> {
                       gnrBloc.setShowViewSendDeposits(false);
                       gnrBloc.setShowViewWebSite(false);
                       gnrBloc.setShowViewFrmDeposit(true);
+                      */
+                      context.push(objRutas.rutaFrmDepositScrn);
                     },
                     backgroundColor: const Color.fromRGBO(75, 57, 239, 1.0),
                     child: const Icon(Icons.add_card_sharp, color: Colors.white,),
