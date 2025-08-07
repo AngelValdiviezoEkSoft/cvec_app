@@ -204,7 +204,7 @@ class ListaRecibos extends StatelessWidget {
                           ),
                         ),
           
-                        Container(color: Colors.transparent, width: sizeLstNot.width * 0.25, height: sizeLstNot.height * 0.056, alignment: Alignment.topCenter, child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black, fontSize: 22), maxLines: 1,)),
+                        Container(color: Colors.transparent, width: sizeLstNot.width * 0.25, height: sizeLstNot.height * 0.056, alignment: Alignment.centerRight, child: AutoSizeText( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black, fontSize: 22), maxLines: 1,)),
                       
                       ],
                     ),                

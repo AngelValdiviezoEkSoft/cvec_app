@@ -1,6 +1,5 @@
 //import 'package:animate_do/animate_do.dart';
 import 'dart:convert';
-
 import 'package:animate_do/animate_do.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/models/models.dart';
@@ -9,11 +8,21 @@ import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 //import 'package:cve_app/auth_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 String searchQuery = '';
 
+DateTime? fechaInicio;
+DateTime? fechaFin;
+
+String? fechaInicioStr;
+String? fechaFinStr;
+
 List<ItemBoton> filteredTransactions = [];
+
+List<Payment> lstGenericaRecibos = [];
 
 Map<String, List<ItemBoton>> groupedTransactions = {};
 //TextEditingController passWordTxt = TextEditingController();
@@ -79,23 +88,33 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                     .where((tx) => tx.mensajeNotificacion.toLowerCase().contains(searchQuery.toLowerCase()))
                     .toList();
 
-                  //objPayment = bookingList.firstWhere((x) => x.paymentId == idFinal);
+                  groupedTransactions = {};
 
-                  //if(filteredTransactions.isNotEmpty){
+                  for (var tx in filteredTransactions) {
+                    groupedTransactions.putIfAbsent(tx.mensaje2, () => []).add(tx);
+                  }
+                }
+                else{
+                  
+                  if(fechaInicio != null && fechaFin != null){
+
+                    lstMenuFiltrado = getFilteredReceiptsByDateRange(startDate: fechaInicio!, endDate: fechaFin!);
+
                     groupedTransactions = {};
+
+                    fechaInicioStr = DateFormat("dd/MM/yyyy").format(fechaInicio!);
+                    fechaFinStr = DateFormat("dd/MM/yyyy").format(fechaFin!);
 
                     for (var tx in filteredTransactions) {
                       groupedTransactions.putIfAbsent(tx.mensaje2, () => []).add(tx);
                     }
-                  //}
-                  
-                }
-                else{
+                  }
+
                   if(groupedTransactions.isEmpty){
                     for (var tx in lstMenu) {
                       groupedTransactions.putIfAbsent(tx.mensaje2, () => []).add(tx);
                     }
-                  }                  
+                  }
                 }
 
                 List<Widget> itemMap = lstMenuFiltrado.map(
@@ -124,8 +143,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                       rutaNavegacion: item.rutaNavegacion,
                     ),
                   )
-                ).toList();                
-
+                ).toList();
                 
                 return Container(
                   width: size.width,
@@ -144,7 +162,163 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                           alignment: Alignment.center,
                           child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
                         ),
-                        
+
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.06,
+                          color: Colors.transparent,
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: size.width * 0.75,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
+                                child: TextField(
+                                  controller: searchTxt,
+                                  decoration: InputDecoration(
+                                    hintText: locGen!.searchLbl,
+                                    prefixIcon: const Icon(Icons.search),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {                                      
+                                          searchQuery = '';
+                                          searchTxt.text = searchQuery;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.close, color: Colors.black,),
+                                    )
+                                  ),
+                                  onEditingComplete: () {
+                                    FocusScope.of(context).unfocus();
+                          
+                                    setState(() {
+                                      searchQuery = searchTxt.text;
+                                    });
+                                  },
+                                ),                              
+                              ),
+
+                              Container(
+                                width: size.width * 0.15,
+                                height: size.height * 0.06,
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle, // Forma circular
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      blurRadius: 4,
+                                      offset: Offset(2, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: GestureDetector(
+                                  onTap: () async {  
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Seleccionar rango de fechas'),
+                                        content: SizedBox(
+                                          height: size.height * 0.35,///300, // <- tamaño fijo
+                                          width: double.maxFinite,
+                                          child: SfDateRangePicker(
+                                            //view: DateRangePickerView.month,
+                                            selectionMode: DateRangePickerSelectionMode.range,
+                                            onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                                              if (args.value is PickerDateRange) {
+                                                fechaInicio = args.value.startDate;
+                                                fechaFin = args.value.endDate;
+                                                setState(() {
+                                                  
+                                                });
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              fechaInicio = null;
+                                              fechaFin = null;
+
+                                              fechaInicioStr = null;
+                                              fechaFinStr = null;
+
+                                              setState(() {
+                                                
+                                              });
+
+                                              
+                                            },
+                                            child: const Text('Limpiar', style: TextStyle(color: Colors.grey),),
+                                          ),
+                                        
+                                          TextButton(
+                                            onPressed: () {
+                                              //print("Inicio: $startDate, Fin: $endDate");
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Aceptar'),
+                                          ),
+                                        
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.25,
+                                    height: size.height * 0.03,
+                                    alignment: Alignment.center,
+                                    child: const Icon(Icons.calendar_month, color: Colors.white), // Ícono dentro del botón
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+
+                        if(fechaInicioStr != null)
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width * 0.52,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('$fechaInicioStr - $fechaFinStr'),
+                              GestureDetector(
+                                onTap: () {
+                                  fechaInicio = null;
+                                  fechaFin = null;
+            
+                                  fechaInicioStr = null;
+                                  fechaFinStr = null;
+            
+                                  setState(() {
+                                    
+                                  });
+                          
+                                },
+                                child: Icon(Icons.delete))
+                            ],
+                          ),
+                        ),
+
+                        if(fechaInicioStr != null)
+                        SizedBox(
+                          height: size.height * 0.025,
+                        ),
+
+                        /*
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
@@ -172,6 +346,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                             },
                           ),
                         ),
+                        */
                     
                         Expanded(
                           child: LiquidPullToRefresh(
@@ -212,33 +387,80 @@ String capitalizarPrimeraLetra(String texto) {
 }
 
 Future<String> getReceipts() async {
+  try{
+    List<Payment>? rsp = await ReceiptsService().getReceipts();
 
-    try{
-      List<Payment>? rsp = await ReceiptsService().getReceipts();
+    final items = <ItemBoton>[];
 
-      final items = <ItemBoton>[];
+    if(rsp != null && rsp.isNotEmpty){
+      
+      lstGenericaRecibos = rsp;
 
-      if(rsp != null && rsp.isNotEmpty){
-        for(int i = 0; i < rsp.length; i++){
-          items.add(            
-            ItemBoton('','','',rsp[i].paymentId, Icons.group_add, '${locGen!.receiptLbl}# ${rsp[i].paymentName}', '${locGen!.paymentDateLbl}: ${rsp[i].paymentDate}', '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
-              RoutersApp().routPrintReceiptView,
-              () {
-                
-              }
-            ),
-          );
-        }
+      for(int i = 0; i < rsp.length; i++){
+        items.add(            
+          ItemBoton('','','',rsp[i].paymentId, Icons.group_add, '${locGen!.receiptLbl}# ${rsp[i].paymentName}', '${locGen!.paymentDateLbl}: ${rsp[i].paymentDate}', '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}','', Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
+            RoutersApp().routPrintReceiptView,
+            () {
+              
+            }
+          ),
+        );
+      }
+    }
+
+    final jsonString = serializeItemBotonMenuList(items);
+
+    return jsonString;
+  }
+  catch(ex){
+    return '';
+  }
+}
+
+ List<ItemBoton> getFilteredReceiptsByDateRange({required DateTime startDate, required DateTime endDate,}) {
+  List<Payment>? rsp = lstGenericaRecibos;
+
+  final items = <ItemBoton>[];
+
+  if (rsp.isNotEmpty) {
+    for (int i = 0; i < rsp.length; i++) {
+      final String paymentDateStr = rsp[i].paymentDate;
+
+      // Intentamos convertir el String a DateTime
+      DateTime? paymentDate;
+      try {
+        //paymentDate = DateTime.parse(paymentDateStr);
+        paymentDate = DateFormat("dd/MM/yyyy").parse(paymentDateStr);
+
+      } catch (e) {
+        // Si hay un error en la conversión, omitimos ese registro
+        continue;
       }
 
-      final jsonString = serializeItemBotonMenuList(items);
-
-      return jsonString;
-    }
-    catch(ex){
-      return '';
+      // Aplicamos el filtro: incluir fechas dentro del rango (inclusive)
+      if (paymentDate != null && paymentDate.isAfter(startDate.subtract(const Duration(days: 1))) &&
+          paymentDate.isBefore(endDate.add(const Duration(days: 1)))) {
+        items.add(
+          ItemBoton(
+            '', '', '', rsp[i].paymentId, Icons.group_add,
+            '${locGen!.receiptLbl}# ${rsp[i].paymentName}',
+            '${locGen!.paymentDateLbl}: ${rsp[i].paymentDate}',
+            '', '', '\$${rsp[i].paymentAmount.toStringAsFixed(2)}',
+            '', Colors.white, Colors.white, false, false, '', '',
+            'icCompras.png', 'icComprasTrans.png', '',
+            RoutersApp().routPrintReceiptView,
+            () {
+              // acción al presionar
+            },
+          ),
+        );
+      }
     }
   }
+
+  return items;
+}
+
 
 String serializeItemBotonMenuList(List<ItemBoton> items) {    
   final serializedList = items.map((item) => serializeItemBotonMenu(item)).toList();
