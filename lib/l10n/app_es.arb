@@ -69,6 +69,14 @@
   "@passwordLbl": {
     "description": "Contraseña"
   },
+  "passwordCurrentLbl": "Contraseña actual",
+  "@passwordCurrentLbl": {
+    "description": "Contraseña actual"
+  },
+  "passwordNotMatchLbl": "Contraseñas no coinciden",
+  "@passwordNotMatchLbl": {
+    "description": "Contraseña no coinciden"
+  },
   "logInLbl": "Acceder",
   "@logInLbl": {
     "description": "Acceder"
@@ -665,5 +673,13 @@
   "noInternetLbl": "No tiene acceso a internet",
   "@noInternetLbl": {
     "description": "No tiene acceso a internet"
+  },
+  "genericErrorUpdateLbl": "Error al actualizar datos",
+  "@genericErrorUpdateLbl": {
+    "description": "Error al actualizar datos"
+  },
+  "samePasswordLbl": "La contraseña nueva no debe ser la misma que la anterior",
+  "@samePasswordLbl": {
+    "description": "La contraseña nueva no debe ser la misma que la anterior"
   }
 }

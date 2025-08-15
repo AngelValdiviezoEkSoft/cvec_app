@@ -1,24 +1,17 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'package:cve_app/domain/domain.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenManager {
   //Timer? _timer;
 
   // Iniciar la verificación del token cada X minutos (por ejemplo, 5 minutos)
   void startTokenCheck() async {    
-    await checkTokenExpiration();
+    //await checkTokenExpiration();
   }
 
   // Detener el temporizador
   void stopTokenCheck() {
     //_timer?.cancel();
   }
-
+/*
   // Verificar si el token ha expirado
   Future<void> checkTokenExpiration() async {
 
@@ -69,4 +62,5 @@ class TokenManager {
       
     }
   }
+  */
 }

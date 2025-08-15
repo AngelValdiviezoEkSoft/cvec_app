@@ -158,7 +158,7 @@ class DepositService extends ChangeNotifier{
           }
         ];
 
-        var response = await GenericService().postGeneric("create","customer_receipt_records_create", null, dataList);
+        var response = await GenericService().postGeneric(true,"create","customer_receipt_records_create", null, dataList);
 
         if(response.isEmpty){
           return null;

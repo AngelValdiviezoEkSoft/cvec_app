@@ -73,7 +73,7 @@ class UserService extends ChangeNotifier{
           if (foto.isNotEmpty) 'image_1920': foto,
         };
 
-        var response = await GenericService().postGeneric("update","customer_info_update", dataParam, []);
+        var response = await GenericService().postGeneric(true,"update","customer_info_update", dataParam, []);
 
         if(response.isEmpty){
           return null;

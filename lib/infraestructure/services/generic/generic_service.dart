@@ -98,7 +98,7 @@ class GenericService extends ChangeNotifier {
     }
   }
 
-  Future<String> postGeneric(String methodType, String queryType, Map<String, dynamic>? filters, List<Map<String, dynamic>>? filtersCreate) async {
+  Future<String> postGeneric(bool ingresaQueryType, String methodType, String queryType, Map<String, dynamic>? filters, List<Map<String, dynamic>>? filtersCreate) async {
     try {
 
       String resInt = await ValidationsUtils().validaInternet();
@@ -123,7 +123,11 @@ class GenericService extends ChangeNotifier {
         cabeceraPost = 'data_list';
       }
 
-      final url = Uri.parse('${EnvironmentsProd().apiEndpoint}post/$methodType');
+      Uri url = Uri.parse('${EnvironmentsProd().apiEndpoint}post/$methodType');
+
+      if(queryType == 'change_password'){
+        url = Uri.parse('${EnvironmentsProd().apiEndpoint}auth/$queryType');
+      }
 
       final headers = {
         'Content-Type': EnvironmentsProd().contentType,
@@ -133,6 +137,7 @@ class GenericService extends ChangeNotifier {
         "jsonrpc": "2.0",
         "params": {
           "company_id": compId,
+          if(ingresaQueryType)
           "query_type": queryType,
           if(filters != null)
           cabeceraPost: filters,
@@ -141,7 +146,7 @@ class GenericService extends ChangeNotifier {
         }
       };
 
-      final response = await http.post(
+      var response = await http.post(
         url,
         headers: headers,
         body: jsonEncode(body),

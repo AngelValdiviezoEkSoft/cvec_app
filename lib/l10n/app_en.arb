@@ -162,5 +162,9 @@
     "msmValidateFieldsLbl": "Please enter all data",
     "aceptLbl": "Acept",
     "closeLbl": "Close",
-    "noInternetLbl": "No internet access"
+    "noInternetLbl": "No internet access",
+    "genericErrorUpdateLbl": "Error updating data",
+    "passwordCurrentLbl": "Current Password",
+    "passwordNotMatchLbl": "Passwords do not match",
+    "samePasswordLbl": "The new password must not be the same as the previous one."
 }

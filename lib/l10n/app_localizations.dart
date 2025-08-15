@@ -1066,6 +1066,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No internet access'**
   String get noInternetLbl;
+
+  /// No description provided for @genericErrorUpdateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating data'**
+  String get genericErrorUpdateLbl;
+
+  /// No description provided for @passwordCurrentLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get passwordCurrentLbl;
+
+  /// No description provided for @passwordNotMatchLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordNotMatchLbl;
+
+  /// No description provided for @samePasswordLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'The new password must not be the same as the previous one.'**
+  String get samePasswordLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

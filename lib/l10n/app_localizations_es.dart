@@ -497,4 +497,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noInternetLbl => 'No tiene acceso a internet';
+
+  @override
+  String get genericErrorUpdateLbl => 'Error al actualizar datos';
+
+  @override
+  String get passwordCurrentLbl => 'Contraseña actual';
+
+  @override
+  String get passwordNotMatchLbl => 'Contraseñas no coinciden';
+
+  @override
+  String get samePasswordLbl => 'La contraseña nueva no debe ser la misma que la anterior';
 }

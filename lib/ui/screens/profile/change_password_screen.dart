@@ -1,3 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cve_app/domain/domain.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,9 +32,9 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
   bool _ocultar2 = true;
   bool _ocultar3 = true;
 
-  final passwordActController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _repeatPasswordController = TextEditingController();
+  TextEditingController passwordActController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _repeatPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -50,6 +53,29 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
     nivelIntermedioMedioAltoChangPassword = false;
     nivelAltoChangPassword = false;
     nivelBajoChangPassword = false;
+  }
+
+  @override
+  void dispose(){
+    verValChangPassword = false;
+    tieneMayusculaChangPassword = false;
+    tieneMinusculaChangPassword = false;
+    tieneNumeroChangPassword = false;
+    tieneCaracterEspecialChangPassword = false;
+    tieneDiezCaracteresChangPassword = false;
+
+    nivelIntermedioBajoMedioCuartaParteChangPassword = false;
+    nivelIntermedioBajoMedioChangPassword = false;
+    nivelMedioChangPassword = false;
+    nivelIntermedioMedioAltoChangPassword = false;
+    nivelAltoChangPassword = false;
+    nivelBajoChangPassword = false;
+
+    passwordActController = TextEditingController();
+    _passwordController = TextEditingController();
+    _repeatPasswordController = TextEditingController();
+
+    super.dispose();
   }
 
   @override
@@ -212,7 +238,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                           obscureText: _ocultar3,
                           controller: passwordActController,
                           decoration: InputDecoration(
-                            hintText: 'Contraseña actual',
+                            hintText: locGen!.passwordCurrentLbl,
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _ocultar3 ? Icons.visibility_off : Icons.visibility,
@@ -231,7 +257,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                           ),
                         ),
                         
-                        SizedBox(height: size.height * 0.015),//32),
+                        SizedBox(height: size.height * 0.015),
               
                         TextField(
                           obscureText: _ocultar1,
@@ -265,7 +291,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                           ),
                         ),
                         
-                        SizedBox(height: size.height * 0.015),////20),
+                        SizedBox(height: size.height * 0.015),
 
                         if (verValChangPassword)
                         Container(
@@ -540,8 +566,211 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // Acción de guardar contraseña
+                            onPressed: () async {
+
+                              String gifRespuesta = '';
+                              String respuestaReg = '';
+                              bool formValido = true;
+
+                              if(passwordActController.text.isEmpty || _passwordController.text.isEmpty || _repeatPasswordController.text.isEmpty){
+                                respuestaReg = locGen!.msmValidateFieldsLbl;
+                                formValido = false;
+                              }
+
+                              if(_passwordController.text == passwordActController.text){
+                                respuestaReg = locGen!.samePasswordLbl;
+                                formValido = false;
+                              }
+
+                              if(_passwordController.text != _repeatPasswordController.text){
+                                respuestaReg = locGen!.passwordNotMatchLbl;
+                                formValido = false;
+                              }
+
+                              if(!formValido){
+                                
+                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+
+                                showDialog(
+                                  //ignore:use_build_context_synchronously
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Container(
+                                        color: Colors.transparent,
+                                        height: size.height * 0.17,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            
+                                            Container(
+                                              color: Colors.transparent,
+                                              height: size.height * 0.09,
+                                              child: Image.asset(gifRespuesta),
+                                            ),
+                
+                                            Container(
+                                              color: Colors.transparent,
+                                              width: size.width * 0.95,
+                                              height: size.height * 0.08,
+                                              alignment: Alignment.center,
+                                              child: AutoSizeText(
+                                                respuestaReg,
+                                                maxLines: 2,
+                                                minFontSize: 2,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {                                                            
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                
+                                return;
+                              }
+                              
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (context) => SimpleDialog(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    SimpleDialogLoad(
+                                      null,
+                                      mensajeMostrar: locGen!.msmUpdateLbl,
+                                      mensajeMostrarDialogCargando: locGen!.msmSafeInfoProfLbl,
+                                    ),
+                                  ]
+                                ),
+                              );
+
+                              ApiResponse? objApiResponse = await AuthServices().changePassword(passwordActController.text, _repeatPasswordController.text);
+
+                              if(objApiResponse == null){
+
+                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+
+                                //ignore: use_build_context_synchronously
+                                Navigator.pop(context);
+
+                                showDialog(
+                                  //ignore:use_build_context_synchronously
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Container(
+                                        color: Colors.transparent,
+                                        height: size.height * 0.17,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            
+                                            Container(
+                                              color: Colors.transparent,
+                                              height: size.height * 0.09,
+                                              child: Image.asset(gifRespuesta),
+                                            ),
+                
+                                            Container(
+                                              color: Colors.transparent,
+                                              width: size.width * 0.95,
+                                              height: size.height * 0.08,
+                                              alignment: Alignment.center,
+                                              child: AutoSizeText(
+                                                locGen!.genericErrorUpdateLbl,
+                                                maxLines: 2,
+                                                minFontSize: 2,
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            
+                                          },
+                                          child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                                
+                                return;
+                              }
+                              
+                              respuestaReg = objApiResponse.mensaje;
+
+                              if(rutaFotoPerfilEdit.isNotEmpty){
+                                fotoUserPrp = '';
+                                fotoUserPrp = rutaFotoPerfilEditTmp;
+                              }
+
+                              if(objApiResponse.estado == 200){
+                                gifRespuesta = 'assets/gifs/exito.gif';                                                
+                              } else {
+                                gifRespuesta = 'assets/gifs/gifErrorBlanco.gif';
+                              }
+
+                              //ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+
+                              showDialog(
+                                //ignore:use_build_context_synchronously
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Container(
+                                      color: Colors.transparent,
+                                      height: size.height * 0.17,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          
+                                          Container(
+                                            color: Colors.transparent,
+                                            height: size.height * 0.09,
+                                            child: Image.asset(gifRespuesta),
+                                          ),
+              
+                                          Container(
+                                            color: Colors.transparent,
+                                            width: size.width * 0.95,
+                                            height: size.height * 0.08,
+                                            alignment: Alignment.center,
+                                            child: AutoSizeText(
+                                              respuestaReg,
+                                              maxLines: 2,
+                                              minFontSize: 2,
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF0076E4),

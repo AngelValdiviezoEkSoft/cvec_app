@@ -3,7 +3,7 @@ import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+//import 'package:device_info_plus/device_info_plus.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -277,29 +277,30 @@ class Welcome2Screen extends StatelessWidget {
         );
     
         try{
+      /*
           String imeiCod = '';
           var plataforma = '';
-    
-          final deviceInfo = DeviceInfoPlugin();
+    */
+          //final deviceInfo = DeviceInfoPlugin();
           
           if (Platform.isAndroid) {
-            plataforma = 'Android';
-            final androidInfo = await deviceInfo.androidInfo;
-            imeiCod = androidInfo.id;
+            //plataforma = 'Android';
+            //final androidInfo = await deviceInfo.androidInfo;
+            //imeiCod = androidInfo.id;
           } else if (Platform.isIOS) {
-            plataforma = 'iOS';
-            final iOSInfo = await deviceInfo.iosInfo;
-            imeiCod = iOSInfo.identifierForVendor ?? '';                    
+            //plataforma = 'iOS';
+            //final iOSInfo = await deviceInfo.iosInfo;
+            //imeiCod = iOSInfo.identifierForVendor ?? '';                    
           } else {
-            plataforma = 'Desconocido';
+            //plataforma = 'Desconocido';
           }
     
-          Position position = await getLocation();
+         // Position position = await getLocation();
     
           //imeiCod = '92345604000000002'; //BORRAR LUEGO - PARA EMULADOR
           //imeiCod = '82345604000002Luis'; //BORRAR LUEGO - PARA CELULAR PRUEBAS
           //imeiCod = '82345604113'; //BORRAR LUEGO - PARA EMULADOR
-    
+    /*
           RegisterDeviceRequestModel  objRegisterMobileRequestModel = RegisterDeviceRequestModel (
             server: serverTxt.text,
             key: keyTxt.text,
@@ -308,8 +309,22 @@ class Welcome2Screen extends StatelessWidget {
             lon: position.longitude.toString(),//'72.74548487',
             so: plataforma//'Android'
           );
+          */
     
-          RegisterDeviceResponseModel respuesta = await AuthServices().doneRegister(objRegisterMobileRequestModel);
+          RegisterDeviceResponseModel respuesta = RegisterDeviceResponseModel(
+            id: 0,
+            jsonrpc: '',
+            result: RegisterDeviceModel(
+              estado: 0, 
+              url: '', 
+              database: '', 
+              serverUrl: '', 
+              key: '', 
+              tocken: '', 
+              bearer: '', 
+              tockenValidDate: DateTime.now(), 
+              msmError: '')
+          );//await AuthServices().doneRegister(objRegisterMobileRequestModel);
           
           //ignore: use_build_context_synchronously
           context.pop();
