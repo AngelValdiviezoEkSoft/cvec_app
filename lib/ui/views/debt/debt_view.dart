@@ -13,10 +13,23 @@ String searchQueryDebt = '';
 List<ItemBoton> filteredTransactionsDeb = [];
 late TextEditingController searchDebTxt;
 int idContrato = 0;
-String nameContrato = '';
-String namePlan = '';
-String fechaInsc = '';
+
+
+Subscription objSubscription = Subscription(
+  contractDueDate: '',
+  contractId: 0,
+  contractInscriptionDate: '',
+  contractName: '',
+  contractPaidAmount: 0,
+  contractPaidPercent: 0,
+  contractPlan: '',
+  contractResidual: 0,
+  contractState: '',
+  contractTotalAmount: 0
+);
+
 List<Subscription> lstSubsResp = [];
+late Future<List<Subscription>> lstFutSubsResp;
 
 class DebtView extends StatefulWidget {
   //const DebtView(Key? key) : super (key: key);  
@@ -36,14 +49,20 @@ class DebtViewSt extends State<DebtView> {
     searchDebTxt = TextEditingController();
     filteredTransactionsDeb = [];
     lstSubsResp = [];
+
+    nameContratoDebt = '';
+    namePlanDebt = '';
+    fechaInscDebt = '';
+
+    lstFutSubsResp = getDebts();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     
-    return FutureBuilder(
-      future: getDebts(),
+    return FutureBuilder<List<Subscription>>(
+      future: lstFutSubsResp,//getDebts(),
       builder: (context, snapshot) {
 
         if(!snapshot.hasData) {
@@ -64,11 +83,11 @@ class DebtViewSt extends State<DebtView> {
           if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
             idContrato = 0;
-            nameContrato = '';
-            namePlan = '';
-            fechaInsc = '';
+            nameContratoDebt = '';
+            namePlanDebt = '';
+            fechaInscDebt = '';
 
-            List<Subscription> lstSubs = snapshot.data as List<Subscription>;            
+            List<Subscription> lstSubs = snapshot.data!; //as List<Subscription>;            
 
             if(searchQueryDebt.isNotEmpty){
               
@@ -143,11 +162,13 @@ class DebtViewSt extends State<DebtView> {
                               return GestureDetector(
                                 onTap: () {
                                   idContrato = item.contractId;
-                                  nameContrato = item.contractName;
-                                  namePlan = item.contractPlan;
+                                  nameContratoDebt = item.contractName;
+                                  namePlanDebt = item.contractPlan;
+
+                                  objSubscription = item;
                           
                                   DateTime dateQuote = DateTime.parse(item.contractInscriptionDate);
-                                  fechaInsc = DateFormat("dd/MM/yyyy").format(dateQuote);
+                                  fechaInscDebt = DateFormat("dd/MM/yyyy").format(dateQuote);
                           
                                   context.push(objRutas.rutaDebsDetScrn);
                                 },

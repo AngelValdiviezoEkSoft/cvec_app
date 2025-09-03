@@ -13,6 +13,10 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
+String nameContratoDebt = '';
+String namePlanDebt = '';
+String fechaInscDebt = '';
+
 
 //ignore: must_be_immutable
 class DebsDetScreen extends StatefulWidget {  
@@ -85,7 +89,7 @@ class DebsDetScreenState extends State<DebsDetScreen> {
     return WillPopScope(
       onWillPop: () async => false,
       child: BlocBuilder<GenericBloc, GenericState>(
-          builder: (context, stateEstado) {
+        builder: (context, stateEstado) {
         return FutureBuilder(
           future: DebsService().getDetDebts(idContrato),
           builder: (context, snapshot) {
@@ -103,14 +107,14 @@ class DebsDetScreenState extends State<DebsDetScreen> {
         }
         else{
           if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+
             List<Quota> lstSubs = snapshot.data as List<Quota>;
             
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,
                 backgroundColor: const Color(0xFF2EA3F2),  
-                centerTitle: true,      
-                //title: Center(child: Text(locGen!.barNavLogInLbl, style: const TextStyle(color: Colors.white),)),
+                centerTitle: true,
                 title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
                 leading: GestureDetector(
                   onTap: () {
@@ -136,11 +140,12 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(nameContrato, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(objSubscription.contractName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             
-                          Text(namePlan, style: const TextStyle(fontSize: 16)),
+                          Text(objSubscription.contractPlan, style: const TextStyle(fontSize: 16)),
             
-                          Text(fechaInsc, style: const TextStyle(fontSize: 14)),
+                          //Text(fechaInscDebt, style: const TextStyle(fontSize: 14)),
+                          Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(objSubscription.contractInscriptionDate)), style: const TextStyle(fontSize: 14)),
                         ],
                       ),
                     ),
@@ -244,7 +249,7 @@ class DebsDetScreenState extends State<DebsDetScreen> {
                     padding: EdgeInsets.all(8.0),
                     child: Icon(Icons.arrow_back_ios)
                   ),
-                ),          
+                ),
               ),
               body: Center(
                 child: Container(

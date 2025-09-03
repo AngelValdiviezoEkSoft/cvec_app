@@ -46,6 +46,23 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
     filteredTransactions = [];
     groupedTransactions = {};
     searchTxt = TextEditingController();
+
+    fechaInicio = null;
+    fechaFin = null;
+
+    fechaInicioStr = null;
+    fechaFinStr = null;
+  }
+
+  @override
+  void dispose(){
+    fechaInicio = null;
+    fechaFin = null;
+
+    fechaInicioStr = null;
+    fechaFinStr = null;
+
+    super.dispose();
   }
 
   @override

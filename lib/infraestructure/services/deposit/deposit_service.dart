@@ -22,52 +22,6 @@ class DepositService extends ChangeNotifier{
 
   Future<List<ReceiptModelResponse>> getDeposit() async {
     try {
-/*
-      String resInt = await ValidationsUtils().validaInternet();
-
-      if(resInt.isNotEmpty){
-        return [];
-      }
-
-      var resp = await storage.read(key: 'RespuestaLogin') ?? '';
-
-      final data = json.decode(resp);
-
-      int compId = data["result"]["company_id"] ?? 0;
-      int partnerId = data["result"]["partner_id"] ?? 0;
-
-      String ruta = '${EnvironmentsProd().apiEndpoint}get';
-
-      final headers = {
-        "Content-Type": EnvironmentsProd().contentType,
-      };
-      
-      final body = jsonEncode({
-        "jsonrpc": "2.0",
-        "params": {
-          "company_id": compId,
-          "query_type": "customer_receipt_records_read",
-          "filters": [
-            "partner_id", "=", '$partnerId'
-          ]
-        }
-      });
-
-      final request = http.Request("GET", Uri.parse(ruta))
-        ..headers.addAll(headers)
-        ..body = body;
-      
-      final streamedResponse = await request.send();
-      final response = await http.Response.fromStream(streamedResponse);
-
-      //print('Test: ${response.body}');
-      
-      var rspValidacion = json.decode(response.body);
-
-      if(rspValidacion['error'] != null){
-        return [];
-      }
-*/
 
       var resp = await storage.read(key: 'RespuestaLogin') ?? '';
 
@@ -77,7 +31,7 @@ class DepositService extends ChangeNotifier{
 
       var response = await GenericService().getGeneric("customer_receipt_records_read", ["partner_id", "=", '$partnerId']);
 
-      if(response.isEmpty){
+      if(response.isEmpty || response.contains('"estado": 404') || response.contains('Platform Error')){
         return [];
       }
 

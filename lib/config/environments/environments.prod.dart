@@ -1,6 +1,6 @@
 class EnvironmentsProd {
-
-  final String apiEndpoint = 'https://centroviajes-taller-21395931.dev.odoo.com/api/v1/cve/';
+  
+  final String apiEndpoint = 'https://centroviajes-taller-23283010.dev.odoo.com/api/v1/cve/';  
 
   final String tokenAutorizacion = '2c9f8fc09218c2c0f65e8303767fabf671989764';
 

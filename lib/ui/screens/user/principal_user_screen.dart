@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cve_app/auth_services.dart';
+//import 'package:cached_network_image/cached_network_image.dart';
+//import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
-import 'package:cve_app/infraestructure/infraestructure.dart';
+//import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+//import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +89,15 @@ class PrincipalClientStScreen extends StatelessWidget {
           AppBar(
             backgroundColor: const Color(0xFF53C9EC),
           ),
+          drawer: MenuLateralWidget(
+            size: MediaQuery.of(context).size,
+            gnrBloc: gnrBloc,
+            locGen: locGen,
+            objRutas: objRutas,
+            fontSizeManager: fontSizeManager,
+            stateGen: state,
+          ),
+          /*
           drawer: FutureBuilder(
             future: AuthServices().getDatosPerfil(),
             builder: (context, snapshot) {
@@ -300,6 +309,8 @@ class PrincipalClientStScreen extends StatelessWidget {
                                     gnrBloc.setShowViewWebSite(false);
                                     gnrBloc.setShowViewFrmDeposit(false);
                                     
+                                    Navigator.of(context).pop();
+
                                     //Navigator.pop(context); // Cierra el menú 
               
                                     await AuthService().logOut();
@@ -313,7 +324,7 @@ class PrincipalClientStScreen extends StatelessWidget {
                                 TextButton(
                                   onPressed: () {
               
-                                    Navigator.of(context).pop();              
+                                    Navigator.of(context).pop();
               
                                   },
                                   child: const Text('No'),
@@ -331,6 +342,7 @@ class PrincipalClientStScreen extends StatelessWidget {
             
             }
           ),
+          */
           body: 
           !state.viewAccountStatement && !state.viewPrintReceipts 
           && !state.viewSendDeposits && !state.viewViewDebts && 
@@ -522,6 +534,7 @@ class PrincipalClientStScreen extends StatelessWidget {
     );
   }
 
+/*
   Widget _buildProfileCard(BuildContext context, Size size) {
 
     final fontSizeManager = Provider.of<FontSizeManager>(context);
@@ -585,4 +598,6 @@ class PrincipalClientStScreen extends StatelessWidget {
       ),
     );
   }
+*/
+
 }

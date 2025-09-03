@@ -116,6 +116,8 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
 
+        gnrBloc.setCargando(false);
+
         return WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
@@ -1000,6 +1002,8 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
   Future<void> readTextFromImage(File image, String tipoCaptura) async {
     final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
 
+    gnrBloc.setCargando(true);
+
     amountDepController.text = '';
     compDepController.text = '';
 
@@ -1084,30 +1088,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
             gnrBloc.setLevantaModal(false);
             textRecognizer.close();
             return;
-            /*
-            }
-            
-            else{
-              
-
-              if(lstDatosFrm[23].toUpperCase().contains('WONTO') || lstDatosFrm[23].toUpperCase().contains('MONTO')){
-                amountDepController.text = lstDatosFrm[23].split(' ')[2];
-                compDepController.text = lstDatosFrm[41].split('SECU: ')[1];
-              }
-              if(lstDatosFrm[12].toUpperCase().contains('BAP')){
-                amountDepController.text = lstDatosFrm[13];
-                compDepController.text = '${lstDatosFrm[12].split(' ')[0]} ${lstDatosFrm[12].split(' ')[1]} ${lstDatosFrm[12].split(' ')[2]}';
-              }
-              if(lstDatosFrm[13].toUpperCase().contains('BAP')){
-                amountDepController.text = lstDatosFrm[14];
-                compDepController.text = '${lstDatosFrm[13].split(' ')[0]} ${lstDatosFrm[13].split(' ')[1]} ${lstDatosFrm[13].split(' ')[2]}';
-              }
-              if(lstDatosFrm[11].toUpperCase().contains('BAP')){
-                amountDepController.text = lstDatosFrm[13];
-                compDepController.text = '${lstDatosFrm[11].split(' ')[0]} ${lstDatosFrm[11].split(' ')[1]} ${lstDatosFrm[11].split(' ')[2]}';
-              }
-            }          
-            */
           }
         }
       }
@@ -1165,8 +1145,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     */
 
     // Buscar la cadena completa: valor antes + BAP1 + fecha
-    final bapRegExp =
-        RegExp(r'(\S+\s+BAP1\s+\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})');
+    final bapRegExp = RegExp(r'(\S+\s+BAP1\s+\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})');
     final bapMatch = bapRegExp.firstMatch(texto);
 
     if (bapMatch != null) {

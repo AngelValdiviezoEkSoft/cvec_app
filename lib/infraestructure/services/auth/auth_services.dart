@@ -129,8 +129,8 @@ class AuthServices extends ChangeNotifier {
       await storage.write(key: 'RespuestaLogin', value: response.body);
 
       return response.body;
-    } catch (_) {
-      //print('Test Error1: $ex');
+    } catch (ex) {
+      print('Test Error1: $ex');
     }
   }
 

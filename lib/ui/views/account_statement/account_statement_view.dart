@@ -55,7 +55,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
-        return FutureBuilder(
+        return FutureBuilder<List<Contract>>(
           future: _futureAccountStatements,//AccountStatementService().getAccountStatement(),
           builder: (context, snapshot) {
 
@@ -75,7 +75,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
             {  
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
-                List<Contract> lstSubs = snapshot.data as List<Contract>;                
+                List<Contract> lstSubs = snapshot.data!; //as List<Contract>;                
 
                 String estadoAccount = '';
 

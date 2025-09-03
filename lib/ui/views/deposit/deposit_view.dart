@@ -94,7 +94,7 @@ class DepositViewSt extends State<DepositView> {
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context,state) {
-        return FutureBuilder(
+        return FutureBuilder<List<ReceiptModelResponse>>(
           future: _futureDeposits,
           builder: (context, snapshot) {
 
@@ -102,13 +102,21 @@ class DepositViewSt extends State<DepositView> {
 
             if(!snapshot.hasData) {
               return Scaffold(
-                //backgroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                //Image.asset(AppConfig().rutaGifLoading)
                 body: Center(
                   child: Image.asset(
+                    AppConfig().rutaGifLoading,
+                    height: size.width * 0.85,
+                    width: size.width * 0.85,
+                  )
+                  /*
+                  Image.asset(
                     AppConfig().rutaGifCarga,
                     height: size.width * 0.85,
                     width: size.width * 0.85,
                   ),
+                  */
                 ),
               );
             }
@@ -117,9 +125,11 @@ class DepositViewSt extends State<DepositView> {
 
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
 
-                lstReceipts = snapshot.data as List<ReceiptModelResponse>;
+                lstReceipts = snapshot.data!; //as List<ReceiptModelResponse>;
 
                 if(lstReceipts.isNotEmpty){
+
+                  lstMenu = [];
 
                   var lstAprobadas = lstReceipts.where((x) => x.receiptState.toLowerCase() == 'approved').toList();
                   var lstRechazadas = lstReceipts.where((x) => x.receiptState.toLowerCase() == 'rejected').toList();
@@ -252,14 +262,15 @@ class DepositViewSt extends State<DepositView> {
                         ),
                       )
                     ).toList();
-
                 }
 
                 gnrBloc.setCargando(false);
                 
               }
+
+              gnrBloc.setCargando(false);
               
-              return !state.cargando ?
+              return //!state.cargando ?
                 Scaffold(
                   body: Container(
                     width: size.width,
@@ -473,7 +484,8 @@ class DepositViewSt extends State<DepositView> {
                     backgroundColor: const Color.fromRGBO(75, 57, 239, 1.0),
                     child: const Icon(Icons.add_card_sharp, color: Colors.white,),
                   ),                  
-                )
+                );
+               /*
                 :                
                 Container(
                   color: Colors.white,
@@ -482,7 +494,7 @@ class DepositViewSt extends State<DepositView> {
                   alignment: Alignment.center,
                   child: Image.asset(AppConfig().rutaGifLoading),
                 );
-              
+              */
 
             }
 
