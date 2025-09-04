@@ -1,9 +1,11 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cve_app/ui/bloc/bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 BuildContext? contextWidgetRecibo;
 
@@ -140,9 +142,11 @@ class ListaRecibos extends StatelessWidget {
     contextWidgetRecibo = context;
 
     final sizeLstNot = MediaQuery.of(context).size;
-    initializeDateFormatting('es');       
+    initializeDateFormatting('es');
 
-  return Container(
+    final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+
+    return Container(
     color: Colors.transparent,
     width: sizeLstNot.width,
     //height: sizeLstNot.height * 0.2,
@@ -150,11 +154,15 @@ class ListaRecibos extends StatelessWidget {
           onTap: () async {
             const storage = FlutterSecureStorage();
 
+            gnrBloc.setCargando(true);
+
             await storage.write(key: 'IdRecibo', value: '');
             await storage.write(key: 'IdRecibo', value: "$varIdNotificacionLst");
             
             //ignore: use_build_context_synchronously
             context.push(rutaNavegacionFin!);
+
+            //gnrBloc.setCargando(false);
           },
           child: Column(
             children: [

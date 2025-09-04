@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 String searchQuery = '';
@@ -38,6 +39,8 @@ class PrintReceiptView extends StatefulWidget {
 
 class PrintReceiptViewSt extends State<PrintReceiptView> {
 
+  bool isLoadingRpt = false;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +55,11 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
 
     fechaInicioStr = null;
     fechaFinStr = null;
+    isLoadingRpt = false;
+
+    final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+    gnrBloc.setCargando(false);
+    
   }
 
   @override
@@ -61,6 +69,7 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
 
     fechaInicioStr = null;
     fechaFinStr = null;
+    isLoadingRpt = false;
 
     super.dispose();
   }
@@ -162,225 +171,229 @@ class PrintReceiptViewSt extends State<PrintReceiptView> {
                   )
                 ).toList();
                 
-                return Container(
-                  width: size.width,
-                  height: size.height * 0.82,
-                  color: Colors.transparent,
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: size.width,
-                          height: size.height * 0.06,
-                          color: Colors.transparent,
-                          alignment: Alignment.center,
-                          child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
-                        ),
-
-                        Container(
-                          width: size.width,
-                          height: size.height * 0.06,
-                          color: Colors.transparent,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: size.width * 0.75,
-                                height: size.height * 0.06,
-                                color: Colors.transparent,
-                                alignment: Alignment.center,
-                                child: TextField(
-                                  controller: searchTxt,
-                                  decoration: InputDecoration(
-                                    hintText: locGen!.searchLbl,
-                                    prefixIcon: const Icon(Icons.search),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                    suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {                                      
-                                          searchQuery = '';
-                                          searchTxt.text = searchQuery;
-                                        });
-                                      },
-                                      icon: const Icon(Icons.close, color: Colors.black,),
-                                    )
-                                  ),
-                                  onEditingComplete: () {
-                                    FocusScope.of(context).unfocus();
-                          
-                                    setState(() {
-                                      searchQuery = searchTxt.text;
-                                    });
-                                  },
-                                ),                              
-                              ),
-
-                              Container(
-                                width: size.width * 0.15,
-                                height: size.height * 0.06,
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  color: Colors.green,
-                                  shape: BoxShape.circle, // Forma circular
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      blurRadius: 4,
-                                      offset: Offset(2, 2),
+                return LoadingOverlay(
+                  null,
+                  isLoading: state.cargando,
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.82,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: size.width,
+                            height: size.height * 0.06,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: Text(locGen!.receiptsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
+                          ),
+                  
+                          Container(
+                            width: size.width,
+                            height: size.height * 0.06,
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: size.width * 0.75,
+                                  height: size.height * 0.06,
+                                  color: Colors.transparent,
+                                  alignment: Alignment.center,
+                                  child: TextField(
+                                    controller: searchTxt,
+                                    decoration: InputDecoration(
+                                      hintText: locGen!.searchLbl,
+                                      prefixIcon: const Icon(Icons.search),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {                                      
+                                            searchQuery = '';
+                                            searchTxt.text = searchQuery;
+                                          });
+                                        },
+                                        icon: const Icon(Icons.close, color: Colors.black,),
+                                      )
                                     ),
-                                  ],
+                                    onEditingComplete: () {
+                                      FocusScope.of(context).unfocus();
+                            
+                                      setState(() {
+                                        searchQuery = searchTxt.text;
+                                      });
+                                    },
+                                  ),                              
                                 ),
-                                child: GestureDetector(
-                                  onTap: () async {  
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text('Seleccionar rango de fechas'),
-                                        content: SizedBox(
-                                          height: size.height * 0.35,///300, // <- tamaño fijo
-                                          width: double.maxFinite,
-                                          child: SfDateRangePicker(
-                                            //view: DateRangePickerView.month,
-                                            selectionMode: DateRangePickerSelectionMode.range,
-                                            onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
-                                              if (args.value is PickerDateRange) {
-                                                fechaInicio = args.value.startDate;
-                                                fechaFin = args.value.endDate;
+                  
+                                Container(
+                                  width: size.width * 0.15,
+                                  height: size.height * 0.06,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.green,
+                                    shape: BoxShape.circle, // Forma circular
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 4,
+                                        offset: Offset(2, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () async {  
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text('Seleccionar rango de fechas'),
+                                          content: SizedBox(
+                                            height: size.height * 0.35,///300, // <- tamaño fijo
+                                            width: double.maxFinite,
+                                            child: SfDateRangePicker(
+                                              //view: DateRangePickerView.month,
+                                              selectionMode: DateRangePickerSelectionMode.range,
+                                              onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                                                if (args.value is PickerDateRange) {
+                                                  fechaInicio = args.value.startDate;
+                                                  fechaFin = args.value.endDate;
+                                                  setState(() {
+                                                    
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                fechaInicio = null;
+                                                fechaFin = null;
+                  
+                                                fechaInicioStr = null;
+                                                fechaFinStr = null;
+                  
                                                 setState(() {
                                                   
                                                 });
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              fechaInicio = null;
-                                              fechaFin = null;
-
-                                              fechaInicioStr = null;
-                                              fechaFinStr = null;
-
-                                              setState(() {
+                  
                                                 
-                                              });
-
-                                              
-                                            },
-                                            child: const Text('Limpiar', style: TextStyle(color: Colors.grey),),
-                                          ),
-                                        
-                                          TextButton(
-                                            onPressed: () {
-                                              //print("Inicio: $startDate, Fin: $endDate");
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('Aceptar'),
-                                          ),
-                                        
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    width: size.width * 0.25,
-                                    height: size.height * 0.03,
-                                    alignment: Alignment.center,
-                                    child: const Icon(Icons.calendar_month, color: Colors.white), // Ícono dentro del botón
+                                              },
+                                              child: const Text('Limpiar', style: TextStyle(color: Colors.grey),),
+                                            ),
+                                          
+                                            TextButton(
+                                              onPressed: () {
+                                                //print("Inicio: $startDate, Fin: $endDate");
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text('Aceptar'),
+                                            ),
+                                          
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      width: size.width * 0.25,
+                                      height: size.height * 0.03,
+                                      alignment: Alignment.center,
+                                      child: const Icon(Icons.calendar_month, color: Colors.white), // Ícono dentro del botón
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ),
-
-                        SizedBox(
-                          height: size.height * 0.025,
-                        ),
-
-                        if(fechaInicioStr != null)
-                        Container(
-                          color: Colors.transparent,
-                          width: size.width * 0.52,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('$fechaInicioStr - $fechaFinStr'),
-                              GestureDetector(
-                                onTap: () {
-                                  fechaInicio = null;
-                                  fechaFin = null;
-            
-                                  fechaInicioStr = null;
-                                  fechaFinStr = null;
-            
-                                  setState(() {
-                                    
-                                  });
-                          
-                                },
-                                child: Icon(Icons.delete))
-                            ],
+                              ],
+                            )
                           ),
-                        ),
-
-                        if(fechaInicioStr != null)
-                        SizedBox(
-                          height: size.height * 0.025,
-                        ),
-
-                        /*
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            controller: searchTxt,
-                            decoration: InputDecoration(
-                              hintText: locGen!.searchLbl,
-                              prefixIcon: const Icon(Icons.search),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {                                      
-                                    searchQuery = '';
-                                    searchTxt.text = searchQuery;
-                                  });
-                                },
-                                icon: const Icon(Icons.close, color: Colors.black,),
-                              )
-                            ),
-                            onEditingComplete: () {
-                              FocusScope.of(context).unfocus();
-                    
-                              setState(() {
-                                searchQuery = searchTxt.text;
-                              });
-                            },
+                  
+                          SizedBox(
+                            height: size.height * 0.025,
                           ),
-                        ),
-                        */
-                    
-                        Expanded(
-                          child: LiquidPullToRefresh(
-                            onRefresh: refreshReceipts,
-                            color: Colors.blue[300],
-                            child: ListView(
-                              physics: const BouncingScrollPhysics(),
-                              children: <Widget>[
-                                const SizedBox( height: 3, ),
-                                ...itemMap,
-                                const SizedBox( height: 3, ),
+                  
+                          if(fechaInicioStr != null)
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.52,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('$fechaInicioStr - $fechaFinStr'),
+                                GestureDetector(
+                                  onTap: () {
+                                    fechaInicio = null;
+                                    fechaFin = null;
+                              
+                                    fechaInicioStr = null;
+                                    fechaFinStr = null;
+                              
+                                    setState(() {
+                                      
+                                    });
+                            
+                                  },
+                                  child: Icon(Icons.delete))
                               ],
                             ),
                           ),
-                        ),
-                              
-                      ],
+                  
+                          if(fechaInicioStr != null)
+                          SizedBox(
+                            height: size.height * 0.025,
+                          ),
+                  
+                          /*
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              controller: searchTxt,
+                              decoration: InputDecoration(
+                                hintText: locGen!.searchLbl,
+                                prefixIcon: const Icon(Icons.search),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {                                      
+                                      searchQuery = '';
+                                      searchTxt.text = searchQuery;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.close, color: Colors.black,),
+                                )
+                              ),
+                              onEditingComplete: () {
+                                FocusScope.of(context).unfocus();
+                      
+                                setState(() {
+                                  searchQuery = searchTxt.text;
+                                });
+                              },
+                            ),
+                          ),
+                          */
+                      
+                          Expanded(
+                            child: LiquidPullToRefresh(
+                              onRefresh: refreshReceipts,
+                              color: Colors.blue[300],
+                              child: ListView(
+                                physics: const BouncingScrollPhysics(),
+                                children: <Widget>[
+                                  const SizedBox( height: 3, ),
+                                  ...itemMap,
+                                  const SizedBox( height: 3, ),
+                                ],
+                              ),
+                            ),
+                          ),
+                                
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -434,7 +447,7 @@ Future<String> getReceipts() async {
   }
 }
 
- List<ItemBoton> getFilteredReceiptsByDateRange({required DateTime startDate, required DateTime endDate,}) {
+List<ItemBoton> getFilteredReceiptsByDateRange({required DateTime startDate, required DateTime endDate,}) {
   List<Payment>? rsp = lstGenericaRecibos;
 
   final items = <ItemBoton>[];
@@ -477,7 +490,6 @@ Future<String> getReceipts() async {
 
   return items;
 }
-
 
 String serializeItemBotonMenuList(List<ItemBoton> items) {    
   final serializedList = items.map((item) => serializeItemBotonMenu(item)).toList();

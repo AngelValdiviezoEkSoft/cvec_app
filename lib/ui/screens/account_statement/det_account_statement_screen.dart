@@ -99,6 +99,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
     return FileImage(file);
   }
 
+/*
   static Widget _paymentItem(PaymentLineData item, double total, Size size) {
     return 
         Row(
@@ -126,6 +127,35 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
           ],
         );      
   }
+*/
+
+  static Widget _paymentItem(PaymentLineData item, double total, Size size) {
+  return Row(
+    // mainAxisAlignment.spaceBetween empuja los widgets a los extremos
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      // Usamos un Expanded para que el texto ocupe el espacio disponible
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(item.paymentSequence, style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 2),
+            Text(
+              DateFormat('dd/MM/yyyy').format(DateTime.parse(item.paymentDate)),
+              style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+      // El precio se alinea al final de la fila
+      Text(
+        '\$${item.paymentAmount.toStringAsFixed(2)}',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+      ),
+    ],
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +197,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                           padding: EdgeInsets.all(8.0),
                           child: Icon(Icons.arrow_back_ios)
                         ),
-                      ),          
+                      ),
                     ),
                     body: LoadingOverlay(
                       null,
@@ -268,66 +298,68 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                 const SizedBox(height: 8),
                           
                                                 Text(
-                                                  "Saldo: \$${item.quotaResidualAmount.toStringAsFixed(2)}",
+                                                  "${locGen!.balanceLbl}: \$${item.quotaResidualAmount.toStringAsFixed(2)}",
                                                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                                 ),
                           
                                                 const Divider(height: 30),
                           
                                                 lstPaymentLineData.isNotEmpty && lstPaymentLineData.first.contractName != 'VACIO'
-                                                    ? Container(
-                                                        color: Colors.transparent,
-                                                        height: size.height * 0.2,
-                                                        child: LiquidPullToRefresh(
-                                                          onRefresh: () => refreshDetAccountStatements(item.quotaId),
-                                                          color: Colors.blue[300],
-                                                          child: SingleChildScrollView(
-                                                            physics: const ScrollPhysics(),
-                                                            child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Column(
-                                                                  children: lstPaymentLineData
-                                                                      .map((p) => Padding(
-                                                                            padding: const EdgeInsets.only(bottom: 2),
-                                                                            child: _paymentItem(p, item.quotaPaidAmount, size),
-                                                                          ))
-                                                                      .toList(),
-                                                                ),
-                                                                const SizedBox(height: 10),
-                                                                // Total alineado a la derecha
-                                                                Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Text(
-                                                                      'Total:',
-                                                                      style: const TextStyle(fontSize: 16),
+                                                    ? 
+                                                    Container(
+                                                      color: Colors.transparent,
+                                                      height: size.height * 0.2,
+                                                      child: LiquidPullToRefresh(
+                                                        onRefresh: () => refreshDetAccountStatements(item.quotaId),
+                                                        color: Colors.blue[300],
+                                                        child: SingleChildScrollView(
+                                                          physics: const ScrollPhysics(),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Column(
+                                                                children: lstPaymentLineData
+                                                                    .map((p) => Padding(
+                                                                          padding: const EdgeInsets.only(bottom: 2),
+                                                                          child: _paymentItem(p, item.quotaPaidAmount, size),
+                                                                        ))
+                                                                    .toList(),
+                                                              ),
+                                                              const SizedBox(height: 10),
+                                                              // Total alineado a la derecha
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    'Total:',
+                                                                    style: const TextStyle(fontSize: 16),
+                                                                  ),
+                                                                  Text(
+                                                                    '\$${item.quotaPaidAmount.toStringAsFixed(2)}',
+                                                                    textAlign: TextAlign.right,
+                                                                    style: const TextStyle(
+                                                                      fontSize: 16,
+                                                                      fontWeight: FontWeight.bold,
                                                                     ),
-                                                                    Text(
-                                                                      '\$${item.quotaPaidAmount.toStringAsFixed(2)}',
-                                                                      textAlign: TextAlign.right,
-                                                                      style: const TextStyle(
-                                                                        fontSize: 16,
-                                                                        fontWeight: FontWeight.bold,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      )
-                                                    : Container(
-                                                        color: Colors.transparent,
-                                                        width: size.width,
-                                                        height: size.height * 0.4,
-                                                        alignment: Alignment.center,
-                                                        child: Text(
-                                                          locGen!.noDataLbl,
-                                                          style: const TextStyle(fontSize: 30),
-                                                        ),
                                                       ),
+                                                    )
+                                                    : 
+                                                    Container(
+                                                      color: Colors.transparent,
+                                                      width: size.width,
+                                                      height: size.height * 0.4,
+                                                      alignment: Alignment.center,
+                                                      child: Text(
+                                                        locGen!.noDataLbl,
+                                                        style: const TextStyle(fontSize: 30),
+                                                      ),
+                                                    ),
                           
                                                 const Divider(height: 30),
                                                 const SizedBox(height: 10),
@@ -342,8 +374,8 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                       });
                           
                                                     },
-                                                    child: const Text(
-                                                      "Close",
+                                                    child: Text(
+                                                      locGen!.closeLbl,
                                                       style: TextStyle(
                                                         color: Colors.blue,
                                                         fontSize: 16,

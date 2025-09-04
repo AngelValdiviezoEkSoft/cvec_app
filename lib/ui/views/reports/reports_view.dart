@@ -9,8 +9,10 @@ import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 
 const storage = FlutterSecureStorage();
 
@@ -172,13 +174,33 @@ class PdfView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    /*
+    @override
+    void dispose(){
+
+      final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+      gnrBloc.setCargando(false);
+
+      super.dispose();
+    }
+    */
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
             title: Text(tipoCertificado ?? '', style: const TextStyle(color: Colors.black),),
+            leading: GestureDetector(
+              onTap: () {
+                final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+                gnrBloc.setCargando(false);
+                context.pop();
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(Icons.arrow_back_ios)
+              ),
+            ),
           ),
           body: state.viewAccountStatement ?
           FutureBuilder(
