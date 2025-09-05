@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:provider/provider.dart';
 //import 'package:provider/provider.dart';
 
 String searchQueryRsv = '';
@@ -27,15 +28,21 @@ class ReservationsView extends StatefulWidget {
 
 class ReservationsViewSt extends State<ReservationsView> {
 
+  Map<String, List<ItemBoton>> groupedTransactions = {};
+  List<ItemBoton> filteredTransactions = [];
+
   @override
   void initState() {
     super.initState();
     searchRsvtTxt = TextEditingController();
     lstMenuFiltrado = [];
+    filteredTransactions = [];
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
 
     final size = MediaQuery.of(context).size;
 
@@ -58,6 +65,8 @@ class ReservationsViewSt extends State<ReservationsView> {
             else
             {  
               if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+                gnrBloc.setCargando(false);
+
                 String rspTmp = snapshot.data as String;
                 lstMenuFiltrado = [];
                 
@@ -121,117 +130,122 @@ class ReservationsViewSt extends State<ReservationsView> {
                   )
                 ).toList();
 
-                return Container(
-                width: size.width,
-                height: size.height * 0.82,
-                color: Colors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                                    
-                      Container(
-                        color: Colors.transparent,
-                        width: size.width * 0.94,
-                        height: size.height * 0.08,
-                        child: Row(
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: size.width * 0.65,
-                              height: size.height * 0.06,
-                              color: Colors.transparent,
-                              alignment: Alignment.center,
-                              child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
-                            ),
-                        
-                            Container(
-                              width: size.width * 0.25,
-                              height: size.height * 0.06,
-                              color: Colors.transparent,
-                              //alignment: Alignment.center,
-                              child: GestureDetector(
-                                onTap: () {
-                                  context.push(RoutersApp().routReservationView);
-                                },
-                                child: Container(
-                                  width: size.width * 0.04,
-                                  height: size.height * 0.03,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.green, // Color de fondo
-                                    shape: BoxShape.circle, // Forma circular
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 4,
-                                        offset: Offset(2, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: const Icon(Icons.picture_as_pdf, color: Colors.white), // Ícono dentro del botón
-                                ),
+                return LoadingOverlay(
+                  null,
+                  isLoading: state.cargando,
+                  child: Container(
+                  width: size.width,
+                  height: size.height * 0.82,
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                                      
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width * 0.94,
+                          height: size.height * 0.08,
+                          child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                width: size.width * 0.65,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
+                                child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
                               ),
-                        
-                            ),
-                                  
-                          ],
-                        ),
-                      ),
+                          
+                              Container(
+                                width: size.width * 0.25,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                //alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    gnrBloc.setCargando(true);                                    
+                                    context.push(RoutersApp().routReservationView);
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.04,
+                                    height: size.height * 0.03,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.green, // Color de fondo
+                                      shape: BoxShape.circle, // Forma circular
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black26,
+                                          blurRadius: 4,
+                                          offset: Offset(2, 2),
+                                        ),
+                                      ],
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Icon(Icons.picture_as_pdf, color: Colors.white), // Ícono dentro del botón
+                                  ),
+                                ),
+                          
+                              ),
                                     
-                                    
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: searchRsvtTxt,
-                          decoration: InputDecoration(
-                            hintText: locGen!.searchLbl,
-                            prefixIcon: const Icon(Icons.search),
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {                                      
-                                  searchQueryRsv = '';
-                                  searchRsvtTxt.text = searchQueryRsv;
-                                });
-                              },
-                              icon: const Icon(Icons.close, color: Colors.black,),
-                            )
-                          ),
-                          onEditingComplete: () {
-                            FocusScope.of(context).unfocus();
-                                    
-                            setState(() {
-                              searchQueryRsv = searchRsvtTxt.text;
-                            });
-                          },
-                        ),
-                      ),    
-                      
-                      SizedBox(height: size.height * 0.009,),
-
-                      Expanded(
-                        child: LiquidPullToRefresh(
-                          onRefresh: refreshReservations,
-                          color: Colors.blue[300],
-                          child: ListView(
-                            physics: const BouncingScrollPhysics(),
-                            children: <Widget>[
-                              const SizedBox( height: 3, ),
-                              ...itemMap,
-                              const SizedBox( height: 3, ),
                             ],
                           ),
                         ),
-                      ),
-                                
-                      //SizedBox(height: size.height * 0.07),
-                    
-                    ],
+                                      
+                                      
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextField(
+                            controller: searchRsvtTxt,
+                            decoration: InputDecoration(
+                              hintText: locGen!.searchLbl,
+                              prefixIcon: const Icon(Icons.search),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {                                      
+                                    searchQueryRsv = '';
+                                    searchRsvtTxt.text = searchQueryRsv;
+                                  });
+                                },
+                                icon: const Icon(Icons.close, color: Colors.black,),
+                              )
+                            ),
+                            onEditingComplete: () {
+                              FocusScope.of(context).unfocus();
+                                      
+                              setState(() {
+                                searchQueryRsv = searchRsvtTxt.text;
+                              });
+                            },
+                          ),
+                        ),    
+                        
+                        SizedBox(height: size.height * 0.009,),
+                  
+                        Expanded(
+                          child: LiquidPullToRefresh(
+                            onRefresh: refreshReservations,
+                            color: Colors.blue[300],
+                            child: ListView(
+                              physics: const BouncingScrollPhysics(),
+                              children: <Widget>[
+                                const SizedBox( height: 3, ),
+                                ...itemMap,
+                                const SizedBox( height: 3, ),
+                              ],
+                            ),
+                          ),
+                        ),
+                                  
+                        //SizedBox(height: size.height * 0.07),
+                      
+                      ],
+                    ),
                   ),
-                ),
-              );
+                                ),
+                );
             
               }
               
@@ -301,7 +315,7 @@ Future<String> getReservations() async {
           items.add(
             ItemBoton('','','',rsp[i].bookingId, 
             Icons.group_add, 
-            'Reserva #: ${rsp[i].bookingName}',
+            '${locGen!.bookingLbl} #: ${rsp[i].bookingName}',
             '${locGen!.hotelLbl}: ${rsp[i].bookingHotelName}',
             '${locGen!.checkInLbl}: $fechaCheckIn',
             '${locGen!.checkOutLbl}: $fechaCheckOut',

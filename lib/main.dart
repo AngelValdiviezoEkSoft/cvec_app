@@ -28,7 +28,8 @@ void main() async {
         np.ChangeNotifierProvider(create: (_) => ThemeProvider()),
         BlocProvider(create: (context) => getIt<AuthBloc>()..add(AppStarted())),
         BlocProvider(create: (context) => getIt<GenericBloc>()),
-        BlocProvider(create: (context) => getIt<LanguageBloc>()),        
+        BlocProvider(create: (context) => getIt<LanguageBloc>()),
+        BlocProvider(create: (context) => getIt<ReceiptBloc>()),
       ],
       child: ProviderScope(
         child: SecureApplication(

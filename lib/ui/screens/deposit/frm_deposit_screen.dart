@@ -520,9 +520,9 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         },
                         onTapOutside: (event) => FocusScope.of(context).unfocus(),
                       ),
-                      
+
                       SizedBox(
-                        height: size.height * 0.025,
+                        height: size.height * 0.15//0.025,
                       ),
                       
                       Container(
@@ -793,6 +793,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         ),
                       ),
             
+            /*
                       SizedBox(
                         height: size.height * 0.025,
                       ),
@@ -828,6 +829,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           ),
                         ),
                       ),
+                    */
                     ],
                   ),
                 ),

@@ -1,7 +1,9 @@
 
+//import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/material.dart';
+//import 'package:provider/provider.dart';
 
 String numeroIdentificacionNotificaciones = '';
 BuildContext? contextWidget;
@@ -163,6 +165,8 @@ class ListaNotificaciones extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    //final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+    
     contextWidget = context;
 
     numeroIdentificacionNotificaciones = varNumIdentifLst!;
@@ -170,149 +174,149 @@ class ListaNotificaciones extends StatelessWidget {
     final sizeLstNot = MediaQuery.of(context).size;
     initializeDateFormatting('es'); 
     
-  return Container(
-    color: Colors.transparent,
-    width: sizeLstNot.width,
-    //height: sizeLstNot.height * 0.2,
-    child: GestureDetector(
-          onTap: () async {
-            if(onPress2 != null){
-              //onPress2!();
-            }
-            else{
-              const storage = FlutterSecureStorage();
-              await storage.write(key: 'IdReservaciones', value: '');
-              await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");              
-            }            
-          },
-          child: Column(
-            children: [
-              Container(
-                width: sizeLstNot.width,
-                height: sizeLstNot.height * 0.16,
-                //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
-                margin: const EdgeInsets.all(3), 
-                decoration: BoxDecoration(
-                  //color: Colors.red,
-                  boxShadow: <BoxShadow>[
-                    BoxShadow( color: Colors.black.withOpacity(0.2), offset: const Offset(4,6), blurRadius: 10 ),
-                  ],
-                  borderRadius: BorderRadius.circular(8),
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      color1,
-                      color2,
-                    ]
-                  )
-                
-                ),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                  dense: true,
-                  minVerticalPadding: 15,
-                  title:  Container( 
-                    width: sizeLstNot.width * 0.98,//65,
-                    height: sizeLstNot.height * 0.16,
-                    //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
-                    alignment: Alignment.center, 
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        
-                        Container(
-                          width: sizeLstNot.width * 0.85,
-                          height: sizeLstNot.height * 0.2,
-                          color: Colors.transparent,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            children: [
-                              Container(
-                                color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.85, 
-                                height: sizeLstNot.height * 0.03,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      texto!, 
-                                      style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20 ), maxLines: 1,
-                                    ),
-                                    /*
-                                    Text(
-                                      varIconoNot!, 
-                                      style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16 ), maxLines: 1,
-                                    ),
-                                    */
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFFE3F0FF),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Text(varIconoNot!,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
-                                    ),
-                                  ],
-                                )
-                              ),
+    return Container(
+      color: Colors.transparent,
+      width: sizeLstNot.width,
+      //height: sizeLstNot.height * 0.2,
+      child: GestureDetector(
+        onTap: () async {
+          //gnrBloc.setCargando(true);
 
-                              Container(
-                                color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.85, 
-                                height: sizeLstNot.height * 0.04,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      color: Colors.transparent, 
-                                      width: sizeLstNot.width * 0.4, 
-                                      height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                      child: Text( texto3 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+          if(onPress2 != null){
+            onPress2!();
+          }
+          else{
+            const storage = FlutterSecureStorage();
+            await storage.write(key: 'IdReservaciones', value: '');
+            await storage.write(key: 'IdReservaciones', value: "$varIdNotificacionLst");              
+          }            
+        },
+        child: Column(
+          children: [
+            Container(
+              width: sizeLstNot.width,
+              height: sizeLstNot.height * 0.16,
+              //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.13 : sizeLstNot.height * 0.3,
+              margin: const EdgeInsets.all(3), 
+              decoration: BoxDecoration(
+                //color: Colors.red,
+                boxShadow: <BoxShadow>[
+                  BoxShadow( color: Colors.black.withOpacity(0.2), offset: const Offset(4,6), blurRadius: 10 ),
+                ],
+                borderRadius: BorderRadius.circular(8),
+                gradient: LinearGradient(
+                  colors: <Color>[
+                    color1,
+                    color2,
+                  ]
+                )
+              
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                dense: true,
+                minVerticalPadding: 15,
+                title:  Container( 
+                  width: sizeLstNot.width * 0.98,//65,
+                  height: sizeLstNot.height * 0.16,
+                  //height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.11 : sizeLstNot.height * 0.3,
+                  alignment: Alignment.center, 
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      
+                      Container(
+                        width: sizeLstNot.width * 0.85,
+                        height: sizeLstNot.height * 0.2,
+                        color: Colors.transparent,
+                        alignment: Alignment.centerLeft,
+                        child: Column(
+                          children: [
+                            Container(
+                              color: Colors.transparent, 
+                              width: sizeLstNot.width * 0.85, 
+                              height: sizeLstNot.height * 0.03,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    texto!, 
+                                    style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20 ), maxLines: 1,
+                                  ),
+                                  /*
+                                  Text(
+                                    varIconoNot!, 
+                                    style: const TextStyle( color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16 ), maxLines: 1,
+                                  ),
+                                  */
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFE3F0FF),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
+                                    child: Text(varIconoNot!,style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black)),
+                                  ),
+                                ],
+                              )
+                            ),
 
-                                    Container(
-                                      color: Colors.transparent, 
-                                      width: sizeLstNot.width * 0.4, 
-                                      height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                      child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            Container(
+                              color: Colors.transparent, 
+                              width: sizeLstNot.width * 0.85, 
+                              height: sizeLstNot.height * 0.04,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    color: Colors.transparent, 
+                                    width: sizeLstNot.width * 0.4, 
+                                    height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                    child: Text( texto3 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+                                  ),
 
-                              //if(texto2 != null && texto2!.isNotEmpty)
-                              Container(
-                                color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.85, 
-                                height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                child: Text( texto2!, style: const TextStyle( color: Colors.black,  fontSize: 14 ),maxLines: 1,
-                                )
+                                  Container(
+                                    color: Colors.transparent, 
+                                    width: sizeLstNot.width * 0.4, 
+                                    height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                                    child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+                                  ),
+                                ],
                               ),
-                              
-                              Container(
-                                color: Colors.transparent, 
-                                width: sizeLstNot.width * 0.85, 
-                                height: sizeLstNot.height * 0.04,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                child: Text( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), maxLines: 1, overflow: TextOverflow.ellipsis)
-                              ),
-                            ],
-                          ),
+                            ),
+
+                            //if(texto2 != null && texto2!.isNotEmpty)
+                            Container(
+                              color: Colors.transparent, 
+                              width: sizeLstNot.width * 0.85, 
+                              height: varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                              child: Text( texto2!, style: const TextStyle( color: Colors.black,  fontSize: 14 ),maxLines: 1,
+                              )
+                            ),
+                            
+                            Container(
+                              color: Colors.transparent, 
+                              width: sizeLstNot.width * 0.85, 
+                              height: sizeLstNot.height * 0.04,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
+                              child: Text( varNumIdentifLst ?? '', style: const TextStyle( color: Colors.black,   ), maxLines: 1, overflow: TextOverflow.ellipsis)
+                            ),
+                          ],
                         ),
-          
-                      ],
-                    ),                
-                  ),
+                      ),
+        
+                    ],
+                  ),                
                 ),
               ),
-                  
-            ],
-          ),
-        )
-      
-    
-  ); 
+            ),
+                
+          ],
+        ),
+      )
+    );
 
   }
 }

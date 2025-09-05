@@ -509,4 +509,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get samePasswordLbl => 'The new password must not be the same as the previous one.';
+
+  @override
+  String get bookingLbl => 'Booking';
 }

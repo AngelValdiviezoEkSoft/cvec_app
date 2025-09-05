@@ -1,3 +1,5 @@
+export 'package:cve_app/ui/bloc/bloc/receipt_bloc.dart';
+
 export 'package:cve_app/ui/bloc/lenguage/language_bloc.dart';
 
 export 'package:cve_app/ui/bloc/generic/generic_bloc.dart';

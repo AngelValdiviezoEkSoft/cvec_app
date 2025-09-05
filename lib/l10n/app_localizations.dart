@@ -1090,6 +1090,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The new password must not be the same as the previous one.'**
   String get samePasswordLbl;
+
+  /// No description provided for @bookingLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking'**
+  String get bookingLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -681,5 +681,9 @@
   "samePasswordLbl": "La contraseña nueva no debe ser la misma que la anterior",
   "@samePasswordLbl": {
     "description": "La contraseña nueva no debe ser la misma que la anterior"
+  },
+  "bookingLbl": "Reserva",
+  "@bookingLbl": {
+    "description": "Reserva"
   }
 }
