@@ -226,11 +226,13 @@ class MenuLateralWidget extends StatelessWidget {
                           gnrBloc.setShowViewWebSite(false);
                           gnrBloc.setShowViewFrmDeposit(false);
 
-                          Navigator.of(context).pop();
-
                           await AuthService().logOut();
                           // ignore: use_build_context_synchronously
                           context.push(objRutas.rutaAuth);
+
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context).pop();
+
                         },
                         child: Text(
                           locGen!.confirmOnlyLbl,
