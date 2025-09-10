@@ -37,99 +37,103 @@ class _PrintReceiptViewState extends State<PrintReceiptView> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BlocBuilder<ReceiptBloc, ReceiptState>(
-      builder: (context, state) {
-        if (state is ReceiptsLoading) {
-          return Scaffold(
-            body: Center(
-              child: Image.asset(
-                AppConfig().rutaGifCarga,
-                height: size.width * 0.85,
-                width: size.width * 0.85,
-              ),
-            ),
-          );
-        }
-
-        if (state is ReceiptsError) {
-          return Scaffold(
-            body: Center(
-              child: Text(state.message),
-            ),
-          );
-        }
-
-        if (state is ReceiptsLoaded) {
-          return LoadingOverlay(
-            null,
-            isLoading: false,
-            child: Container(
-              width: size.width,
-              height: size.height * 0.92,
-              color: Colors.transparent,
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    Text(
-                      locGen!.receiptsLbl,
-                      style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    _buildSearchBar(context, size),
-                    _buildDateRangeDisplay(),
-                    SizedBox(height: size.height * 0.02),
-                    Container(
-                      color: Colors.transparent,
-                      width: size.width,
-                      height: state.receipts.length > 8 ? size.height * 0.72 : size.height * 0.5,
-                      child: LiquidPullToRefresh(
-                        onRefresh: _onRefresh,
-                        color: Colors.blue[300],
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: state.receipts.length,
-                          itemBuilder: (context, index) {
-                            final item = state.receipts[index];
-
-                            return FadeInLeft(
-                              duration: const Duration(milliseconds: 250),
-                              child: ItemsListaRecibosWidget(
-                                null,
-                                varIdPosicionMostrar: 0,
-                                varEsRelevante: item.esRelevante,
-                                varIdNotificacion: item.ordenNot,
-                                varNumIdenti: item.fechaNotificacion,
-                                icon: item.icon,
-                                texto: item.mensajeNotificacion,
-                                texto2: item.mensaje2,
-                                color1: item.color1,
-                                color2: item.color2,
-                                onPress: () {},
-                                varMuestraNotificacionesTrAp: 0,
-                                varMuestraNotificacionesTrProc: 0,
-                                varMuestraNotificacionesTrComp: 0,
-                                varMuestraNotificacionesTrInfo: 0,
-                                varIconoNot: item.iconoNotificacion,
-                                varIconoNotTrans: item.rutaImagen,
-                                permiteGestion: permiteGestion,
-                                rutaNavegacion: item.rutaNavegacion,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
+    return BlocBuilder<GenericBloc, GenericState>(
+      builder: (context, stateGeneric) {
+        return BlocBuilder<ReceiptBloc, ReceiptState>(
+          builder: (context, state) {
+            if (state is ReceiptsLoading) {
+              return Scaffold(
+                body: Center(
+                  child: Image.asset(
+                    AppConfig().rutaGifCarga,
+                    height: size.width * 0.85,
+                    width: size.width * 0.85,
+                  ),
                 ),
-              ),
-            ),
-          );
-        }
-
-        return Container();
-      },
+              );
+            }
+        
+            if (state is ReceiptsError) {
+              return Scaffold(
+                body: Center(
+                  child: Text(state.message),
+                ),
+              );
+            }
+        
+            if (state is ReceiptsLoaded) {
+              return LoadingOverlay(
+                null,
+                isLoading: stateGeneric.cargando,
+                child: Container(
+                  width: size.width,
+                  height: size.height * 0.92,
+                  color: Colors.transparent,
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          locGen!.receiptsLbl,
+                          style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        _buildSearchBar(context, size),
+                        _buildDateRangeDisplay(),
+                        SizedBox(height: size.height * 0.02),
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width,
+                          height: state.receipts.length > 8 ? size.height * 0.72 : size.height * 0.5,
+                          child: LiquidPullToRefresh(
+                            onRefresh: _onRefresh,
+                            color: Colors.blue[300],
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: state.receipts.length,
+                              itemBuilder: (context, index) {
+                                final item = state.receipts[index];
+        
+                                return FadeInLeft(
+                                  duration: const Duration(milliseconds: 250),
+                                  child: ItemsListaRecibosWidget(
+                                    null,
+                                    varIdPosicionMostrar: 0,
+                                    varEsRelevante: item.esRelevante,
+                                    varIdNotificacion: item.ordenNot,
+                                    varNumIdenti: item.fechaNotificacion,
+                                    icon: item.icon,
+                                    texto: item.mensajeNotificacion,
+                                    texto2: item.mensaje2,
+                                    color1: item.color1,
+                                    color2: item.color2,
+                                    onPress: () {},
+                                    varMuestraNotificacionesTrAp: 0,
+                                    varMuestraNotificacionesTrProc: 0,
+                                    varMuestraNotificacionesTrComp: 0,
+                                    varMuestraNotificacionesTrInfo: 0,
+                                    varIconoNot: item.iconoNotificacion,
+                                    varIconoNotTrans: item.rutaImagen,
+                                    permiteGestion: permiteGestion,
+                                    rutaNavegacion: item.rutaNavegacion,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }
+        
+            return Container();
+          },
+        );
+      }
     );
   }
 
