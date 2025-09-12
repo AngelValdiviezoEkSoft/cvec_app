@@ -57,7 +57,7 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
 
   //Size? size;// = MediaQuery.of(contextPrincipalGen!).size!;
 
-  static const platform = MethodChannel('call_channel');
+  static const platformPhone = MethodChannel('call_channel');
 
   static const platformEmail = MethodChannel('email_channel');
 
@@ -68,22 +68,22 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
 
   void makePhoneCall() async {
     
-    if(Platform.isAndroid){
-      try {
-        await platform.invokeMethod('makePhoneCall', {'phone': "+593979856428"});
-      } on PlatformException catch (_) {
-        //print("Error al hacer la llamada: ${e.message}");
-      }
+    try {
+      await platformPhone.invokeMethod('makePhoneCall', {'phone': "+593979856428"});
+    } on PlatformException catch (_) {
+      //print("Error al abrir la app de llamada: ${e.message}");
     }
-    
+        
   }
 
-  void openEmailApp(email) async {    
+  void openEmailApp(String email) async {   
+
     try {
       await platformEmail.invokeMethod('openEmailApp', {'email': email});
     } on PlatformException catch (_) {
       //print("Error al abrir la app de correos: ${e.message}");
     }
+    
   }
 
   @override
