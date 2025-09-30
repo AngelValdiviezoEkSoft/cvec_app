@@ -684,7 +684,7 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                 DepositRequestModel objRqt = DepositRequestModel(
                                                   amount: double.parse(amountController.text),
                                                   customerNotes: observationsController.text,
-                                                  date: DateTime.parse(fechaHoraEscogidaMuestra),
+                                                  date: DateTime.now(),
                                                   idAccountBank: idBank,
                                                   name: concController.text,
                                                   receiptNumber: compController.text,

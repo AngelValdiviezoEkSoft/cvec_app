@@ -15,11 +15,11 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-
     <application
         android:label="Centro de Viajes"
         android:name="${applicationName}"
-        android:icon="@mipmap/logo_app">
+        android:icon="@mipmap/logo_app"
+        android:enableOnBackInvokedCallback="true">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyBNRevgaESKXBVcIFnEPVBQcTc1i_yqE6k"/>

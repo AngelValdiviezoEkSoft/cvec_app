@@ -1,3 +1,4 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/infraestructure/services/services.dart';
 import 'package:cve_app/config/config.dart';
@@ -8,8 +9,29 @@ import 'package:provider/provider.dart';
 
 //String direccionUser = '';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  //const _ProfileScreenState({super.key});
+
+  late Future<String> _futurePerfil;
+
+  @override
+  void initState() {
+    super.initState();
+    _futurePerfil = AuthServices().getDatosPerfil();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       body: FutureBuilder(
-        future: AuthServices().getDatosPerfil(),
+        future: _futurePerfil ,//AuthServices().getDatosPerfil(),
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
 
           return SingleChildScrollView(
@@ -99,12 +121,14 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
+          
           GestureDetector(
             onTap: () {
               context.push(objRutas.rutaFrmProfileScrn);
             },
-            child: const Icon(Icons.edit, color: Colors.white)
+            child: const Icon(Icons.visibility, color: Colors.white)
           ),
+          
         ],
       ),
     );

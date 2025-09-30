@@ -136,10 +136,8 @@ class AuthServices extends ChangeNotifier {
 
   Future<String> getDatosPerfil() async {    
     final rspLogin = await storage.read(key: 'DataUser') ?? '';
-    //final jsonLog = json.decode(rspLogin);
-
-    return rspLogin;//jsonEncode(objFiltrado);
-    //return "TST";//jsonEncode(objFiltrado);
+    
+    return rspLogin;
   }
 
   

@@ -512,4 +512,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bookingLbl => 'Reserva';
+
+  @override
+  String get sendingDateLbl => 'Fecha de envío';
 }

@@ -685,5 +685,9 @@
   "bookingLbl": "Reserva",
   "@bookingLbl": {
     "description": "Reserva"
+  },
+  "sendingDateLbl": "Fecha de envío",
+  "@sendingDateLbl": {
+    "description": "Fecha de envío"
   }
 }

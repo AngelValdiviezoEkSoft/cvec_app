@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cve_app/config/config.dart';
 import 'package:cve_app/infraestructure/infraestructure.dart';
@@ -35,12 +35,61 @@ class FrmProfileScreen extends StatelessWidget {
           },
         ),
         actions: [
+          /*
           IconButton(
             icon: const Icon(Icons.edit, color: Colors.white,),
             onPressed: () {
               context.push(objRutas.rutaFrmProfileEditScrn);
             },
           ),
+          */
+          IconButton(
+            icon: const Icon(Icons.lightbulb_circle, color: Colors.white,),
+            onPressed: () {
+              showDialog(
+                //ignore:use_build_context_synchronously
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Container(
+                      color: Colors.transparent,
+                      height: size.height * 0.2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          
+                          Container(
+                            color: Colors.transparent,
+                            width: size.width * 0.95,
+                            height: size.height * 0.19,
+                            alignment: Alignment.center,
+                            child: Center(
+                              child: AutoSizeText(
+                                "Si desea actualizar sus datos, envíenos un correo al balcon@centrodeviajesecuador.com solicitando esta acción y los datos que desea actualizar.",
+                                maxLines: 7,
+                                minFontSize: 12,
+                              ),
+                            ),
+                          )
+
+                        ],
+                      )
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {                                                            
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(locGen!.aceptLbl, style: TextStyle(color: Colors.blue[200]),),
+                      ),
+                    ],
+                  );
+                },
+              );
+                  
+            },
+          ),
+        
         ],
       ),
       body: FutureBuilder(

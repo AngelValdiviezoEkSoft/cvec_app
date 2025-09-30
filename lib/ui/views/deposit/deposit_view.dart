@@ -166,10 +166,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabTodas && lstMenu.length <= lstReceipts.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          '','${locGen!.amountLbl}: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          'Concepto: ${lstReceipts[i].receiptConcept}',
-                          'Fecha de envío: $fechaFormateada','','','','',
+                          '${locGen!.conceptLbl}: ${lstReceipts[i].receiptConcept}',
+                          '${locGen!.sendingDateLbl}: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -183,10 +183,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabProgreso && statusDeposit.toLowerCase() == locGen!.pendingReviewLbl.toLowerCase() && lstMenu.length < lstPendientes.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          '','${locGen!.amountLbl}: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          'Concepto: ${lstReceipts[i].receiptConcept}',
-                          'Fecha de envío: $fechaFormateada','','','','',
+                          '${locGen!.conceptLbl}: ${lstReceipts[i].receiptConcept}',
+                          '${locGen!.sendingDateLbl}: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -200,10 +200,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabAprobadas && lstReceipts[i].receiptState.toLowerCase() == 'approved' && lstMenu.length < lstAprobadas.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          '','${locGen!.amountLbl}: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          'Concepto: ${lstReceipts[i].receiptConcept}',
-                          'Fecha de envío: $fechaFormateada','','','','',
+                          '${locGen!.conceptLbl}: ${lstReceipts[i].receiptConcept}',
+                          '${locGen!.sendingDateLbl}: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){
@@ -217,10 +217,10 @@ class DepositViewSt extends State<DepositView> {
                     if(tabRechazadas && lstReceipts[i].receiptState.toLowerCase() == 'rejected' && lstMenu.length < lstRechazadas.length){
                       lstMenu.add(
                         ItemBoton(
-                          '','Monto: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
+                          '','${locGen!.amountLbl}: \$${lstReceipts[i].receiptAmount.toStringAsFixed(2)}',statusDeposit,
                           i,Icons.person,
-                          'Concepto: ${lstReceipts[i].receiptConcept}',
-                          'Fecha de envío: $fechaFormateada','','','','',
+                          '${locGen!.conceptLbl}: ${lstReceipts[i].receiptConcept}',
+                          '${locGen!.sendingDateLbl}: $fechaFormateada','','','','',
                           Colors.white,colorStatus,false,false,'','','','','',
                           objRutas.rutaDetalleDepositFrmScrn,
                           (){

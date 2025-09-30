@@ -34,6 +34,10 @@ class _ManualSplashScreenState extends State<ManualSplashScreen> {
     });
     
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

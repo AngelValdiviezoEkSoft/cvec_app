@@ -6,7 +6,6 @@ import 'package:cve_app/config/config.dart';
 import 'package:cve_app/domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:intl/intl.dart';
 
 class DepositService extends ChangeNotifier{
 
@@ -56,54 +55,32 @@ class DepositService extends ChangeNotifier{
     if(internet.isEmpty){      
       try{
 
-/*
-        var resp = await storage.read(key: 'RespuestaLogin') ?? '';
-
-        final data = json.decode(resp);
-
-        int compId = data["result"]["company_id"] ?? 0;
-        //int partnerId = data["result"]["partner_id"] ?? 0;
-
-        final url = Uri.parse('${EnvironmentsProd().apiEndpoint}post/create');
-
-        final headers = {
-          'Content-Type': EnvironmentsProd().contentType,
-        };
-
-        final body = {
-          "jsonrpc": "2.0",
-          "params": {
-            "company_id": compId,
-            "query_type": "customer_receipt_records_create",
-            "data_list": [
-              {
-                "receipt_concept": objDeposit.name,
-                "date": DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date),
-                "amount": objDeposit.amount,
-                "receipt_number": objDeposit.receiptNumber,
-                "user_id": objDeposit.idUser,
-                "receipt_file": objDeposit.receiptFile,
-                "customer_notes": objDeposit.customerNotes
-              }
-            ]
-          }
-        };
-
-        final response = await http.post(
-          url,
-          headers: headers,
-          body: jsonEncode(body),
-        );
-
-        var rspValidacion = json.decode(response.body);
-        */
-
         //var fechaConv = DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date);
+/*
+        DateTime ahora = DateTime.now();
+
+        int horas = ahora.hour;
+        int minutos = ahora.minute;
+        int segundos = ahora.second;
+
+        String mesFinal = ahora.month < 10 ? '0${ahora.month}' : '${ahora.month}';
+        String diaFinal = ahora.day < 10 ? '0${ahora.day}' : '${ahora.day}';
+
+        String fechaFinal = '${ahora.year}-$mesFinal-$diaFinal';
+
+        String horasStr = horas < 10 ? '0$horas' : '$horas';
+        String minStr = minutos < 10 ? '0$minutos' : '$minutos';
+        String segStr = segundos < 10 ? '0$segundos' : '$segundos';
+
+        //String fechaHoraEnviar = DateFormat('yyyy-MM-dd').format(DateTime.now());
+        //DateTime fechaHoraEnviarDateTime = DateTime.parse(fechaHoraEnviar);
+        String fechaEnvio = '$fechaFinal $horasStr:$minStr:$segStr';
+        */
 
         final List<Map<String, dynamic>> dataList = [
           {
             "receipt_concept": objDeposit.name,
-            "date": DateFormat('yyyy-MM-dd', 'es').format(objDeposit.date),
+            //"date": fechaEnvio,//DateFormat('yyyy-MM-dd HH:mm:ss', 'es').format(objDeposit.date),
             "amount": objDeposit.amount,
             "receipt_number": objDeposit.receiptNumber,
             "user_id": objDeposit.idUser,

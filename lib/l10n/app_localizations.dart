@@ -1096,6 +1096,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booking'**
   String get bookingLbl;
+
+  /// No description provided for @sendingDateLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending Date'**
+  String get sendingDateLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
