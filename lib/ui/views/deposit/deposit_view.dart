@@ -52,6 +52,7 @@ class DepositViewSt extends State<DepositView> {
 
     searchQueryDeposit = '';
     lstMenu = [];
+    //_futureDeposits = Future.value([]);
 
     tabTodas = true;
     tabProgreso = false;
@@ -75,15 +76,49 @@ class DepositViewSt extends State<DepositView> {
     );
     scrollListaClt.addListener(() {
       if (scrollListaClt.offset > 200 && !showButtonScrool) {
-        setState(() {
+        //setState(() {
           showButtonScrool = true;
-        });
+        //});
       } else if (scrollListaClt.offset <= 200 && showButtonScrool) {
-        setState(() {
+        //setState(() {
           showButtonScrool = false;
-        });
+        //});
       }
     });
+/*
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      
+    });
+   */ 
+  }
+
+  @override
+  void dispose() {
+    _futureDeposits = Future.value([]);
+    searchQueryDeposit = '';
+    lstMenu = [];
+    tabTodas = true;
+    tabProgreso = false;
+    tabAprobadas = false;
+    tabRechazadas = false;
+    itemMap = [];
+    lstReceipts = [];
+    objReciboDet = ReceiptModelResponse(
+      receiptAmount: 0,
+      receiptBankAccountHolder: '',
+      receiptBankAccountId: 0,
+      receiptBankName: '',
+      receiptConcept: '',
+      receiptDate: '',
+      receiptNumber: '',
+      receiptState: '',
+      receiptNotes: '',
+      receiptFile: '',
+      receiptComment: '',
+      receiptDateApproving: ''
+    );
+    
+    super.dispose();
   }
 
   @override
@@ -123,7 +158,7 @@ class DepositViewSt extends State<DepositView> {
             else
             {  
 
-              if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+              if(snapshot.data != null && snapshot.data!.isNotEmpty && lstReceipts.isEmpty) {
 
                 lstReceipts = snapshot.data!; //as List<ReceiptModelResponse>;
 
@@ -286,6 +321,7 @@ class DepositViewSt extends State<DepositView> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
+                                    lstReceipts = [];
                                     lstMenu = [];
                                     tabTodas = true;
                                     tabProgreso = false;
@@ -319,6 +355,7 @@ class DepositViewSt extends State<DepositView> {
                                 child: GestureDetector(
                                   onTap: () {
                 
+                                    lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -347,10 +384,13 @@ class DepositViewSt extends State<DepositView> {
                                   ),
                                 ),
                               ),
+
                               const SizedBox(width: 8),
+
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
+                                    lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -385,6 +425,7 @@ class DepositViewSt extends State<DepositView> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
+                                    lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -420,7 +461,7 @@ class DepositViewSt extends State<DepositView> {
                         
                         Container(
                           width: size.width,
-                          height: size.height * 0.75,//0.79,
+                          height: itemMap.length < 4 ? size.height * 0.75 : size.height * 0.78,//0.79,
                           color: Colors.transparent,
                             child: Scaffold(
                               body: Padding(
@@ -435,7 +476,7 @@ class DepositViewSt extends State<DepositView> {
                                                   
                                         Container(
                                           width: size.width,
-                                          height: size.height * 0.18 * lstMenu.length,
+                                          height: itemMap.length < 4 ? size.height * 0.18 * lstMenu.length : size.height * 0.2 * lstMenu.length,
                                           color: Colors.transparent,
                                           child: 
                                           
@@ -507,10 +548,10 @@ class DepositViewSt extends State<DepositView> {
   Future<void> refreshDeposits() async {
     lstReceipts = [];
     final data = await DepositService().getDeposit();
-    setState(() {
+    //setState(() {
       lstReceipts = data;
-      _futureDeposits = Future.value(data); // Actualizamos el future
-    });
+      //_futureDeposits = Future.value(data); // Actualizamos el future
+    //});
     
     return Future.delayed(const Duration(seconds: 1));
   }

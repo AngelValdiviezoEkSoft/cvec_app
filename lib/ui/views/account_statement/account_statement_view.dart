@@ -45,6 +45,27 @@ class AccountStatementViewSt extends State<AccountStatementView> {
     lstAccountStatResp = [];
 
     _futureAccountStatements = getAccountStatements();
+
+/*
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      //_futureAccountStatements = getAccountStatements();
+    });
+    */
+  }
+
+  @override
+  void dispose() {
+    _futureAccountStatements = Future.value([]);
+    searchAccTxt = TextEditingController();
+    searchQueryAcc = '';
+
+    idContratoAccountStatement = 0;
+    nameContratoAccountStatement = '';
+    namePlanAccountStatement = '';
+    fechaInscAccountStatement = '';
+    lstAccountStatResp = [];
+    
+    super.dispose();
   }
 
   @override
@@ -73,7 +94,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
             }
             else
             {  
-              if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+              if(snapshot.data != null && snapshot.data!.isNotEmpty && lstAccountStatResp.isEmpty) {
 
                 List<Contract> lstSubs = snapshot.data!; //as List<Contract>;                
 

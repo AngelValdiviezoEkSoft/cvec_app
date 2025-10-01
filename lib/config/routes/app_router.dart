@@ -83,7 +83,7 @@ final GoRouter appRouter = GoRouter(
                   }
                   */
                   if(snapshot.data == 'home') {                    
-                    return const PrincipalUserScreen(null);
+                    return const PrincipalUserScreen();
                   }
                 }
               }
@@ -102,7 +102,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: objRutas.rutaPrincipalUser,
-      builder: (context, state) => const PrincipalUserScreen(null),
+      builder: (context, state) => const PrincipalUserScreen(),
     ),
     GoRoute(
       path: objRutas.routManualSplashScreen,

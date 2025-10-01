@@ -18,8 +18,7 @@
     <application
         android:label="Centro de Viajes"
         android:name="${applicationName}"
-        android:icon="@mipmap/logo_app"
-        android:enableOnBackInvokedCallback="true">
+        android:icon="@mipmap/logo_app">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyBNRevgaESKXBVcIFnEPVBQcTc1i_yqE6k"/>

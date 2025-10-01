@@ -1,44 +1,228 @@
-//import 'package:cached_network_image/cached_network_image.dart';
-//import 'package:cve_app/auth_services.dart';
 import 'package:cve_app/config/config.dart';
-//import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:go_router/go_router.dart';
-import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+// principal_user_screen.dart
 class PrincipalUserScreen extends StatelessWidget {
-
-  const PrincipalUserScreen(Key? key) : super (key: key);
+  const PrincipalUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
+    final size = MediaQuery.of(context).size;
+    final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+    final fontSizeManager = Provider.of<FontSizeManager>(context, listen: false);
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    return BlocBuilder<GenericBloc, GenericState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(backgroundColor: const Color(0xFF53C9EC)),
+          drawer: MenuLateralWidget(
+            size: size,
+            gnrBloc: gnrBloc,
+            locGen: locGen,
+            objRutas: objRutas,
+            fontSizeManager: fontSizeManager,
+            stateGen: state,
+          ),
+          body: _buildBody(state, size, fontSizeManager, themeProvider),
+        );
+      },
+    );
+  }
 
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Info App',        
-        home: PrincipalClientStScreen(),
-        theme: ThemeData.light(),
-        darkTheme: ThemeData.dark(),
-        themeMode: themeProvider.themeMode,
+  Widget _buildBody(GenericState state, Size size, FontSizeManager fontSizeManager, ThemeProvider themeProvider) {
+    // Determinamos el índice actual según el estado
+    int currentIndex = 0;
+
+    if (state.viewAccountStatement) { currentIndex = 1; }
+    else if (state.viewViewDebts) { currentIndex = 2; }
+    else if (state.viewSendDeposits) { currentIndex = 3; }
+    else if (state.viewFrmDeposits) { currentIndex = 4; }
+    else if (state.viewPrintReceipts) { currentIndex = 5; }
+    else if (state.viewViewReservations) { currentIndex = 6; }
+
+    return IndexedStack(
+      index: currentIndex,
+      children: [
+        // Pantalla principal por defecto
+        _buildHome(size, fontSizeManager, themeProvider),
+
+        const AccountStatementView(null),
+        const DebtView(null),
+        const DepositView(null),
+        const DepositFrmView(null),
+        const PrintReceiptView(null),
+        const ReservationsView(null),
+      ],
+    );
+  }
+
+  Widget _buildHome(Size size, FontSizeManager fontSizeManager, ThemeProvider themeProvider) {
+    return SingleChildScrollView(
+      child: Container(
+        width: size.width,
+        height: size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PORTADA-PRINCIPAL-scaled.jpg'),
+            fit: BoxFit.cover,
+            opacity: 0.3,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/logo_app_pequenio.png",
+                width: size.width * 0.35,
+                height: size.height * 0.09,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Centro de Viajes Ecuador",
+                style: TextStyle(
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize25),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              DefaultTextStyle(
+                style: TextStyle(
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize18),
+                  color: themeProvider.themeMode != ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  pause: const Duration(milliseconds: 1000),
+                  animatedTexts: [
+                    ScaleAnimatedText(locGen!.titulo1Introduccion),
+                    ScaleAnimatedText(locGen!.titulo2Introduccion),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
+
+/*
+// principal_user_screen.dart
+class PrincipalUserScreen extends StatelessWidget {
+  const PrincipalUserScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+    final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
+    final fontSizeManager = Provider.of<FontSizeManager>(context, listen: false);
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    return BlocBuilder<GenericBloc, GenericState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(backgroundColor: const Color(0xFF53C9EC)),
+          drawer: MenuLateralWidget(
+            size: size,
+            gnrBloc: gnrBloc,
+            locGen: locGen,
+            objRutas: objRutas,
+            fontSizeManager: fontSizeManager,
+            stateGen: state,
+          ),
+          body: _buildBody(state, size, fontSizeManager, themeProvider),
+        );
+      },
+    );
+  }
+
+  Widget _buildBody(GenericState state, Size size, FontSizeManager fontSizeManager, ThemeProvider themeProvider) {
+    
+    if (state.viewAccountStatement) {
+      return const AccountStatementView(null);
+    }
+    if (state.viewViewDebts) {
+      return const DebtView(null);
+    }
+    if (state.viewSendDeposits) {
+      return const DepositView(null);
+    }
+    if (state.viewFrmDeposits) {
+      return const DepositFrmView(null);
+    }
+    if (state.viewPrintReceipts) {
+      return const PrintReceiptView(null);
+    }
+    if (state.viewViewReservations) {
+      return const ReservationsView(null);
+    }
+
+    // Pantalla principal por defecto
+    return SingleChildScrollView(
+      child: Container(
+        width: size.width,
+        height: size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://centrodeviajesecuador.com/wp-content/uploads/2020/11/PORTADA-PRINCIPAL-scaled.jpg'),
+            fit: BoxFit.cover,
+            opacity: 0.3,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/logo_app_pequenio.png",
+                  width: size.width * 0.35, height: size.height * 0.09),
+              const SizedBox(height: 20),
+              Text(
+                "Centro de Viajes Ecuador",
+                style: TextStyle(
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize25),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              DefaultTextStyle(
+                style: TextStyle(
+                  fontSize: fontSizeManager.get(FontSizesConfig().fontSize18),
+                  color: themeProvider.themeMode != ThemeMode.light
+                      ? Colors.black
+                      : Colors.white,
+                ),
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  pause: const Duration(milliseconds: 1000),
+                  animatedTexts: [
+                    ScaleAnimatedText(locGen!.titulo1Introduccion),
+                    ScaleAnimatedText(locGen!.titulo2Introduccion),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+*/
+
+/*
 class PrincipalClientStScreen extends StatelessWidget {
 
   static const platform = MethodChannel('call_channel');
@@ -85,8 +269,7 @@ class PrincipalClientStScreen extends StatelessWidget {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
         return Scaffold( 
-          appBar: //!state.viewWebSite ?
-          AppBar(
+          appBar: AppBar(
             backgroundColor: const Color(0xFF53C9EC),
           ),
           drawer: MenuLateralWidget(
@@ -97,252 +280,6 @@ class PrincipalClientStScreen extends StatelessWidget {
             fontSizeManager: fontSizeManager,
             stateGen: state,
           ),
-          /*
-          drawer: FutureBuilder(
-            future: AuthServices().getDatosPerfil(),
-            builder: (context, snapshot) {
-
-              //final themeProvider = Provider.of<ThemeProvider>(context);
-
-              Color colorLblEstadoCuenta = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-              Color colorLblDeuda = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-              Color colorLblDepositos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-              Color colorLblRecibos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-              Color colorLblReservaciones = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;              
-
-              if(state.viewAccountStatement){
-                colorLblEstadoCuenta = Colors.grey;
-              }
-
-              if(state.viewViewDebts){
-                colorLblDeuda = Colors.grey;
-              }
-
-              if(state.viewSendDeposits){
-                colorLblDepositos = Colors.grey;
-              }
-
-              if(state.viewPrintReceipts){
-                colorLblRecibos = Colors.grey;
-              }
-
-              if(state.viewViewReservations){
-                colorLblReservaciones = Colors.grey;
-              }
-
-              return Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[                
-              
-                    SizedBox(height: size.height * 0.075,),
-              
-                    GestureDetector(
-                      onTap: () {
-                        context.push(objRutas.rutaPerfilScreen);
-                      },
-                      child: _buildProfileCard(context, size),
-                    ),
-                    
-                    ListTile(
-                      leading: Icon(Icons.document_scanner, color: colorLblEstadoCuenta,),//, color: state.viewAccountStatement ? Colors.grey : Colors.black),
-                      title: Text(
-                        locGen!.menuAccountStatementLbl, 
-                        style: TextStyle(
-                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: colorLblEstadoCuenta
-                        ),
-                      ),
-                      onTap: () {
-                        
-                        gnrBloc.setShowViewAccountStatementEvent(true);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(false);
-                        gnrBloc.setShowViewWebSite(false);
-                        gnrBloc.setShowViewFrmDeposit(false);
-              
-                        Navigator.pop(context); // Cierra el menú 
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.home, color: colorLblDeuda,),
-                      title: Text(
-                        locGen!.menuDebtsLbl, 
-                        style: TextStyle(
-                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: colorLblDeuda
-                        ),
-                      ),
-                      onTap: () {
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(true);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(false);
-                        gnrBloc.setShowViewWebSite(false);
-                        gnrBloc.setShowViewFrmDeposit(false);
-                        
-                        Navigator.pop(context); // Cierra el menú 
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.send, color: colorLblDepositos),
-                      title: Text(
-                        locGen!.menuSendDepositsLbl, 
-                        style: TextStyle(
-                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: colorLblDepositos
-                        ),
-                      ),
-                      onTap: () {
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(true);
-                        gnrBloc.setShowViewWebSite(false);
-                        gnrBloc.setShowViewFrmDeposit(false);
-                        
-                        Navigator.pop(context); // Cierra el menú 
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.print, color: colorLblRecibos),
-                      title: Text(
-                        locGen!.menuPrintReceiptsLbl, 
-                        style: TextStyle(
-                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: colorLblRecibos),
-                      ),
-                      onTap: () {
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(true);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(false);
-                        gnrBloc.setShowViewWebSite(false);
-                        gnrBloc.setShowViewFrmDeposit(false);
-              
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.visibility, color: colorLblReservaciones),
-                      title: Text(
-                        locGen!.menuSeeReservationsLbl, 
-                        style: TextStyle(
-                          fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
-                          color: colorLblReservaciones
-                        ),
-                      ),
-                      onTap: () {
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(true);
-                        gnrBloc.setShowViewSendDeposits(false);
-                        gnrBloc.setShowViewWebSite(false);
-                        gnrBloc.setShowViewFrmDeposit(false);
-              
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.web_rounded),
-                      title: Text(
-                        locGen!.menuWebSiteLbl,
-                        style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),),
-                      ),
-                      onTap: () {
-                        gnrBloc.setShowViewAccountStatementEvent(false);
-                        gnrBloc.setShowViewDebts(false);
-                        gnrBloc.setShowViewPrintRecipts(false);
-                        gnrBloc.setShowViewReservetions(false);
-                        gnrBloc.setShowViewSendDeposits(false);                    
-                        gnrBloc.setShowViewFrmDeposit(false);
-              
-                        context.pop(objRutas.rutaDefault);
-                        /*                    
-              
-                        Navigator.pop(context);
-                        */
-                      },
-                    ),
-                    
-                    //SizedBox(height: size.height * 0.17,),
-                    SizedBox(height: size.height * 0.29,),
-                    const Divider(),
-              
-                //NO ELIMINAAAAR
-              /*
-                    ListTile(
-                      leading: const Icon(Icons.web_rounded),
-                      title: Text(locGen!.menuHelpSupportLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
-                      onTap: () {
-                      
-                      },
-                    ),´
-                    */
-                    
-                    ListTile(
-                      leading: const Icon(Icons.exit_to_app),
-                      title: Text(locGen!.menuLogOutLbl, style: TextStyle(fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),),
-                      onTap: () async {
-              
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(locGen!.logoutMsmLbl),
-                              
-                              actions: [
-                                TextButton(
-                                  onPressed: () async {
-              
-                                    gnrBloc.setShowViewAccountStatementEvent(false);
-                                    gnrBloc.setShowViewDebts(false);
-                                    gnrBloc.setShowViewPrintRecipts(false);
-                                    gnrBloc.setShowViewReservetions(false);
-                                    gnrBloc.setShowViewSendDeposits(false);
-                                    gnrBloc.setShowViewWebSite(false);
-                                    gnrBloc.setShowViewFrmDeposit(false);
-                                    
-                                    Navigator.of(context).pop();
-
-                                    //Navigator.pop(context); // Cierra el menú 
-              
-                                    await AuthService().logOut();
-              
-                                    //ignore: use_build_context_synchronously
-                                    context.push(objRutas.rutaAuth);
-              
-                                  },
-                                  child: Text(locGen!.confirmOnlyLbl, style: TextStyle(color: Colors.blue[200]),),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-              
-                                    Navigator.of(context).pop();
-              
-                                  },
-                                  child: const Text('No'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-              
-                      },
-                    ),
-                  ],
-                ),
-              );
-            
-            }
-          ),
-          */
           body: 
           !state.viewAccountStatement && !state.viewPrintReceipts 
           && !state.viewSendDeposits && !state.viewViewDebts && 
@@ -534,70 +471,5 @@ class PrincipalClientStScreen extends StatelessWidget {
     );
   }
 
-/*
-  Widget _buildProfileCard(BuildContext context, Size size) {
-
-    final fontSizeManager = Provider.of<FontSizeManager>(context);
-
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          if (fotoUserPrp.isEmpty)
-          const CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey,
-            child: Icon(Icons.person, size: 40, color: Colors.white),
-          ),
-
-          if (fotoUserPrp.isNotEmpty)
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey,
-            backgroundImage: CachedNetworkImageProvider(fotoUserPrp)
-          ),
-
-          SizedBox(width: size.width * 0.02),//16),
-          
-          Container(
-            color: Colors.transparent,
-            width: size.width * 0.46,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  displayName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize16)),
-                ),
-                SizedBox(height: size.height * 0.002),
-                Text(
-                  direccionUserPrp,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
-                ),
-                SizedBox(height: size.height * 0.002),
-                /*
-                Text(
-                  'Propietario',
-                  style: TextStyle(color: Colors.black, fontSize: fontSizeManager.get(FontSizesConfig().fontSize14)),
-                ),
-                */
-              ],
-            ),
-          ),
-
-          //SizedBox(width: 10),
-          SizedBox(width: size.width * 0.0005),
-
-          const Icon(Icons.arrow_forward_ios, color: Colors.grey),
-        ],
-      ),
-    );
-  }
-*/
-
 }
+*/
