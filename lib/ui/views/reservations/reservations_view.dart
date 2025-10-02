@@ -212,6 +212,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                                 icon: const Icon(Icons.close, color: Colors.black,),
                               )
                             ),
+                            onTapOutside: (event) => FocusScope.of(context).unfocus(),
                             onEditingComplete: () {
                               FocusScope.of(context).unfocus();
                                       

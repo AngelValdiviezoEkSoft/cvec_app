@@ -137,6 +137,7 @@ class DebtViewSt extends State<DebtView> {
                               icon: const Icon(Icons.close, color: Colors.black,),
                             )
                           ),
+                          onTapOutside: (event) => FocusScope.of(context).unfocus(),
                           onEditingComplete: () {
                             FocusScope.of(context).unfocus();
                   

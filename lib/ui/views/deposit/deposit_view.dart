@@ -53,11 +53,12 @@ class DepositViewSt extends State<DepositView> {
     searchQueryDeposit = '';
     lstMenu = [];
     //_futureDeposits = Future.value([]);
-
+/*
     tabTodas = true;
     tabProgreso = false;
     tabAprobadas = false;
     tabRechazadas = false;
+    */
     itemMap = [];
     lstReceipts = [];
     objReciboDet = ReceiptModelResponse(
@@ -162,7 +163,11 @@ class DepositViewSt extends State<DepositView> {
 
                 lstReceipts = snapshot.data!; //as List<ReceiptModelResponse>;
 
-                if(lstReceipts.isNotEmpty){
+                gnrBloc.setCargando(false);
+                
+              }
+
+              if(lstReceipts.isNotEmpty){
 
                   lstMenu = [];
 
@@ -297,10 +302,6 @@ class DepositViewSt extends State<DepositView> {
                         ),
                       )
                     ).toList();
-                }
-
-                gnrBloc.setCargando(false);
-                
               }
 
               gnrBloc.setCargando(false);
@@ -321,7 +322,7 @@ class DepositViewSt extends State<DepositView> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
-                                    lstReceipts = [];
+                                    //lstReceipts = [];
                                     lstMenu = [];
                                     tabTodas = true;
                                     tabProgreso = false;
@@ -355,7 +356,7 @@ class DepositViewSt extends State<DepositView> {
                                 child: GestureDetector(
                                   onTap: () {
                 
-                                    lstReceipts = [];
+                                    //lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -390,7 +391,7 @@ class DepositViewSt extends State<DepositView> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
-                                    lstReceipts = [];
+                                    //lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -425,7 +426,7 @@ class DepositViewSt extends State<DepositView> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
-                                    lstReceipts = [];
+                                    //lstReceipts = [];
                                     lstMenu = [];
                 
                                     tabTodas = false;
@@ -520,6 +521,10 @@ class DepositViewSt extends State<DepositView> {
                       gnrBloc.setShowViewWebSite(false);
                       gnrBloc.setShowViewFrmDeposit(true);
                       */
+                      tabTodas = true;
+                      tabProgreso = false;
+                      tabAprobadas = false;
+                      tabRechazadas = false;
                       context.push(objRutas.rutaFrmDepositScrn);
                     },
                     backgroundColor: const Color.fromRGBO(75, 57, 239, 1.0),
@@ -548,10 +553,10 @@ class DepositViewSt extends State<DepositView> {
   Future<void> refreshDeposits() async {
     lstReceipts = [];
     final data = await DepositService().getDeposit();
-    //setState(() {
+    setState(() {
       lstReceipts = data;
       //_futureDeposits = Future.value(data); // Actualizamos el future
-    //});
+    });
     
     return Future.delayed(const Duration(seconds: 1));
   }

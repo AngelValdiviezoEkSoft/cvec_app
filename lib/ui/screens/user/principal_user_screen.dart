@@ -20,6 +20,13 @@ class PrincipalUserScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(backgroundColor: const Color(0xFF53C9EC)),
+          onDrawerChanged: (isOpened) {
+            if (isOpened) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FocusScope.of(context).requestFocus(FocusNode());
+              });
+            }
+          },
           drawer: MenuLateralWidget(
             size: size,
             gnrBloc: gnrBloc,
@@ -83,7 +90,9 @@ class PrincipalUserScreen extends StatelessWidget {
                 width: size.width * 0.35,
                 height: size.height * 0.09,
               ),
+
               const SizedBox(height: 20),
+
               Text(
                 "Centro de Viajes Ecuador",
                 style: TextStyle(
@@ -91,7 +100,9 @@ class PrincipalUserScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
               const SizedBox(height: 10),
+
               DefaultTextStyle(
                 style: TextStyle(
                   fontSize: fontSizeManager.get(FontSizesConfig().fontSize18),

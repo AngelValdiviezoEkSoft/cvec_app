@@ -100,6 +100,7 @@ class MenuLateralWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
+              
               gnrBloc.setShowViewAccountStatementEvent(false);
               gnrBloc.setShowViewDebts(true);
               gnrBloc.setShowViewPrintRecipts(false);
@@ -272,7 +273,7 @@ Widget _buildProfileCard(BuildContext context, Size size) {
 
   Widget _buildProfileCard(BuildContext context, Size size) {
 
-    final fontSizeManager = Provider.of<FontSizeManager>(context);
+    final fontSizeManager = Provider.of<FontSizeManager>(context);    
 
     return Container(
       color: Colors.transparent,

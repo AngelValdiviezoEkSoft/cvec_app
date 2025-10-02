@@ -27,9 +27,9 @@ class AccountStatementView extends StatefulWidget {
   AccountStatementViewSt createState() => AccountStatementViewSt();
 }
 
-class AccountStatementViewSt extends State<AccountStatementView> {
+class AccountStatementViewSt extends State<AccountStatementView>{
 
-  late Future<List<Contract>> _futureAccountStatements; // <-- Guardamos el Future
+  late Future<List<Contract>> _futureAccountStatements;
 
   @override
   void initState() {
@@ -178,6 +178,8 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                               suffixIcon: IconButton(
                                 onPressed: () {
+
+                                  FocusScope.of(context).unfocus();
                                   
                                   setState(() {                                      
                                     searchQueryAcc = '';
@@ -188,6 +190,7 @@ class AccountStatementViewSt extends State<AccountStatementView> {
                                 icon: const Icon(Icons.close, color: Colors.black,),
                               )
                             ),
+                            onTapOutside: (event) => FocusScope.of(context).unfocus(),
                             onEditingComplete: () {
                               FocusScope.of(context).unfocus();
                     

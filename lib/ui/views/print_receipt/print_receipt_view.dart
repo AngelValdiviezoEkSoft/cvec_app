@@ -161,6 +161,7 @@ class _PrintReceiptViewState extends State<PrintReceiptView> {
               FocusScope.of(context).unfocus();
               _applyFilters();
             },
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
           ),
         ),
         SizedBox(

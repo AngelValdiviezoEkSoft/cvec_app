@@ -43,7 +43,6 @@ class FrmDepositScreen extends StatefulWidget {
 class FrmDepositScreenState extends State<FrmDepositScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  //String? _fileName;
   var currencyFormatter = CurrencyInputFormatter(
     thousandSeparator: ThousandSeparator.None,
   );
@@ -51,7 +50,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
   String extractedText = '';  
 
   final List<String> cmbBancoCve = [];
-  //final List<String> cmbBancoClient = ['Narboni', 'Tito Salazar'];
 
   File? selectedFile;
 
@@ -64,23 +62,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
       });
     }
   }
-/*
-  Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'pdf', 'doc', 'docx'],
-    );
-
-    if (result != null) {
-      setState(() {
-        //_pickedFile = result.files.first;
-        //_fileName = _pickedFile!.name;
-      });
-    }
-
-    pickFile(result);
-  }
-*/
+  
   @override
   void initState() {
     super.initState();
@@ -283,6 +265,16 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           }
                           return null;
                         },
+                        onEditingComplete: () {
+                          if(amountDepController.text.isNotEmpty && compDepController.text.isNotEmpty 
+                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
+                        /*
                         onChanged: (value) {
                           if(value.isNotEmpty && compDepController.text.isNotEmpty 
                           && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
@@ -291,7 +283,16 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             });
                           }
                         },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        */
+                        onTapOutside: (event) {
+                          if(amountDepController.text.isNotEmpty && compDepController.text.isNotEmpty 
+                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
                       ),
                       
                       SizedBox(
@@ -345,6 +346,16 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           }
                           return null;
                         },
+                        onEditingComplete: () {
+                          if(compDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
+                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
+                        /*
                         onChanged: (value) {
                           if(value.isNotEmpty && amountDepController.text.isNotEmpty 
                           && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
@@ -353,59 +364,22 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             });
                           }
                         },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        */
+                        onTapOutside: (event) {
+                          if(compDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
+                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        }
                       ),
                       
                       SizedBox(
                         height: size.height * 0.025,
                       ),
-              /*        
-                      Container(
-                        width: size.width * 0.96,
-                        height: size.height * 0.028,
-                        color: Colors.transparent,
-                        child: Text(locGen!.dateLbl),
-                      ),
-                    
-                      SizedBox(
-                        height: size.height * 0.005,
-                      ),
-                      
-                      GestureDetector(
-                        onTap: () {
-                          openDatePicker(context);
-                        },
-                        child: Container(
-                          width: size.width * 0.96,
-                          height: size.height * 0.028,
-                          color: Colors.transparent,
-                          child: GestureDetector(
-                            onTap: () {
-                              openDatePicker(context);
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.calendar_month_outlined,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  width: size.width * 0.008,
-                                ),
-                                Text(fechaHoraEscogidaDep),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-                      */
-                      
+              
                       TextFormField(
                         controller: concDepController,
                         decoration: InputDecoration(
@@ -454,6 +428,16 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           }
                           return null;
                         },
+                        onEditingComplete: () {
+                          if(concDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
+                          && compDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
+                        /*
                         onChanged: (value) {
                           if(value.isNotEmpty && amountDepController.text.isNotEmpty 
                           && compDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
@@ -462,7 +446,16 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             });
                           }
                         },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        */
+                        onTapOutside: (event) {
+                          if(concDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
+                          && compDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+                          FocusScope.of(context).unfocus();
+                        },
                       ),
                       
                       SizedBox(
@@ -510,6 +503,18 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                                 //color: Colors.black,
                               ),
                             )),
+                            /*
+                            onEditingComplete: () {
+                              if(amountDepController.text.isNotEmpty 
+                              && compDepController.text.isNotEmpty && concDepController.text.isNotEmpty){
+                                setState(() {
+                                  btnGuardarDeposit = true;
+                                });
+                              }
+                              FocusScope.of(context).unfocus();
+                            },
+                            */
+                            /*
                         onChanged: (value) {
                           if(value.isNotEmpty && amountDepController.text.isNotEmpty 
                           && compDepController.text.isNotEmpty && concDepController.text.isNotEmpty){
@@ -518,7 +523,18 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             });
                           }
                         },
-                        onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                        */
+                        onTapOutside: (event) {
+
+                          if(observationsDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
+                          && compDepController.text.isNotEmpty && concDepController.text.isNotEmpty){
+                            setState(() {
+                              btnGuardarDeposit = true;
+                            });
+                          }
+
+                          FocusScope.of(context).unfocus();
+                        }
                       ),
 
                       SizedBox(
@@ -737,12 +753,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                                               
                                               //ignore: use_build_context_synchronously
                                               parentContext.push(objRutas.rutaConfDepositScreen);
-                /*
-                                              setState(() {
-                                                //_pickedFile = null;
-                                                //_fileName = null;
-                                              });
-                                              */
+            
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -793,43 +804,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         ),
                       ),
             
-            /*
-                      SizedBox(
-                        height: size.height * 0.025,
-                      ),
-            
-                      Container(
-                        width: size.width * 0.96,
-                        color: Colors.transparent,
-                        alignment: Alignment.center,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            gnrBloc.setShowViewAccountStatementEvent(false);
-                            gnrBloc.setShowViewDebts(false);
-                            gnrBloc.setShowViewPrintRecipts(false);
-                            gnrBloc.setShowViewReservetions(false);
-                            gnrBloc.setShowViewSendDeposits(true);
-                            gnrBloc.setShowViewWebSite(false);
-                            gnrBloc.setShowViewFrmDeposit(false);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 147, vertical: 15),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: const BorderSide(color: Colors.red, width: 2),
-                            ),
-                            backgroundColor: Colors.white,
-                            elevation: 0,
-                          ),
-                          child: Text(
-                            locGen!.cancelLbl,
-                            style: const TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    */
                     ],
                   ),
                 ),
@@ -902,7 +876,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         blurRadius: 10,
                       ),
                     ],
-                  ),                  
+                  ),
                 ),
 
                 const SizedBox(height: 20),
@@ -1024,9 +998,11 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
           amountDepController.text = lstDatosFrm[3].split('\$')[1];
           compDepController.text = lstDatosFrm[15].split('No.')[1];
 
+          textRecognizer.close();
+
           gnrBloc.setCargando(false);
           gnrBloc.setLevantaModal(false);
-          textRecognizer.close();
+          
           return;
         } catch (_) {
           try {
@@ -1036,9 +1012,11 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
               amountDepController.text = lstDatosFrm[4].split('\$')[1];
               compDepController.text = numComp;
 
+              textRecognizer.close();
+
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
-              textRecognizer.close();
+              
               return;
             }
             if (lstDatosFrm[3].toUpperCase().contains('MONTO')) {
@@ -1047,18 +1025,22 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
               amountDepController.text = lstDatosFrm[3].split('\$')[1];
               compDepController.text = numComp;
 
+              textRecognizer.close();
+
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
-              textRecognizer.close();
+              
               return;              
             }
             if (lstDatosFrm[3].toUpperCase().contains('TOTAL')) {
               amountDepController.text = lstDatosFrm[4];
               compDepController.text = '${lstDatosFrm[2].split(' ')[0]} ${lstDatosFrm[2].split(' ')[1]} ${lstDatosFrm[2].split(' ')[2]}';
 
+              textRecognizer.close();
+
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
-              textRecognizer.close();
+              
               return;
             }
             if (lstDatosFrm[12].toUpperCase().contains('USD')) {
@@ -1066,9 +1048,12 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
 
               amountDepController.text = lstDatosFrm[12].split('USD')[0];
               compDepController.text = numComp;
+              
+              textRecognizer.close();
+              
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
-              textRecognizer.close();
+              
               return;
             }
             if (lstDatosFrm[11].toUpperCase().contains('USD')) {
@@ -1077,18 +1062,23 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
               amountDepController.text = montoStr.trim();
               compDepController.text = lstDatosFrm[2];
 
+              textRecognizer.close();
+              
               gnrBloc.setCargando(false);
               gnrBloc.setLevantaModal(false);
-              textRecognizer.close();
+              
               return;
             }
           } catch (_) {
             //if(lstDatosFrm.length == 22){
             amountDepController.text = lstDatosFrm[10];
             compDepController.text = lstDatosFrm[9].split('SECU: ')[1];
+            
+            textRecognizer.close();
+
             gnrBloc.setCargando(false);
             gnrBloc.setLevantaModal(false);
-            textRecognizer.close();
+            
             return;
           }
         }
@@ -1139,12 +1129,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     final totalRegExp = RegExp(r'TOTAL\s+(\d+,\d+|\d+\.\d+|\d+)');
     final totalMatch = totalRegExp.firstMatch(texto);
     if (totalMatch != null) datos['Monto'] = totalMatch.group(1)!;
-/*
-    // Buscar recibo
-    final reciboRegExp = RegExp(r'BAP.*', caseSensitive: false);
-    final reciboMatch = reciboRegExp.firstMatch(texto);
-    if (reciboMatch != null) datos['Recibo'] = reciboMatch.group(0)!;
-    */
 
     // Buscar la cadena completa: valor antes + BAP1 + fecha
     final bapRegExp = RegExp(r'(\S+\s+BAP1\s+\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2}:\d{2})');
@@ -1157,3 +1141,269 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     return datos;
   }
 }
+
+// ... (imports y variables externas)
+/*
+class FrmDepositScreenState extends State<FrmDepositScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  var currencyFormatter = CurrencyInputFormatter(
+    thousandSeparator: ThousandSeparator.None,
+  );
+
+  String extractedText = '';  
+
+  final List<String> cmbBancoCve = [];
+
+  File? selectedFile;
+
+  @override
+  Widget build(BuildContext context) {
+    // Estas líneas deberían estar fuera del BlocBuilder si no necesitan reconstruirse
+    final gnrBloc = Provider.of<GenericBloc>(context);
+    final size = MediaQuery.of(context).size;
+    // contextPrincipalGen = context; // Es una variable externa, ten cuidado con esto
+    ColorsApp objColorsApp = ColorsApp();
+
+    final parentContext = Navigator.of(context).context;
+
+    // **Optimización 1: Quitar llamada a setCargando del build**
+    // gnrBloc.setCargando(false); // **QUITAR ESTA LÍNEA**
+
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          // ... (AppBar content)
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              // **Optimización 2: El BlocBuilder solo envuelve los widgets que CAMBIAN de estado.**
+              // Las cajas de texto estáticas se quedan fuera.
+              child: Column(
+                children: [
+
+                  // --- Sección de Foto (Necesita BlocBuilder porque 'levantaModal' es del state)
+                  BlocBuilder<GenericBloc, GenericState>(
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          Container(
+                            width: size.width * 0.96,
+                            height: size.height * 0.028,
+                            color: Colors.transparent,
+                            child: Text(
+                              locGen!.photoPaymentReceiptLbl,
+                              style: TextStyle(
+                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.007,
+                          ),
+                          if (rutaPagoAdjDep.isEmpty && !state.levantaModal)
+                            Container(
+                              // ... (Código para mostrar el icono de agregar foto)
+                            ),
+                          if (state.levantaModal)
+                            Container(
+                              // ... (Contenedor de relleno)
+                            ),
+                          if (rutaPagoAdjDep.isNotEmpty && !state.levantaModal)
+                            Container(
+                              // ... (Código para mostrar la foto adjunta)
+                            ),
+                          SizedBox(
+                            height: size.height * 0.025,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  // --- Fin Sección de Foto (Ahora solo se reconstruye esta parte)
+
+                  // --- Campos de texto y Botón (usarán otro BlocBuilder para los iconos de carga si es necesario)
+
+                  // 1. TextFormField para amountDepController
+                  // La lentitud se puede deber a la reconstrucción del Bloc en el suffixIcon.
+                  // Usaremos un BlocSelector para el suffixIcon para reconstruir solo el icono.
+
+                  TextFormField(
+                    controller: amountDepController,
+                    inputFormatters: [currencyFormatter],
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    decoration: InputDecoration(
+                      labelText: locGen!.amountLbl,
+                      // ... (otros estilos de decoración)
+                      prefixIcon: const Icon(Icons.monetization_on_outlined),
+                      hintText: "0.00",
+                      // **Optimización 3: Usar BlocSelector para reducir el alcance de reconstrucción**
+                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
+                        selector: (state) => state.cargando, // Solo escucha el campo 'cargando'
+                        builder: (context, cargando) {
+                          return IconButton(
+                            onPressed: () {
+                              amountDepController.text = '';
+                              // ... (lógica de setState)
+                            },
+                            icon: cargando
+                            ? LoadingAnimationWidget.fallingDot(
+                                color: const Color(0xFF1A1A3F),
+                                size: 12,
+                              )
+                            : const Icon(
+                                Icons.cancel,
+                                size: 12,
+                              ),
+                          );
+                        },
+                      ),
+                    ),
+                    // ... (validator, onChanged, onTapOutside)
+                  ),
+
+                  // ... (Repite el patrón de BlocSelector para los otros TextFormField: compDepController, concDepController, observationsDepController)
+
+                  SizedBox(
+                    height: size.height * 0.025,
+                  ),
+
+                  // 2. TextFormField para compDepController
+                  TextFormField(
+                    controller: compDepController,
+                    decoration: InputDecoration(
+                      labelText: locGen!.receiptNumberLbl,
+                      // ... (otros estilos de decoración)
+                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
+                        selector: (state) => state.cargando,
+                        builder: (context, cargando) {
+                          return IconButton(
+                            onPressed: () {
+                              compDepController.text = '';
+                              // ... (lógica de setState)
+                            },
+                            icon: cargando
+                            ? LoadingAnimationWidget.fallingDot(
+                                color: const Color(0xFF1A1A3F),
+                                size: 12,
+                              )
+                            : const Icon(
+                                Icons.cancel,
+                                size: 12,
+                              ),
+                          );
+                        },
+                      ),
+                    ),
+                    // ... (validator, onChanged, onTapOutside)
+                  ),
+
+                  SizedBox(
+                    height: size.height * 0.025,
+                  ),
+
+                  // 3. TextFormField para concDepController
+                  TextFormField(
+                    controller: concDepController,
+                    decoration: InputDecoration(
+                      labelText: locGen!.conceptLbl,
+                      // ... (otros estilos de decoración)
+                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
+                        selector: (state) => state.cargando,
+                        builder: (context, cargando) {
+                          return IconButton(
+                            onPressed: () {
+                              concDepController.text = '';
+                              // ... (lógica de setState)
+                            },
+                            icon: cargando
+                            ? LoadingAnimationWidget.fallingDot(
+                                color: const Color(0xFF1A1A3F),
+                                size: 12,
+                              )
+                            : const Icon(
+                                Icons.cancel,
+                                size: 12,
+                              ),
+                          );
+                        },
+                      ),
+                    ),
+                    // ... (validator, onChanged, onTapOutside)
+                  ),
+
+                  SizedBox(
+                    height: size.height * 0.025,
+                  ),
+
+                  // 4. TextFormField para observationsDepController
+                  TextFormField(
+                    controller: observationsDepController,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      labelText: locGen!.notesLbl,
+                      // ... (otros estilos de decoración)
+                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
+                        selector: (state) => state.cargando,
+                        builder: (context, cargando) {
+                          return IconButton(
+                            onPressed: () {
+                              observationsDepController.text = '';
+                              // ... (lógica de setState)
+                            },
+                            icon: cargando
+                            ? LoadingAnimationWidget.fallingDot(
+                                color: const Color(0xFF1A1A3F),
+                                size: 12,
+                              )
+                            : const Icon(
+                                Icons.cancel,
+                                size: 12,
+                              ),
+                          );
+                        },
+                      ),
+                    ),
+                    // ... (onChanged, onTapOutside)
+                  ),
+
+                  SizedBox(
+                    height: size.height * 0.15,
+                  ),
+
+                  // 5. Botón Guardar (usar BlocBuilder si depende de un estado del Bloc, pero en este caso 'btnGuardarDeposit' es local)
+                  Container(
+                    width: size.width * 0.96,
+                    color: Colors.transparent,
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: btnGuardarDeposit
+                          ? () {
+                              // ... (lógica de onPressed)
+                            }
+                          : null, // Deshabilitar si btnGuardarDeposit es false
+                      // ... (estilo del botón)
+                      child: Text(
+                            locGen!.saveLbl,
+                            style: TextStyle(
+                              color: btnGuardarDeposit && btnGuardarDepositFoto ? Colors.green : Colors.grey, 
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  // ... (método dispose)
+}
+*/
