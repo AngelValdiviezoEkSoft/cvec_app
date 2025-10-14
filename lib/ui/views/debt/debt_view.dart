@@ -127,7 +127,7 @@ class DebtViewSt extends State<DebtView> {
                         height: size.height * 0.055,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text('${locGen!.menuDebtsLbl} total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
+                        child: Text('Total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
                       ),
                       
                       Padding(
