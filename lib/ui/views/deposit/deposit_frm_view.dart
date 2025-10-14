@@ -615,12 +615,12 @@ class DepositFrmViewState extends State<DepositFrmView> {
                                                   fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
                                                 ),
                                               ),
-                                              Text(
-                                                '${locGen!.dateLbl}: $fechaHoraEscogidaMuestra',
-                                                style: TextStyle(
-                                                  fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
-                                                ),
-                                              ),
+                                              // Text(
+                                              //   '${locGen!.dateLbl}: $fechaHoraEscogidaMuestra',
+                                              //   style: TextStyle(
+                                              //     fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                              //   ),
+                                              // ),
                                               Text(
                                                 '${locGen!.conceptLbl}: ${concController.text}',
                                                 style: TextStyle(

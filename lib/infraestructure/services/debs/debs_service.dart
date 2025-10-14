@@ -37,7 +37,7 @@ class DebsService extends ChangeNotifier{
       
       SubscriptionResponseModel objConv = SubscriptionResponseModel.fromJson(rspValidacion);
 
-      return objConv.result.data.customerStatementContracts.data;      
+      return objConv.result.data.customerStatementContracts.data;
     }
     catch(_){
       return [];

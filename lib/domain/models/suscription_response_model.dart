@@ -212,9 +212,10 @@ class Subscription {
   final String contractDueDate;
   final double contractTotalAmount;
   final double contractPaidAmount;
+  final double contractAmount;
   final double contractPaidPercent;
   final double contractResidual;
-  final String contractState;
+  final String contractState;  
 
   Subscription({
     required this.contractId,
@@ -227,20 +228,23 @@ class Subscription {
     required this.contractPaidPercent,
     required this.contractResidual,
     required this.contractState,
+    required this.contractAmount,
   });
 
   factory Subscription.fromJson(Map<String, dynamic> json) {
+
     return Subscription(
       contractId: json['contract_id'] ?? 0,
       contractName: json['contract_name'] ?? '',
       contractPlan: json['contract_plan'] ?? '',
       contractInscriptionDate: json['contract_inscription_date'] ?? '',
       contractDueDate: json['contract_due_date'] ?? '',
+      contractAmount: json['contract_amount'] != null ? (json['contract_amount'] as num).toDouble() : 0,
       contractTotalAmount: json['contract_total_amount'] != null ? (json['contract_total_amount'] as num).toDouble() : 0,
       contractPaidAmount: json['contract_paid_amount'] != null ? (json['contract_paid_amount'] as num).toDouble() : 0,
       contractPaidPercent: json['contract_paid_percent'] != null ? (json['contract_paid_percent'] as num).toDouble() : 0,
       contractResidual: json['contract_residual'] != null ? (json['contract_residual'] as num).toDouble() : 0,
-      contractState: json['contract_state'] ?? '',
+      contractState: json['contract_state'] ?? '',      
     );
   }
 
@@ -256,6 +260,7 @@ class Subscription {
       'contract_paid_percent': contractPaidPercent,
       'contract_residual': contractResidual,
       'contract_state': contractState,
+      'contract_amount': contractAmount,
     };
   }
 }

@@ -25,7 +25,8 @@ Subscription objSubscription = Subscription(
   contractPlan: '',
   contractResidual: 0,
   contractState: '',
-  contractTotalAmount: 0
+  contractTotalAmount: 0,
+  contractAmount: 0
 );
 
 List<Subscription> lstSubsResp = [];
@@ -81,7 +82,7 @@ class DebtViewSt extends State<DebtView> {
         {  
           //
           if(snapshot.data != null && snapshot.data!.isNotEmpty) {
-
+            double totalAmount = 0;
             idContrato = 0;
             nameContratoDebt = '';
             namePlanDebt = '';
@@ -101,6 +102,10 @@ class DebtViewSt extends State<DebtView> {
               lstSubs = lstSubsResp;
             }
 
+            if(lstSubs.isNotEmpty){
+              totalAmount = lstSubs.fold(0, (sum, item) => sum + item.contractAmount);
+            }
+
             final themeProvider = Provider.of<ThemeProvider>(context);
 
             return Container(
@@ -115,6 +120,14 @@ class DebtViewSt extends State<DebtView> {
                         color: Colors.transparent,
                         alignment: Alignment.center,
                         child: Text(locGen!.menuDebtsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
+                      ),
+
+                      Container(
+                        width: size.width * 0.75,
+                        height: size.height * 0.055,
+                        color: Colors.transparent,
+                        alignment: Alignment.center,
+                        child: Text('${locGen!.menuDebtsLbl} total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
                       ),
                       
                       Padding(
@@ -230,7 +243,8 @@ class DebtViewSt extends State<DebtView> {
                                                     color: Colors.transparent,
                                                     width: size.width * 0.3,
                                                     alignment: Alignment.centerRight,
-                                                    child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
+                                                    //child: Text('\$${item.contractResidual.toStringAsFixed(2)}',
+                                                    child: Text('\$${item.contractAmount.toStringAsFixed(2)}',
                                                       style: const TextStyle(
                                                         fontWeight: FontWeight.w600, fontSize: 20
                                                       )

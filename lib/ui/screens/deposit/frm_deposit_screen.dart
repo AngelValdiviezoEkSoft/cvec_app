@@ -238,7 +238,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             onPressed: () {
                               amountDepController.text = '';
               
-                              if(observationsDepController.text.isEmpty || amountDepController.text.isEmpty 
+                              if(amountDepController.text.isEmpty 
                                 || compDepController.text.isEmpty || concDepController.text.isEmpty){
                                 setState(() {
                                   btnGuardarDeposit = false;
@@ -267,7 +267,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         },
                         onEditingComplete: () {
                           if(amountDepController.text.isNotEmpty && compDepController.text.isNotEmpty 
-                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && concDepController.text.isNotEmpty ){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -286,7 +286,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         */
                         onTapOutside: (event) {
                           if(amountDepController.text.isNotEmpty && compDepController.text.isNotEmpty 
-                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && concDepController.text.isNotEmpty ){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -348,7 +348,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         },
                         onEditingComplete: () {
                           if(compDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
-                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && concDepController.text.isNotEmpty){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -367,7 +367,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         */
                         onTapOutside: (event) {
                           if(compDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
-                          && concDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && concDepController.text.isNotEmpty){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -430,7 +430,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         },
                         onEditingComplete: () {
                           if(concDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
-                          && compDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && compDepController.text.isNotEmpty){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -449,7 +449,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         */
                         onTapOutside: (event) {
                           if(concDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
-                          && compDepController.text.isNotEmpty && observationsDepController.text.isNotEmpty){
+                          && compDepController.text.isNotEmpty){
                             setState(() {
                               btnGuardarDeposit = true;
                             });
@@ -468,7 +468,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         decoration: InputDecoration(
                             labelText: locGen!.notesLbl,
                             labelStyle: TextStyle(
-                            //fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
                           ),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -483,7 +482,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             suffixIcon: IconButton(
                               onPressed: () {
                                 observationsDepController.text = '';
-                                if(observationsDepController.text.isEmpty || amountDepController.text.isEmpty 
+                                if(amountDepController.text.isEmpty 
                                   || compDepController.text.isEmpty || concDepController.text.isEmpty){
                                   setState(() {
                                     btnGuardarDeposit = false;
@@ -524,6 +523,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           }
                         },
                         */
+                        /*
                         onTapOutside: (event) {
 
                           if(observationsDepController.text.isNotEmpty && amountDepController.text.isNotEmpty 
@@ -535,6 +535,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
 
                           FocusScope.of(context).unfocus();
                         }
+                        */
                       ),
 
                       SizedBox(
@@ -561,9 +562,6 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                               btnGuardarDeposit = false;                          
                             }
                 
-                            if(observationsDepController.text.isEmpty){
-                              btnGuardarDeposit = false;                          
-                            }
                 
                             setState(() {
                               return;
@@ -620,12 +618,12 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                                                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
                                               ),
                                             ),
-                                            Text(
-                                              '${locGen!.dateLbl}: $fechaHoraEscogidaDepMuestra',
-                                              style: TextStyle(
-                                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
-                                              ),
-                                            ),
+                                            // Text(
+                                            //   '${locGen!.dateLbl}: $fechaHoraEscogidaDepMuestra',
+                                            //   style: TextStyle(
+                                            //     fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),
+                                            //   ),
+                                            // ),
                                             Text(
                                               '${locGen!.conceptLbl}: ${concDepController.text}',
                                               style: TextStyle(
