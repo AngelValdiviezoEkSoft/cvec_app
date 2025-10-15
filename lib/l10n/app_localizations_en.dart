@@ -515,4 +515,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sendingDateLbl => 'Sending Date';
+
+  @override
+  String get copyLbl => 'Copy';
 }

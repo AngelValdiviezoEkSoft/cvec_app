@@ -689,5 +689,9 @@
   "sendingDateLbl": "Fecha de envío",
   "@sendingDateLbl": {
     "description": "Fecha de envío"
+  },
+  "copyLbl": "Copia",
+  "@copyLbl": {
+    "description": "Copia"
   }
 }

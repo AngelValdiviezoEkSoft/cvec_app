@@ -1102,6 +1102,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sending Date'**
   String get sendingDateLbl;
+
+  /// No description provided for @copyLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copyLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

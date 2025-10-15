@@ -168,5 +168,6 @@
     "passwordNotMatchLbl": "Passwords do not match",
     "samePasswordLbl": "The new password must not be the same as the previous one.",
     "bookingLbl": "Booking",
-    "sendingDateLbl": "Sending Date"
+    "sendingDateLbl": "Sending Date",
+    "copyLbl": "Copy"
 }

@@ -119,7 +119,7 @@ Future<Uint8List> printReceiptRpt(Payment objPayment, List<PaymentLine> detRpt) 
                   child: pw.Opacity(
                     opacity: 0.4, // transparencia
                     child: pw.Text(
-                      'COPIA',
+                      locGen!.copyLbl,
                       style: pw.TextStyle(
                         fontSize: 50,
                         fontWeight: pw.FontWeight.bold,
