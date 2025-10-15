@@ -81,7 +81,7 @@ class DebtViewSt extends State<DebtView> {
         else
         {  
           //
-          if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+          if(snapshot.data != null && snapshot.data!.isNotEmpty && lstSubsResp.isEmpty) {
             double totalAmount = 0;
             idContrato = 0;
             nameContratoDebt = '';
@@ -100,6 +100,7 @@ class DebtViewSt extends State<DebtView> {
 
               lstSubs = [];
               lstSubs = lstSubsResp;
+              lstSubsResp = [];
             }
 
             if(lstSubs.isNotEmpty){
@@ -127,7 +128,7 @@ class DebtViewSt extends State<DebtView> {
                         height: size.height * 0.055,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text('Total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26)),)
+                        child: Text('Total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26), fontWeight: FontWeight.bold),)
                       ),
                       
                       Padding(

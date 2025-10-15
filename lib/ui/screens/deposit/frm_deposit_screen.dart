@@ -992,6 +992,35 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     if (tipoCaptura == 'GALERIA') {
       //Map<String, String> datos = extraerDatos(text);
       if (lstDatosFrm.isNotEmpty) {
+
+        try{
+          for (var dato in lstDatosFrm) {
+            final texto = dato.toString().toUpperCase();
+
+            // Buscar monto precedido por "$"
+            if (texto.contains('\$')) {
+              // Elimina todo antes del símbolo $, y también espacios
+              final monto = texto.split('\$').last.trim();
+              amountDepController.text = monto;
+            }
+
+            // Buscar número de recibo precedido por "No."
+            if (texto.contains('NO.')) {
+              // Divide por "No." y toma lo que sigue, quitando espacios
+              final recibo = texto.split('NO.').last.trim();
+              compDepController.text = recibo;
+            }
+          }
+
+          // Cerrar reconocimiento y estados
+          textRecognizer.close();
+          gnrBloc.setCargando(false);
+          gnrBloc.setLevantaModal(false);
+        }
+        catch(ex){
+          print(ex);
+        }
+/*
         try {
           amountDepController.text = lstDatosFrm[3].split('\$')[1];
           compDepController.text = lstDatosFrm[15].split('No.')[1];
@@ -1004,6 +1033,17 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
           return;
         } catch (_) {
           try {
+            if (lstDatosFrm[2].toUpperCase().contains('\$')) {
+              amountDepController.text = lstDatosFrm[2].split('\$')[1];
+              compDepController.text = lstDatosFrm[11].split('No.')[1];
+
+              textRecognizer.close();
+
+              gnrBloc.setCargando(false);
+              gnrBloc.setLevantaModal(false);
+              
+              return;
+            }
             if (lstDatosFrm[4].toUpperCase().contains('\$')) {
               String numComp = lstDatosFrm[8].replaceAll(RegExp(r'[^0-9]'), '');
 
@@ -1080,6 +1120,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
             return;
           }
         }
+        */
       }
     }
 

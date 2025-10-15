@@ -96,7 +96,7 @@ class AccountStatementViewSt extends State<AccountStatementView>{
             {  
               if(snapshot.data != null && snapshot.data!.isNotEmpty && lstAccountStatResp.isEmpty) {
 
-                List<Contract> lstSubs = snapshot.data!; //as List<Contract>;                
+                List<Contract> lstSubs = snapshot.data!;
 
                 String estadoAccount = '';
 
@@ -110,6 +110,7 @@ class AccountStatementViewSt extends State<AccountStatementView>{
 
                   lstSubs = [];
                   lstSubs = lstAccountStatResp;
+                  lstAccountStatResp = [];
                 }
 
                 return Container(
