@@ -893,6 +893,8 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                         title: const Text('Eliminar foto', style: TextStyle(color: Colors.white)),
                         onTap: () async {
                           Navigator.pop(context);
+                          amountDepController.text = '';
+                          compDepController.text = '';
                           rutaPagoAdjDep = '';
                         },
                       ),
@@ -990,137 +992,68 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     List<String> lstDatosFrm = text.split('\n');
 
     if (tipoCaptura == 'GALERIA') {
-      //Map<String, String> datos = extraerDatos(text);
       if (lstDatosFrm.isNotEmpty) {
 
         try{
           for (var dato in lstDatosFrm) {
             final texto = dato.toString().toUpperCase();
 
-            // Buscar monto precedido por "$"
+            //guayaquil
             if (texto.contains('\$')) {
-              // Elimina todo antes del símbolo $, y también espacios
               final monto = texto.split('\$').last.trim();
               amountDepController.text = monto;
             }
 
-            // Buscar número de recibo precedido por "No."
+            //produbanco
+            if (texto.contains('USD') && !texto.toLowerCase().contains('servicios financieros') && !texto.contains('usd servicios financieros') && !texto.contains('usd (servicios financieros)')) {
+              final monto = texto.split('USD').first.trim();
+              amountDepController.text = monto;
+            }
+
+            //guayaquil
             if (texto.contains('NO.')) {
-              // Divide por "No." y toma lo que sigue, quitando espacios
               final recibo = texto.split('NO.').last.trim();
               compDepController.text = recibo;
             }
+
+            //guayaquil
+            if(texto.toLowerCase().contains('comprobante:')){
+              final comp = texto.toLowerCase().split('comprobante:').last.trim();
+              compDepController.text = comp;
+            }
+
+            //produbanco
+            if(texto.toLowerCase().contains('comprobante nro.')){
+              final comp = texto.toLowerCase().split('comprobante nro.').last.trim();
+              compDepController.text = comp;
+            }
+
+            //pichincha
+            if(texto.toLowerCase().contains('aeeb comprabante')){
+              final comp = texto.toLowerCase().split('aeeb comprabante').last.trim();
+              final comp2 = comp.toLowerCase().split('pihie').first.trim();
+              compDepController.text = comp2;
+            }
           }
 
-          // Cerrar reconocimiento y estados
-          textRecognizer.close();
-          gnrBloc.setCargando(false);
-          gnrBloc.setLevantaModal(false);
         }
         catch(ex){
-          print(ex);
+          //print(ex);
         }
-/*
-        try {
-          amountDepController.text = lstDatosFrm[3].split('\$')[1];
-          compDepController.text = lstDatosFrm[15].split('No.')[1];
 
-          textRecognizer.close();
-
-          gnrBloc.setCargando(false);
-          gnrBloc.setLevantaModal(false);
-          
-          return;
-        } catch (_) {
-          try {
-            if (lstDatosFrm[2].toUpperCase().contains('\$')) {
-              amountDepController.text = lstDatosFrm[2].split('\$')[1];
-              compDepController.text = lstDatosFrm[11].split('No.')[1];
-
-              textRecognizer.close();
-
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;
-            }
-            if (lstDatosFrm[4].toUpperCase().contains('\$')) {
-              String numComp = lstDatosFrm[8].replaceAll(RegExp(r'[^0-9]'), '');
-
-              amountDepController.text = lstDatosFrm[4].split('\$')[1];
-              compDepController.text = numComp;
-
-              textRecognizer.close();
-
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;
-            }
-            if (lstDatosFrm[3].toUpperCase().contains('MONTO')) {
-              String numComp = lstDatosFrm[1].replaceAll(RegExp(r'[^0-9]'), '');
-
-              amountDepController.text = lstDatosFrm[3].split('\$')[1];
-              compDepController.text = numComp;
-
-              textRecognizer.close();
-
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;              
-            }
-            if (lstDatosFrm[3].toUpperCase().contains('TOTAL')) {
-              amountDepController.text = lstDatosFrm[4];
-              compDepController.text = '${lstDatosFrm[2].split(' ')[0]} ${lstDatosFrm[2].split(' ')[1]} ${lstDatosFrm[2].split(' ')[2]}';
-
-              textRecognizer.close();
-
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;
-            }
-            if (lstDatosFrm[12].toUpperCase().contains('USD')) {
-              String numComp = lstDatosFrm[6].replaceAll(RegExp(r'[^0-9]'), '');
-
-              amountDepController.text = lstDatosFrm[12].split('USD')[0];
-              compDepController.text = numComp;
-              
-              textRecognizer.close();
-              
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;
-            }
-            if (lstDatosFrm[11].toUpperCase().contains('USD')) {
-              var montoStr = lstDatosFrm[11].split('USD')[0];
-              double.parse(montoStr);
-              amountDepController.text = montoStr.trim();
-              compDepController.text = lstDatosFrm[2];
-
-              textRecognizer.close();
-              
-              gnrBloc.setCargando(false);
-              gnrBloc.setLevantaModal(false);
-              
-              return;
-            }
-          } catch (_) {
-            //if(lstDatosFrm.length == 22){
-            amountDepController.text = lstDatosFrm[10];
-            compDepController.text = lstDatosFrm[9].split('SECU: ')[1];
-            
-            textRecognizer.close();
-
-            gnrBloc.setCargando(false);
-            gnrBloc.setLevantaModal(false);
-            
-            return;
+        try{
+          if(compDepController.text.isEmpty){
+            compDepController.text = lstDatosFrm[2];
           }
         }
-        */
+        catch(_){
+
+        }
+
+        // Cerrar reconocimiento y estados
+        textRecognizer.close();
+        gnrBloc.setCargando(false);
+        gnrBloc.setLevantaModal(false);
       }
     }
 
@@ -1180,269 +1113,3 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
     return datos;
   }
 }
-
-// ... (imports y variables externas)
-/*
-class FrmDepositScreenState extends State<FrmDepositScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  var currencyFormatter = CurrencyInputFormatter(
-    thousandSeparator: ThousandSeparator.None,
-  );
-
-  String extractedText = '';  
-
-  final List<String> cmbBancoCve = [];
-
-  File? selectedFile;
-
-  @override
-  Widget build(BuildContext context) {
-    // Estas líneas deberían estar fuera del BlocBuilder si no necesitan reconstruirse
-    final gnrBloc = Provider.of<GenericBloc>(context);
-    final size = MediaQuery.of(context).size;
-    // contextPrincipalGen = context; // Es una variable externa, ten cuidado con esto
-    ColorsApp objColorsApp = ColorsApp();
-
-    final parentContext = Navigator.of(context).context;
-
-    // **Optimización 1: Quitar llamada a setCargando del build**
-    // gnrBloc.setCargando(false); // **QUITAR ESTA LÍNEA**
-
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-        appBar: AppBar(
-          // ... (AppBar content)
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              // **Optimización 2: El BlocBuilder solo envuelve los widgets que CAMBIAN de estado.**
-              // Las cajas de texto estáticas se quedan fuera.
-              child: Column(
-                children: [
-
-                  // --- Sección de Foto (Necesita BlocBuilder porque 'levantaModal' es del state)
-                  BlocBuilder<GenericBloc, GenericState>(
-                    builder: (context, state) {
-                      return Column(
-                        children: [
-                          Container(
-                            width: size.width * 0.96,
-                            height: size.height * 0.028,
-                            color: Colors.transparent,
-                            child: Text(
-                              locGen!.photoPaymentReceiptLbl,
-                              style: TextStyle(
-                                fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize17)
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: size.height * 0.007,
-                          ),
-                          if (rutaPagoAdjDep.isEmpty && !state.levantaModal)
-                            Container(
-                              // ... (Código para mostrar el icono de agregar foto)
-                            ),
-                          if (state.levantaModal)
-                            Container(
-                              // ... (Contenedor de relleno)
-                            ),
-                          if (rutaPagoAdjDep.isNotEmpty && !state.levantaModal)
-                            Container(
-                              // ... (Código para mostrar la foto adjunta)
-                            ),
-                          SizedBox(
-                            height: size.height * 0.025,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                  // --- Fin Sección de Foto (Ahora solo se reconstruye esta parte)
-
-                  // --- Campos de texto y Botón (usarán otro BlocBuilder para los iconos de carga si es necesario)
-
-                  // 1. TextFormField para amountDepController
-                  // La lentitud se puede deber a la reconstrucción del Bloc en el suffixIcon.
-                  // Usaremos un BlocSelector para el suffixIcon para reconstruir solo el icono.
-
-                  TextFormField(
-                    controller: amountDepController,
-                    inputFormatters: [currencyFormatter],
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    decoration: InputDecoration(
-                      labelText: locGen!.amountLbl,
-                      // ... (otros estilos de decoración)
-                      prefixIcon: const Icon(Icons.monetization_on_outlined),
-                      hintText: "0.00",
-                      // **Optimización 3: Usar BlocSelector para reducir el alcance de reconstrucción**
-                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
-                        selector: (state) => state.cargando, // Solo escucha el campo 'cargando'
-                        builder: (context, cargando) {
-                          return IconButton(
-                            onPressed: () {
-                              amountDepController.text = '';
-                              // ... (lógica de setState)
-                            },
-                            icon: cargando
-                            ? LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                            : const Icon(
-                                Icons.cancel,
-                                size: 12,
-                              ),
-                          );
-                        },
-                      ),
-                    ),
-                    // ... (validator, onChanged, onTapOutside)
-                  ),
-
-                  // ... (Repite el patrón de BlocSelector para los otros TextFormField: compDepController, concDepController, observationsDepController)
-
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-
-                  // 2. TextFormField para compDepController
-                  TextFormField(
-                    controller: compDepController,
-                    decoration: InputDecoration(
-                      labelText: locGen!.receiptNumberLbl,
-                      // ... (otros estilos de decoración)
-                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
-                        selector: (state) => state.cargando,
-                        builder: (context, cargando) {
-                          return IconButton(
-                            onPressed: () {
-                              compDepController.text = '';
-                              // ... (lógica de setState)
-                            },
-                            icon: cargando
-                            ? LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                            : const Icon(
-                                Icons.cancel,
-                                size: 12,
-                              ),
-                          );
-                        },
-                      ),
-                    ),
-                    // ... (validator, onChanged, onTapOutside)
-                  ),
-
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-
-                  // 3. TextFormField para concDepController
-                  TextFormField(
-                    controller: concDepController,
-                    decoration: InputDecoration(
-                      labelText: locGen!.conceptLbl,
-                      // ... (otros estilos de decoración)
-                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
-                        selector: (state) => state.cargando,
-                        builder: (context, cargando) {
-                          return IconButton(
-                            onPressed: () {
-                              concDepController.text = '';
-                              // ... (lógica de setState)
-                            },
-                            icon: cargando
-                            ? LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                            : const Icon(
-                                Icons.cancel,
-                                size: 12,
-                              ),
-                          );
-                        },
-                      ),
-                    ),
-                    // ... (validator, onChanged, onTapOutside)
-                  ),
-
-                  SizedBox(
-                    height: size.height * 0.025,
-                  ),
-
-                  // 4. TextFormField para observationsDepController
-                  TextFormField(
-                    controller: observationsDepController,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      labelText: locGen!.notesLbl,
-                      // ... (otros estilos de decoración)
-                      suffixIcon: BlocSelector<GenericBloc, GenericState, bool>(
-                        selector: (state) => state.cargando,
-                        builder: (context, cargando) {
-                          return IconButton(
-                            onPressed: () {
-                              observationsDepController.text = '';
-                              // ... (lógica de setState)
-                            },
-                            icon: cargando
-                            ? LoadingAnimationWidget.fallingDot(
-                                color: const Color(0xFF1A1A3F),
-                                size: 12,
-                              )
-                            : const Icon(
-                                Icons.cancel,
-                                size: 12,
-                              ),
-                          );
-                        },
-                      ),
-                    ),
-                    // ... (onChanged, onTapOutside)
-                  ),
-
-                  SizedBox(
-                    height: size.height * 0.15,
-                  ),
-
-                  // 5. Botón Guardar (usar BlocBuilder si depende de un estado del Bloc, pero en este caso 'btnGuardarDeposit' es local)
-                  Container(
-                    width: size.width * 0.96,
-                    color: Colors.transparent,
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      onPressed: btnGuardarDeposit
-                          ? () {
-                              // ... (lógica de onPressed)
-                            }
-                          : null, // Deshabilitar si btnGuardarDeposit es false
-                      // ... (estilo del botón)
-                      child: Text(
-                            locGen!.saveLbl,
-                            style: TextStyle(
-                              color: btnGuardarDeposit && btnGuardarDepositFoto ? Colors.green : Colors.grey, 
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-  // ... (método dispose)
-}
-*/
