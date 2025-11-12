@@ -212,9 +212,6 @@ class AuthScreenSt extends StatelessWidget {
                     
                     var resp = await AuthServices().login(objAuthRequest);
       
-                    userTxt = TextEditingController();
-                    passWordTxt = TextEditingController();
-      
                     if(resp == 'NI'){
                       //ignore: use_build_context_synchronously
                       context.pop();
@@ -270,11 +267,12 @@ class AuthScreenSt extends StatelessWidget {
                     final data = json.decode(resp);
                     
                     final objError = data['error'];
+                    final estado = data['result']['estado'];
                     
                     //ignore: use_build_context_synchronously
                     context.pop();
       
-                    if(objError == null) {
+                    if(objError == null && estado != 404) {
                       displayName = data["result"]["user_name"] ?? '';
       
                       const storage = FlutterSecureStorage();
@@ -286,10 +284,20 @@ class AuthScreenSt extends StatelessWidget {
                       await storage.write(key: 'EmailUser', value: data["result"]["email"] ?? '');
                       await storage.write(key: 'PhoneUser', value: data["result"]["phone"] ?? '');
       */
+
+                      userTxt = TextEditingController();
+                      passWordTxt = TextEditingController();
+
                       //ignore: use_build_context_synchronously
                       context.push(objRutas.rutaPrincipalUser);
                     } else {
-                      final msmError = data['error']['data']['name'] ?? '';
+                      String msmError = '';
+
+                      if(estado != 404){
+                        msmError = data['error']['data']['name'] ?? '';
+                      } else {
+                        msmError = data['result']['mensaje'];
+                      }
       
                       showDialog(
                         //ignore: use_build_context_synchronously
