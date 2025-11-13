@@ -154,6 +154,16 @@ class ReservationsViewSt extends State<ReservationsView> {
                           child: Row(
                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              if(itemMap.isEmpty)
+                              Container(
+                                width: size.width * 0.94,
+                                height: size.height * 0.06,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
+                                child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
+                              ),
+
+                              if(itemMap.isNotEmpty)
                               Container(
                                 width: size.width * 0.65,
                                 height: size.height * 0.06,
@@ -162,6 +172,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                                 child: Text(locGen!.reservationsLbl, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize20)),)
                               ),
                           
+                              if(itemMap.isNotEmpty)
                               Container(
                                 width: size.width * 0.25,
                                 height: size.height * 0.06,
@@ -250,7 +261,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                         Container(
                           color: Colors.transparent,
                           width: size.width,
-                          height: size.height * 0.78,
+                          height: size.height * 0.7,
                           alignment: Alignment.center,
                           child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
                         ),
