@@ -1,10 +1,10 @@
-
 import 'dart:async';
+import 'package:cve_app/ui/screens/screens.dart';
 import 'package:flutter/material.dart';
 
 class CarouselWidget extends StatefulWidget {
-  final List<String> imagePaths; // Puede ser URL o assets locales
-  final Duration interval;       // Tiempo entre auto-scroll
+  final List<String> imagePaths;
+  final Duration interval;
 
   const CarouselWidget({
     super.key,
@@ -26,7 +26,6 @@ class _AutoImageCarouselState extends State<CarouselWidget> {
     super.initState();
     _controller = PageController();
 
-    // Auto-movimiento
     _timer = Timer.periodic(widget.interval, (timer) {
       if (_controller.hasClients) {
         _currentPage++;
@@ -67,13 +66,23 @@ class _AutoImageCarouselState extends State<CarouselWidget> {
               final path = widget.imagePaths[index];
               final isNetwork = path.startsWith('http');
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: isNetwork
-                      ? Image.network(path, fit: BoxFit.cover)
-                      : Image.asset(path, fit: BoxFit.cover),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => FullImageScreen(imagePath: path),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: isNetwork
+                        ? Image.network(path, fit: BoxFit.cover)
+                        : Image.asset(path, fit: BoxFit.cover),
+                  ),
                 ),
               );
             },
@@ -82,9 +91,6 @@ class _AutoImageCarouselState extends State<CarouselWidget> {
 
         const SizedBox(height: 12),
 
-        // -------------------------------
-        //  Indicadores de página (dots)
-        // -------------------------------
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(

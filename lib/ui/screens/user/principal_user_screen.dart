@@ -86,7 +86,7 @@ class PrincipalUserScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
-              SizedBox(height: size.height * 0.08),
+              SizedBox(height: size.height * 0.006),
 
               Container(
                 color: Colors.transparent,
