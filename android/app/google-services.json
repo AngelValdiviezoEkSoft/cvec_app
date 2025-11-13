@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359168005356",
+    "project_id": "notifications-cve-clients-test",
+    "storage_bucket": "notifications-cve-clients-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359168005356:android:5d144ce77615f66a8bc1c9",
+        "android_client_info": {
+          "package_name": "com.cve.cve_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX0nFfBmGDBjzZse69rnRvVxVrEFiQNfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

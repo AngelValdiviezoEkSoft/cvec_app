@@ -1,4 +1,4 @@
-package com.example.cve_app
+package com.cve.cve_app
 
 import android.content.Intent
 import android.net.Uri

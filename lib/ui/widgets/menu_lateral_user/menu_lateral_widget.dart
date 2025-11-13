@@ -195,7 +195,8 @@ class MenuLateralWidget extends StatelessWidget {
               gnrBloc.setShowViewSendDeposits(false);
               gnrBloc.setShowViewFrmDeposit(false);
 
-              context.pop(objRutas.rutaDefault);
+              context.pop();
+              context.push(objRutas.rutaDefault);
             },
           ),
 

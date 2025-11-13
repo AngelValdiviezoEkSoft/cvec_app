@@ -16,7 +16,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.example.cve_app"
+    namespace = "com.cve.cve_app"
     compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
@@ -39,8 +39,8 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.cve_app"
-        minSdk = 21
+        applicationId = "com.cve.cve_app"
+        minSdk = 23
         targetSdk = 35
         versionCode = 1
         versionName = "0.0.1"
