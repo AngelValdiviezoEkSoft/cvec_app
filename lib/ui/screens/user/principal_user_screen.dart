@@ -83,15 +83,32 @@ class PrincipalUserScreen extends StatelessWidget {
         ),
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
+              SizedBox(height: size.height * 0.08),
+
+              Container(
+                color: Colors.transparent,
+                height: size.height * 0.35,
+                child: CarouselWidget(
+                  imagePaths: [
+                    'assets/images/carrusel_1.jpg',
+                    'assets/images/carrusel_2.jpg',
+                    'assets/images/carrusel_3.jpg'
+                  ],
+                ),
+              ),
+
+              SizedBox(height: size.height * 0.15),
+
               Image.asset(
                 "assets/logo_app_pequenio.png",
                 width: size.width * 0.35,
                 height: size.height * 0.09,
               ),
 
-              const SizedBox(height: 20),
+              //SizedBox(height: size.height * 0.08),
 
               Text(
                 "Centro de Viajes Ecuador",
@@ -101,7 +118,7 @@ class PrincipalUserScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 10),
+              //SizedBox(height: size.height * 0.08),
 
               DefaultTextStyle(
                 style: TextStyle(
@@ -119,6 +136,8 @@ class PrincipalUserScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
+              SizedBox(height: size.height * 0.25),
             ],
           ),
         ),

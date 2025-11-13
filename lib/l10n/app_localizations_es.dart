@@ -79,6 +79,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get menuWebSiteLbl => 'Sitio web';
 
   @override
+  String get menuHomeLbl => 'Inicio';
+
+  @override
   String get menuHelpSupportLbl => 'Ayuda y soporte';
 
   @override

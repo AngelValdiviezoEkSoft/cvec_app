@@ -69,6 +69,28 @@ class MenuLateralWidget extends StatelessWidget {
           ),
 
           ListTile(
+            leading: const Icon(Icons.home),
+            title: Text(
+              locGen!.menuHomeLbl,
+              style: TextStyle(
+                fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+              ),
+            ),
+            onTap: () {
+              gnrBloc.setShowViewAccountStatementEvent(false);
+              gnrBloc.setShowViewDebts(false);
+              gnrBloc.setShowViewPrintRecipts(false);
+              gnrBloc.setShowViewReservetions(false);
+              gnrBloc.setShowViewSendDeposits(false);
+              gnrBloc.setShowViewFrmDeposit(false);
+
+              context.pop();
+
+            },
+          ),
+
+
+          ListTile(
             leading: Icon(Icons.document_scanner, color: colorLblEstadoCuenta),
             title: Text(
               locGen!.menuAccountStatementLbl,

@@ -113,6 +113,10 @@
   "@menuWebSiteLbl": {
     "description": "Sitio web"
   },
+  "menuHomeLbl": "Inicio",
+  "@menuHomeLbl": {
+    "description": "Inicio"
+  },
   "menuHelpSupportLbl": "Ayuda y soporte",
   "@menuHelpSupportLbl": {
     "description": "Ayuda y soporte"

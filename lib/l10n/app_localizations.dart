@@ -227,6 +227,12 @@ abstract class AppLocalizations {
   /// **'Web Site'**
   String get menuWebSiteLbl;
 
+  /// No description provided for @menuHomeLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get menuHomeLbl;
+
   /// No description provided for @menuHelpSupportLbl.
   ///
   /// In en, this message translates to:

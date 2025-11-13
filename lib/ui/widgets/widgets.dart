@@ -11,3 +11,5 @@ export 'package:cve_app/ui/widgets/modals/modals.dart';
 export 'package:cve_app/ui/widgets/generic/generic.dart';
 
 export 'package:cve_app/ui/widgets/menu_lateral_user/menu_lateral_user.dart';
+
+export 'package:cve_app/ui/widgets/carousel/carousel.dart';

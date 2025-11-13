@@ -80,15 +80,21 @@ class DebtViewSt extends State<DebtView> {
         }
         else
         {  
-          //
-          if(snapshot.data != null && snapshot.data!.isNotEmpty && lstSubsResp.isEmpty) {
+          if(snapshot.data != null && snapshot.data!.isNotEmpty) {
             double totalAmount = 0;
             idContrato = 0;
             nameContratoDebt = '';
             namePlanDebt = '';
             fechaInscDebt = '';
 
-            List<Subscription> lstSubs = snapshot.data!; //as List<Subscription>;            
+            List<Subscription> lstSubs = [];
+
+            if(lstSubsResp.isEmpty) {
+              lstSubs = snapshot.data!;
+            } else {
+              lstSubs = lstSubsResp;
+              lstSubsResp = [];
+            }
 
             if(searchQueryDebt.isNotEmpty){
               
@@ -128,7 +134,7 @@ class DebtViewSt extends State<DebtView> {
                         height: size.height * 0.055,
                         color: Colors.transparent,
                         alignment: Alignment.center,
-                        child: Text('Total: \$$totalAmount', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26), fontWeight: FontWeight.bold),)
+                        child: Text('Total: \$${totalAmount.toStringAsFixed(2)}', style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize26), fontWeight: FontWeight.bold),)
                       ),
                       
                       Padding(
@@ -332,5 +338,5 @@ Future<List<Subscription>> getDebts() async {
 Future<void> refreshDebts() async {
   lstSubsResp = [];
   lstSubsResp = await DebsService().getDebts();
-  return Future.delayed(const Duration(seconds: 1));
+  return;//Future.delayed(const Duration(seconds: 1));
 }
