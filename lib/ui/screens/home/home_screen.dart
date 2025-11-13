@@ -4,7 +4,6 @@ import 'package:cve_app/config/config.dart';
 import 'package:cve_app/ui/ui.dart';
 
 BuildContext? contextPrincipalGen;
-//DonePermissions? objPermisosGen;
 
 String compSelect = '';
 String rutaFotoPerfil = '';
@@ -32,6 +31,8 @@ class HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     contextPrincipalGen = context;
+
+    
   }
 
   @override

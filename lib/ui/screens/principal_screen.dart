@@ -63,6 +63,23 @@ class PrincipalStScreen extends State<ContenidoPrincipalScreen> {
   @override
   void initState() {    
     super.initState();
+
+    NotificationFirebaseService.init();
+
+    NotificationFirebaseService.messagesStream.listen((message) { 
+      
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+/*
+      setState(() {
+        cantNotificaciones += 1;
+      });
+      */
+    });
   }
 
   void makePhoneCall() async {
