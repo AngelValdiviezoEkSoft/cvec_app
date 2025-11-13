@@ -404,7 +404,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
                   
                   if(objReciboDet!.receiptComment.isNotEmpty)
                   Container(
-                    width: size.width * 0.88,
+                    width: size.width * 0.89,
                     height: size.height * 0.03,
                     color: Colors.transparent,
                     child: Text(locGen!.commentsLbl)
@@ -412,7 +412,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
 
                   if(objReciboDet!.receiptComment.isNotEmpty)
                   Container(
-                    width: size.width * 0.88,
+                    width: size.width * 0.93,
                     height: size.height * 0.15,
                     color: Colors.transparent,
                     child: Card(

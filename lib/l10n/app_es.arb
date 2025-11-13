@@ -513,21 +513,21 @@
   "@reservReportLbl": {
     "description": "Reporte de Reservas"
   },
-  "reservSeqLbl": "Secuencia de reserva",
+  "reservSeqLbl": "Reserva",
   "@reservSeqLbl": {
-    "description": "Secuencia de reserva"
+    "description": "Reserva"
   },
-  "checkInDateLbl": "Fecha de ingreso",
+  "checkInDateLbl": "F. Ingreso",
   "@checkInDateLbl": {
-    "description": "Fecha de ingreso"
+    "description": "F. Ingreso"
   },
   "checkInLbl": "Ingreso",
   "@checkInLbl": {
     "description": "Ingreso"
   },
-  "checkOutDateLbl": "Salida",
+  "checkOutDateLbl": "F. Salida",
   "@checkOutDateLbl": {
-    "description": "Ssalida"
+    "description": "F. Salida"
   },
   "checkOutLbl": "Fecha Salida",
   "@checkOutLbl": {
@@ -541,9 +541,9 @@
   "@includesLbl": {
     "description": "Incluye"
   },
-  "contractSeqLbl": "Secuencia de contrato",
+  "contractSeqLbl": "Contrato",
   "@contractSeqLbl": {
-    "description": "Secuencia de contrato"
+    "description": "Contrato"
   },
   "roomsLbl": "Habitaciones",
   "@roomsLbl": {
@@ -693,5 +693,13 @@
   "copyLbl": "Copia",
   "@copyLbl": {
     "description": "Copia"
-  }
+  },
+  "detailDataProfileLbl": "Si desea actualizar sus datos, envíenos un correo a balcon@centrodeviajesecuador.com solicitando esta acción y los datos que desea actualizar.",
+  "@detailDataProfileLbl": {
+    "description": "Si desea actualizar sus datos, envíenos un correo a balcon@centrodeviajesecuador.com solicitando esta acción y los datos que desea actualizar."
+  },
+  "nightsAvaibleLbl": "Noches disponibles",
+  "@nightsAvaibleLbl": {
+    "description": "Noches disponibles"
+  }  
 }

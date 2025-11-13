@@ -215,6 +215,7 @@ class Booking {
   final String bookingDateCheckIn;
   final String bookingEndCheckIn;
   String bookingState;
+  String availableNights;
 
   Booking({
     required this.bookingId,
@@ -226,6 +227,7 @@ class Booking {
     required this.bookingDateCheckIn,
     required this.bookingEndCheckIn,
     required this.bookingState,
+    required this.availableNights,
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
@@ -239,6 +241,7 @@ class Booking {
       bookingDateCheckIn: json['booking_date_check_in'] ?? '',
       bookingEndCheckIn: json['booking_end_check_in'] ?? '',
       bookingState: json['booking_state'] ?? '',
+      availableNights: json['available_nights'] ?? '',
     );
   }
 
@@ -253,6 +256,7 @@ class Booking {
       "booking_date_check_in": bookingDateCheckIn,
       "booking_end_check_in": bookingEndCheckIn,
       "booking_state": bookingState,
+      "available_nights": availableNights,
     };
   }
 }

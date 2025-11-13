@@ -123,14 +123,14 @@
     "msmUpdateLbl": "We are updating",
     "msmSafeInfoProfLbl": "your information",
     "reservReportLbl": "Booking Report",
-    "reservSeqLbl": "Reservation Sequence",
+    "reservSeqLbl": "Reservation",
     "checkInDateLbl": "Check-in Date",
     "checkInLbl": "Check-in",
     "checkOutDateLbl": "Check-out",
     "checkOutLbl": "Check-out",
     "hotelLbl": "Hotel",
     "includesLbl": "Includes",
-    "contractSeqLbl": "Contract Sequence",
+    "contractSeqLbl": "Contract",
     "roomsLbl": "Rooms",
     "statusLbl": "Status",
     "categoryLbl": "Category",
@@ -169,5 +169,7 @@
     "samePasswordLbl": "The new password must not be the same as the previous one.",
     "bookingLbl": "Booking",
     "sendingDateLbl": "Sending Date",
-    "copyLbl": "Copy"
+    "copyLbl": "Copy",
+    "detailDataProfileLbl": "If you wish to update your information, please send an email to balcon@centrodeviajesecuador.com requesting this action and the information you wish to update.",
+    "nightsAvaibleLbl": "Nights Available"
 }

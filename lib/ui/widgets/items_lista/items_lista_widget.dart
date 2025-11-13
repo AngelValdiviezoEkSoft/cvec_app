@@ -280,9 +280,10 @@ class ListaNotificaciones extends StatelessWidget {
 
                                   Container(
                                     color: Colors.transparent, 
-                                    width: sizeLstNot.width * 0.4, 
+                                    width: sizeLstNot.width * 0.45, 
                                     height: sizeLstNot.height * 0.02,//varNumIdentifLst != null && varNumIdentifLst!.isNotEmpty ? sizeLstNot.height * 0.036 : sizeLstNot.height * 0.05,
-                                    child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 5,)
+                                    alignment: Alignment.centerRight,
+                                    child: Text( texto4 ?? '', style: TextStyle( color: Colors.black, fontWeight: FontWeight.bold ), maxLines: 1,)
                                   ),
                                 ],
                               ),

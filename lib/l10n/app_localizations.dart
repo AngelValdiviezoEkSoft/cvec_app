@@ -842,7 +842,7 @@ abstract class AppLocalizations {
   /// No description provided for @reservSeqLbl.
   ///
   /// In en, this message translates to:
-  /// **'Reservation Sequence'**
+  /// **'Reservation'**
   String get reservSeqLbl;
 
   /// No description provided for @checkInDateLbl.
@@ -884,7 +884,7 @@ abstract class AppLocalizations {
   /// No description provided for @contractSeqLbl.
   ///
   /// In en, this message translates to:
-  /// **'Contract Sequence'**
+  /// **'Contract'**
   String get contractSeqLbl;
 
   /// No description provided for @roomsLbl.
@@ -1108,6 +1108,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy'**
   String get copyLbl;
+
+  /// No description provided for @detailDataProfileLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'If you wish to update your information, please send an email to balcon@centrodeviajesecuador.com requesting this action and the information you wish to update.'**
+  String get detailDataProfileLbl;
+
+  /// No description provided for @nightsAvaibleLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Nights Available'**
+  String get nightsAvaibleLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

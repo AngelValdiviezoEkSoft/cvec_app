@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 import 'package:cve_app/domain/domain.dart';
 import 'package:cve_app/ui/ui.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 
@@ -129,6 +130,7 @@ Future<Uint8List> generateReservation(List<Booking> reservations) async {
                     pw.Center(child: pw.Text(locGen!.contractSeqLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6))),
                     //pw.Center(child: pw.Text(locGen!.roomsLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6))),
                     pw.Center(child: pw.Text(locGen!.statusLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6))),
+                    pw.Center(child: pw.Text(locGen!.nightsAvaibleLbl, style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 6))),
                   ],
                 ),
                 // Filas de datos
@@ -139,13 +141,14 @@ Future<Uint8List> generateReservation(List<Booking> reservations) async {
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text(booking.bookingName, style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
                       ),
+                      //DateFormat('dd/MM/yyyy').format(DateTime.parse(rsp[i].bookingDateCheckIn))
                       pw.Padding(
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text(booking.bookingDateCheckIn, style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
+                        child: pw.Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(booking.bookingDateCheckIn)), style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
                       ),
                       pw.Padding(
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text(booking.bookingEndCheckIn, style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
+                        child: pw.Text(DateFormat('dd/MM/yyyy').format(DateTime.parse(booking.bookingEndCheckIn)), style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
                       ),
                       pw.Padding(
                         padding: const pw.EdgeInsets.all(2),
@@ -163,6 +166,10 @@ Future<Uint8List> generateReservation(List<Booking> reservations) async {
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text(booking.bookingState, style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
                       ),
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.all(2),
+                        child: pw.Text(booking.availableNights, style: const pw.TextStyle(fontSize: 5), textAlign: pw.TextAlign.center),
+                      ),                    
                     ],
                   ),
                 ),

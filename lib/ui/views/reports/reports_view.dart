@@ -106,7 +106,8 @@ class PdfView extends StatelessWidget {
           bookingDateCheckIn: '',
           bookingEndCheckIn: '',
           bookingHotelName: '',
-          bookingState: ''
+          bookingState: '',
+          availableNights: ''
         ),
       );
 

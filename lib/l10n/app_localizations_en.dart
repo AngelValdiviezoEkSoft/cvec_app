@@ -385,7 +385,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservReportLbl => 'Booking Report';
 
   @override
-  String get reservSeqLbl => 'Reservation Sequence';
+  String get reservSeqLbl => 'Reservation';
 
   @override
   String get checkInDateLbl => 'Check-in Date';
@@ -406,7 +406,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get includesLbl => 'Includes';
 
   @override
-  String get contractSeqLbl => 'Contract Sequence';
+  String get contractSeqLbl => 'Contract';
 
   @override
   String get roomsLbl => 'Rooms';
@@ -518,4 +518,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copyLbl => 'Copy';
+
+  @override
+  String get detailDataProfileLbl => 'If you wish to update your information, please send an email to balcon@centrodeviajesecuador.com requesting this action and the information you wish to update.';
+
+  @override
+  String get nightsAvaibleLbl => 'Nights Available';
 }

@@ -65,7 +65,8 @@ class FrmProfileScreen extends StatelessWidget {
                             alignment: Alignment.center,
                             child: Center(
                               child: AutoSizeText(
-                                "Si desea actualizar sus datos, envíenos un correo al balcon@centrodeviajesecuador.com solicitando esta acción y los datos que desea actualizar.",
+                                //"Si desea actualizar sus datos, envíenos un correo a balcon@centrodeviajesecuador.com solicitando esta acción y los datos que desea actualizar.",
+                                locGen!.detailDataProfileLbl,
                                 maxLines: 7,
                                 minFontSize: 12,
                               ),

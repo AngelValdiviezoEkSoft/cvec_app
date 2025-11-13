@@ -100,35 +100,39 @@ class ReservationsViewSt extends State<ReservationsView> {
                   }                  
                 }
 
-                List<Widget> itemMap = lstMenuFiltrado.map(
-                (item) => FadeInLeft(
-                  duration: const Duration( milliseconds: 250 ),
-                  child: 
-                    ItemsListasWidget(
-                      null,
-                      varIdPosicionMostrar: 0,
-                      varEsRelevante: item.esRelevante,
-                      varIdNotificacion: item.ordenNot,
-                      varNumIdenti: item.fechaNotificacion, //se usa para mostrar el campo de "room include"
-                      icon: item.icon,
-                      texto: item.mensajeNotificacion,
-                      texto2: item.mensaje2,
-                      texto3: item.mensaje3,
-                      texto4: item.mensaje4,
-                      color1: item.color1,
-                      color2: item.color2,
-                      onPress: () {  },
-                      varMuestraNotificacionesTrAp: 0,
-                      varMuestraNotificacionesTrProc: 0,
-                      varMuestraNotificacionesTrComp: 0,
-                      varMuestraNotificacionesTrInfo: 0,
-                      varIconoNot: item.tiempoDesde,
-                      varIconoNotTrans: item.rutaImagen,
-                      permiteGestion: permiteGestion,
-                      rutaNavegacion: ''//item.rutaNavegacion,
-                    ),
-                  )
-                ).toList();
+                List<Widget> itemMap = [];
+
+                if(lstMenuFiltrado.isNotEmpty){
+                  itemMap = lstMenuFiltrado.map(
+                    (item) => FadeInLeft(
+                      duration: const Duration( milliseconds: 250 ),
+                      child: 
+                        ItemsListasWidget(
+                          null,
+                          varIdPosicionMostrar: 0,
+                          varEsRelevante: item.esRelevante,
+                          varIdNotificacion: item.ordenNot,
+                          varNumIdenti: item.fechaNotificacion, //se usa para mostrar el campo de "room include"
+                          icon: item.icon,
+                          texto: item.mensajeNotificacion,
+                          texto2: item.mensaje2,
+                          texto3: item.mensaje3,
+                          texto4: item.mensaje4,
+                          color1: item.color1,
+                          color2: item.color2,
+                          onPress: () {  },
+                          varMuestraNotificacionesTrAp: 0,
+                          varMuestraNotificacionesTrProc: 0,
+                          varMuestraNotificacionesTrComp: 0,
+                          varMuestraNotificacionesTrInfo: 0,
+                          varIconoNot: item.tiempoDesde,
+                          varIconoNotTrans: item.rutaImagen,
+                          permiteGestion: permiteGestion,
+                          rutaNavegacion: ''//item.rutaNavegacion,
+                        ),
+                      )
+                    ).toList();
+                }                
 
                 return LoadingOverlay(
                   null,
@@ -193,7 +197,7 @@ class ReservationsViewSt extends State<ReservationsView> {
                           ),
                         ),
                                       
-                                      
+                        if(itemMap.isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextField(
@@ -223,8 +227,10 @@ class ReservationsViewSt extends State<ReservationsView> {
                           ),
                         ),    
                         
+                        if(itemMap.isNotEmpty)
                         SizedBox(height: size.height * 0.009,),
                   
+                        if(itemMap.isNotEmpty)
                         Expanded(
                           child: LiquidPullToRefresh(
                             onRefresh: refreshReservations,
@@ -240,6 +246,14 @@ class ReservationsViewSt extends State<ReservationsView> {
                           ),
                         ),
                                   
+                        if(itemMap.isEmpty)
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width,
+                          height: size.height * 0.78,
+                          alignment: Alignment.center,
+                          child: Text(locGen!.noDataLbl, style: TextStyle(fontSize: 30),),
+                        ),
                         //SizedBox(height: size.height * 0.07),
                       
                       ],
@@ -318,8 +332,8 @@ Future<String> getReservations() async {
             Icons.group_add, 
             '${locGen!.bookingLbl} #: ${rsp[i].bookingName}',
             '${locGen!.hotelLbl}: ${rsp[i].bookingHotelName}',
-            '${locGen!.checkInLbl}: $fechaCheckIn',
-            '${locGen!.checkOutLbl}: $fechaCheckOut',
+            '${locGen!.checkInDateLbl}: $fechaCheckIn',
+            '${locGen!.checkOutDateLbl}: $fechaCheckOut',
             '${locGen!.includesLbl}: ${rsp[i].bookingContent}',
              estado, Colors.white, Colors.white,false,false,'','','icCompras.png','icComprasTrans.png','',
               RoutersApp().routReservationView,
