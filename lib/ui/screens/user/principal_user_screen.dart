@@ -19,7 +19,12 @@ class PrincipalUserScreen extends StatelessWidget {
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: AppBar(backgroundColor: const Color(0xFF53C9EC)),
+          appBar: AppBar(
+            backgroundColor: const Color(0xFF53C9EC),
+            actions: [
+              //Icon(Icons.abc) //AQUÍ IRÁ EL BOTÓN DE LAS NOTIFICACIONES...
+            ],
+          ),
           onDrawerChanged: (isOpened) {
             if (isOpened) {
               WidgetsBinding.instance.addPostFrameCallback((_) {

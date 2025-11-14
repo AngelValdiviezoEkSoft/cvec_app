@@ -284,7 +284,9 @@ class ListaDeposits extends StatelessWidget {
                           if(texto != null && texto!.isNotEmpty )
                           GestureDetector(
                             onTap: () {
-                              context.push(rutaNavegacionFin!);
+                              if(onPress2 != null){
+                                onPress2!();
+                              }
                             },
                             child: Stack(
                               alignment: Alignment.center,
