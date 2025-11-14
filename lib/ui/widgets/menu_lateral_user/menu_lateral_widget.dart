@@ -29,6 +29,7 @@ class MenuLateralWidget extends StatelessWidget {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
 
+    Color colorLblHome = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
     Color colorLblEstadoCuenta = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
     Color colorLblDeuda = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
     Color colorLblDepositos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
@@ -55,6 +56,11 @@ class MenuLateralWidget extends StatelessWidget {
       colorLblReservaciones = Colors.grey;
     }
 
+    if(!stateGen.viewAccountStatement && !stateGen.viewViewDebts && !stateGen.viewSendDeposits
+    && !stateGen.viewPrintReceipts && !stateGen.viewViewReservations){
+      colorLblHome = Colors.grey;
+    }
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -69,11 +75,12 @@ class MenuLateralWidget extends StatelessWidget {
           ),
 
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: Icon(Icons.home, color: colorLblHome,),
             title: Text(
               locGen!.menuHomeLbl,
               style: TextStyle(
                 fontSize: fontSizeManager.get(FontSizesConfig().fontSize16),
+                color: colorLblHome
               ),
             ),
             onTap: () {

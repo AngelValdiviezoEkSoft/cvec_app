@@ -95,7 +95,8 @@ class PrincipalUserScreen extends StatelessWidget {
                   imagePaths: [
                     'assets/images/carrusel_1.jpg',
                     'assets/images/carrusel_2.jpg',
-                    'assets/images/carrusel_3.jpg'
+                    'assets/images/carrusel_3.jpg',
+                    'assets/images/carrusel_4.jpg'
                   ],
                 ),
               ),
