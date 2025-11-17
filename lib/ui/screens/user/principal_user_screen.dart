@@ -1,13 +1,54 @@
+import 'dart:math';
+
 import 'package:cve_app/config/config.dart';
+import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-// principal_user_screen.dart
-class PrincipalUserScreen extends StatelessWidget {
-  const PrincipalUserScreen({super.key});
+int cantNotificaciones = 2;
+
+class PrincipalUserScreen extends StatefulWidget {
+  
+  const PrincipalUserScreen(Key? key) : super (key: key);
+
+  @override
+  PrincipalUserScreenState createState() => PrincipalUserScreenState();
+
+}
+
+class PrincipalUserScreenState extends State<PrincipalUserScreen> with SingleTickerProviderStateMixin {  
+  
+  late AnimationController varController = AnimationController(vsync: this, duration: const Duration(milliseconds: 700))
+    ..repeat(reverse: true);
+
+  late Animation<Offset> animationHorizontal = Tween(begin: const Offset(-0.07, 0), end: const Offset(0.07, 0)).animate(varController);
+
+  @override
+  void initState(){
+    super.initState();
+    
+    contextPrincipalGen = context;
+
+    NotificationFirebaseService.messagesStream.listen((message) { 
+      
+      //ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 5),
+        ),
+      );
+
+      setState(() {
+        cantNotificaciones += 1;
+      });
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +56,7 @@ class PrincipalUserScreen extends StatelessWidget {
     final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
     final fontSizeManager = Provider.of<FontSizeManager>(context, listen: false);
     final themeProvider = Provider.of<ThemeProvider>(context);
+    double angle = pi / 420.0;
 
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
@@ -22,7 +64,74 @@ class PrincipalUserScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: const Color(0xFF53C9EC),
             actions: [
-              //Icon(Icons.abc) //AQUÍ IRÁ EL BOTÓN DE LAS NOTIFICACIONES...
+              //if(mostrarBoton)
+              TweenAnimationBuilder(
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.ease,
+                tween: Tween<double>(begin: -pi / 12.0, end: angle),
+                onEnd: () {
+                  if (angle == pi / 12.0) {
+                    setState(() {
+                      angle = -pi / 12.0;
+                    });
+                  } else {
+                    setState(() {
+                      angle = 0;
+                    });
+                  }
+                },
+                builder: (_, double value, __) {
+                  return Transform.rotate(
+                    angle: value,
+                    child: Stack(
+                      children: [
+                        SlideTransition(
+                          position: animationHorizontal,
+                          child: IconButton(
+                            icon: const Icon(Icons.notifications_active),
+                            color: Colors.deepOrangeAccent,
+                            tooltip: 'Notificaciones',
+                            onPressed: () async {
+                              await context.push(objRutas.rutaListaNotificaciones);
+                            },
+                          ),
+                        ),
+                        Positioned(
+                          top: 2.0,
+                          right: 5.0,
+                          child: Container(
+                            width: 16,
+                            height: 16,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                            child: 
+                            /*
+                            state.cantidadTotalNotificaciones < 100
+                              ? Text(
+                                  '${state.cantidadTotalNotificaciones}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: numNotificaciones < 100 ? 9 : 6
+                                  ),
+                                )
+                              : 
+                              */
+                              Text(
+                                  '$cantNotificaciones',//'99+',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 6
+                                  ),
+                                ),
+                          )
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           onDrawerChanged: (isOpened) {

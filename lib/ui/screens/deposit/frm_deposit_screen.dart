@@ -342,7 +342,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                             )),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el título';
+                            return locGen!.alertCompDepLbl;
                           }
                           return null;
                         },
@@ -424,7 +424,7 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
                           ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese el título';
+                            return locGen!.alertConcDepLbl;
                           }
                           return null;
                         },
@@ -998,18 +998,20 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
           for (var dato in lstDatosFrm) {
             final texto = dato.toString().toUpperCase();
 
-            //guayaquil
-            if (texto.contains('\$')) {
-              final monto = texto.split('\$').last.trim();
-              amountDepController.text = monto;
-            }
+            if(amountDepController.text.isEmpty){
+              //guayaquil y bolivariano
+              if (texto.contains('\$')) {
+                final monto = texto.split('\$').last.trim();
+                amountDepController.text = monto;
+              }
 
-            //produbanco
-            if (texto.contains('USD') && !texto.toLowerCase().contains('servicios financieros') && !texto.contains('usd servicios financieros') && !texto.contains('usd (servicios financieros)')) {
-              final monto = texto.split('USD').first.trim();
-              amountDepController.text = monto;
+              //produbanco
+              if (texto.contains('USD') && !texto.toLowerCase().contains('servicios financieros') && !texto.contains('usd servicios financieros') && !texto.contains('usd (servicios financieros)')) {
+                final monto = texto.split('USD').first.trim();
+                amountDepController.text = monto;
+              }
             }
-
+            
             //guayaquil
             if (texto.contains('NO.')) {
               final recibo = texto.split('NO.').last.trim();
@@ -1034,8 +1036,14 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
               final comp2 = comp.toLowerCase().split('pihie').first.trim();
               compDepController.text = comp2;
             }
-          }
 
+            //bolivariano
+            if(texto.toLowerCase().contains('comprobante') && !texto.toLowerCase().contains('comprobante:')
+               && !texto.toLowerCase().contains('comprobante nro')){
+              final comp = texto.toLowerCase().split('comprobante').last.trim();
+              compDepController.text = comp;
+            }
+          }
         }
         catch(ex){
           //print(ex);
@@ -1048,6 +1056,18 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
         }
         catch(_){
 
+        }
+
+        if(compDepController.text.isNotEmpty){
+          if(!esSoloNumeros(compDepController.text)){
+            for (var dato in lstDatosFrm) {
+              final texto = dato.toString().toUpperCase();
+
+              if(esSoloNumeros(texto)){
+                compDepController.text = texto;
+              }
+            }
+          }
         }
 
         // Cerrar reconocimiento y estados
@@ -1076,6 +1096,11 @@ class FrmDepositScreenState extends State<FrmDepositScreen> {
 
     textRecognizer.close();
   }
+
+  bool esSoloNumeros(String valor) {
+    return RegExp(r'^[0-9]+$').hasMatch(valor);
+  }
+
 
   Map<String, String> extraerDatos(String texto) {
     //List<String> lstDatosFrm = texto.split('\n');

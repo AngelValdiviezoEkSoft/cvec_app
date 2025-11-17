@@ -705,5 +705,17 @@
   "nightsAvaibleLbl": "Noches disponibles",
   "@nightsAvaibleLbl": {
     "description": "Noches disponibles"
-  }  
+  },
+  "notificationsLbl": "Notificaciones",
+  "@notificationsLbl": {
+    "description": "Notificaciones"
+  },
+  "alertCompDepLbl": "Por favor ingrese el número de comprobante",
+  "@alertCompDepLbl": {
+    "description": "Por favor ingrese el número de comprobante"
+  },
+  "alertConcDepLbl": "Por favor ingrese el concepto",
+  "@alertConcDepLbl": {
+    "description": "Por favor ingrese el concepto"
+  }
 }

@@ -527,4 +527,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nightsAvaibleLbl => 'Nights Available';
+
+  @override
+  String get notificationsLbl => 'Notifications';
+
+  @override
+  String get alertCompDepLbl => 'Please enter the receipt number';
+
+  @override
+  String get alertConcDepLbl => 'Please enter the concept';
 }

@@ -1126,6 +1126,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nights Available'**
   String get nightsAvaibleLbl;
+
+  /// No description provided for @notificationsLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsLbl;
+
+  /// No description provided for @alertCompDepLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the receipt number'**
+  String get alertCompDepLbl;
+
+  /// No description provided for @alertConcDepLbl.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the concept'**
+  String get alertConcDepLbl;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

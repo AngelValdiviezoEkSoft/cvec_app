@@ -31,3 +31,5 @@ export 'package:cve_app/ui/screens/debts/debts.dart';
 export 'package:cve_app/ui/screens/account_statement/account_statement.dart';
 
 export 'package:cve_app/ui/screens/gps/gps.dart';
+
+export 'package:cve_app/ui/screens/notifications/notifications.dart';

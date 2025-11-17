@@ -172,5 +172,8 @@
     "sendingDateLbl": "Sending Date",
     "copyLbl": "Copy",
     "detailDataProfileLbl": "If you wish to update your information, please send an email to balcon@centrodeviajesecuador.com requesting this action and the information you wish to update.",
-    "nightsAvaibleLbl": "Nights Available"
+    "nightsAvaibleLbl": "Nights Available",
+    "notificationsLbl": "Notifications",
+    "alertCompDepLbl": "Please enter the receipt number",
+    "alertConcDepLbl": "Please enter the concept"
 }

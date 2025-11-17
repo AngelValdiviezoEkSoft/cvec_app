@@ -83,7 +83,7 @@ final GoRouter appRouter = GoRouter(
                   }
                   */
                   if(snapshot.data == 'home') {                    
-                    return const PrincipalUserScreen();
+                    return const PrincipalUserScreen(null);
                   }
                 }
               }
@@ -102,7 +102,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: objRutas.rutaPrincipalUser,
-      builder: (context, state) => const PrincipalUserScreen(),
+      builder: (context, state) => const PrincipalUserScreen(null),
     ),
     GoRoute(
       path: objRutas.routManualSplashScreen,
@@ -140,6 +140,14 @@ final GoRouter appRouter = GoRouter(
         locGen!.menuReservationsLbl,
         true        
       ),
+    ),
+    GoRoute(
+      path: objRutas.rutaListaNotificaciones,
+      builder: (context, state) => const NotificationsScreen(),
+    ),
+    GoRoute(
+      path: objRutas.rutaDetNotificaciones,
+      builder: (context, state) => const NotificationDetailScreen(),
     ),
   ],//
   initialLocation: objRutas.routManualSplashScreen,
