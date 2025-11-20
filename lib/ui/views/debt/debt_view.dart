@@ -115,6 +115,20 @@ class DebtViewSt extends State<DebtView> {
 
             final themeProvider = Provider.of<ThemeProvider>(context);
 
+            Color colorFondo = Colors.transparent;
+
+            if(themeProvider.themeMode.index == 0){
+              colorFondo = Colors.grey;
+            } else {
+              if(themeProvider.themeMode.index == 1){
+                colorFondo = Colors.white;
+              }
+
+              if(themeProvider.themeMode.index == 2){
+                colorFondo = Colors.grey;
+              }
+            }
+
             return Container(
                 width: size.width,
                 height: size.height * 0.85,
@@ -207,8 +221,7 @@ class DebtViewSt extends State<DebtView> {
                                             alignment: Alignment.centerRight,
                                             decoration: BoxDecoration(
                                               //color: Colors.white,
-                                              color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                                                Colors.white : Colors.grey,
+                                              color: colorFondo,
                                               borderRadius: BorderRadius.circular(12),
                                             ),
                                             //alignment: Alignment.center,

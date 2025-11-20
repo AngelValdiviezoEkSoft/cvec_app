@@ -4,6 +4,7 @@ import 'package:cve_app/infraestructure/infraestructure.dart';
 import 'package:cve_app/ui/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 bool verValChangPassword = false;
 bool tieneMayusculaChangPassword = false;
@@ -157,6 +158,30 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
       setState(() {});
     }
 
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo = Colors.transparent;
+    Color colorFondoCajasTexto = Color(0xFFF0F0F0);
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorFondo = Colors.black;
+        colorFondoCajasTexto = Colors.white;
+      } else {
+        colorFondo = Colors.white;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorFondo = Colors.white;
+        colorFondoCajasTexto = Colors.white;
+      }
+
+      if(themeProvider.themeMode.index == 2){
+        colorFondo = Colors.black;
+      }
+    }
+
     return Scaffold(
       backgroundColor: const Color(0xFF0076E4),
       appBar: AppBar(
@@ -200,8 +225,8 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: colorFondo,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
                         topRight: Radius.circular(40),
@@ -215,10 +240,10 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                       children: [
                         Text(
                         locGen!.chngPsswLbl,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          //color: colorFondo,
                         ),
                         ),
                         
@@ -253,7 +278,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFF0F0F0),
+                            fillColor: colorFondoCajasTexto,
                           ),
                         ),
                         
@@ -287,7 +312,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFF0F0F0),
+                            fillColor: colorFondoCajasTexto,
                           ),
                         ),
                         
@@ -554,7 +579,7 @@ class CambiarContrasenaScreenState extends State<CambiarContrasenaScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                             filled: true,
-                            fillColor: const Color(0xFFF0F0F0),
+                            fillColor: colorFondoCajasTexto,
                           ),
                         ),
                         

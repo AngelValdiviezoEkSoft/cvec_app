@@ -268,6 +268,8 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                     default:
                                       estadoDetAccount = ''; // o algún valor por defecto apropiado
                                   }
+
+                                  Color colorFondo = Colors.black;
                                   
                                   return GestureDetector(
                                     onTap: () async {
@@ -442,6 +444,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                       style: TextStyle(
                                                         fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14, 
                                                         fontWeight: FontWeight.w600,
+                                                        color: colorFondo
                                                       )
                                                     ),
                                                   ),
@@ -455,6 +458,7 @@ class DetAccountStatementScreenState extends State<DetAccountStatementScreen> {
                                                       style: TextStyle(
                                                         fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14),//14, 
                                                         fontWeight: FontWeight.w600,
+                                                        color: colorFondo
                                                       )
                                                     ),
                                                   ),

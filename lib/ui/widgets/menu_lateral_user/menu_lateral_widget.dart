@@ -29,12 +29,32 @@ class MenuLateralWidget extends StatelessWidget {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    Color colorLblHome = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-    Color colorLblEstadoCuenta = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-    Color colorLblDeuda = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-    Color colorLblDepositos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-    Color colorLblRecibos = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
-    Color colorLblReservaciones = themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;              
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorFondo = Colors.white;        
+      } else {
+        colorFondo = Colors.black;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorFondo = Colors.black;
+      }
+
+      if(themeProvider.themeMode.index == 2){
+        colorFondo = Colors.white;
+      }
+    }
+
+    Color colorLblHome = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+    Color colorLblEstadoCuenta = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+    Color colorLblDeuda = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+    Color colorLblDepositos = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+    Color colorLblRecibos = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;
+    Color colorLblReservaciones = colorFondo;//themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? Colors.black : Colors.white;              
 
     if(stateGen.viewAccountStatement){
       colorLblEstadoCuenta = Colors.grey;
@@ -95,7 +115,6 @@ class MenuLateralWidget extends StatelessWidget {
 
             },
           ),
-
 
           ListTile(
             leading: Icon(Icons.document_scanner, color: colorLblEstadoCuenta),
@@ -229,7 +248,7 @@ class MenuLateralWidget extends StatelessWidget {
             },
           ),
 
-          SizedBox(height: size.height * 0.29),
+          SizedBox(height: size.height * 0.235),
           const Divider(),
 
           ListTile(

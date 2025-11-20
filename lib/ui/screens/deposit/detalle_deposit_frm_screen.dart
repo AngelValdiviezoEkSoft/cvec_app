@@ -36,7 +36,7 @@ class DetalleDepositFrmScreenState extends State<DetalleDepositFrmScreen> {
 
     if(objReciboDet!.receiptState.toLowerCase() == 'draft'){
       state = locGen!.pendingReviewLbl;
-      colorTextoEstado = Colors.black;
+      colorTextoEstado = Colors.grey;
     }
 
     if(objReciboDet!.receiptState.toLowerCase() == 'rejected'){

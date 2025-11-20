@@ -82,12 +82,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
+
           if (fotoUserPrp.isEmpty)
           const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.white,
             child: Icon(Icons.person, size: 40, color: Colors.grey),
           ),
+
           if (fotoUserPrp.isNotEmpty)
           CircleAvatar(
             radius: 30,
@@ -96,6 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
           SizedBox(width: size.width * 0.035),//16),
+
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,10 +140,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildOptionCard(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorFondo = Colors.black;
+      } else {
+        colorFondo = Colors.white;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorFondo = Colors.white;
+      }
+
+      if(themeProvider.themeMode.index == 2){
+        colorFondo = Colors.black;
+      }
+    }
+
     return Container(
       decoration: BoxDecoration(
-        color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-          Colors.white : Colors.black,
+        color: colorFondo,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)],
       ),
@@ -157,10 +179,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildAdditionalOptions(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorFondo = Colors.black;
+      } else {
+        colorFondo = Colors.white;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorFondo = Colors.white;
+      }
+
+      if(themeProvider.themeMode.index == 2){
+        colorFondo = Colors.black;
+      }
+    }
+    
     return Container(
       decoration: BoxDecoration(
-        color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-          Colors.white : Colors.black,
+        color: colorFondo,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: 5)],
       ),
@@ -177,7 +218,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildListTile(BuildContext context, IconData icon, String title) {
     return ListTile(
       leading: Icon(icon),
-      title: Text(title, style: TextStyle(fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize13)),),
+      title: Text(title, style: TextStyle(
+        fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize13)),
+      ),
       trailing: Icon(
         Icons.arrow_forward_ios,
       ),

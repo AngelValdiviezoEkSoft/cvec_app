@@ -50,10 +50,13 @@ class _AutoImageCarouselState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    final size = MediaQuery.of(context).size;
+
     return Column(
       children: [
         SizedBox(
-          height: 220,
+          height: size.height * 0.25,//220,
           child: PageView.builder(
             controller: _controller,
             itemCount: widget.imagePaths.length,

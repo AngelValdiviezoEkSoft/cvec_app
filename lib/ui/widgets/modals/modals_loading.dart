@@ -37,7 +37,7 @@ class SimpleDialogLoad extends StatelessWidget {
             ),
 
             const SizedBox(height: 20,),
-            Text(locGen!.pleaseWaitLbl, style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontFamily: 'Montserrat',fontSize: 14, fontWeight: FontWeight.bold),),
+            Text(locGen!.pleaseWaitLbl, style: TextStyle(fontFamily: 'Montserrat',fontSize: 14, fontWeight: FontWeight.bold),),
 
             Container(
               color: Colors.transparent,

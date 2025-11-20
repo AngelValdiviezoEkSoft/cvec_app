@@ -175,16 +175,6 @@ class PdfView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*
-    @override
-    void dispose(){
-
-      final gnrBloc = Provider.of<GenericBloc>(context, listen: false);
-      gnrBloc.setCargando(false);
-
-      super.dispose();
-    }
-    */
     return BlocBuilder<GenericBloc, GenericState>(
       builder: (context, state) {
         return Scaffold(
@@ -199,7 +189,7 @@ class PdfView extends StatelessWidget {
               },
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.arrow_back_ios)
+                child: Icon(Icons.arrow_back_ios, color: Colors.black,)
               ),
             ),
           ),
@@ -285,6 +275,5 @@ class PdfView extends StatelessWidget {
         );
       }
     );
-
   }
 }

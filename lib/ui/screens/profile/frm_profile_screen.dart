@@ -21,9 +21,29 @@ class FrmProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final size = MediaQuery.of(context).size;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo1 = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {                
+        colorFondo1 = Colors.black;
+      } else {
+        colorFondo1 = Colors.blue;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){        
+        colorFondo1 = Colors.blue;
+      }
+
+      if(themeProvider.themeMode.index == 2){        
+        
+      }
+    }
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: colorFondo1,
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: Text(locGen!.profileLbl, style: const TextStyle(color: Colors.white),),
@@ -240,21 +260,40 @@ class ProfileField extends StatelessWidget {
 
     final themeProvider = Provider.of<ThemeProvider>(context);
 
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    Color colorFondo = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorFondo = Colors.white;
+      } else {
+        colorFondo = Colors.black;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorFondo = Colors.black;
+      }
+
+      if(themeProvider.themeMode.index == 2){        
+        colorFondo = Colors.white;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: RichText(
         text: TextSpan(
           text: '$label\n',
           style: TextStyle(
-            color: Colors.grey, 
+            color: colorFondo, 
             fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize14)
           ),
           children: [
             TextSpan(
               text: value,
               style: TextStyle(
-                color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                  Colors.black : Colors.white,
+                color: colorFondo,
                 fontSize: fontSizeManagerGen.get(FontSizesConfig().fontSize15)
               ),
             ),

@@ -28,6 +28,11 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
   @override
   Widget build(BuildContext context) {
 
+    Color colorBordeFontSize = Colors.transparent;
+    Color colorBtnSliderFontSize = Colors.transparent;
+    Color colorBarraSliderFontSize = Colors.transparent;
+    Color colorBarraRestanteFontSize = Colors.grey;
+
     final size = MediaQuery.of(context).size;
     final languageProvider = Provider.of<LanguageProvider>(context);    
     final fontSizeManager = Provider.of<FontSizeManager>(context);
@@ -35,6 +40,34 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
     languageProvider.loadLanguageLocale();
 
     final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final brightness = MediaQuery.of(context).platformBrightness;
+
+    //Color colorFondo = Colors.transparent;
+
+    if(themeProvider.themeMode.index == 0){
+      if (brightness == Brightness.dark) {        
+        colorBordeFontSize = Colors.white;
+        colorBtnSliderFontSize = Colors.white;
+        colorBarraSliderFontSize = Colors.white;
+      } else {
+        colorBordeFontSize = Colors.black;
+        colorBtnSliderFontSize = Colors.black;
+        colorBarraSliderFontSize = Colors.black;
+      }
+    } else {
+      if(themeProvider.themeMode.index == 1){
+        colorBordeFontSize = Colors.black;
+        colorBtnSliderFontSize = Colors.black;
+        colorBarraSliderFontSize = Colors.black;        
+      }
+
+      if(themeProvider.themeMode.index == 2){
+        colorBordeFontSize = Colors.white;
+        colorBtnSliderFontSize = Colors.white;
+        colorBarraSliderFontSize = Colors.white;
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -130,8 +163,9 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                   height: size.height * 0.22,
                   decoration: BoxDecoration(
                     //color: Colors.grey.shade500,
-                    border: Border.all(color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                          Colors.black : Colors.white,),
+                    border: Border.all(
+                      color: colorBordeFontSize
+                    ),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(16),
@@ -148,12 +182,9 @@ class _SettingsUserScreenState extends State<SettingsUserScreen> {
                         divisions: 15,
                         value: _fontSize,                        
                         label: '${_fontSize.toStringAsFixed(1)}%',
-                        thumbColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                          Colors.black : Colors.white,
-                        activeColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                          Colors.black26 : Colors.grey.shade500,
-                        inactiveColor: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                          Colors.black : Colors.white,
+                        thumbColor: colorBtnSliderFontSize,
+                        activeColor: colorBarraSliderFontSize,
+                        inactiveColor: colorBarraRestanteFontSize,
                         onChanged: (newValue) async {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setInt('PorcFontSize', newValue.toInt());

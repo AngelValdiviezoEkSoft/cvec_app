@@ -256,6 +256,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           height: size.height * 0.025,
                         ),
                         
+                        if(observationsDepController.text.isNotEmpty)
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,
@@ -269,6 +270,7 @@ class ConfirmacionDepositoScreenState extends State<ConfirmacionDepositoScreen> 
                           ),
                         ),
 
+                        if(observationsDepController.text.isNotEmpty)
                         Container(
                           width: size.width * 0.96,
                           height: size.height * 0.028,

@@ -12,6 +12,7 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 
 String nameContratoDebt = '';
 String namePlanDebt = '';
@@ -94,146 +95,156 @@ class DebsDetScreenState extends State<DebsDetScreen> {
           future: DebsService().getDetDebts(idContrato),
           builder: (context, snapshot) {
             if(!snapshot.hasData) {
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(
-              child: Image.asset(
-                AppConfig().rutaGifCarga,
-                height: size.width * 0.85,
-                width: size.width * 0.85,
-              ),
-            ),
-          );
-        }
-        else{
-          if(snapshot.data != null && snapshot.data!.isNotEmpty) {
-
-            List<Quota> lstSubs = snapshot.data as List<Quota>;
-            
-            return Scaffold(
-              appBar: AppBar(
-                foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF2EA3F2),  
-                centerTitle: true,
-                title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
-                leading: GestureDetector(
-                  onTap: () {
-                    context.push(objRutas.rutaPrincipalUser);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(Icons.arrow_back_ios)
+              return Scaffold(
+                backgroundColor: Colors.white,
+                body: Center(
+                  child: Image.asset(
+                    AppConfig().rutaGifCarga,
+                    height: size.width * 0.85,
+                    width: size.width * 0.85,
                   ),
-                ),          
-              ),
-              body: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    SizedBox(height:  size.height * 0.02,),
-            
-                    Container(
-                      color: Colors.transparent,
-                      width: size.width * 0.95,
-                      alignment: Alignment.center,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(objSubscription.contractName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            
-                          Text(objSubscription.contractPlan, style: const TextStyle(fontSize: 16)),
-            
-                          //Text(fechaInscDebt, style: const TextStyle(fontSize: 14)),
-                          Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(objSubscription.contractInscriptionDate)), style: const TextStyle(fontSize: 14)),
-                        ],
-                      ),
-                    ),
-            
-                    SizedBox(height:  size.height * 0.02,),
-            
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: lstSubs.length,
-                        itemBuilder: (context, index) {
-                          final item = lstSubs[index];
-
-                          DateTime dateQuote = DateTime.parse(item.quotaDueDate);
-
-                          String formattedDateQuote = DateFormat("dd MMM yy", "en_US").format(dateQuote);
-                          //String formatted = DateFormat("dd MMM", "en_US").format(date);
-                          
-                          return Container(
-                            width: size.width,
-                            //height: size.height * 0.25,
-                            color: Colors.grey[100],
-                            alignment: Alignment.center,
-                            child: Stack(
-                              children: [
-                                  
-                              
-                                Container(
-                                  width: size.width * 0.95,
-                                  height: size.height * 0.08,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Container(
-                                    width: size.width * 0.85,
-                                    color: Colors.transparent,
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          color: Colors.transparent,
-                                          width: size.width * 0.1,
-                                          alignment: Alignment.center,
-                                          child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
-                                        ),
-
-                                        SizedBox(width: size.width * 0.02),
-          
-                                        Container(
-                                          color: Colors.transparent,
-                                          width: size.width * 0.36,
-                                          child: Text(
-                                            item.quotaName, 
-                                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)
-                                          ),
-                                        ),
-                      
-                                        Container(
-                                          color: Colors.transparent,
-                                          width: size.width * 0.25,
-                                          alignment: Alignment.centerRight,
-                                          child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600,)),
-                                        ),
-                      
-                                        SizedBox(width: size.width * 0.0004),
-                                      ],
-                                    ),
-                                  ),
-                                
-                                ),
-                      
-                                SizedBox(height: size.height * 0.09,),
-                              
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
                 ),
-              )
-            );
-          
-          }
-        }
+              );
+            }
+            else{
+              if(snapshot.data != null && snapshot.data!.isNotEmpty) {
+
+                List<Quota> lstSubs = snapshot.data as List<Quota>;
+
+                Color colorFondo = Colors.transparent;
+                final themeProvider = Provider.of<ThemeProvider>(context);
+
+                if(themeProvider.themeMode.index == 0){
+                  colorFondo = Colors.grey;
+                } else {
+                  colorFondo = Colors.black;
+                }
+                
+                return Scaffold(
+                  appBar: AppBar(
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color(0xFF2EA3F2),  
+                    centerTitle: true,
+                    title: Text(locGen!.detailLbl, style: const TextStyle(color: Colors.white),),
+                    leading: GestureDetector(
+                      onTap: () {
+                        context.push(objRutas.rutaPrincipalUser);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(Icons.arrow_back_ios)
+                      ),
+                    ),          
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height:  size.height * 0.02,),
+                
+                        Container(
+                          color: Colors.transparent,
+                          width: size.width * 0.95,
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(objSubscription.contractName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                
+                              Text(objSubscription.contractPlan, style: const TextStyle(fontSize: 16)),
+                
+                              //Text(fechaInscDebt, style: const TextStyle(fontSize: 14)),
+                              Text(DateFormat("dd/MM/yyyy").format(DateTime.parse(objSubscription.contractInscriptionDate)), style: const TextStyle(fontSize: 14)),
+                            ],
+                          ),
+                        ),
+                
+                        SizedBox(height:  size.height * 0.02,),
+                
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: lstSubs.length,
+                            itemBuilder: (context, index) {
+                              final item = lstSubs[index];
+
+                              DateTime dateQuote = DateTime.parse(item.quotaDueDate);
+
+                              String formattedDateQuote = DateFormat("dd MMM yy", "en_US").format(dateQuote);
+                              //String formatted = DateFormat("dd MMM", "en_US").format(date);
+                              
+                              return Container(
+                                width: size.width,
+                                //height: size.height * 0.25,
+                                color: Colors.transparent,
+                                alignment: Alignment.center,
+                                child: Stack(
+                                  children: [
+                                      
+                                  
+                                    Container(
+                                      width: size.width * 0.95,
+                                      height: size.height * 0.08,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                      ),
+                                      child: Container(
+                                        width: size.width * 0.85,
+                                        color: Colors.transparent,
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              color: Colors.transparent,
+                                              width: size.width * 0.1,
+                                              alignment: Alignment.center,
+                                              child: Text(formattedDateQuote, style: TextStyle(fontSize: 14, color: Colors.blue[600]), textAlign: TextAlign.center,),
+                                            ),
+
+                                            SizedBox(width: size.width * 0.02),
+              
+                                            Container(
+                                              color: Colors.transparent,
+                                              width: size.width * 0.36,
+                                              child: Text(
+                                                item.quotaName, 
+                                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: colorFondo)
+                                              ),
+                                            ),
+                          
+                                            Container(
+                                              color: Colors.transparent,
+                                              width: size.width * 0.25,
+                                              alignment: Alignment.centerRight,
+                                              child: Text('\$${item.quotaResidual.toStringAsFixed(2)}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: colorFondo)),
+                                            ),
+                          
+                                            SizedBox(width: size.width * 0.0004),
+                                          ],
+                                        ),
+                                      ),
+                                    
+                                    ),
+                          
+                                    SizedBox(height: size.height * 0.09,),
+                                  
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                );
+              
+              }
+            }
+
             return Scaffold(
               appBar: AppBar(
                 foregroundColor: Colors.white,

@@ -239,6 +239,22 @@ class AccountStatementViewSt extends State<AccountStatementView>{
                                   default:
                                     estadoAccount = ''; // o algún valor por defecto apropiado
                                 }
+
+                                //final brightness = MediaQuery.of(context).platformBrightness;
+
+                                Color colorFondo = Colors.transparent;
+
+                                if(themeProvider.themeMode.index == 0){
+                                  colorFondo = Colors.grey;
+                                } else {
+                                  if(themeProvider.themeMode.index == 1){
+                                    colorFondo = Colors.white;
+                                  }
+
+                                  if(themeProvider.themeMode.index == 2){
+                                    colorFondo = Colors.grey;
+                                  }
+                                }
                             
                                 return GestureDetector(
                                   onTap: () {
@@ -266,8 +282,7 @@ class AccountStatementViewSt extends State<AccountStatementView>{
                                               height: size.height * 0.17,
                                               alignment: Alignment.centerRight,
                                               decoration: BoxDecoration(
-                                                color: themeProvider.themeMode.index == 0 || themeProvider.themeMode.index == 1 ? 
-                                                  Colors.white : Colors.grey,
+                                                color: colorFondo,
                                                 borderRadius: BorderRadius.circular(12),
                                               ),
                                               //alignment: Alignment.center,
